@@ -4,7 +4,7 @@
 # response.  HMG_TASK selects queue/<task>/ (one queue per track); without it
 # the request goes to queue/shared/, which no track server polls, so a
 # forgotten HMG_TASK shows up as a timeout.
-HERE=$(cd "$(dirname "$0")" && pwd)
+HERE=$(cd "$(dirname "$0")/.." && pwd)
 QDIR="$HERE/queue/${HMG_TASK:-shared}"
 REQ="$1"
 TMO="${2:-120}"
