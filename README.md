@@ -17,6 +17,7 @@ actors. The harness only records it for the coordinator.
 | `hmg_tools.py` | The tool API used by primitives (observe, step, reach, grip, probes) |
 | `hmg_render.py` | Offscreen stills / mp4 rendering |
 | `hmg_harness/` | Adapter, observation/recording, primitive registry and composition |
+| `.claude/` | Coordinator skill and `hmg-worker` agent definitions for Claude Code |
 | `library/skills/` | Skill descriptions: signature, preconditions, contract, scope, cautions |
 | `library/evidence/` | Proof history for each skill |
 | `library/CORRECTIONS.md`, `SUPERSEDED.md`, `LESSONS.md`, `NOT_CATALOGUED.md` | Corrections, retired entries, cross-task lessons, rejected candidates |
@@ -82,6 +83,27 @@ HMG_TASK=02_push_button scripts/qtool.sh \
 
 Stop servers with `scripts/server_ctl.sh stop [task]` and check them with
 `status`.
+
+## Orchestration (Claude Code)
+
+There is no Python orchestration loop. A Claude Code coordinator session uses
+the `hmg-coordinator` skill and dynamically spawns `hmg-worker` subagents:
+
+| Role | Job |
+|---|---|
+| Coordinator | Owns the experiment policy, reads the engine bit, verifies claims, updates the catalogue |
+| Actor | Solves one task at a time in a fresh context; writes primitives and reports evidence |
+| Verifier | Sees only the skill contract; runs reproduction, safety/determinism and cross-task gates |
+| Fixer | Performance or debugging-tool work, measured before and after |
+
+The coordinator spawns actors per track, collects their reports, and promotes
+skills only after verification. Actors never see the success predicate; the
+coordinator reads it from the coordinator-only episode summary.
+
+Start Claude Code in this repository (the `.claude/` definitions load
+automatically) and give it `docs/coordinator_prompt.txt`, or invoke the
+`hmg-coordinator` skill directly. The server/queue protocol is unchanged; see
+`docs/PROTOCOL.md`.
 
 ## Composition
 
