@@ -42,7 +42,7 @@ directories and videos) are intentionally excluded.
 ## Setup
 
 ```bash
-git clone <this-repository> hmg_primitive_harness
+git clone https://github.com/llllIIIIIllll-ai/hmg-primitive-harness.git hmg_primitive_harness
 cd hmg_primitive_harness
 bash scripts/bootstrap.sh
 source env.sh
