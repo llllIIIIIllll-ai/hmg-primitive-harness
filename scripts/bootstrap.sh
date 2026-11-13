@@ -11,14 +11,37 @@ if ! command -v "$PYTHON" >/dev/null 2>&1; then
   exit 1
 fi
 
+create_venv() {
+  if "$PYTHON" -m venv .venv 2>/dev/null; then
+    return
+  fi
+  # Some distros ship Python without ensurepip. Fall back to uv.
+  rm -rf .venv
+  if command -v uv >/dev/null 2>&1; then
+    echo "python -m venv unavailable; creating the venv with uv" >&2
+    uv venv --python "$PYTHON" .venv
+  else
+    echo "error: cannot create a venv (install python3-venv or uv)" >&2
+    exit 1
+  fi
+}
+
 if [ ! -d .venv ]; then
-  "$PYTHON" -m venv .venv
+  create_venv
 fi
 # shellcheck disable=SC1091
 source .venv/bin/activate
 
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
+pip_install() {
+  if [ -x .venv/bin/pip ]; then
+    .venv/bin/python -m pip install "$@"
+  else
+    uv pip install --python .venv/bin/python "$@"
+  fi
+}
+
+pip_install --upgrade pip
+pip_install -r requirements.txt
 
 REPO=third_party/humanoidmimicgen
 if [ ! -d "$REPO/.git" ]; then
@@ -26,7 +49,7 @@ if [ ! -d "$REPO/.git" ]; then
   git clone https://github.com/NVlabs/humanoidmimicgen.git "$REPO"
 fi
 # Requirements are already pinned above; do not let pip re-resolve them.
-python -m pip install -e "$REPO" --no-deps
+pip_install -e "$REPO" --no-deps
 
 # The lower-body WBC policies are downloaded separately by the benchmark.
 python -m humanoidmimicgen.download_wbc_policies
