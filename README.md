@@ -20,6 +20,7 @@ actors. The harness only records it for the coordinator.
 | `library/skills/` | Skill descriptions: signature, preconditions, contract, scope, cautions |
 | `library/evidence/` | Proof history for each skill |
 | `library/CORRECTIONS.md`, `SUPERSEDED.md`, `LESSONS.md`, `NOT_CATALOGUED.md` | Corrections, retired entries, cross-task lessons, rejected candidates |
+| `work/tracks/` | The exact skill sources pinned by the catalogue (`.py` only) |
 | `docs/PRIMITIVES.md` | Skill-catalogue system prompt and compact index |
 | `docs/PROTOCOL.md` | Queue protocol, tool schemas and hard rules |
 | `docs/DEBUG_TOOLS.md` | Debug tools, their costs and known blind spots |
@@ -28,8 +29,10 @@ actors. The harness only records it for the coordinator.
 | `examples/compositions/` | Canonical task compositions for 02/03/04/06/08 |
 | `docs/HMG_harness_overview.tex` | Beamer overview (compile with XeLaTeX) |
 
-Large local artefacts (`queue/`, `out/`, `.coord/`, `.scratch/`, task working
-directories and videos) are intentionally excluded.
+`library/skills/<name>.md` gives the source path relative to `work/tracks/`.
+Large local artefacts (`queue/`, `out/`, `.coord/`, `.scratch/`, `run/`, videos,
+probes, traces and the rest of the task working tree) are intentionally
+excluded; only the pinned skill sources are kept.
 
 ## Requirements
 
