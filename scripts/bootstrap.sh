@@ -33,10 +33,10 @@ fi
 source .venv/bin/activate
 
 pip_install() {
-  if [ -x .venv/bin/pip ]; then
-    .venv/bin/python -m pip install "$@"
-  else
+  if command -v uv >/dev/null 2>&1; then
     uv pip install --python .venv/bin/python "$@"
+  else
+    .venv/bin/python -m pip install "$@"
   fi
 }
 
