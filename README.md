@@ -34,6 +34,16 @@ Large local artefacts (`queue/`, `out/`, `.coord/`, `.scratch/`, `run/`, videos,
 probes, traces and the rest of the task working tree) are intentionally
 excluded; only the pinned skill sources are kept.
 
+## Verification
+
+Smoke-tested from a fresh clone on 2026-11-13 using the pinned environment:
+
+- 9/9 tasks started a server (ready in about 12 s) and answered `observe`.
+- A short `run_seeds` episode at seed 0 succeeded on every task (`t=0.2`).
+
+The repository code path is verified. A clean `bootstrap.sh` install in a brand-new
+venv is still being checked; the CUDA wheel download was slow in this environment.
+
 ## Requirements
 
 - Linux, Python **3.10**
