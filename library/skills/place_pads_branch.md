@@ -1,0 +1,12 @@
+# place_pads_branch -- open before calling
+
+Signature: place_pads_branch(tag='place', stand=0.0, xb=0.0, zu=0.0, ncmd=2, free=True, hold=None, out0=None, dur=0.40, lo=None, hi=None, box_ref=None, x_in=0.03, z_frac=0.94, pad_half=0.0217, off=(0.076,-0.018,-0.030), box_move_tol=0.02, box_move_hard=0.25, jump_ratio=0.0, jump_abs=0.05, jump_eps=0.004, restore_mode='prev', restore_dy=0.08, restore_dur=0.35, branch='off', branch_iters=300, branch_ratio=3.0, branch_clear_tol=-0.04, branch_travel=0.25, branch_err_tol=0.0, branch_dq_tol=0.0, branch_switch_corr=1, branch_min_cmd=0, branch_alphas=(0.5,0.25,0.0), branch_fallback='refuse')
+- source hash: 35cc36386db2c99bb53924b4e2459e8f5b60e873a8576a515a009d9ca524eae7 (01_box_lift_floor/actor_7/skills/place_pads_branch.py)
+- removes: a one-sided grip from an unseated pad, AND a correction command that re-solves onto a non-current IK branch and sweeps the pad through the object face before any post-command guard can see it.
+- applies when: box at rest with a settled `box_ref`, both palms have a two-palm IK solution, the caller supplies the box AABB and owns the base and fingers. The preview must be able to SOLVE the target: unsolved targets make the screen fire false positives.
+- contract: pre: settled box_ref -> post: up to `ncmd` measured corrections, each gated on the displacement THAT command caused; `branch='refuse'` additionally screens every command index >= `branch_min_cmd` with one read-only `ik_preview` and sends none when the predicted winning branch is not the current one; returns {ok, record, log, contacts, sides, jump_guards, branch_refused, branch_refuse}.
+- verified scope: 01 box on floor. `branch='off'` is trace-identical to place_pads_closed_loop (dd05958a) on seeds 0/13/20 in the wrapper context (15/15 arrays, inputs = recorded settle states); `branch='refuse'` composed on seeds 0,6,13,20,21 refused exactly one command (s20, instruction 1, left, 'switch') and ran one repair. No cross-task evidence: on 03 every target was unsolved (ik_err 0.149-0.268 vs its 0.09 limit), so all would-be refusals there were false positives.
+- used by: grasp_lift_floor_box_branch (01).
+- CAUTION: supersedes place_pads_closed_loop -- do not keep both. The screen is only meaningful on targets the current stance can solve; when the preview does not converge it fires false positives rather than staying silent.
+
+Proof history: `library/evidence/place_pads_branch.md`.

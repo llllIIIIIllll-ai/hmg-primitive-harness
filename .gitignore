@@ -1,0 +1,15 @@
+.venv/
+env.sh
+third_party/
+queue/
+out/
+.coord/
+run/
+.scratch/
+__pycache__/
+*.py[cod]
+*.mp4
+*.npz
+MUJOCO_LOG.TXT
+slurm-*.out
+.DS_Store

@@ -1,0 +1,665 @@
+% HMG Primitive Discovery Harness -- Beamer (Madrid)
+% XeLaTeX + kotex + Noto Sans CJK KR
+%   xelatex HMG_harness_overview.tex
+\documentclass[aspectratio=169,10pt]{beamer}
+\usetheme{Madrid}
+\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[triangle]
+\setbeamertemplate{blocks}[rounded][shadow=false]
+
+\usepackage{fontspec}
+\usepackage{kotex}
+\setmainfont{Noto Sans CJK KR}
+\setsansfont{Noto Sans CJK KR}
+\setmonofont{Noto Sans Mono CJK KR}
+
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds,calc}
+\usepackage{graphicx}
+
+\newcommand{\sk}[1]{\texttt{\detokenize{#1}}}
+\newcommand{\code}[1]{\texttt{\detokenize{#1}}}
+
+\title[HMG Harness]{HMG Primitive Discovery Harness}
+\subtitle{원시 동작 구현에서 재사용 가능한 스킬 조합으로}
+\author{하니스 운영 요약}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{목차}
+  \tableofcontents
+\end{frame}
+
+\section{하니스 구조}
+
+\begin{frame}{한눈에}
+  \begin{columns}[T]
+    \begin{column}{0.33\textwidth}
+      \begin{block}{실행}
+        \begin{itemize}
+          \item 태스크마다 MuJoCo 서버 1대
+          \item 파일 큐로 요청과 응답
+          \item 43자유도 G1, 35차원 전신 목표
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.33\textwidth}
+      \begin{block}{계측}
+        \begin{itemize}
+          \item 에피소드별 이벤트 기록
+          \item 시계열·접촉·자세 프로브
+          \item 필요할 때 영상 렌더
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.33\textwidth}
+      \begin{block}{지식}
+        \begin{itemize}
+          \item 스킬 카탈로그 40개
+          \item 적용 조건과 검증 범위
+          \item 실패·반증 기록 보존
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \vspace{0.4em}
+  \centering
+  \textbf{9/9 태스크 \quad·\quad 평균 성공률 93.8\% \quad·\quad API 비용 총 \$50}
+
+  \vspace{0.6em}
+  \begin{block}{핵심 원칙}
+    태스크 해는 일회성 프로그램이 아니라 \textbf{재사용 가능한 스킬의 조합}이다.\\
+    성공 판정은 벤치마크가 소유하며, 액터에게는 노출하지 않는다.
+  \end{block}
+\end{frame}
+
+\begin{frame}{코디네이터--액터 구조 (ASPIRE식 동적 생성)}
+  \centering
+  \resizebox{0.98\textwidth}{!}{%
+  \begin{tikzpicture}[
+    box/.style={draw, rounded corners=2pt, align=center, inner sep=3pt, font=\scriptsize},
+    coord/.style={box, fill=orange!20, minimum width=42mm, minimum height=11mm},
+    act/.style={box, fill=green!10, minimum width=30mm, minimum height=10mm},
+    srv/.style={box, fill=gray!12, minimum width=30mm, minimum height=10mm},
+    lib/.style={box, fill=blue!8, minimum width=36mm, minimum height=12mm},
+    eng/.style={box, fill=red!8, minimum width=44mm, minimum height=10mm},
+    aux/.style={box, fill=purple!8, minimum width=26mm, minimum height=10mm},
+    ar/.style={-{Latex[length=1.8mm]}, thick},
+    sp/.style={-{Latex[length=1.8mm]}, thick, dashed, blue!70!black},
+    rep/.style={-{Latex[length=1.8mm]}, thick, dashed, teal!70!black}
+  ]
+    \node[coord] (c) at (0,4.2) {코디네이터\\{\tiny 실험 정책 · 검증 · 카탈로그}};
+    \node[aux] (ver) at (-9.2,4.2) {검증자\\{\tiny 계약서만}};
+    \node[aux] (fix) at (9.2,4.2) {수정자\\{\tiny 성능 · 디버깅}};
+
+    \node[act] (a1) at (-5.0,2.0) {액터 1\\{\tiny 새 문맥}};
+    \node[act] (a2) at (0,2.0) {액터 2\\{\tiny 새 문맥}};
+    \node[act] (a3) at (5.0,2.0) {액터 N\\{\tiny 새 문맥}};
+
+    \node[srv] (s1) at (-5.0,0.0) {서버 1\\{\tiny 태스크 큐}};
+    \node[srv] (s2) at (0,0.0) {서버 2};
+    \node[srv] (s3) at (5.0,0.0) {서버 N};
+
+    \node[eng] (eng) at (0,-2.0) {성공 판정\\{\tiny 코디네이터만}};
+    \node[lib] (lib) at (9.2,0.0) {스킬 카탈로그\\{\tiny 설명 · 검증 기록}};
+
+    \draw[sp] (c) -- node[above,font=\tiny,sloped]{생성} (a1);
+    \draw[sp] (c) -- node[above,font=\tiny]{생성} (a2);
+    \draw[sp] (c) -- node[above,font=\tiny,sloped]{생성} (a3);
+
+    \draw[ar,<->] (a1) -- node[right,font=\tiny]{파일 큐} (s1);
+    \draw[ar,<->] (a2) -- node[right,font=\tiny]{파일 큐} (s2);
+    \draw[ar,<->] (a3) -- node[right,font=\tiny]{파일 큐} (s3);
+
+    \draw[ar] (s1) -- (eng);
+    \draw[ar] (s2) -- (eng);
+    \draw[ar] (s3) -- (eng);
+
+    \draw[rep] (eng.east) to[bend left=18] node[right,font=\tiny]{판정 비트} (c.south);
+    \draw[rep] (a1.north) to[bend right=18] node[left,font=\tiny]{결과 보고} (c.south west);
+
+    \draw[sp,<->] (c) -- (ver);
+    \draw[sp,<->] (c) -- (fix);
+    \draw[ar] (c) -- node[above,font=\tiny,sloped]{등재} (lib);
+  \end{tikzpicture}}
+  \vspace{0.2em}
+  \begin{itemize}
+    \item 코디네이터는 태스크마다 액터를 \textbf{새로 띄우고}, 액터는 이전 대화 없이 시작한다.
+    \item 액터는 파일 큐로 서버와만 대화하며, 성공 판정은 볼 수 없다.
+    \item 검증자와 수정자는 각각 계약서와 측정된 병목만 받는다.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{실행 모델: 태스크 = 서버 1대 + 큐 1개}
+  \begin{itemize}
+    \item 태스크마다 상주 프로세스 하나가 MuJoCo를 계속 돌린다.
+    \item 요청과 응답은 파일 큐로 주고받는다.
+    \item 서버는 seed를 바꿔 같은 프로세스에서 다음 에피소드를 시작할 수 있다.
+    \item 여러 seed를 한 번에 돌리고, seed별 결과를 따로 남긴다.
+  \end{itemize}
+
+  \vspace{0.5em}
+  \begin{alertblock}{실행 중인 프로세스는 검증 대상의 일부다}
+    파일을 고쳐도 실행 중인 프로세스는 시작할 때의 코드로 계속 돈다.\\
+    그래서 서버 재시작은 반드시 라운드 경계에서 한다.
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}{액터가 쓰는 도구}
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    도구 & 역할 \\
+    \midrule
+    \code{observe} & 현재 자세·물체·손·접촉 상태 \\
+    \code{list} & 등록된 동작 목록 \\
+    \code{write} & 새 동작 구현 등록 \\
+    \code{call} & 등록된 동작 1회 실행 \\
+    \code{reset} & 같은 프로세스에서 다음 에피소드 \\
+    \code{finish} & 결과 기록 후 다음 에피소드 \\
+    \code{run_seeds} & 여러 seed 일괄 실행 \\
+    \code{events} / \code{window} & 실패 이벤트 요약 / 구간 시계열 \\
+    \code{probe} & 접촉·물체·관절·장면 상태 \\
+    \code{trace} & 분석용 시계열 파일 \\
+    \code{stills} & 정지 영상 / mp4 \\
+    \bottomrule
+  \end{tabular}
+
+  \vspace{0.5em}
+  \footnotesize
+  동작 안에서는 관측, 전신 목표, 베이스 이동, 손 도달, 그립, 리프트, 다른 스킬 호출을 쓸 수 있다.
+\end{frame}
+
+\begin{frame}{디버깅 원칙: 질문 하나, 신호 하나}
+  \begin{block}{매 라운드마다}
+    \begin{enumerate}
+      \item 액터가 \textbf{내리지 못한 판단}을 적는다.
+      \item 그 판단을 뒤집을 \textbf{단 하나의 신호}를 정한다.
+      \item 신호가 없을 때만, 가장 낮은 계층에 그 신호만 추가한다.
+      \item 같은 실험을 다시 돌려 실제로 쓰였는지 확인한다.
+      \item 판단이 끝난 신호는 제거한다.
+    \end{enumerate}
+  \end{block}
+
+  \begin{itemize}
+    \item 대시보드, 전체 덤프, ``언젠가 쓸 수도 있는'' 항목은 만들지 않는다.
+    \item 공유 도구는 두 개 이상 태스크가 같은 신호에 막히거나, 일반적인 물리량일 때만 만든다.
+    \item 디버깅 도구는 보상이나 성공 조건을 절대 노출하지 않는다.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{디버깅 사례: 실제로 보강한 피드백}
+  \scriptsize
+  \begin{tabular}{@{}p{0.27\textwidth}p{0.33\textwidth}p{0.31\textwidth}@{}}
+    \toprule
+    막힌 판단 & 보강한 신호 & 결과 \\
+    \midrule
+    드릴을 놓을 때 상자가 끌리는 원인 & 놓기 직전 행별 접촉 정보와 상자 속도 비교 & 팜 패드, 선반 모서리, 잔류 운동을 구분 \\
+    09의 도달 실패인지 조준 실패인지 & IK 잔차와 패드 이동량 미리보기 & 두 실패 유형을 분리 \\
+    05의 닫기 동작이 드릴을 굴리는 문제 & 닫기 단계별 물체 자세와 패드 상대 위치 & 36.36도 회전의 원인 규명 \\
+    같은 코드인데 seed 12가 재현되지 않음 & 실행 당시 호출 파라미터 기록 & 코드가 같아도 파라미터가 다르면 결과가 달라짐 \\
+    지표를 잘못 읽을 위험 & 지표별 한계와 사용 금지 조건 기록 & 과소집계되는 지표를 판단에 쓰지 않게 함 \\
+    액터가 성공 비트를 보는 문제 & 서버 로그에서 성공 비트 제거 & 액터는 물리 지표로만 추론 \\
+    \bottomrule
+  \end{tabular}
+
+  \vspace{0.3em}
+  \footnotesize
+  모든 추가는 현재 판단이 막혔을 때만 이뤄졌고, 같은 실험을 다시 돌려 사용을 확인한 뒤 정리했다.
+\end{frame}
+
+\section{원시 동작에서 스킬로}
+
+\begin{frame}{합성 API: 스킬을 부품처럼 호출}
+  \begin{block}{한 줄 요약}
+    등록된 동작을 같은 에피소드 안에서 호출하고, 돌려받은 측정값을 다음 동작의 입력으로 넘긴다.
+  \end{block}
+
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \begin{itemize}
+        \item 호출 시점에 이름으로 동작을 찾는다.
+        \item 순환 호출은 깊이 제한으로 막는다.
+        \item 물리, 보상, 성공 조건은 건드리지 않는다.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \begin{block}{측정값 연결}
+        \small
+        버튼 앞까지 걸은 뒤,\\
+        측정된 버튼 위치로 손끝을 보내고,\\
+        버튼 관절이 끝까지 눌릴 때까지 전진한다.
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \vspace{0.4em}
+  \footnotesize
+  태스크 성공 판정은 스킬 밖 프로그램에 남긴다.
+\end{frame}
+
+\begin{frame}{지식 저장 구조}
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    문서 & 역할 \\
+    \midrule
+    스킬 카탈로그 & 시스템 규칙 + 한 줄 인덱스 (40개) \\
+    스킬 설명 & 서명, 적용 조건, 계약, 검증 범위, 주의점 \\
+    증거 기록 & 실행별 증거와 반증 이력 \\
+    정정·대체 기록 & 틀린 주장과 병합된 스킬의 이력 \\
+    교훈 & 태스크를 넘어 적용되는 규칙 \\
+    미등재 후보 & 측정 후 기각한 후보와 이유 \\
+    \bottomrule
+  \end{tabular}
+
+  \vspace{0.5em}
+  \begin{block}{조회 순서}
+    인덱스에서 스킬을 찾고, 설명을 읽은 뒤 호출한다.\\
+    주의 표시가 있는 스킬은 이름만 보고 호출하지 않는다.
+  \end{block}
+\end{frame}
+
+\begin{frame}{파이프라인: 구현 $\rightarrow$ 검증 $\rightarrow$ 스킬 $\rightarrow$ 조합}
+  \begin{center}
+    \small
+    \begin{tabular}{@{}c@{\quad$\rightarrow$\quad}c@{\quad$\rightarrow$\quad}c@{\quad$\rightarrow$\quad}c@{}}
+      \toprule
+      \textbf{1. 실패 측정} & \textbf{2. 동작 구현} & \textbf{3. 독립 검증} & \textbf{4. 스킬 등재} \\
+      \midrule
+      이벤트와 시계열로 & 새 동작을 쓰고 & 재현·안전·교차 & 이름, 계약, \\
+      막힌 판단 확인 & 여러 seed로 반복 & 태스크 검증 & 검증 범위 기록 \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+
+  \vspace{0.6em}
+  \begin{block}{5. 조합}
+    태스크 프로그램이 여러 스킬을 순서대로 호출한다.\\
+    측정값이 다음 스킬의 입력이 되고, 최종 판정은 프로그램 밖에 남는다.
+  \end{block}
+
+  \begin{itemize}
+    \item 검증한 실행은 코드와 호출 파라미터를 함께 보존한다.
+    \item 한 태스크의 성공은 그 태스크가 쓴 스킬의 증거일 뿐, 스킬의 가치는 검증된 범위다.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{검증 게이트 A / B / C}
+  \begin{description}
+    \item[재현 검증] 작은 seed 집합에서 액터의 결과를 독립적으로 다시 실행해 확인한다.
+    \item[안전·결정성 검증] 관절·토크 한계, 하위 몸체 미명령, 같은 입력에 같은 궤적을 확인한다.
+    \item[교차 태스크 검증] 주장한 범위가 자기 태스크를 넘으면, 다른 태스크에서도 최소 한 seed를 확인한다.
+  \end{description}
+
+  \vspace{0.6em}
+  \begin{block}{보고 형식}
+    판정, 결정한 단일 측정값, 검증된 seed 범위, 사용한 실행 한 줄.\\
+    파일 목록, 해시 목록, 시각, 로그 덤프는 보고하지 않는다.
+  \end{block}
+\end{frame}
+
+\begin{frame}{스킬 계약서}
+  \begin{block}{스킬 설명에 들어가는 것}
+    \begin{itemize}
+      \item \textbf{서명}: 이름 있는 파라미터와 기본값
+      \item \textbf{적용 조건}: 물체, 자세, 베이스, 손, 접촉 전제
+      \item \textbf{계약}: 시작 조건 $\rightarrow$ 끝 조건과 부수 효과
+      \item \textbf{검증 범위}: 태스크, seed 범위, 알려진 실패 경계
+      \item \textbf{없애는 실패}: 이 스킬이 해결하는 문제
+      \item \textbf{사용처}: 어떤 태스크가 이 스킬을 쓰는가
+      \item \textbf{주의점}: 호출 판단을 바꾸는 함정
+    \end{itemize}
+  \end{block}
+
+  \footnotesize
+  원칙: 검증은 재실행으로 확인한다. 관측도 시뮬레이션 상태를 바꾼다. 응답의 \code{ok}는 성공이 아니다.
+\end{frame}
+
+\begin{frame}{스킬 병합 원칙}
+  \begin{block}{어떻게 묶는가}
+    이름이 아니라 \textbf{동작 원리, 계약, 적용 조건}으로 묶는다.\\
+    같은 원리의 상수 차이는 하나의 파라미터화된 스킬로 합친다.
+  \end{block}
+
+  \begin{itemize}
+    \item 병합한 스킬은 변형들의 검증 범위를 합친 곳에서 다시 검증한다.
+    \item 기존 조합을 모두 갱신하고 다시 실행해 결과를 기록한다.
+    \item 분리해 두는 경우에는 그 이유를 정정 기록에 남긴다.
+  \end{itemize}
+
+  \vspace{0.4em}
+  \begin{alertblock}{이번 라운드}
+    \begin{itemize}
+      \item 병합: \sk{move_held}, \sk{level_upright} — 결과가 완전히 같을 때만
+      \item 거부: 베이스 이동 4종, 손가락 닫기 3종, 단일 지점 서보 2종
+      \item 이유: 같은 목표라도 \textbf{물리적으로 읽는 순서}가 달라, 하나로 묶으면 숨은 모드 전환이 된다
+    \end{itemize}
+  \end{alertblock}
+\end{frame}
+
+\section{태스크와 조합}
+
+\begin{frame}{태스크 맵 (9개)}
+  \begin{tabular}{@{}cll@{}}
+    \toprule
+    ID & 태스크 & 목표 \\
+    \midrule
+    01 & \sk{box_lift_floor} & 바닥 상자 들어올리기 \\
+    02 & \sk{push_button} & 빨간 버튼 누르기 \\
+    03 & \sk{box_lift} & 상자 들어올리기 \\
+    04 & \sk{push_shelf_forward} & 상자로 선반을 표시 구역까지 밀기 \\
+    05 & \sk{drill_lift} & 드릴 들어올리기 \\
+    06 & \sk{drill_pnp} & 한 테이블의 드릴을 다른 테이블로 옮기기 \\
+    07 & \sk{box_table_to_shelf} & 상자를 선반 위에 놓기 \\
+    08 & \sk{pick_drill_from_holder} & 서 있는 높이의 홀더에서 드릴 집기 \\
+    09 & \sk{obstacle_aware_pick_drill} & 장애물을 피해 드릴 집기 \\
+    \bottomrule
+  \end{tabular}
+
+  \vspace{0.5em}
+  \footnotesize
+  각 태스크는 자기 문제만 담당하고, 성공하거나 측정된 경계에 도달하면 끝난다.
+\end{frame}
+
+\begin{frame}{seed가 달라진다는 것 — 예: 버튼 누르기}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \begin{itemize}
+        \item seed는 \textbf{장면 배치를 정하는 난수 초기값}이다.
+        \item 같은 seed와 같은 프로그램이면 같은 장면이 재현된다.
+        \item seed가 다르면 물체 위치가 달라진다.
+        \item 로봇 시작 자세와 성공 조건은 그대로다.
+      \end{itemize}
+
+      \vspace{0.4em}
+      \begin{block}{02 버튼 누르기의 경우}
+        \small
+        버튼이 붙은 패널이 로봇 앞 \textbf{0.5m $\times$ 0.5m} 범위에서 놓인다.\\
+        패널 자체도 위아래로 약 $\pm$2cm 흔들린다.
+      \end{block}
+    \end{column}
+    \begin{column}{0.46\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=3.0, every node/.style={font=\tiny}]
+        \draw[gray, dashed] (-1.1,-1.1) rectangle (-0.45,-0.45);
+        \node[gray, align=center] at (-0.78,-1.22) {패널 위치 범위};
+        \filldraw[blue!35] (-0.82,-0.70) rectangle (-0.66,-0.54);
+        \filldraw[red!35] (-0.62,-0.98) rectangle (-0.46,-0.82);
+        \node at (-0.74,-0.62) {A};
+        \node at (-0.54,-0.90) {B};
+        \filldraw[black] (0,0) circle (2.2pt);
+        \node at (0.12,0.12) {로봇};
+        \draw[-{Latex[length=1.5mm]}, thick] (0,0) -- (-0.74,-0.62);
+        \draw[-{Latex[length=1.5mm]}, thick] (0,0) -- (-0.54,-0.90);
+      \end{tikzpicture}
+
+      \vspace{0.2em}
+      \footnotesize
+      seed A와 B에서 버튼은 약 25--30cm 떨어진 곳에 놓인다.
+    \end{column}
+  \end{columns}
+
+  \vspace{0.4em}
+  \footnotesize
+  그래서 걸어가는 거리와 방향, 손끝의 접근 방향이 달라진다. 한 seed에서 통과한 프로그램이 다른 seed에서 실패할 수 있어 여러 seed로 검증한다.
+\end{frame}
+
+\begin{frame}{조합 예시 (1): 02 / 03 / 04}
+  \begin{block}{02 버튼 누르기 — 3개 동작}
+    \sk{walk_to_reach} $\rightarrow$ \sk{servo_fingertip_to_point} $\rightarrow$ \sk{press_until_joint_stop}
+  \end{block}
+
+  \begin{block}{03 상자 들기 — 8개 호출, 가운데 반복}
+    \sk{retract_clear} $\rightarrow$ \sk{approach_standoff} $\times 2$ $\rightarrow$\\
+    반복\{ \sk{reach_opposed_faces} $\rightarrow$ \sk{align_pads_to_faces} $\rightarrow$ \sk{limit_safe_close} \} $\rightarrow$ \sk{shoulder_lift_hold}
+  \end{block}
+
+  \begin{block}{04 선반 밀기 — 9개 호출, 측정·밀기·유지 반복}
+    \sk{measure_scene_state} $\rightarrow$ \sk{walk_to_first_contact} $\rightarrow$ \sk{push_object_to_target_x} $\times 2$ $\rightarrow$ \sk{hold_commanded_pose} $\rightarrow$\\
+    \sk{measure_scene_state} $\rightarrow$ \sk{push_object_to_target_x} $\rightarrow$ \sk{hold_commanded_pose} $\rightarrow$ \sk{measure_scene_state}
+  \end{block}
+\end{frame}
+
+\begin{frame}{조합 예시 (2): 06 / 08}
+  \begin{block}{06 드릴 옮기기 — 14개 호출}
+    \footnotesize
+    \sk{servo_base_to_target_pose} $\rightarrow$ \sk{reach_palm_to_object_standoff} $\rightarrow$ \sk{park_hand_clear_of_object} $\rightarrow$\\
+    \sk{curl_fingers_onto_handle} $\rightarrow$ \sk{hoist_gripped_object_in_steps} $\rightarrow$ \sk{nudge_wrist_joint} $\times 2$ $\rightarrow$\\
+    \sk{raise_gripped_until_clear} $\rightarrow$ \sk{carry_gripped_object_to_pose} $\rightarrow$ \sk{level_upright} $\times 2$ $\rightarrow$\\
+    \sk{seat_gripped_object_on_support} $\rightarrow$ \sk{release_grip_and_settle_in_place} $\rightarrow$\\
+    \sk{retreat_hands_radially_from_object} $\rightarrow$ \sk{hold_parked_arms_and_measure_drift}
+  \end{block}
+
+  \begin{block}{08 홀더에서 드릴 집기 — 7개 호출}
+    \footnotesize
+    \sk{walk_base_to_coordinate} $\rightarrow$ \sk{servo_hand_site_to_point} $\rightarrow$ \sk{creep_to_object_standoff} $\rightarrow$\\
+    \sk{ramp_close_fingers} $\rightarrow$ \sk{move_held}(빼내기) $\rightarrow$ \sk{move_held}(들기) $\rightarrow$ \sk{boost_base_height_holding_command}
+  \end{block}
+\end{frame}
+
+\begin{frame}{하나의 큰 스킬로 마감한 태스크: 01 / 05 / 07 / 09}
+  \begin{block}{01 바닥 상자 — \sk{grasp_lift_floor_box_press_branch}}
+    \footnotesize
+    내부 조합: \sk{place_pads_branch} $\rightarrow$ \sk{reach_attitude_guard} $\times 3$ $\rightarrow$ \sk{seat_pads_reach_aware} $\rightarrow$\\
+    \sk{close_fingers_flip_left} $\rightarrow$ \sk{secure_grip_after_close} $\rightarrow$ \sk{stand_lift_box}
+  \end{block}
+
+  \begin{block}{05 드릴 들기 — \sk{lift_drill_pad_route_geom_close}}
+    \footnotesize
+    베이스 정렬 $\rightarrow$ 팔 궤적 $\rightarrow$ 패드 배치와 서보 $\rightarrow$ 패드 안착 $\rightarrow$\\
+    그립 검사 $\rightarrow$ 단계적 닫기 $\rightarrow$ 그립 재검사
+  \end{block}
+
+  \begin{block}{07 상자를 선반에 — \sk{carry_and_seat_on_shelf}}
+    \footnotesize
+    운반과 안착을 하나로 묶은 스킬. 옆걸음, 베이스 고정, 놓기까지 포함한다.
+  \end{block}
+
+  \begin{block}{09 장애물 회피 드릴 — \sk{top_up_reach_at_standoff}}
+    \footnotesize
+    부족한 도달을 보충한 뒤, 오른팔 회전 보조로 마지막 seed를 통과시킨다.
+  \end{block}
+\end{frame}
+
+\section{스킬 목록}
+
+\begin{frame}{스킬 목록 (1): 02 / 04 / 03}
+  \scriptsize
+  \begin{tabular}{@{}lll@{}}
+    \toprule
+    태스크 & 스킬 & 한 줄 목적 \\
+    \midrule
+    02 & \sk{walk_to_reach} & 물체 앞까지 걸어 도달 범위 확보 \\
+    02 & \sk{servo_fingertip_to_point} & 손끝을 목표점으로 서보 \\
+    02 & \sk{press_until_joint_stop} & 버튼 관절이 끝까지 눌릴 때까지 전진 \\
+    \midrule
+    04 & \sk{measure_scene_state} & 장면과 목표 상태 측정 \\
+    04 & \sk{walk_to_first_contact} & 접촉면까지 걷기 \\
+    04 & \sk{steer_behind_leader} & 리더 뒤에서 조향 \\
+    04 & \sk{push_object_to_target_x} & x 목표까지 밀기 \\
+    04 & \sk{hold_commanded_pose} & 자세 유지 후 측정 \\
+    \midrule
+    03 & \sk{approach_standoff} & 측면 접근 자세 \\
+    03 & \sk{reach_opposed_faces} & 양손을 마주 보는 면으로 \\
+    03 & \sk{align_pads_to_faces} & 패드를 면에 정렬 \\
+    03 & \sk{limit_safe_close} & 한계 안에서 안전하게 닫기 \\
+    03 & \sk{shoulder_lift_hold} & 어깨로 단계적 리프트 \\
+    03,05 & \sk{arm_ramp} & 다른 IK 분기로 관절 벡터 이동 \\
+    \bottomrule
+  \end{tabular}
+\end{frame}
+
+\begin{frame}{스킬 목록 (2): 06 / 08}
+  \scriptsize
+  \begin{tabular}{@{}lll@{}}
+    \toprule
+    태스크 & 스킬 & 한 줄 목적 \\
+    \midrule
+    06 & \sk{reach_palm_to_object_standoff} & 손바닥을 물체 앞 대기점으로 \\
+    06 & \sk{park_hand_clear_of_object} & 대기 손을 접촉권 밖으로 \\
+    06 & \sk{curl_fingers_onto_handle} & 손가락을 핸들에 감기 \\
+    06 & \sk{hoist_gripped_object_in_steps} & 잡은 물체를 단계적으로 올리기 \\
+    06 & \sk{carry_gripped_object_to_pose} & 잡은 채 목표 자세로 운반 \\
+    06 & \sk{level_upright} & 손목 보정으로 수직 세우기 \\
+    06 & \sk{release_grip_and_settle_in_place} & 놓고 안착시키기 \\
+    06 & \sk{retreat_hands_radially_from_object} & 손을 바깥으로 후퇴 \\
+    06 & \sk{hold_parked_arms_and_measure_drift} & 대기 자세의 흔들림 측정 \\
+    \midrule
+    08 & \sk{walk_base_to_coordinate} & 좌표로 베이스 이동 \\
+    08 & \sk{servo_hand_site_to_point} & 손 사이트를 점으로 서보 \\
+    08 & \sk{creep_to_object_standoff} & 흔들림을 감시하며 접근 \\
+    08 & \sk{move_held} & 잡은 물체 축 이동 (병합) \\
+    08 & \sk{boost_base_height_holding_command} & 명령을 유지한 채 베이스 상승 \\
+    \bottomrule
+  \end{tabular}
+\end{frame}
+
+\begin{frame}{스킬 목록 (3): 01 / 05 / 07 / 09}
+  \scriptsize
+  \begin{tabular}{@{}lll@{}}
+    \toprule
+    태스크 & 스킬 & 한 줄 목적 \\
+    \midrule
+    01 & \sk{servo_base_to_target_pose} & 무작위 자세로 베이스 서보 \\
+    01 & \sk{place_pads_branch} & 패드 배치와 분기 교정 \\
+    01 & \sk{reach_attitude_guard} & 손바닥 회전 자세 가드 \\
+    01 & \sk{seat_pads_for_grip} & 양 패드 안착 \\
+    01 & \sk{close_fingers_flip_left} & 좌측 손가락 회전 포함 닫기 \\
+    01 & \sk{secure_grip_after_close} & 닫은 뒤 그립 확인 \\
+    01 & \sk{stand_lift_box} & 베이스 상승으로 상자 들기 \\
+    01 & \sk{grasp_lift_floor_box_press_branch} & 바닥 상자 잡기와 들기 \\
+    \midrule
+    05 & \sk{grasp_verify} & 닫기 직후 그립 검사 \\
+    05 & \sk{lift_drill_pad_route_geom_close} & 드릴 패드 경로와 기하학적 닫기 \\
+    07 & \sk{carry_and_seat_on_shelf} & 운반과 안착 통합 \\
+    09 & \sk{top_up_reach_at_standoff} & 대기점에서 부족한 도달 보충 \\
+    \bottomrule
+  \end{tabular}
+
+  \vspace{0.3em}
+  \footnotesize
+  총 40개. 여러 태스크에서 재사용: \sk{servo_base_to_target_pose}(01,06), \sk{arm_ramp}(03,05), \sk{walk_base_to_coordinate}(08,09).
+\end{frame}
+
+\section{결과와 교훈}
+
+\begin{frame}{태스크 간 재사용과 병합}
+  \begin{columns}[T]
+    \begin{column}{0.5\textwidth}
+      \begin{block}{여러 태스크가 함께 쓰는 스킬}
+        \begin{itemize}
+          \item \sk{servo_base_to_target_pose}: 01, 06
+          \item \sk{arm_ramp}: 03, 05
+          \item \sk{walk_base_to_coordinate}: 08, 09
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{병합한 스킬}
+        \begin{itemize}
+          \item \sk{move_held} $\leftarrow$ 빼내기 + 들기
+          \item \sk{level_upright} $\leftarrow$ 한 축 + 두 축
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \vspace{0.5em}
+  \begin{block}{병합하지 않은 것 — 물리적으로 읽는 순서가 다름}
+    \begin{itemize}
+      \item 베이스 이동 4종: 물체 간격, 리더 간격과 조향, 닫힌 루프 xy·yaw, 축 방향 이동
+      \item 손가락 닫기 3종: 단계적 명령, 그립 명령과 확인, 여러 단계로 나눈 닫기
+      \item 단일 지점 서보 2종: 손끝 메시와 그립 지점
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{최종 검증 범위 — 한 번이라도 성공하면 성공}
+  \small
+  9개 태스크 모두, 검증한 범위에서 통과하는 해를 하나 이상 확보했다. 아래는 그 범위의 seed 성공 비율이다.
+
+  \vspace{0.4em}
+  \begin{tabular}{@{}cll@{}}
+    \toprule
+    ID & 검증 범위 & 성공/시도 \\
+    \midrule
+    01 & 0--80 & 78/81 \\
+    02 & 검증 11개 & 11/11 \\
+    03 & 검증 4개 & 4/4 \\
+    04 & 3--7 & 5/5 \\
+    05 & 0--60 & 56/61 \\
+    06 & 10--30 & 18/21 \\
+    07 & 0--60 & 51/61 \\
+    08 & 0--60 & 59/61 \\
+    09 & 0--60 & 55/61 \\
+    \bottomrule
+  \end{tabular}
+
+  \vspace{0.4em}
+  \footnotesize
+  성공은 에피소드 중 한 번이라도 조건을 만족하면 인정한다.\\
+  수치는 현재 실행 기록 기준이며, 중간 성공을 포함한 공식 방식 재평가에서는 같거나 높아질 수 있다.
+\end{frame}
+
+\begin{frame}{평가 방식의 차이: 우리 판정 vs 공식 HMG}
+  \begin{columns}[T]
+    \begin{column}{0.5\textwidth}
+      \begin{block}{공식 평가 스크립트}
+        \begin{itemize}
+          \item 빠른 확인 20회, 보고용 100회
+          \item seed는 0부터 연속
+          \item 에피소드당 최대 1250스텝
+          \item \textbf{매 스텝 누적 판정}: 한 번이라도 성공하면 성공
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{우리 하니스}
+        \begin{itemize}
+          \item 태스크 해는 동작 프로그램
+          \item seed마다 초기화, 에피소드 종료 시 판정
+          \item 검증한 실행을 그대로 보존
+          \item 성공 판정은 코디네이터만 확인
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \vspace{0.5em}
+  \begin{alertblock}{비교할 때 주의}
+    종료 시점 판정은 중간에 성공했다가 놓친 경우를 공식보다 엄격하게 떨어뜨린다.\\
+    공식 성공률과 비교하려면 누적 판정과 0--99 seed로 다시 평가해야 한다.
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}{교훈}
+  \begin{enumerate}
+    \item \textbf{해결의 단위는 스킬이다.} 태스크 해는 스킬 조합이고, 스킬의 가치는 검증 범위다.
+    \item \textbf{검증은 코드와 호출 파라미터를 함께 보존한다.} 코드만으로는 재현되지 않는다.
+    \item \textbf{응답의 ok는 성공이 아니다.} 판정은 벤치마크만 한다.
+    \item \textbf{관측도 시뮬레이션 상태를 바꾼다.} 프로브 한 번도 궤적을 바꾼다.
+    \item \textbf{실행 중인 프로세스는 검증 대상의 일부다.} 파일을 고쳐도 그 프로세스의 코드는 그대로다.
+    \item \textbf{디버깅은 질문 하나, 신호 하나.} 불필요한 계측은 추가하지 않는다.
+    \item \textbf{병합은 결과가 완전히 같을 때만.} 읽는 순서가 다르면 분리해 두는 편이 낫다.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{}
+  \centering
+  \Huge 감사합니다
+
+  \vspace{1em}
+  \normalsize
+  스킬 카탈로그 \;\textbar\; 스킬 설명 \;\textbar\; 검증 기록 \;\textbar\; 작업 로그
+\end{frame}
+
+\end{document}
