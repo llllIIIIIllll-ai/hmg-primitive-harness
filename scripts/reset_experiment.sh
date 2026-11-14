@@ -10,7 +10,8 @@ if [ -x scripts/server_ctl.sh ]; then
 fi
 
 rm -rf experiments/ll_v1/skills experiments/ll_v1/logs \
-       experiments/ll_v1/library experiments/ll_v1/out
+       experiments/ll_v1/library experiments/ll_v1/out \
+       experiments/ll_v1/evidence experiments/ll_v1/experiment_log.md
 rm -f experiments/ll_v1/checkpoints/round_*.db \
       experiments/ll_v1/checkpoints/round_*.db-*
 rm -f experiments/ll_v1/skill_system.db experiments/ll_v1/skill_system.db-*
