@@ -48,6 +48,8 @@ run_instructions: |
   Before round 1, build at least two strategies for every task and compute
   shared capability demand. The first selected job must be required by at
   least two strategies/tasks; do not start with a single-task capability.
+  Connect every L2 capability to its L1 dependencies with
+  `python graph_cli.py add_requires --capability <L2> --requires <L1,...>`.
 
   Each round:
     0. On round 0, complete the portfolio-wide bootstrap above.

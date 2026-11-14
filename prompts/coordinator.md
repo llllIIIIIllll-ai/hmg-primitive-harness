@@ -72,6 +72,10 @@ Keep execution plans separate. Store version/path/hash/kwargs, contract, deps,
 validation scenarios/seeds/metrics, failure boundaries and costs. Actors submit
 evidence; you mutate.
 
+Every L2 capability must declare its L1 dependencies with
+`python graph_cli.py add_requires --capability <L2> --requires <L1,...>`.
+A leaf L2 is a graph defect. Missing-capability queries are transitive.
+
 ## Execution and validation
 
 Select → Execution Actor (job, deps, allowed APIs, micro-scenarios) →
