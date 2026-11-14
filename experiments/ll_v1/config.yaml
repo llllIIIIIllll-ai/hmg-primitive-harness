@@ -2,8 +2,8 @@ experiment:
   name: ll_v1
   mode: warmup
   use_legacy_library: false
-  max_rounds: 5
-  hard_stop_after_max_rounds: true
+  max_batches: 5
+  hard_stop_after_max_batches: true
   on_stop: report_and_exit
 
 task_portfolio:
@@ -25,7 +25,7 @@ prompts:
 
 actors:
   proposal_roles: [explore, exploit]
-  require_both_each_round: true
+  require_both_each_batch: true
   execution_actor: true
   validator: true
 
@@ -40,32 +40,32 @@ micro:
 
 run_instructions: |
   Read prompts/coordinator.md and this config. You are the coordinator for
-  experiment ll_v1. Run at most 5 rounds in warmup mode.
+  experiment ll_v1. Run at most 5 batches in warmup mode.
 
   Use `python graph_cli.py ...` for all graph operations. Do not edit the
   SQLite database directly.
 
-  Before round 1, build at least two strategies for every task and compute
+  Before the first batch, build at least two strategies for every task and compute
   shared capability demand. The first selected job must be required by at
   least two strategies/tasks; do not start with a single-task capability.
   Connect every L2 capability to its L1 dependencies with
   `python graph_cli.py add_requires --capability <L2> --requires <L1,...>`.
 
-  Each round:
-    0. On round 0, complete the portfolio-wide bootstrap above.
+  Each batch:
     1. Summarize capability gaps, verified skills and recent failures.
     2. Spawn Explore and Exploit proposal actors independently with
        prompts/proposal_actor.md and the same compact packet.
-    3. Receive exactly one proposal from each; compare and select one.
-    4. Spawn an Execution Actor with prompts/execution_actor.md for the
-       selected job.
-    5. Spawn a Validator with prompts/validator.md.
+    3. Each returns one batch proposal; target_ids may contain multiple
+       capability IDs.
+    4. Compare and select one batch.
+    5. Spawn one Execution Actor per capability/job in the batch, in parallel
+       waves. Spawn a Validator per candidate.
     6. Update the graph/registry and report in the required format.
-    7. Checkpoint: `python graph_cli.py checkpoint --name round_N`.
+    7. Checkpoint: `python graph_cli.py checkpoint --name batch_N`.
 
   Do not read legacy libraries, work/tracks, .coord, out, or demonstration
   data. This experiment starts fresh.
 
-  HARD STOP: when round 5 completes, stop immediately. Do not start round 6.
-  Write the round report, the final library summary, the reuse ledger and the
+  HARD STOP: when batch 5 completes, stop immediately. Do not start batch 6.
+  Write the batch report, the final library summary, the reuse ledger and the
   next unresolved bottlenecks, then exit.

@@ -25,7 +25,7 @@ Spawn every subagent with the Agent tool and `subagent_type: "hmg-worker"`.
 Give each one the relevant prompt file and only its job packet; never give a
 proposal actor the other proposal.
 
-Every round spawn **both** with fresh context and the same compact packet
+Every batch spawn **both** with fresh context and the same compact packet
 (mode, subgraph, verified skills, failures, demand). Proposal-only: no
 sim, no code, no graph edits, one proposal.
 
@@ -40,18 +40,18 @@ fabricate probabilities or costs.
 ## Config is authoritative
 
 Read `experiments/<run>/config.yaml` first. It is authoritative for mode, task
-portfolio and `max_rounds`. Persist a round counter; after each round
-increment it. When it reaches `max_rounds`, stop immediately, write the report
-and exit. Do not start another round.
+portfolio and `max_batches`. Persist a batch counter; after each batch
+increment it. When it reaches `max_batches`, stop immediately, write the report
+and exit. Do not start another batch.
 
-**Portfolio-wide bootstrap.** Before round 1, inspect all tasks and create at
+**Portfolio-wide bootstrap.** Before the first batch, inspect all tasks and create at
 least two strategies for every task. Compute shared capability demand. The
 first selected job must be required by at least two strategies/tasks; do not
 start with a single-task capability. Do not dispatch a task-specific execution
 actor before the shared L1/L2 base exists.
 
-Checkpoint after each round with
-`python graph_cli.py checkpoint --name round_N`. `reset` restores the initial
+Checkpoint after each batch with
+`python graph_cli.py checkpoint --name batch_N`. `reset` restores the initial
 checkpoint (fresh graph with the task nodes only).
 
 ## Modes
@@ -78,8 +78,8 @@ A leaf L2 is a graph defect. Missing-capability queries are transitive.
 
 ## Execution and validation
 
-Select → Execution Actor (job, deps, allowed APIs, micro-scenarios) →
-Validator → accept/restrict/reject/retire → update graph/registry. A candidate
+Select a batch → one Execution Actor per capability/job, in parallel waves →
+one Validator per candidate → accept/restrict/reject/retire → update graph/registry. A candidate
 is not verified because it ran. L1/L2 use **contract micro-benchmarks**, not
 task success: servo tracking/convergence/joint margin, IK continuity, reach
 accuracy, grasp contact/stability, hold drift; held-out scenarios. IK
@@ -111,9 +111,9 @@ I/O, termination and failure. No hidden task-specific patches.
 ## Loop and report
 
 INITIALIZE: config, fresh registry, all tasks, at least two strategies per
-task, inferred graph, mark unverified. ROUND: summarize gaps/verified/failures;
-spawn both; one proposal each; compare/select; execution; validate; checkpoint;
-update. Use subgraphs; do not pass the full DB or history.
+task, inferred graph, mark unverified. BATCH: summarize gaps/verified/failures;
+spawn both; one batch proposal each; compare/select; execution per capability;
+validate; checkpoint; update. Use subgraphs; do not pass the full DB or history.
 
 Report: Explore proposal / Exploit proposal / Selected+reason / result /
 verified change / cost / next bottleneck. Measured only.
@@ -123,7 +123,7 @@ verified change / cost / next bottleneck. Measured only.
 No physics/reward/predicate/model-limit changes; predicate coordinator-only; no
 demos or pretrained task skills; rollouts/traces allowed;
 `use_legacy_library: false`; preserve code/params/seeds/versions; do not assume
-IK solves force/contact/WBC limits; spawn both proposal actors every round.
+IK solves force/contact/WBC limits; spawn both proposal actors every batch.
 
 First actions: load config; confirm fresh; inspect tasks/APIs; infer strategies
 and capabilities; spawn both; select; execute.

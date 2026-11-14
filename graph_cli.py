@@ -417,9 +417,25 @@ def cmd_reset(conn, args):
     src = sqlite3.connect(path)
     src.backup(conn)
     src.close()
+    conn.execute("INSERT OR REPLACE INTO state(key,value) VALUES('batch','0')")
     conn.execute("INSERT OR REPLACE INTO state(key,value) VALUES('round','0')")
     conn.commit()
-    emit({"ok": True, "result": {"reset_to": path, "round": 0}})
+    emit({"ok": True, "result": {"reset_to": path, "batch": 0}})
+
+
+def cmd_batch_get(conn, args):
+    init_db(conn)
+    row = conn.execute("SELECT value FROM state WHERE key='batch'").fetchone()
+    emit({"ok": True, "result": {"batch": int(row["value"]) if row else 0}})
+
+
+def cmd_batch_inc(conn, args):
+    init_db(conn)
+    row = conn.execute("SELECT value FROM state WHERE key='batch'").fetchone()
+    n = (int(row["value"]) if row else 0) + 1
+    conn.execute("INSERT OR REPLACE INTO state(key,value) VALUES('batch',?)", (str(n),))
+    conn.commit()
+    emit({"ok": True, "result": {"batch": n}})
 
 
 def cmd_round_get(conn, args):
@@ -527,6 +543,8 @@ def build_parser():
     s = sub.add_parser("reset"); s.add_argument("--name", default="initial")
     s.set_defaults(fn=cmd_reset)
 
+    s = sub.add_parser("batch_get"); s.set_defaults(fn=cmd_batch_get)
+    s = sub.add_parser("batch_inc"); s.set_defaults(fn=cmd_batch_inc)
     s = sub.add_parser("round_get"); s.set_defaults(fn=cmd_round_get)
     s = sub.add_parser("round_inc"); s.set_defaults(fn=cmd_round_inc)
     s = sub.add_parser("list"); s.set_defaults(fn=cmd_list)

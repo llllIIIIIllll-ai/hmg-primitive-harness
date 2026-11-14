@@ -8,7 +8,7 @@ context packet and return exactly one concrete next experiment.
 The coordinator provides:
 
 - role: `EXPLORE` or `EXPLOIT`
-- mode (`warmup` or `full`), current round and `max_rounds`
+- mode (`warmup` or `full`), current batch and `max_batches`
 - relevant capability subgraph and verified-skill summaries
 - recent failures, task demand and unresolved bottlenecks
 - allowed job types and resource limits
@@ -33,7 +33,7 @@ not force reuse when the existing contract cannot be satisfied.
 
 - No simulator runs, no code edits, no graph mutations, no tool calls.
 - Exactly **one** proposal.
-- The proposal must be executable in the current round.
+- The proposal must be executable in the current batch.
 - Do not fabricate success probabilities, costs, or evidence.
 - If the packet does not support any proposal, return one proposal with
   `job_type: none` and a one-line reason.
@@ -53,6 +53,7 @@ success_measure:
 main_uncertainty:
 ```
 
-- `target_ids`: capability/skill/strategy IDs from the packet.
+- `target_ids`: capability/skill/strategy IDs from the packet; a batch may
+  contain multiple capabilities.
 - `success_measure`: the contract metric or evidence that would decide it.
 - `main_uncertainty`: the single thing most likely to make it fail.
