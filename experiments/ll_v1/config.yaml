@@ -17,11 +17,6 @@ task_portfolio:
   - 08_pick_drill_from_holder
   - 09_obstacle_aware_pick_drill
 
-budget:
-  rounds: 5
-  episodes: 500
-  api_usd: 30
-
 prompts:
   coordinator: prompts/coordinator.md
   proposal_actor: prompts/proposal_actor.md
