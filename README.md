@@ -29,7 +29,7 @@ actors. The harness only records it for the coordinator.
 | `docs/coordinator_prompt.txt` | Standalone coordinator prompt |
 | `examples/compositions/` | Canonical task compositions for 02/03/04/06/08 |
 | `docs/HMG_harness_overview.tex` | Beamer overview (compile with XeLaTeX) |
-| `docs/mujoco_skills/` | MuJoCo agent-skill guides (3.14.0; reference only — runtime pins 3.2.6) |
+| `docs/mujoco_skills/` | MuJoCo agent-skill guides (upstream `main`; reference only — runtime pins 3.2.6) |
 
 `library/skills/<name>.md` gives the source path relative to `work/tracks/`.
 Large local artefacts (`queue/`, `out/`, `.coord/`, `.scratch/`, `run/`, videos,
