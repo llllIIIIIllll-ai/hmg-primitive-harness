@@ -13,3 +13,8 @@ __pycache__/
 MUJOCO_LOG.TXT
 slurm-*.out
 .DS_Store
+experiments/*/skill_system.db
+experiments/*/skill_system.db-*
+experiments/*/logs/
+experiments/*/library/
+experiments/*/out/

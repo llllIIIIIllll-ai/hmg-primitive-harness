@@ -1,0 +1,68 @@
+experiment:
+  name: ll_v1
+  mode: warmup
+  use_legacy_library: false
+  max_rounds: 5
+  hard_stop_after_max_rounds: true
+  on_stop: report_and_exit
+
+task_portfolio:
+  - 01_box_lift_floor
+  - 02_push_button
+  - 03_box_lift
+  - 04_push_shelf_forward
+  - 05_drill_lift
+  - 06_drill_pnp
+  - 07_box_table_to_shelf
+  - 08_pick_drill_from_holder
+  - 09_obstacle_aware_pick_drill
+
+budget:
+  rounds: 5
+  episodes: 500
+  api_usd: 30
+
+prompts:
+  coordinator: prompts/coordinator.md
+  proposal_actor: prompts/proposal_actor.md
+  execution_actor: prompts/execution_actor.md
+  validator: prompts/validator.md
+
+actors:
+  proposal_roles: [explore, exploit]
+  require_both_each_round: true
+  execution_actor: true
+  validator: true
+
+graph:
+  db: experiments/ll_v1/skill_system.db
+  cli: graph_cli.py
+  source_of_truth: sqlite
+
+micro:
+  runner: micro/run_micro.py
+  scenarios: micro/scenarios
+
+run_instructions: |
+  Read prompts/coordinator.md and this config. You are the coordinator for
+  experiment ll_v1. Run at most 5 rounds in warmup mode.
+
+  Use `python graph_cli.py ...` for all graph operations. Do not edit the
+  SQLite database directly.
+
+  Each round:
+    1. Summarize capability gaps, verified skills, recent failures and budget.
+    2. Spawn Explore and Exploit proposal actors independently with
+       prompts/proposal_actor.md and the same compact packet.
+    3. Receive exactly one proposal from each; compare and select one.
+    4. Spawn an Execution Actor with prompts/execution_actor.md for the
+       selected job.
+    5. Spawn a Validator with prompts/validator.md.
+    6. Update the graph/registry and report in the required format.
+
+  Do not read legacy libraries, work/tracks, .coord, out, or demonstration
+  data. This experiment starts fresh.
+
+  HARD STOP: when round 5 completes, stop immediately. Do not start round 6.
+  Write the round report, the final library summary, the reuse ledger and the
+  next unresolved bottlenecks, then exit.

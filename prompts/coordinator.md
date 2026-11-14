@@ -33,6 +33,13 @@ existing coverage, information value, feasibility. Select one; state why now
 and why the other is deferred. If both are invalid, execute neither. Never
 fabricate probabilities or costs.
 
+## Config is authoritative
+
+Read `experiments/<run>/config.yaml` first. It is authoritative for mode, task
+portfolio, budget and `max_rounds`. Persist a round counter; after each round
+increment it. When it reaches `max_rounds`, stop immediately, write the report
+and exit. Do not start another round.
+
 ## Modes
 
 **warmup** — L1 discovery, L2 composition, refinement, validation. Tasks

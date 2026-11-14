@@ -1,0 +1,9 @@
+capability: reach_standoff
+task: 02_push_button
+seeds: [0, 1, 2]
+source: work/tracks/02_push_button/actor_extract/skills/walk_to_reach.py
+name: walk_to_reach
+kwargs: {}
+metrics:
+  post_walk_gap_m_max: 0.44
+  base_tilt_deg_max: 8.0
