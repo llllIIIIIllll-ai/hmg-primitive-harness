@@ -67,6 +67,25 @@ def init_db(conn):
     conn.commit()
 
 
+def checkpoints_dir(db):
+    return os.path.join(os.path.dirname(os.path.abspath(db)), "checkpoints")
+
+
+def ensure_initial(db):
+    directory = checkpoints_dir(db)
+    os.makedirs(directory, exist_ok=True)
+    path = os.path.join(directory, "initial.db")
+    if os.path.exists(path):
+        return path
+    tmp = sqlite3.connect(":memory:")
+    init_db(tmp)
+    dst = sqlite3.connect(path)
+    tmp.backup(dst)
+    dst.close()
+    tmp.close()
+    return path
+
+
 def resolve(conn, ref, kind=None):
     if not ref:
         fail("empty reference")
@@ -105,7 +124,9 @@ def parse_json(value, default):
 
 def cmd_init(conn, args):
     init_db(conn)
-    emit({"ok": True, "result": {"db": args.db, "tasks": TASKS}})
+    initial = ensure_initial(args.db)
+    emit({"ok": True, "result": {"db": args.db, "tasks": TASKS,
+                                 "initial_checkpoint": initial}})
 
 
 def cmd_add_task(conn, args):
@@ -313,6 +334,40 @@ def cmd_merge_capabilities(conn, args):
                                  "merged": [m["id"] for m in merged]}})
 
 
+def cmd_checkpoint(conn, args):
+    directory = checkpoints_dir(args.db)
+    os.makedirs(directory, exist_ok=True)
+    path = os.path.join(directory, args.name + ".db")
+    dst = sqlite3.connect(path)
+    conn.backup(dst)
+    dst.close()
+    emit({"ok": True, "result": {"checkpoint": path}})
+
+
+def cmd_restore(conn, args):
+    path = os.path.join(checkpoints_dir(args.db), args.name + ".db")
+    if not os.path.exists(path):
+        fail("checkpoint not found: %s" % path)
+    src = sqlite3.connect(path)
+    src.backup(conn)
+    src.close()
+    conn.commit()
+    emit({"ok": True, "result": {"restored": path}})
+
+
+def cmd_reset(conn, args):
+    path = ensure_initial(args.db) if args.name == "initial" else os.path.join(
+        checkpoints_dir(args.db), args.name + ".db")
+    if not os.path.exists(path):
+        fail("checkpoint not found: %s" % path)
+    src = sqlite3.connect(path)
+    src.backup(conn)
+    src.close()
+    conn.execute("INSERT OR REPLACE INTO state(key,value) VALUES('round','0')")
+    conn.commit()
+    emit({"ok": True, "result": {"reset_to": path, "round": 0}})
+
+
 def cmd_round_get(conn, args):
     init_db(conn)
     row = conn.execute("SELECT value FROM state WHERE key='round'").fetchone()
@@ -403,6 +458,15 @@ def build_parser():
     s = sub.add_parser("merge_capabilities")
     s.add_argument("--keep", required=True); s.add_argument("--merge", required=True)
     s.set_defaults(fn=cmd_merge_capabilities)
+
+    s = sub.add_parser("checkpoint"); s.add_argument("--name", required=True)
+    s.set_defaults(fn=cmd_checkpoint)
+
+    s = sub.add_parser("restore"); s.add_argument("--name", required=True)
+    s.set_defaults(fn=cmd_restore)
+
+    s = sub.add_parser("reset"); s.add_argument("--name", default="initial")
+    s.set_defaults(fn=cmd_reset)
 
     s = sub.add_parser("round_get"); s.set_defaults(fn=cmd_round_get)
     s = sub.add_parser("round_inc"); s.set_defaults(fn=cmd_round_inc)

@@ -45,7 +45,12 @@ run_instructions: |
   Use `python graph_cli.py ...` for all graph operations. Do not edit the
   SQLite database directly.
 
+  Before round 1, build at least two strategies for every task and compute
+  shared capability demand. The first selected job must be required by at
+  least two strategies/tasks; do not start with a single-task capability.
+
   Each round:
+    0. On round 0, complete the portfolio-wide bootstrap above.
     1. Summarize capability gaps, verified skills and recent failures.
     2. Spawn Explore and Exploit proposal actors independently with
        prompts/proposal_actor.md and the same compact packet.
@@ -54,6 +59,7 @@ run_instructions: |
        selected job.
     5. Spawn a Validator with prompts/validator.md.
     6. Update the graph/registry and report in the required format.
+    7. Checkpoint: `python graph_cli.py checkpoint --name round_N`.
 
   Do not read legacy libraries, work/tracks, .coord, out, or demonstration
   data. This experiment starts fresh.

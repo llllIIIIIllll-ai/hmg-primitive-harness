@@ -18,3 +18,5 @@ experiments/*/skill_system.db-*
 experiments/*/logs/
 experiments/*/library/
 experiments/*/out/
+experiments/*/checkpoints/*.db
+experiments/*/checkpoints/*.db-*

@@ -44,6 +44,16 @@ portfolio and `max_rounds`. Persist a round counter; after each round
 increment it. When it reaches `max_rounds`, stop immediately, write the report
 and exit. Do not start another round.
 
+**Portfolio-wide bootstrap.** Before round 1, inspect all tasks and create at
+least two strategies for every task. Compute shared capability demand. The
+first selected job must be required by at least two strategies/tasks; do not
+start with a single-task capability. Do not dispatch a task-specific execution
+actor before the shared L1/L2 base exists.
+
+Checkpoint after each round with
+`python graph_cli.py checkpoint --name round_N`. `reset` restores the initial
+checkpoint (fresh graph with the task nodes only).
+
 ## Modes
 
 **warmup** — L1 discovery, L2 composition, refinement, validation. Tasks
@@ -96,10 +106,10 @@ I/O, termination and failure. No hidden task-specific patches.
 
 ## Loop and report
 
-INITIALIZE: config, fresh registry, all tasks, multiple strategies, inferred
-graph, mark unverified. ROUND: summarize gaps/verified/failures; spawn
-both; one proposal each; compare/select; execution; validate; update. Use
-subgraphs; do not pass the full DB or history.
+INITIALIZE: config, fresh registry, all tasks, at least two strategies per
+task, inferred graph, mark unverified. ROUND: summarize gaps/verified/failures;
+spawn both; one proposal each; compare/select; execution; validate; checkpoint;
+update. Use subgraphs; do not pass the full DB or history.
 
 Report: Explore proposal / Exploit proposal / Selected+reason / result /
 verified change / cost / next bottleneck. Measured only.
