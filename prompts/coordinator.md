@@ -50,6 +50,10 @@ first selected job must be required by at least two strategies/tasks; do not
 start with a single-task capability. Do not dispatch a task-specific execution
 actor before the shared L1/L2 base exists.
 
+**The first batch must be broad:** at least 10 capabilities, or all shared L1
+gaps if fewer than 10. A 1-2 capability first batch is invalid; expand it before
+selecting. Later batches may be smaller and targeted.
+
 Checkpoint after each batch with
 `python graph_cli.py checkpoint --name batch_N`. `reset` restores the initial
 checkpoint (fresh graph with the task nodes only).

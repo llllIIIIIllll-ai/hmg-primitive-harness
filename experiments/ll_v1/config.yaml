@@ -51,6 +51,9 @@ run_instructions: |
   Connect every L2 capability to its L1 dependencies with
   `python graph_cli.py add_requires --capability <L2> --requires <L1,...>`.
 
+  The first batch must cover at least 10 capabilities, or all shared L1 gaps if
+  fewer than 10. Do not select a smaller first batch.
+
   Each batch:
     1. Summarize capability gaps, verified skills and recent failures.
     2. Spawn Explore and Exploit proposal actors independently with

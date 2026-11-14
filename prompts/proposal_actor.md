@@ -35,6 +35,8 @@ not force reuse when the existing contract cannot be satisfied.
 - Exactly **one** proposal.
 - The proposal must be executable in the current batch.
 - Do not fabricate success probabilities, costs, or evidence.
+- For the first batch, propose a broad set: at least 10 capabilities, or all
+  shared gaps if fewer than 10.
 - If the packet does not support any proposal, return one proposal with
   `job_type: none` and a one-line reason.
 
