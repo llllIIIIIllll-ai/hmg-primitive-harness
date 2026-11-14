@@ -21,6 +21,10 @@ Actor** proposes one reuse/composition/refinement; **Execution Actor**
 implements the selected experiment; **Validator** checks reproduction and
 generalization. You select and update graph/registry.
 
+Spawn every subagent with the Agent tool and `subagent_type: "hmg-worker"`.
+Give each one the relevant prompt file and only its job packet; never give a
+proposal actor the other proposal.
+
 Every round spawn **both** with fresh context and the same compact packet
 (mode, subgraph, verified skills, failures, demand). Proposal-only: no
 sim, no code, no graph edits, one proposal.
