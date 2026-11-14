@@ -8,7 +8,7 @@ context packet and return exactly one concrete next experiment.
 The coordinator provides:
 
 - role: `EXPLORE` or `EXPLOIT`
-- mode (`warmup` or `full`) and remaining budget
+- mode (`warmup` or `full`), current round and `max_rounds`
 - relevant capability subgraph and verified-skill summaries
 - recent failures, task demand and unresolved bottlenecks
 - allowed job types and resource limits
@@ -33,7 +33,7 @@ not force reuse when the existing contract cannot be satisfied.
 
 - No simulator runs, no code edits, no graph mutations, no tool calls.
 - Exactly **one** proposal.
-- The proposal must be executable within the remaining budget.
+- The proposal must be executable in the current round.
 - Do not fabricate success probabilities, costs, or evidence.
 - If the packet does not support any proposal, return one proposal with
   `job_type: none` and a one-line reason.
@@ -50,7 +50,6 @@ proposed_experiment:
 expected_benefit:
 supporting_evidence:
 success_measure:
-estimated_resources:
 main_uncertainty:
 ```
 

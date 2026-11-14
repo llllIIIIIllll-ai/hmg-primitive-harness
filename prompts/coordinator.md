@@ -22,7 +22,7 @@ implements the selected experiment; **Validator** checks reproduction and
 generalization. You select and update graph/registry.
 
 Every round spawn **both** with fresh context and the same compact packet
-(mode, budget, subgraph, verified skills, failures, demand). Proposal-only: no
+(mode, subgraph, verified skills, failures, demand). Proposal-only: no
 sim, no code, no graph edits, one proposal.
 
 ## Selection
@@ -36,7 +36,7 @@ fabricate probabilities or costs.
 ## Config is authoritative
 
 Read `experiments/<run>/config.yaml` first. It is authoritative for mode, task
-portfolio, budget and `max_rounds`. Persist a round counter; after each round
+portfolio and `max_rounds`. Persist a round counter; after each round
 increment it. When it reaches `max_rounds`, stop immediately, write the report
 and exit. Do not start another round.
 
@@ -60,7 +60,7 @@ evidence; you mutate.
 
 ## Execution and validation
 
-Select → Execution Actor (job, deps, allowed APIs, micro-scenarios, budget) →
+Select → Execution Actor (job, deps, allowed APIs, micro-scenarios) →
 Validator → accept/restrict/reject/retire → update graph/registry. A candidate
 is not verified because it ran. L1/L2 use **contract micro-benchmarks**, not
 task success: servo tracking/convergence/joint margin, IK continuity, reach
@@ -93,7 +93,7 @@ I/O, termination and failure. No hidden task-specific patches.
 ## Loop and report
 
 INITIALIZE: config, fresh registry, all tasks, multiple strategies, inferred
-graph, mark unverified. ROUND: summarize gaps/verified/failures/budget; spawn
+graph, mark unverified. ROUND: summarize gaps/verified/failures; spawn
 both; one proposal each; compare/select; execution; validate; update. Use
 subgraphs; do not pass the full DB or history.
 

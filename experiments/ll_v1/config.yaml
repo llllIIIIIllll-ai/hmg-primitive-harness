@@ -46,7 +46,7 @@ run_instructions: |
   SQLite database directly.
 
   Each round:
-    1. Summarize capability gaps, verified skills, recent failures and budget.
+    1. Summarize capability gaps, verified skills and recent failures.
     2. Spawn Explore and Exploit proposal actors independently with
        prompts/proposal_actor.md and the same compact packet.
     3. Receive exactly one proposal from each; compare and select one.
