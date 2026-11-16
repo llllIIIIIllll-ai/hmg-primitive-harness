@@ -3,6 +3,82 @@ def _dist(a, b):
             + (a[2] - b[2]) ** 2) ** 0.5
 
 
+def _collider_dist(p, c):
+    """Signed distance from world point p to the surface of one object
+    collider (box / sphere / capsule / cylinder / mesh-as-box).  Negative
+    means p is inside the collider.  Analytic so it can also be evaluated at
+    the QP's PREDICTED wrist centres, which the sim cannot do."""
+    t = c.get('type')
+    cen = np.array(c.get('world_pos'), dtype='float64')
+    R = np.array(c.get('world_xmat'), dtype='float64')
+    sz = c.get('size') or [0.0, 0.0, 0.0]
+    l = R.T @ (np.array(p, dtype='float64') - cen)
+    if t == 'sphere':
+        return np.linalg.norm(l) - sz[0]
+    if t == 'capsule':
+        r = sz[0]
+        hl = sz[1]
+        z = l[2]
+        if z > hl:
+            z = hl
+        if z < -hl:
+            z = -hl
+        q = np.array([0.0, 0.0, z], dtype='float64')
+        return np.linalg.norm(l - q) - r
+    if t == 'cylinder':
+        r = sz[0]
+        hl = sz[1]
+        rad = (l[0] * l[0] + l[1] * l[1]) ** 0.5
+        dr = rad - r
+        az = l[2] if l[2] >= 0.0 else -l[2]
+        dz = az - hl
+        a = dr if dr > 0.0 else 0.0
+        b = dz if dz > 0.0 else 0.0
+        outd = (a * a + b * b) ** 0.5
+        mn = dr if dr > dz else dz
+        if mn < 0.0:
+            outd = outd + mn
+        return outd
+    if t == 'mesh':
+        h = c.get('mesh_half_extents') or [0.0, 0.0, 0.0]
+    else:
+        h = sz
+    dv = [0.0, 0.0, 0.0]
+    i = 0
+    while i < 3:
+        v = l[i]
+        if v < 0.0:
+            v = -v
+        dv[i] = v - h[i]
+        i = i + 1
+    ou = [0.0, 0.0, 0.0]
+    i = 0
+    while i < 3:
+        ou[i] = dv[i] if dv[i] > 0.0 else 0.0
+        i = i + 1
+    outd = (ou[0] * ou[0] + ou[1] * ou[1] + ou[2] * ou[2]) ** 0.5
+    mn = dv[0]
+    if dv[1] > mn:
+        mn = dv[1]
+    if dv[2] > mn:
+        mn = dv[2]
+    if mn < 0.0:
+        outd = outd + mn
+    return outd
+
+
+def _min_collider(p, cols):
+    """(min signed distance, collider name) over the object colliders."""
+    best = None
+    bn = None
+    for c in cols:
+        s = _collider_dist(p, c)
+        if best is None or s < best:
+            best = s
+            bn = c.get('name')
+    return best, bn
+
+
 def run(api, grasp=None, orientation='keep', max_steps=50, max_delta=0.08,
         iters=80, hand_hold=None, stop_err=0.012, hold_base=True,
         base_vmax=0.03, base_wmax=0.05, base_gain=0.05,
@@ -14,7 +90,7 @@ def run(api, grasp=None, orientation='keep', max_steps=50, max_delta=0.08,
         seed_force=False, joint_mode=False, deadband_comp=0.0,
         sides=('left', 'right'),
         live_guard_dist=0.02,
-        budget=True, **kw):
+        budget=True, pred_guard=True, **kw):
     """True closed-loop reach: solve from the live state with apply=False,
     clamp the per-step joint delta, apply one control step (sim advances),
     re-observe.  Logs sim time, live site, base, NaN and reset per iteration."""
@@ -294,18 +370,22 @@ def run(api, grasp=None, orientation='keep', max_steps=50, max_delta=0.08,
             su = None
             ss = None
             if radii:
+                cols_all2 = api.object_colliders().get('colliders') or []
+                cols_sel = []
+                for c_ in cols_all2:
+                    if 'collider' in (c_.get('name') or ''):
+                        cols_sel.append(c_)
+                if not cols_sel:
+                    cols_sel = cols_all2
                 for rr_, tag_ in ((r_un, 'u'), (r_sd, 's')):
-                    a_ = api.object_aabb()
-                    lo_ = np.array(a_['lo'])
-                    hi_ = np.array(a_['hi'])
                     ws_ = rr_.get('wrist_solved') or {}
                     mn_ = None
                     for nm_ in ws_:
                         if nm_ not in radii:
                             continue
                         p_ = np.array(ws_[nm_])
-                        near_ = np.clip(p_, lo_, hi_)
-                        s_ = np.linalg.norm(p_ - near_) - radii[nm_]
+                        s_, cn_ = _min_collider(p_, cols_sel)
+                        s_ = s_ - radii[nm_]
                         if mn_ is None or s_ < mn_:
                             mn_ = s_
                     if tag_ == 'u':
@@ -366,40 +446,67 @@ def run(api, grasp=None, orientation='keep', max_steps=50, max_delta=0.08,
         md_step = max_delta
         wd = None
         wd_pred = None
+        wd_col = None
+        wd_pred_col = None
+        wd_aabb = None
         cmin = None
         pmin = None
         if wrist_guard:
+            # Collider-level clearance (2026-11-16): the AABB is an
+            # over-approximation and produced "wrist inside the object"
+            # verdicts in empty space, so the guard is computed against the
+            # ACTUAL colliders.  The AABB surface is kept as a diagnostic.
+            cols_all = api.object_colliders().get('colliders') or []
+            cols = []
+            for c_ in cols_all:
+                nmc = c_.get('name') or ''
+                if 'collider' in nmc:
+                    cols.append(c_)
+            if not cols:
+                cols = cols_all
             a = api.object_aabb()
             lo3 = np.array(a['lo'])
             hi3 = np.array(a['hi'])
             agg = api.arm_geoms()
             cur = {'left': None, 'right': None}
+            curn = {'left': None, 'right': None}
+            aabb = {'left': None, 'right': None}
             for body in agg:
                 for gg in agg[body]['geoms']:
                     nm_ = gg['name']
                     if nm_ not in radii:
                         continue
                     p3 = np.array(gg['world_pos'])
+                    s3, cn3 = _min_collider(p3, cols)
+                    s3 = s3 - radii[nm_]
                     near3 = np.clip(p3, lo3, hi3)
-                    s3 = np.linalg.norm(p3 - near3) - radii[nm_]
+                    sa = np.linalg.norm(p3 - near3) - radii[nm_]
                     side = 'left' if (nm_ == 'robot0_g27_col'
                                       or nm_ == 'robot0_g28_col') else 'right'
                     if cur[side] is None or s3 < cur[side]:
                         cur[side] = s3
+                        curn[side] = cn3
+                    if aabb[side] is None or sa < aabb[side]:
+                        aabb[side] = sa
             pred = {'left': None, 'right': None}
+            predn = {'left': None, 'right': None}
             ws = r.get('wrist_solved') or {}
             for nm_ in ws:
                 if nm_ not in radii:
                     continue
                 p3 = np.array(ws[nm_])
-                near3 = np.clip(p3, lo3, hi3)
-                s3 = np.linalg.norm(p3 - near3) - radii[nm_]
+                s3, cn3 = _min_collider(p3, cols)
+                s3 = s3 - radii[nm_]
                 side = 'left' if (nm_ == 'robot0_g27_col'
                                   or nm_ == 'robot0_g28_col') else 'right'
                 if pred[side] is None or s3 < pred[side]:
                     pred[side] = s3
+                    predn[side] = cn3
             wd = cur
             wd_pred = pred
+            wd_col = curn
+            wd_pred_col = predn
+            wd_aabb = aabb
             for side in cur:
                 if cur[side] is not None and (cmin is None
                                               or cur[side] < cmin):
@@ -443,7 +550,9 @@ def run(api, grasp=None, orientation='keep', max_steps=50, max_delta=0.08,
             nans = nans + 1
             trace.append({'k': k, 't': api.t, 'nan_target': True})
             break
-        if wrist_guard and ((pmin is not None and pmin < wrist_guard_dist)
+        pg_ = wrist_guard and pred_guard
+        if wrist_guard and ((pg_ and pmin is not None
+                             and pmin < wrist_guard_dist)
                             or (cmin is not None
                                 and cmin < live_guard_dist)):
             wrist_abort = True
@@ -452,6 +561,8 @@ def run(api, grasp=None, orientation='keep', max_steps=50, max_delta=0.08,
             wd_step = k
             trace.append({'k': k, 't': api.t, 'wrist_abort': True,
                           'wrist_surface': wd, 'wrist_pred': wd_pred,
+                      'wrist_col': wd_col, 'wrist_pred_col': wd_pred_col,
+                      'wrist_aabb': wd_aabb,
                           'wrist_dist_min': pmin})
             break
         api.step_goal(upper=cmd, nav=nav, dur=0.02)
@@ -521,6 +632,8 @@ def run(api, grasp=None, orientation='keep', max_steps=50, max_delta=0.08,
                       'yaw_before': b['yaw_deg'], 'yaw_after': b_a['yaw_deg'],
                       'yaw_err': hold_yaw - b['yaw_deg'],
                       'wrist_surface': wd, 'wrist_pred': wd_pred,
+                      'wrist_col': wd_col, 'wrist_pred_col': wd_pred_col,
+                      'wrist_aabb': wd_aabb,
                       'seed_dist': sd, 'q_moved': qm, 'jres': jres,
                       'base_jump': base_jump,
                       'delta_max': dmax, 'reset': reset,

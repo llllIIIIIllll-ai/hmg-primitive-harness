@@ -5,7 +5,7 @@ def _dist(a, b):
 
 def run(api, side='left', standoff=0.15, lateral_offset=0.0,
         pre_dx=-0.205, grasp_dx=-0.105, dy=0.0, z_grasp=0.954, z_pre=0.954,
-        lift_dz=0.10, **kw):
+        lift_dz=0.10, front_pre=False, use_waypoint=False, **kw):
     """W2 one-hand grasp: tuck -> standoff -> backoff -> free-space unfold to
     a palms-down pre-grasp for the GRASPING hand -> approach -> seeded
     descent -> close -> lift.  The non-grasping arm stays tucked clear."""
@@ -34,7 +34,7 @@ def run(api, side='left', standoff=0.15, lateral_offset=0.0,
                    stop_err=0.12, max_steps=250, max_delta=0.04,
                    orient_mode='down', orientation='down', joint_mode=True,
                    deadband_comp=0.012, wrist_guard=True,
-                   wrist_guard_dist=0.01, seed_mode='dls', sides=(side,),
+                   wrist_guard_dist=0.02, seed_mode='dls', sides=(side,),
                    base_gain=0.3, base_deadband=0.005, base_vmax=0.05,
                    base_yaw_deadband=0.003, base_yaw_gain=0.6,
                    base_wmax=0.1, trace_contacts=True, contact_match=om)
@@ -46,75 +46,122 @@ def run(api, side='left', standoff=0.15, lateral_offset=0.0,
                 'binding_constraint': 'object_displacement', 'untuck': u1,
                 'phase': {'displacements': {'standoff': d_standoff,
                                             'untuck': d_u1}}}
-    u2 = api.skill('arm_pose_ik_live', grasp={'dx': pre_dx, 'dy': dy,
-                                              'z': z_pre},
-                   orientation='keep', orient_mode='side',
-                   sides=(side,), joint_mode=True, stop_err=0.12,
-                   max_steps=300, max_delta=0.04, max_delta_near=0.02,
-                   near_dist=0.03, deadband_comp=0.04,
-                   wrist_guard=True, wrist_guard_dist=0.01, seed_mode='dls',
-                   base_gain=0.3, base_deadband=0.005, base_vmax=0.05,
-                   base_yaw_deadband=0.003, base_yaw_gain=0.6,
-                   base_wmax=0.1, trace_contacts=True, contact_match=om)
-    st = api.observe()
-    o_u = (st.get('object') or {}).get('pos')
-    d_untuck = _dist(o_u, o_u1)
-    if d_untuck > 0.001:
-        return {'ok': False, 'stage': 'unfold_front',
-                'binding_constraint': 'object_displacement',
-                'untuck': u2, 'unfold_down': u1,
-                'phase': {'displacements': {'standoff': d_standoff,
-                                            'untuck_down': d_u1,
-                                            'untuck': d_untuck}}}
-    if not u2.get('ok'):
-        return {'ok': False, 'stage': 'unfold_front_unreached',
-                'binding_constraint': u2.get('binding_constraint'),
-                'untuck': u2, 'unfold_down': u1,
-                'phase': {'displacements': {'standoff': d_standoff,
-                                            'untuck_down': d_u1,
-                                            'untuck': d_untuck}}}
-    u_r = u2
-    r1b = None
-    o_u2 = o_u
-    d_rest = 0.0
-    lat_ok = True
-    wp = {'dx': -0.15, 'dy': 0.0, 'z': 1.004}
-    r_wp = api.skill('arm_pose_ik_live', grasp=wp, orientation='keep',
-                     orient_mode='side', sides=(side,), joint_mode=True,
-                     max_delta=0.04, max_steps=300, stop_err=0.05,
-                     max_delta_near=0.02, near_dist=0.03,
-                     deadband_comp=0.035, wrist_guard=True,
-                     wrist_guard_dist=0.01, seed_mode='dls',
-                     base_gain=0.3, base_deadband=0.005, base_vmax=0.05,
-                     base_yaw_deadband=0.003, base_yaw_gain=0.6,
-                     base_wmax=0.1, trace_contacts=True, contact_match=om)
-    st = api.observe()
-    o_wp = (st.get('object') or {}).get('pos')
-    d_wp = _dist(o_wp, o_u2)
-    if r_wp.get('wrist_abort'):
-        return {'ok': False, 'stage': 'waypoint_wrist_guard',
-                'binding_constraint': 'wrist_guard',
-                'wrist_abort_step': r_wp.get('wrist_abort_step'),
-                'wrist_dist_min': r_wp.get('wrist_dist_min'),
-                'waypoint': r_wp, 'untuck': u_r,
-                'phase': {'displacements': {'standoff': d_standoff,
-                                            'untuck': d_untuck,
-                                            'waypoint': d_wp}}}
-    if d_wp > 0.001:
-        return {'ok': False, 'stage': 'waypoint',
-                'binding_constraint': 'object_displacement',
-                'waypoint': r_wp, 'untuck': u_r,
-                'phase': {'displacements': {'standoff': d_standoff,
-                                            'untuck': d_untuck,
-                                            'waypoint': d_wp}}}
+    if front_pre:
+        u2 = api.skill('arm_pose_ik_live', grasp={'dx': pre_dx, 'dy': dy,
+                                                  'z': z_pre},
+                       orientation='keep', orient_mode='side',
+                       sides=(side,), joint_mode=True, stop_err=0.12,
+                       max_steps=300, max_delta=0.04, max_delta_near=0.02,
+                       near_dist=0.03, deadband_comp=0.04,
+                       wrist_guard=True, wrist_guard_dist=0.02, seed_mode='dls',
+                       base_gain=0.3, base_deadband=0.005, base_vmax=0.05,
+                       base_yaw_deadband=0.003, base_yaw_gain=0.6,
+                       base_wmax=0.1, trace_contacts=True, contact_match=om)
+        st = api.observe()
+        o_u = (st.get('object') or {}).get('pos')
+        d_untuck = _dist(o_u, o_u1)
+        if d_untuck > 0.001:
+            return {'ok': False, 'stage': 'unfold_front',
+                    'binding_constraint': 'object_displacement',
+                    'untuck': u2, 'unfold_down': u1,
+                    'phase': {'displacements': {'standoff': d_standoff,
+                                                'untuck_down': d_u1,
+                                                'untuck': d_untuck}}}
+        if not u2.get('ok'):
+            return {'ok': False, 'stage': 'unfold_front_unreached',
+                    'binding_constraint': u2.get('binding_constraint'),
+                    'untuck': u2, 'unfold_down': u1,
+                    'phase': {'displacements': {'standoff': d_standoff,
+                                                'untuck_down': d_u1,
+                                                'untuck': d_untuck}}}
+        u_r = u2
+        r1b = None
+        o_u2 = o_u
+        d_rest = 0.0
+        lat_ok = True
+        wp = {'dx': -0.15, 'dy': 0.0, 'z': 1.004}
+        r_wp = api.skill('arm_pose_ik_live', grasp=wp, orientation='keep',
+                         orient_mode='side', sides=(side,), joint_mode=True,
+                         max_delta=0.04, max_steps=300, stop_err=0.05,
+                         max_delta_near=0.02, near_dist=0.03,
+                         deadband_comp=0.035, wrist_guard=True,
+                         wrist_guard_dist=0.02, seed_mode='dls',
+                         base_gain=0.3, base_deadband=0.005, base_vmax=0.05,
+                         base_yaw_deadband=0.003, base_yaw_gain=0.6,
+                         base_wmax=0.1, trace_contacts=True, contact_match=om)
+        st = api.observe()
+        o_wp = (st.get('object') or {}).get('pos')
+        d_wp = _dist(o_wp, o_u2)
+        if r_wp.get('wrist_abort'):
+            return {'ok': False, 'stage': 'waypoint_wrist_guard',
+                    'binding_constraint': 'wrist_guard',
+                    'wrist_abort_step': r_wp.get('wrist_abort_step'),
+                    'wrist_dist_min': r_wp.get('wrist_dist_min'),
+                    'waypoint': r_wp, 'untuck': u_r,
+                    'phase': {'displacements': {'standoff': d_standoff,
+                                                'untuck': d_untuck,
+                                                'waypoint': d_wp}}}
+        if d_wp > 0.001:
+            return {'ok': False, 'stage': 'waypoint',
+                    'binding_constraint': 'object_displacement',
+                    'waypoint': r_wp, 'untuck': u_r,
+                    'phase': {'displacements': {'standoff': d_standoff,
+                                                'untuck': d_untuck,
+                                                'waypoint': d_wp}}}
+    else:
+        u_r = u1
+        r1b = None
+        o_u = o_u1
+        o_u2 = o_u1
+        d_rest = 0.0
+        lat_ok = True
+        r_wp = None
+        d_wp = 0.0
+        d_untuck = 0.0
+        if use_waypoint:
+            # Route (b): enter the wrist-clear waypoint from the stage-1
+            # down posture (where pitch/roll/yaw authority exists), then the
+            # short seeded descent.  The front pre-grasp is not used.
+            wp = {'dx': -0.15, 'dy': 0.0, 'z': 1.004}
+            r_wp = api.skill('arm_pose_ik_live', grasp=wp,
+                             orientation='keep', orient_mode='side',
+                             sides=(side,), joint_mode=True, max_delta=0.04,
+                             max_steps=300, stop_err=0.05,
+                             max_delta_near=0.02, near_dist=0.03,
+                             deadband_comp=0.035, wrist_guard=True,
+                             wrist_guard_dist=0.02, seed_mode='dls',
+                             base_gain=0.3, base_deadband=0.005,
+                             base_vmax=0.05, base_yaw_deadband=0.003,
+                             base_yaw_gain=0.6, base_wmax=0.1,
+                             trace_contacts=True, contact_match=om)
+            st = api.observe()
+            o_wp = (st.get('object') or {}).get('pos')
+            d_wp = _dist(o_wp, o_u2)
+            if r_wp.get('wrist_abort'):
+                return {'ok': False, 'stage': 'waypoint_wrist_guard',
+                        'binding_constraint': 'wrist_guard',
+                        'wrist_abort_step': r_wp.get('wrist_abort_step'),
+                        'wrist_dist_min': r_wp.get('wrist_dist_min'),
+                        'waypoint': r_wp, 'untuck': u_r,
+                        'phase': {'displacements': {'standoff': d_standoff,
+                                                    'untuck_down': d_u1,
+                                                    'waypoint': d_wp}}}
+            if d_wp > 0.001:
+                return {'ok': False, 'stage': 'waypoint',
+                        'binding_constraint': 'object_displacement',
+                        'waypoint': r_wp, 'untuck': u_r,
+                        'phase': {'displacements': {'standoff': d_standoff,
+                                                    'untuck_down': d_u1,
+                                                    'waypoint': d_wp}}}
     grasp = {'dx': grasp_dx, 'dy': dy, 'z': z_grasp}
     r2 = api.skill('arm_pose_ik_live', grasp=grasp, orientation='keep',
-                   orient_mode='side', sides=(side,), max_delta=0.02,
-                   max_steps=400, max_delta_near=0.01, freeze_frame=True,
+                   orient_mode='side', sides=(side,), max_delta=0.04,
+                   max_steps=400, max_delta_near=0.02, near_dist=0.03,
+                   freeze_frame=True, pred_guard=False,
                    reorient_each_step=True, base_deadband=0.005,
                    base_yaw_deadband=0.003, base_yaw_gain=0.6,
-                   base_wmax=0.1, wrist_guard=True, wrist_guard_dist=0.01,
-                   seed_mode='dls', seed_force=True, deadband_comp=0.035,
+                   base_wmax=0.1, wrist_guard=True, wrist_guard_dist=0.02,
+                   seed_mode='dls', seed_force=True, deadband_comp=0.04,
                    base_gain=0.3, base_vmax=0.05,
                    trace_contacts=True, contact_match=om)
     st = api.observe()

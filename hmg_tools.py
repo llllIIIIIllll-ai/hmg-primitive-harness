@@ -707,6 +707,65 @@ class Tools:
                 'lo': None if lo is None else np.round(lo, 4).tolist(),
                 'hi': None if hi is None else np.round(hi, 4).tolist()}
 
+    def object_colliders(self):
+        """Read-only per-collider geometry of the task object (collider-level
+        clearance guard).  The world AABB from ``object_aabb`` over-approximates
+        the object; this returns every geom in the object body TREE with its
+        world centre, world rotation, type and size so a wrist/pad clearance
+        can be computed against the actual colliders.  No state change.
+        """
+        m, d = self.raw
+        import mujoco
+        mujoco.mj_forward(m, d)
+        objs, sel = task_object(self.env)
+        if sel is None:
+            return {'error': 'no object'}
+        root = int(mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_BODY,
+                                     sel.root_body))
+        members = set()
+        for b in range(int(m.nbody)):
+            x = b
+            for _ in range(16):
+                if x == root:
+                    members.add(b)
+                    break
+                if x <= 0:
+                    break
+                x = int(m.body_parentid[x])
+        names = {int(mujoco.mjtGeom.mjGEOM_BOX): 'box',
+                 int(mujoco.mjtGeom.mjGEOM_SPHERE): 'sphere',
+                 int(mujoco.mjtGeom.mjGEOM_CAPSULE): 'capsule',
+                 int(mujoco.mjtGeom.mjGEOM_CYLINDER): 'cylinder',
+                 int(mujoco.mjtGeom.mjGEOM_MESH): 'mesh'}
+        out = []
+        for gi in range(int(m.ngeom)):
+            if int(m.geom_bodyid[gi]) not in members:
+                continue
+            gtype = int(m.geom_type[gi])
+            tname = names.get(gtype, str(gtype))
+            cov = None
+            if gtype == int(mujoco.mjtGeom.mjGEOM_MESH):
+                aid = int(m.geom_dataid[gi])
+                v0 = int(m.mesh_vertadr[aid])
+                v1 = v0 + int(m.mesh_vertnum[aid])
+                verts = np.asarray(m.mesh_vert[v0:v1], float)
+                lo_ = verts.min(axis=0)
+                hi_ = verts.max(axis=0)
+                cov = np.round(np.maximum(np.abs(lo_), np.abs(hi_)),
+                               5).tolist()
+            out.append({
+                'name': m.geom(gi).name,
+                'type': tname,
+                'body': m.body(int(m.geom_bodyid[gi])).name,
+                'world_pos': np.round(
+                    np.asarray(d.geom_xpos[gi], float), 5).tolist(),
+                'world_xmat': np.round(np.asarray(
+                    d.geom_xmat[gi], float).reshape(3, 3), 5).tolist(),
+                'size': np.round(
+                    np.asarray(m.geom_size[gi], float), 5).tolist(),
+                'mesh_half_extents': cov})
+        return {'body': sel.root_body, 'colliders': out}
+
     def object_info(self):
         """Read-only object/affordance inventory (L1 object_part_inventory).
 

@@ -919,3 +919,94 @@ available. The wrist guard's surface is still AABB-based; the
 AABB, not against the drill's actual colliders (handle box, motor capsule
 r0.035, bit capsule r0.023, battery box), and has not yet been resolved
 against them.
+
+## 39. The clearance guard is collider-level; the AABB is a diagnostic
+
+Operator directive: the AABB is an over-approximation and earlier "wrist
+inside the object" verdicts were AABB artifacts; the wrist/clearance guard
+must be computed against the actual colliders.
+
+Change (2026-11-16):
+- New read-only tool `object_colliders` (`hmg_tools.py`, dispatched in
+  `hmg_server.py`): every geom in the object body tree with world centre,
+  world rotation, type, size and (for meshes) vertex-derived half extents.
+  05_drill_lift returns the four colliders plus two visual meshes
+  (`bottle_g0`, `bottle_g4`); the guard keeps geoms whose name contains
+  `collider`, so the visual mesh boxes cannot re-introduce the
+  over-approximation.
+- `arm_pose_ik_live`: the wrist guard now evaluates analytic signed
+  distances from each wrist geom centre to the collider surface, minus the
+  wrist geom radius, both at the LIVE pose and at the QP's PREDICTED wrist
+  centres (the sim cannot evaluate future poses; the analytic form can).
+  `wrist_col` / `wrist_pred_col` name the binding collider per side per
+  step; `wrist_aabb` carries the old AABB surface as a diagnostic.
+  The seed choice (unseeded vs seeded) also uses the collider distance.
+  The abort thresholds are unchanged in structure: predicted and live both
+  compare against `wrist_guard_dist`, now 0.02 in the chain.  NOTE: the
+  "predicted" surface is the QP's FULL solved endpoint (dq 1.1-2.0 rad from
+  the live pose), not the next clamped 0.01-0.02 rad step, so as an abort it
+  fires at step 0 whenever the solution endpoint is inside a collider and
+  the path is never observed.  `pred_guard=False` keeps the field in the
+  trace and guards on the LIVE surface only; the descent uses that to
+  measure the actual path.
+- Distance functions are unit-checked (box interior/exterior/on-surface,
+  capsule side/end/inside, cylinder radial/cap/corner, sphere, rotated
+  box). A capsule-projection bug (using the radial components instead of
+  the axis) was caught by that check and fixed before the run.
+- Not changed (recorded deliberately): `base_standoff_servo_v3` keeps the
+  AABB for its stop-distance and fingertip guard. Those are planning and
+  conservative safety margins, not collision verdicts; switching them
+  changes the base's stopping distance for every task. Flag for the
+  operator if the AABB should go there too.
+
+## 40. Collider-level measurements: the wrist guard is no longer the binding constraint
+
+Route (a) - seeded QP descent straight from the stage-1 down posture
+(`front_pre=False`), collider guard with the endpoint check ON:
+
+- At the first step the QP's solved endpoint puts the left wrist **-0.0248 m
+  into the motor capsule** (`bottle_collider_box_8e968ea9`); the unseeded
+  branch gives -0.0387. The AABB had said -0.028. **The AABB verdict was not
+  the artifact here** - the motor-capsule penetration is real at the solved
+  destination. Route (a) is NOT clear.
+
+Route (b) - wrist-clear waypoint from the stage-1 posture, joint-space:
+
+- The waypoint (dx -0.15, z 1.004) is NOT reached: `dq_need` 2.02 rad to the
+  DLS branch, 301 steps, `q_moved` 0.0075/step for ~40 steps then 7e-5, site
+  error 0.322 -> 0.323, no wrist abort (live clearance 0.146-0.218). Same
+  failure as the front pre-grasp: the DLS branch is a distant configuration
+  and joint interpolation cannot traverse it.
+
+Descent with the LIVE-collider guard only (endpoint check off, clamp
+0.04 / near 0.02 / comp 0.04), from the stage-1 posture, 400 steps:
+
+- wrist live clearance: min **0.1473** (battery box `a1f69b3d`), max 0.187.
+  The wrist never comes within 14.7 cm of any collider, so the guard never
+  fires and **the wrist/collider clearance is NOT the binding constraint**
+  any more - the collider guard resolves the earlier ambiguity.
+- The descent does not approach the cell: pad error 0.290 -> 0.307 (min
+  0.2897, max 0.3130), solver residual 0.14, base drift 0.018, yaw -5 deg.
+  `q_moved` mean 0.0075 (max 0.026) on a 0.04 command: the arm wiggles
+  rather than tracking.
+- Cause visible in the QP's own margins: the solved configuration sits on
+  FOUR joint bounds simultaneously - `left_shoulder_pitch`, `left_shoulder_roll`,
+  `left_shoulder_yaw`, `left_wrist_roll`, all margin 0.000. The target cell
+  is at the edge of the QP's feasible box from this posture, so the
+  solution is saturated and the executed steps do not move the pads toward
+  it.
+- Both seed branches are inside the motor capsule at the destination
+  (seeded -0.0248, unseeded -0.0387), so seed selection cannot rescue it.
+
+Chain state: runs through close and lift, gate fails on `site`
+(0.306 / 0.333). Displacements: tuck 0.0010, everything else 0.0,
+pre_close 0.0010 (limit 0.010). Contacts 0/0, rise 0.0. No reset, no NaN.
+
+Implication: the handle-cell target at z 0.954 is not reachable from the
+stage-1 down posture by either controller (QP: saturated at four bounds and
+ends inside the motor capsule; DLS/joint: distant branch). The earlier
+seeded-branch result (residual 0.032, wrist -0.028 AABB) was measured from
+an arm already extended at the front pre-grasp - a posture the chain cannot
+establish. The pre-grasp is therefore still the missing piece, and it needs
+a controller that can move the arm to a nearby Cartesian pose without
+committing to a distant DLS branch.

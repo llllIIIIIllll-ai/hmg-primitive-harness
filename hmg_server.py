@@ -656,6 +656,10 @@ def handle(req):
         # Read-only object/affordance inventory (L1 object_part_inventory):
         # bodies, geoms, structural part classification, grasp parts/axes.
         return tools.object_info()
+    if tool == 'object_colliders':
+        # Read-only per-collider world geometry: the collider-level clearance
+        # guard's input (the AABB is an over-approximation).
+        return tools.object_colliders()
     if tool == 'audit':
         # per-joint authority + execution audit of the last command
         return tools.command_audit(**(req.get('kwargs') or {}))
