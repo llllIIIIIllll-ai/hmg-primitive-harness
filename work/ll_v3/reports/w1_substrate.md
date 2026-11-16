@@ -648,3 +648,36 @@ Next levers: tune the front-posture joint-space move (its own deadband/
 gain curve), and re-approach before the front pre-grasp (down pre-grasp ->
 approach -> front pre-grasp near the handle -> descent) so the walk happens
 with the tucked arms that do walk.
+
+## 29. QUEUED for the next session: `object_info` L1 tool (manager requirement)
+
+Config entry `object_info` (capability `object_part_inventory`) in
+warmup.substrate. Read-only; no state change. Contract:
+- Returns: the task object name; a short semantic summary with evidence;
+  every body in the object tree with mass and local/world pose; every
+  collision and visual geom (name, type, size, local/world pose, mesh asset
+  name, parent body); the world AABB explicitly flagged as an
+  over-approximation, NOT the object model; a shape-based part
+  classification (handle / body / bit / battery / base) with the evidence
+  geom and measured dimensions; per part the cross-section vs the hand
+  opening (~0.10-0.12 m) and vs the wrist radius (0.047 m) + wrist-pad
+  offset (5-7 cm); the candidate grasp parts + approach axes
+  (front/side/top); the source model XML path.
+- Classification is structural (shape + the model's own body/mesh names),
+  not a text classifier.
+- Validator: pass on the drill (handle box 0.04x0.028x0.16, motor capsule
+  r 0.035, bit capsule r 0.023, battery box 0.06x0.038x0.02) and on a box
+  task (03) as the contrast; assert no state change; record the output here.
+- The grasp-topology pass must consume it: hand count and grasp part come
+  from the tool's inventory, not from the body AABB.
+
+Implementation sketch: aggregate `bodies(match=<object root>)` +
+`object_aabb` + the model XML path; classify by geom type/size and the
+body/mesh names; emit the per-part cross-section vs the hand/wrist
+clearances. The drill model path used here:
+humanoidmimicgen/locomanipulation/models/assets/objects/omniverse/locomanip/
+powerdrill_b01/model.xml.
+
+Also queued: the two chain levers (front-posture joint-space tuning; the
+arm posture that lets the base walk forward, or re-approach before the
+front pre-grasp). W2 gate unchanged; batch 0.
