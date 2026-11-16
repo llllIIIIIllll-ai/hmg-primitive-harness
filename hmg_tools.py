@@ -781,7 +781,8 @@ class Tools:
                 if ratio >= 2.0 and dims[1] <= 0.06:
                     kind = 'handle'
                 elif dims[0] < 0.045 and dims[2] > 0.10:
-                    kind = 'battery'
+                    kind = ('battery' if 'battery' in
+                            rec['body'].lower() else 'panel')
                 else:
                     kind = 'box'
             elif gtype in (int(mujoco.mjtGeom.mjGEOM_CAPSULE),

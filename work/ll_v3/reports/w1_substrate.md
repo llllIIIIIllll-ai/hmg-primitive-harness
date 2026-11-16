@@ -705,3 +705,25 @@ Validator (work/ll_v3/object_info_test.py), state unchanged on both:
 Classification is structural (geom type/size + ratio + cross-section), not
 text-based. The 03 panels are labelled 'battery' (a flat-plate class); a
 'panel' label is a cosmetic refinement.
+
+## 31. Item 2: front-posture gain (and the graph registration of object_info)
+
+Front-posture joint-space move (stage 2, down pre-grasp -> front pre-grasp
+dx -0.205 z 0.954), from its trace:
+- DLS preview err 0.0, dq 0.938 rad: the front pre-grasp target IS reachable
+  kinematically from the stage-1 pose.
+- Live tracking: q_moved 0.0024-0.0034 per step against the 0.04 clamp =
+  gain ~6-8.5%. The site error stays 0.386 -> 0.400 (no progress).
+- The live LEFT wrist surface falls 0.065 -> 0.020 over the move; the live
+  guard (0.02) aborts at k80 (surface 0.01997). The 81 steps are the abort,
+  not the budget.
+So the front posture is a weak-authority posture (~0.08 vs the backoff's
+0.4-0.6) AND the path brings the left wrist within 2 cm of the object. The
+0.012 deadband comp is too small at this posture; a much larger comp/step
+is needed and the path must keep the wrist clear.
+
+Graph: `object_part_inventory` proposed as an L1 read capability
+(id 37b7b823-0e86-44ba-ad63-9d3830850393), skill `object_info` linked
+(88a1b024-0bba-47b0-84eb-8bcd6bbba37c), validation accepted -> verified.
+The flat-plate class is relabelled 'panel' unless the parent body is a
+battery (drill battery -> 'battery', 03 panels -> 'panel').
