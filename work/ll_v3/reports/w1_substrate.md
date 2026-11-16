@@ -742,3 +742,36 @@ base tilt/yaw at the standoff. The next measurement is a longer sustained
 burst at the standoff (tucked vs down) and from the backoff, reporting the
 distance vs the commanded velocity. Queued with the front-posture friction
 threshold and the wrist-clear waypoint.
+
+## 33. Walk characterization grid (position x duration x posture)
+
+move_base x=0.12: moved / commanded / speed / tilt / robot-object contacts
+- standoff tucked 2 s: 0.030 / 0.24 / 0.015 / 6.3 / 0
+- standoff tucked 5 s: 0.102 / 0.60 / 0.020 / 5.8 / 0
+- standoff down 2 s: 0.006 / 0.24 / 0.003 / 4.0 / 0
+- standoff down 5 s: 0.033 / 0.60 / 0.007 / 4.8 / 0
+- backoff tucked 2 s: 0.256 / 0.24 / 0.128 / 3.4 / 0
+- backoff tucked 5 s: 0.285 / 0.60 / 0.057 / 4.9 / 0
+- backoff down 2 s: 0.041 / 0.24 / 0.021 / 2.0 / 0
+- backoff down 5 s: 0.041 / 0.60 / 0.008 / 2.0 / 0
+Position dominates (backoff-tucked 0.256 vs standoff-tucked 0.030, 8.5x);
+posture is 6x at the backoff (tucked 0.256 vs down 0.041); duration
+saturates; no robot-object contacts; tilt 2-6 deg with no clear effect.
+NOTE (manager correction): the policy cannot see the object (the observation
+has no object/base-XY/table input), so "proximity avoidance" is impossible
+via perception; the mechanism must be physical contact, robot state, policy
+state/history, or the arm-FK rpy command. The discriminating tests (all
+scene contacts + feet/shin positions; tilt/velocity per step and a settle;
+a sustained walk and a walk-after-walk; the commanded rpy vs zero) remain
+queued. The ordering (approach tucked, unfold at the standoff) sidesteps the
+walk issue regardless.
+
+## 34. Reordered one-hand chain: standoff unfold safe, front grasp bifurcated
+
+tuck -> standoff -> unfold at the standoff (down then front) -> descent ->
+close -> lift. All phases 0.0 object displacement: the standoff unfold no
+longer drags (strong hold). Stage 2 front pre-grasp 0.307 at the 300-step
+cap (weak posture). Descent branches: seeded residual 0.032 but wrist
+-0.028; unseeded wrist +0.052 but residual 0.155 and no motion (site 0.3313
+constant), predicted surface flips at k50 and the guard aborts. The
+reachable branch collides; the clear branch does not move.

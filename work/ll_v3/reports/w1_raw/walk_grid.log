@@ -1,0 +1,8 @@
+standoff tucked dur 2: dist 0.03 moved [0.014399999999999968, -0.026299999999999997] cmd 0.24 speed 0.015 tilt 6.3 yaw 0.26 contacts 0
+standoff tucked dur 5: dist 0.1015 moved [0.006799999999999917, -0.1013] cmd 0.60 speed 0.0203 tilt 5.77 yaw -0.72 contacts 0
+standoff down dur 2: dist 0.006 moved [0.005900000000000016, 0.0012000000000000014] cmd 0.24 speed 0.003 tilt 4.01 yaw -1.79 contacts 0
+standoff down dur 5: dist 0.0327 moved [0.0014000000000000679, -0.0327] cmd 0.60 speed 0.0065 tilt 4.81 yaw 0.06 contacts 0
+backoff tucked dur 2: dist 0.2561 moved [0.25470000000000015, 0.0268] cmd 0.24 speed 0.1281 tilt 3.38 yaw 1.22 contacts 0
+backoff tucked dur 5: dist 0.2846 moved [0.2846000000000002, -0.0032] cmd 0.60 speed 0.0569 tilt 4.93 yaw 0.69 contacts 0
+backoff down dur 2: dist 0.041 moved [0.03859999999999997, 0.013800000000000002] cmd 0.24 speed 0.0205 tilt 2.0 yaw 1.28 contacts 0
+backoff down dur 5: dist 0.0405 moved [0.03799999999999981, 0.0141] cmd 0.60 speed 0.0081 tilt 2.01 yaw 1.28 contacts 0
