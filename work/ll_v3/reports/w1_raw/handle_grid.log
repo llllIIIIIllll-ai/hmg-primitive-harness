@@ -1,0 +1,8 @@
+standoff 0.16317561092271102
+cells 36 feasible 0
+closest pad surfaces:
+  left frac 0.2 roll 0 pad_surf 0.0000 wrist -0.035 margin 0.0 ik 0.007
+  left frac 0.2 roll 0 pad_surf 0.0000 wrist -0.029 margin 0.0 ik 0.011
+  left frac 0.2 roll 0 pad_surf 0.0000 wrist -0.021 margin 0.0 ik 0.025
+  left frac 0.2 roll 90 pad_surf 0.0000 wrist -0.03 margin 0.239 ik 0.001
+  left frac 0.2 roll 90 pad_surf 0.0000 wrist -0.02 margin 0.19 ik 0.001

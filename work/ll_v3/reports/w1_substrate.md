@@ -600,3 +600,20 @@ pad normal and contact face.
 Topology record update: the drill's grasp part is the HANDLE
 (collider_box_f302734d), one hand; grasp type top/side on the handle; the
 AABB must not be used as the object model for grasp planning.
+
+## 26. Geom-level handle grid: pads reach, wrist cannot clear
+
+36 cells (both hands x handle frac 0.2/0.5/0.8 x roll 0/90 x palm z-offset
+0.05/0.07/0.09), clearance measured to the actual colliders
+(bottle_collider_box_f302734d handle, _8e968ea9 motor capsule,
+_cylinder99aba387 bit, _a1f69b3d battery):
+- ALL 36 cells: pad_surface = 0.0000 (the pads reach the handle).
+- ALL 36 cells: wrist_min NEGATIVE, -0.008..-0.035 m - the wrist geom center
+  is inside a collider. Best margins are the left roll-90 cells
+  (0.19-0.24, ik 0.001) with wrist -0.008..-0.03; right-hand cells have
+  margin 0.0 and wrist -0.009..-0.02.
+The wrist radius (~0.047 m) sits 5-7 cm behind the pad; with the pad on the
+4 x 2.8 cm handle the wrist center lands inside it. The wrist-to-pad
+geometry, not the object model, is the binding constraint. Zero feasible
+one-hand cells; the final measured constraint for 05 across both grasp modes
+and both object representations. Stopped for the manager-level decision.
