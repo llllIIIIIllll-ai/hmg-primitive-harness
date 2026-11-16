@@ -775,3 +775,22 @@ cap (weak posture). Descent branches: seeded residual 0.032 but wrist
 -0.028; unseeded wrist +0.052 but residual 0.155 and no motion (site 0.3313
 constant), predicted surface flips at k50 and the guard aborts. The
 reachable branch collides; the clear branch does not move.
+
+## 35. WALK MECHANISM NAMED: physical table contact (case A)
+
+Per-step logs (tuck, 1.5 s settle, nav x=0.12 for 5 s):
+- STANDOFF (start x 1.490): dist 0.1605 but lateral wandering (y 0.004 ->
+  -0.141 -> -0.129); x stays 1.490. Scene contacts: k010 table_main <->
+  robot0_pelvis dist -0.00011; k020 table_main <->
+  gripper0_left_left_hand_thumb_2_link dist -0.00022.
+- BACKOFF (start x 1.214): dist 0.2774, x advances 1.214 -> 1.489 then
+  stops; ZERO scene contacts.
+So the standoff "stall" is the pelvis (and at settle a hand thumb) physically
+contacting the table; the walk cannot advance past the table's edge. The
+policy has no object input, consistent with a physical block. Tilt 2-6 deg
+in both cases; the backoff (lowest tilt) walked best, so tilt is not the
+driver. The 6x arm-posture effect at the backoff is a separate real effect.
+Consequence: the standoff aabb 0.15-0.163 is at the pelvis-table contact
+limit; no chain can bring the base closer, and earlier approaches that
+reached aabb 0.162 were already at that limit. Recorded: the approach stops
+at the table contact, not a WBC characteristic.

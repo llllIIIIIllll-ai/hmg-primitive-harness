@@ -1,0 +1,16 @@
+== standoff dist 0.1605
+  k000 pos [1.49, 0.004, 0.749] tilt 2.65 yaw -3.65 vel [0.026, 0.016, 0.009] nscene 0 feet {'robot0_left_ankle_pitch_link': [1.508, 0.1406, 0.052], 'robot0_left_ankle_roll_link': [1.508, 0.14
+  k010 pos [1.495, 0.027, 0.743] tilt 4.97 yaw -2.4 vel [0.027, 0.101, 0.093] nscene 1 feet {'robot0_left_ankle_pitch_link': [1.5063, 0.1333, 0.0516], 'robot0_left_ankle_roll_link': [1.5062, 0
+     scene {'b1': 'table_main', 'b2': 'robot0_pelvis', 'dist': -0.00011}
+  k020 pos [1.493, 0.011, 0.753] tilt 4.57 yaw -2.6 vel [-0.005, -0.16, -0.029] nscene 1 feet {'robot0_left_ankle_pitch_link': [1.506, 0.1329, 0.0515], 'robot0_left_ankle_roll_link': [1.506, 0.1
+     scene {'b1': 'table_main', 'b2': 'gripper0_left_left_hand_thumb_2_link', 'dist': -0.00022}
+  k030 pos [1.496, 0.002, 0.74] tilt 4.07 yaw -0.99 vel [-0.0, 0.051, -0.014] nscene 0 feet {'robot0_left_ankle_pitch_link': [1.5014, 0.1296, 0.0812], 'robot0_left_ankle_roll_link': [1.5017, 0
+  k230 pos [1.493, -0.141, 0.737] tilt 4.52 yaw -1.83 vel [0.0, 0.071, -0.012] nscene 0 feet {'robot0_left_ankle_pitch_link': [1.5169, -0.0109, 0.0806], 'robot0_left_ankle_roll_link': [1.5173, 
+  k240 pos [1.49, -0.129, 0.747] tilt 5.1 yaw -2.98 vel [-0.022, -0.064, 0.093] nscene 0 feet {'robot0_left_ankle_pitch_link': [1.5266, -0.0132, 0.0514], 'robot0_left_ankle_roll_link': [1.5267, 
+== backoff dist 0.2774
+  k000 pos [1.214, -0.014, 0.749] tilt 2.64 yaw 0.97 vel [0.032, 0.021, 0.011] nscene 0 feet {'robot0_left_ankle_pitch_link': [1.2284, 0.1233, 0.052], 'robot0_left_ankle_roll_link': [1.2284, 0.
+  k010 pos [1.226, 0.014, 0.744] tilt 4.23 yaw 1.28 vel [0.1, 0.134, 0.103] nscene 0 feet {'robot0_left_ankle_pitch_link': [1.226, 0.1172, 0.0516], 'robot0_left_ankle_roll_link': [1.226, 0.1
+  k020 pos [1.246, 0.011, 0.756] tilt 2.19 yaw 0.16 vel [0.126, -0.119, 0.006] nscene 0 feet {'robot0_left_ankle_pitch_link': [1.226, 0.1171, 0.0517], 'robot0_left_ankle_roll_link': [1.226, 0.1
+  k030 pos [1.27, -0.011, 0.742] tilt 2.44 yaw 1.46 vel [0.113, 0.019, -0.047] nscene 0 feet {'robot0_left_ankle_pitch_link': [1.2285, 0.1064, 0.0868], 'robot0_left_ankle_roll_link': [1.2278, 0
+  k230 pos [1.489, -0.014, 0.736] tilt 4.5 yaw 2.0 vel [0.031, 0.156, -0.049] nscene 0 feet {'robot0_left_ankle_pitch_link': [1.4952, 0.111, 0.0754], 'robot0_left_ankle_roll_link': [1.4955, 0.
+  k240 pos [1.495, 0.007, 0.745] tilt 3.52 yaw 0.27 vel [-0.019, -0.026, 0.066] nscene 0 feet {'robot0_left_ankle_pitch_link': [1.5097, 0.1133, 0.0514], 'robot0_left_ankle_roll_link': [1.5098, 0
