@@ -1,5 +1,5 @@
 offset 0.0 ok False stage unfold binding object_displacement err None
-  displacements {'tuck': 0.0010000000000000009, 'standoff': 0.0, 'backoff': 0.0, 'untuck': 0.008485281374238578}
+  displacements {'tuck': 0.0010000000000000009, 'standoff': 0.0, 'backoff': 0.0, 'untuck': 0.015297058540778237}
   resets/nans None None sim_time None
   first_step null
   site None normal None contacts None rise None guard None

@@ -11,7 +11,8 @@ def run(api, grasp=None, orientation='keep', max_steps=50, max_delta=0.08,
         reorient_each_step=False, freeze_object_pos=False,
         wrist_guard=False, wrist_guard_dist=0.010, max_delta_near=0.005,
         near_dist=0.15, orient_mode='side', seed_mode='none',
-        seed_force=False, joint_mode=False, live_guard_dist=0.02,
+        seed_force=False, joint_mode=False, deadband_comp=0.0,
+        live_guard_dist=0.02,
         budget=True, **kw):
     """True closed-loop reach: solve from the live state with apply=False,
     clamp the per-step joint delta, apply one control step (sim advances),
@@ -419,6 +420,15 @@ def run(api, grasp=None, orientation='keep', max_steps=50, max_delta=0.08,
                 bad = True
                 break
             c = np.clip(d, -md_step, md_step)
+            if joint_mode and deadband_comp > 0.0:
+                if c > 0.0 and c < deadband_comp:
+                    c = deadband_comp
+                if c < 0.0 and c > -deadband_comp:
+                    c = -deadband_comp
+                if c > md_step:
+                    c = md_step
+                if c < -md_step:
+                    c = -md_step
             if np.abs(c) > dmax:
                 dmax = np.abs(c)
             cmd[i] = q[i] + c

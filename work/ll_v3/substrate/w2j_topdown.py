@@ -47,7 +47,7 @@ def run(api, standoff=0.15, lateral_offset=0.0, z_pre=1.20, z_grasp=1.06,
     u_r = api.skill('arm_untuck', dx=pre_dx, dy=dy, z=z_pre,
                     stop_err=0.05, max_steps=400, max_delta=0.04,
                     orient_mode='down', orientation='down',
-                    trace_contacts=True,
+                    deadband_comp=0.012, trace_contacts=True,
                     contact_match=object_match, joint_mode=True,
                     wrist_guard=True, wrist_guard_dist=0.01,
                     seed_mode='dls')

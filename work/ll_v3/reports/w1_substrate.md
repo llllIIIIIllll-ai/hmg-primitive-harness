@@ -456,3 +456,21 @@ torso contact. Shared limits: WBC arm authority is position/posture/size
 dependent; the base creeps ~0.45 mm/step under arm motion; preview
 solutions are not executable at the standoff. Batch 0; stopped for a
 manager-level decision.
+
+## 18. Arm actuator static-friction deadband (control-layer root cause)
+
+The "WBC refusal" is an actuator friction deadband, not a policy choice: the
+arm joints run robosuite JointPositionController (kp 300/shoulder-elbow,
+800/wrist; kd 8/15; torque compensation on) with frictionloss 0.2 N·m (arm)
+and 0.1 N·m (wrist). For small errors the PD share M(q) kp e is below the
+friction while the actuator force is dominated by gravity compensation, so
+the joint does not move. Measured (torque_probe at the backoff): actuator
+forces 0.57-2.91 N·m vs ctrlrange +/-25/+/-10 (no saturation); an elbow
+0.006 rad command moved 0.0008 rad.
+
+Deadband compensation (command at least 0.012 rad in the target direction
+when the residual is small) closes the plateau: the down pre-grasp site
+error went 0.532 -> 0.1207 at k225 (previously plateaued at 0.25-0.55).
+Two residual defects remain, both named: the compensation limit-cycles at
+small residuals (~0.12 m) and the base creeps ~0.5 mm/step over a long
+unfold, producing a torso contact at k318 (0.68 mm, 15.3 mm displacement).
