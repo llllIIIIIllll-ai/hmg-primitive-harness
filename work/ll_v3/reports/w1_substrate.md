@@ -821,3 +821,23 @@ Lever (harness-controllable): keep the arms near the trained configuration
 while the base must walk; do the arm unfold only when the base need not walk.
 The reordered chain already does this (approach tucked, unfold at the
 standoff).
+
+## 37. Front-posture friction threshold (40-step steady gains)
+
+Stage 1 at the standoff: 0.478 (vs 0.119 at the backoff - the down pre-grasp
+is much harder from the standoff's tuck). Stage 2 front: 0.307.
+Steady gains (step -> gain, q before->after):
+- left_shoulder_pitch: 0.005 0.038; 0.01 0.040; 0.02 0.096; 0.04 0.413;
+  0.08 0.423. Threshold between 0.02 and 0.04; the comp must be ~0.03-0.04.
+- left_elbow: 0.005 1.086; 0.01 0.261; 0.02 0.399; 0.04 0.468;
+  0.08 0.013 (q 2.05->2.09, at its range end).
+- left_wrist_pitch: 0.005 0.474; 0.01 0.482; 0.02 0.015; 0.04 0.001;
+  0.08 0.001 (q ~1.48-1.49, at its limit).
+Implication: at the front posture the shoulder needs a >=0.03-0.04 comp/step;
+the wrist is at its limit (no orientation authority); the descent's
+0.005/0.01 near clamp is below the friction threshold, which is why the
+unseeded branch crept 0.0002-0.003/step. A descent at the front posture needs
+a >=0.04 clamp - but the unseeded branch's 0.155 residual then travels fast
+through the wrist's 0.052 clearance (the guard would trip mid-path). The
+seeded branch (residual 0.032, wrist -0.028) with the wrist-clear waypoint is
+the route. Recorded; the next run is that route.

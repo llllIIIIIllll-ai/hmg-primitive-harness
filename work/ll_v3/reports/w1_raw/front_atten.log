@@ -1,0 +1,17 @@
+stage1 0.4785775920123712
+stage2 0.307035833078841
+left_shoulder_pitch_joint    s0.005 steady_gain 0.038 q 0.474 -> 0.482
+left_shoulder_pitch_joint    s0.010 steady_gain 0.04 q 0.482 -> 0.498
+left_shoulder_pitch_joint    s0.020 steady_gain 0.096 q 0.498 -> 0.574
+left_shoulder_pitch_joint    s0.040 steady_gain 0.413 q 0.574 -> 1.235
+left_shoulder_pitch_joint    s0.080 steady_gain 0.423 q 1.235 -> 2.59
+left_elbow_joint             s0.005 steady_gain 1.086 q 0.661 -> 0.878
+left_elbow_joint             s0.010 steady_gain 0.261 q 0.878 -> 0.983
+left_elbow_joint             s0.020 steady_gain 0.399 q 0.983 -> 1.302
+left_elbow_joint             s0.040 steady_gain 0.468 q 1.302 -> 2.052
+left_elbow_joint             s0.080 steady_gain 0.013 q 2.052 -> 2.094
+left_wrist_pitch_joint       s0.005 steady_gain 0.474 q 1.193 -> 1.288
+left_wrist_pitch_joint       s0.010 steady_gain 0.482 q 1.288 -> 1.481
+left_wrist_pitch_joint       s0.020 steady_gain 0.015 q 1.481 -> 1.492
+left_wrist_pitch_joint       s0.040 steady_gain 0.001 q 1.492 -> 1.494
+left_wrist_pitch_joint       s0.080 steady_gain 0.001 q 1.494 -> 1.497
