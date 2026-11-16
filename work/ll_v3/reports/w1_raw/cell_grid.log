@@ -1,0 +1,20 @@
+standoff True
+stage1 ok False worst 0.4802481199191019
+grid err None rows 16
+front frac 0.3 roll   0 | best unseeded err 0.0053 | margin 0.0 @ left_shoulder_roll_joint | bounds ['left_shoulder_roll'] | wrist 0.0152 @ box_a1f69b3d | yaw -0.485
+front frac 0.3 roll  90 | best unseeded err 0.0007 | margin 0.7703 @ left_shoulder_roll_joint | bounds [] | wrist 0.0133 @ box_a1f69b3d | yaw -0.408
+front frac 0.5 roll   0 | best seeded err 0.002 | margin 0.0407 @ left_wrist_roll_joint | bounds [] | wrist 0.0132 @ box_a1f69b3d | yaw 0.168
+front frac 0.5 roll  90 | best unseeded err 0.0008 | margin 0.7975 @ left_elbow_joint | bounds [] | wrist 0.0144 @ box_a1f69b3d | yaw -0.574
+front frac 0.7 roll   0 | best seeded err 0.0041 | margin 0.0 @ left_shoulder_roll_joint | bounds ['left_shoulder_roll'] | wrist 0.0244 @ box_a1f69b3d | yaw 0.533
+front frac 0.7 roll  90 | best unseeded err 0.0008 | margin 0.6909 @ left_elbow_joint | bounds [] | wrist 0.0279 @ box_a1f69b3d | yaw -0.692
+front frac 0.9 roll   0 | best seeded err 0.0052 | margin 0.0 @ left_wrist_pitch_joint | bounds ['left_wrist_pitch'] | wrist 0.0055 @ box_8e968ea9 | yaw -2.564
+front frac 0.9 roll  90 | best unseeded err 0.0008 | margin 0.6052 @ left_elbow_joint | bounds [] | wrist 0.0065 @ box_8e968ea9 | yaw -0.766
+diag  frac 0.3 roll   0 | best unseeded err 0.0039 | margin 0.0207 @ left_wrist_pitch_joint | bounds [] | wrist -0.0104 @ box_a1f69b3d | yaw -2.694
+diag  frac 0.3 roll  90 | best seeded err 0.0072 | margin 0.0 @ left_wrist_roll_joint | bounds ['left_wrist_roll'] | wrist -0.0132 @ box_a1f69b3d | yaw 1.425
+diag  frac 0.5 roll   0 | best unseeded err 0.0033 | margin 0.0191 @ left_wrist_pitch_joint | bounds [] | wrist 0.0062 @ box_a1f69b3d | yaw -2.585
+diag  frac 0.5 roll  90 | best seeded err 0.0035 | margin 0.0 @ left_wrist_yaw_joint | bounds ['left_wrist_yaw'] | wrist 0.0061 @ box_a1f69b3d | yaw -2.623
+diag  frac 0.7 roll   0 | best unseeded err 0.0028 | margin 0.0507 @ left_wrist_pitch_joint | bounds [] | wrist 0.0067 @ box_8e968ea9 | yaw -2.518
+diag  frac 0.7 roll  90 | best seeded err 0.0039 | margin 0.0 @ left_wrist_yaw_joint | bounds ['left_wrist_yaw'] | wrist 0.0 @ box_8e968ea9 | yaw -2.624
+diag  frac 0.9 roll   0 | best unseeded err 0.0025 | margin 0.0 @ left_wrist_yaw_joint | bounds ['left_wrist_yaw'] | wrist 0.0 @ box_8e968ea9 | yaw -2.483
+diag  frac 0.9 roll  90 | best seeded err 0.0046 | margin 0.0 @ left_wrist_yaw_joint | bounds ['left_wrist_yaw'] | wrist 0.0 @ box_8e968ea9 | yaw -2.663
+EXIT=0

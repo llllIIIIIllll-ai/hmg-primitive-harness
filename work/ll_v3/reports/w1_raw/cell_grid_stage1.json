@@ -1,0 +1,774 @@
+{
+ "ok": true,
+ "result": {
+  "ok": true,
+  "side": "left",
+  "yaw_now": 0.1579250075292362,
+  "rows": [
+   {
+    "side": "left",
+    "approach": "front",
+    "frac": 0.3,
+    "roll": 0,
+    "target": [
+     1.622933886073418,
+     0.021809863401689354,
+     0.852737558530631
+    ],
+    "unseeded": {
+     "branch": "unseeded",
+     "err": 0.0053,
+     "margin": 0.0,
+     "margin_joint": "left_shoulder_roll_joint",
+     "bounds": [
+      "left_shoulder_roll_joint"
+     ],
+     "wrist_min": 0.015190805936832197,
+     "wrist_collider": "collider_box_a1f69b3d",
+     "yaw_delta": -0.4846250075292362,
+     "branch_name": "unseeded"
+    },
+    "seeded": {
+     "branch": "seeded",
+     "err": 0.0121,
+     "margin": 0.0,
+     "margin_joint": "left_wrist_roll_joint",
+     "bounds": [
+      "left_wrist_roll_joint"
+     ],
+     "wrist_min": 0.018415781328803643,
+     "wrist_collider": "collider_box_a1f69b3d",
+     "yaw_delta": 0.5452749924707638
+    },
+    "best": {
+     "branch": "unseeded",
+     "err": 0.0053,
+     "margin": 0.0,
+     "margin_joint": "left_shoulder_roll_joint",
+     "bounds": [
+      "left_shoulder_roll_joint"
+     ],
+     "wrist_min": 0.015190805936832197,
+     "wrist_collider": "collider_box_a1f69b3d",
+     "yaw_delta": -0.4846250075292362,
+     "branch_name": "unseeded"
+    }
+   },
+   {
+    "side": "left",
+    "approach": "front",
+    "frac": 0.3,
+    "roll": 90,
+    "target": [
+     1.622933886073418,
+     0.021809863401689354,
+     0.852737558530631
+    ],
+    "unseeded": {
+     "branch": "unseeded",
+     "err": 0.0007,
+     "margin": 0.7703,
+     "margin_joint": "left_shoulder_roll_joint",
+     "bounds": [],
+     "wrist_min": 0.013284273175987335,
+     "wrist_collider": "collider_box_a1f69b3d",
+     "yaw_delta": -0.40752500752923615,
+     "branch_name": "unseeded"
+    },
+    "seeded": {
+     "branch": "seeded",
+     "err": 0.0007,
+     "margin": 0.7703,
+     "margin_joint": "left_shoulder_roll_joint",
+     "bounds": [],
+     "wrist_min": 0.013284273175987335,
+     "wrist_collider": "collider_box_a1f69b3d",
+     "yaw_delta": -0.40752500752923615
+    },
+    "best": {
+     "branch": "unseeded",
+     "err": 0.0007,
+     "margin": 0.7703,
+     "margin_joint": "left_shoulder_roll_joint",
+     "bounds": [],
+     "wrist_min": 0.013284273175987335,
+     "wrist_collider": "collider_box_a1f69b3d",
+     "yaw_delta": -0.40752500752923615,
+     "branch_name": "unseeded"
+    }
+   },
+   {
+    "side": "left",
+    "approach": "front",
+    "frac": 0.5,
+    "roll": 0,
+    "target": [
+     1.6268335915358345,
+     0.02184092636377679,
+     0.8844990341323531
+    ],
+    "unseeded": {
+     "branch": "unseeded",
+     "err": 0.1824,
+     "margin": 0.0,
+     "margin_joint": "left_wrist_roll_joint",
+     "bounds": [
+      "left_wrist_roll_joint"
+     ],
+     "wrist_min": 0.0708344308415757,
+     "wrist_collider": "collider_box_8e968ea9",
+     "yaw_delta": 0.5909749924707638,
+     "branch_name": "unseeded"
+    },
+    "seeded": {
+     "branch": "seeded",
+     "err": 0.002,
+     "margin": 0.0407,
+     "margin_joint": "left_wrist_roll_joint",
+     "bounds": [],
+     "wrist_min": 0.013196642160739985,
+     "wrist_collider": "collider_box_a1f69b3d",
+     "yaw_delta": 0.16847499247076383,
+     "branch_name": "seeded"
+    },
+    "best": {
+     "branch": "seeded",
+     "err": 0.002,
+     "margin": 0.0407,
+     "margin_joint": "left_wrist_roll_joint",
+     "bounds": [],
+     "wrist_min": 0.013196642160739985,
+     "wrist_collider": "collider_box_a1f69b3d",
+     "yaw_delta": 0.16847499247076383,
+     "branch_name": "seeded"
+    }
+   },
+   {
+    "side": "left",
+    "approach": "front",
+    "frac": 0.5,
+    "roll": 90,
+    "target": [
+     1.6268335915358345,
+     0.02184092636377679,
+     0.8844990341323531
+    ],
+    "unseeded": {
+     "branch": "unseeded",
+     "err": 0.0008,
+     "margin": 0.7975,
+     "margin_joint": "left_elbow_joint",
+     "bounds": [],
+     "wrist_min": 0.014362389883352492,
+     "wrist_collider": "collider_box_a1f69b3d",
+     "yaw_delta": -0.5738250075292362,
+     "branch_name": "unseeded"
+    },
+    "seeded": {
+     "branch": "seeded",
+     "err": 0.0008,
+     "margin": 0.7975,
+     "margin_joint": "left_elbow_joint",
+     "bounds": [],
+     "wrist_min": 0.014362389883352492,
+     "wrist_collider": "collider_box_a1f69b3d",
+     "yaw_delta": -0.5738250075292362
+    },
+    "best": {
+     "branch": "unseeded",
+     "err": 0.0008,
+     "margin": 0.7975,
+     "margin_joint": "left_elbow_joint",
+     "bounds": [],
+     "wrist_min": 0.014362389883352492,
+     "wrist_collider": "collider_box_a1f69b3d",
+     "yaw_delta": -0.5738250075292362,
+     "branch_name": "unseeded"
+    }
+   },
+   {
+    "side": "left",
+    "approach": "front",
+    "frac": 0.7,
+    "roll": 0,
+    "target": [
+     1.630733296998251,
+     0.021871989325864226,
+     0.9162605097340751
+    ],
+    "unseeded": {
+     "branch": "unseeded",
+     "err": 0.0546,
+     "margin": 0.0,
+     "margin_joint": "left_wrist_roll_joint",
+     "bounds": [
+      "left_wrist_roll_joint",
+      "left_wrist_yaw_joint"
+     ],
+     "wrist_min": 0.0006105731914353256,
+     "wrist_collider": "collider_box_f302734d",
+     "yaw_delta": -1.8540250075292362,
+     "branch_name": "unseeded"
+    },
+    "seeded": {
+     "branch": "seeded",
+     "err": 0.0041,
+     "margin": 0.0,
+     "margin_joint": "left_shoulder_roll_joint",
+     "bounds": [
+      "left_shoulder_roll_joint"
+     ],
+     "wrist_min": 0.024352570491390682,
+     "wrist_collider": "collider_box_a1f69b3d",
+     "yaw_delta": 0.5331749924707638,
+     "branch_name": "seeded"
+    },
+    "best": {
+     "branch": "seeded",
+     "err": 0.0041,
+     "margin": 0.0,
+     "margin_joint": "left_shoulder_roll_joint",
+     "bounds": [
+      "left_shoulder_roll_joint"
+     ],
+     "wrist_min": 0.024352570491390682,
+     "wrist_collider": "collider_box_a1f69b3d",
+     "yaw_delta": 0.5331749924707638,
+     "branch_name": "seeded"
+    }
+   },
+   {
+    "side": "left",
+    "approach": "front",
+    "frac": 0.7,
+    "roll": 90,
+    "target": [
+     1.630733296998251,
+     0.021871989325864226,
+     0.9162605097340751
+    ],
+    "unseeded": {
+     "branch": "unseeded",
+     "err": 0.0008,
+     "margin": 0.6909,
+     "margin_joint": "left_elbow_joint",
+     "bounds": [],
+     "wrist_min": 0.027945612072162923,
+     "wrist_collider": "collider_box_a1f69b3d",
+     "yaw_delta": -0.6918250075292363,
+     "branch_name": "unseeded"
+    },
+    "seeded": {
+     "branch": "seeded",
+     "err": 0.0008,
+     "margin": 0.6909,
+     "margin_joint": "left_elbow_joint",
+     "bounds": [],
+     "wrist_min": 0.027945612072162923,
+     "wrist_collider": "collider_box_a1f69b3d",
+     "yaw_delta": -0.6918250075292363
+    },
+    "best": {
+     "branch": "unseeded",
+     "err": 0.0008,
+     "margin": 0.6909,
+     "margin_joint": "left_elbow_joint",
+     "bounds": [],
+     "wrist_min": 0.027945612072162923,
+     "wrist_collider": "collider_box_a1f69b3d",
+     "yaw_delta": -0.6918250075292363,
+     "branch_name": "unseeded"
+    }
+   },
+   {
+    "side": "left",
+    "approach": "front",
+    "frac": 0.9,
+    "roll": 0,
+    "target": [
+     1.6346330024606677,
+     0.021903052287951662,
+     0.9480219853357973
+    ],
+    "unseeded": {
+     "branch": "unseeded",
+     "err": 0.0479,
+     "margin": 0.0,
+     "margin_joint": "left_wrist_roll_joint",
+     "bounds": [
+      "left_wrist_roll_joint",
+      "left_wrist_yaw_joint"
+     ],
+     "wrist_min": 0.0,
+     "wrist_collider": "collider_box_8e968ea9",
+     "yaw_delta": -1.5554250075292362,
+     "branch_name": "unseeded"
+    },
+    "seeded": {
+     "branch": "seeded",
+     "err": 0.0052,
+     "margin": 0.0,
+     "margin_joint": "left_wrist_pitch_joint",
+     "bounds": [
+      "left_wrist_pitch_joint"
+     ],
+     "wrist_min": 0.0054990632208416,
+     "wrist_collider": "collider_box_8e968ea9",
+     "yaw_delta": -2.564425007529236,
+     "branch_name": "seeded"
+    },
+    "best": {
+     "branch": "seeded",
+     "err": 0.0052,
+     "margin": 0.0,
+     "margin_joint": "left_wrist_pitch_joint",
+     "bounds": [
+      "left_wrist_pitch_joint"
+     ],
+     "wrist_min": 0.0054990632208416,
+     "wrist_collider": "collider_box_8e968ea9",
+     "yaw_delta": -2.564425007529236,
+     "branch_name": "seeded"
+    }
+   },
+   {
+    "side": "left",
+    "approach": "front",
+    "frac": 0.9,
+    "roll": 90,
+    "target": [
+     1.6346330024606677,
+     0.021903052287951662,
+     0.9480219853357973
+    ],
+    "unseeded": {
+     "branch": "unseeded",
+     "err": 0.0008,
+     "margin": 0.6052,
+     "margin_joint": "left_elbow_joint",
+     "bounds": [],
+     "wrist_min": 0.006499050390632637,
+     "wrist_collider": "collider_box_8e968ea9",
+     "yaw_delta": -0.7663250075292363,
+     "branch_name": "unseeded"
+    },
+    "seeded": {
+     "branch": "seeded",
+     "err": 0.0008,
+     "margin": 0.6052,
+     "margin_joint": "left_elbow_joint",
+     "bounds": [],
+     "wrist_min": 0.006499050390632637,
+     "wrist_collider": "collider_box_8e968ea9",
+     "yaw_delta": -0.7663250075292363
+    },
+    "best": {
+     "branch": "unseeded",
+     "err": 0.0008,
+     "margin": 0.6052,
+     "margin_joint": "left_elbow_joint",
+     "bounds": [],
+     "wrist_min": 0.006499050390632637,
+     "wrist_collider": "collider_box_8e968ea9",
+     "yaw_delta": -0.7663250075292363,
+     "branch_name": "unseeded"
+    }
+   },
+   {
+    "side": "left",
+    "approach": "diag",
+    "frac": 0.3,
+    "roll": 0,
+    "target": [
+     1.6992918144042337,
+     -0.032866153104874146,
+     0.8840425102156281
+    ],
+    "unseeded": {
+     "branch": "unseeded",
+     "err": 0.0039,
+     "margin": 0.0207,
+     "margin_joint": "left_wrist_pitch_joint",
+     "bounds": [],
+     "wrist_min": -0.010444789049700878,
+     "wrist_collider": "collider_box_a1f69b3d",
+     "yaw_delta": -2.694025007529236,
+     "branch_name": "unseeded"
+    },
+    "seeded": {
+     "branch": "seeded",
+     "err": 0.0039,
+     "margin": 0.0207,
+     "margin_joint": "left_wrist_pitch_joint",
+     "bounds": [],
+     "wrist_min": -0.010444789049700878,
+     "wrist_collider": "collider_box_a1f69b3d",
+     "yaw_delta": -2.694025007529236
+    },
+    "best": {
+     "branch": "unseeded",
+     "err": 0.0039,
+     "margin": 0.0207,
+     "margin_joint": "left_wrist_pitch_joint",
+     "bounds": [],
+     "wrist_min": -0.010444789049700878,
+     "wrist_collider": "collider_box_a1f69b3d",
+     "yaw_delta": -2.694025007529236,
+     "branch_name": "unseeded"
+    }
+   },
+   {
+    "side": "left",
+    "approach": "diag",
+    "frac": 0.3,
+    "roll": 90,
+    "target": [
+     1.6992918144042337,
+     -0.032866153104874146,
+     0.8840425102156281
+    ],
+    "unseeded": {
+     "branch": "unseeded",
+     "err": 0.0331,
+     "margin": 0.0,
+     "margin_joint": "left_shoulder_roll_joint",
+     "bounds": [
+      "left_shoulder_roll_joint"
+     ],
+     "wrist_min": 0.012179317466814762,
+     "wrist_collider": "collider_box_a1f69b3d",
+     "yaw_delta": -1.0777250075292362,
+     "branch_name": "unseeded"
+    },
+    "seeded": {
+     "branch": "seeded",
+     "err": 0.0072,
+     "margin": 0.0,
+     "margin_joint": "left_wrist_roll_joint",
+     "bounds": [
+      "left_wrist_roll_joint"
+     ],
+     "wrist_min": -0.013204119746219357,
+     "wrist_collider": "collider_box_a1f69b3d",
+     "yaw_delta": 1.4254749924707637,
+     "branch_name": "seeded"
+    },
+    "best": {
+     "branch": "seeded",
+     "err": 0.0072,
+     "margin": 0.0,
+     "margin_joint": "left_wrist_roll_joint",
+     "bounds": [
+      "left_wrist_roll_joint"
+     ],
+     "wrist_min": -0.013204119746219357,
+     "wrist_collider": "collider_box_a1f69b3d",
+     "yaw_delta": 1.4254749924707637,
+     "branch_name": "seeded"
+    }
+   },
+   {
+    "side": "left",
+    "approach": "diag",
+    "frac": 0.5,
+    "roll": 0,
+    "target": [
+     1.7031915198666503,
+     -0.03283509014278671,
+     0.9158039858173501
+    ],
+    "unseeded": {
+     "branch": "unseeded",
+     "err": 0.0033,
+     "margin": 0.0191,
+     "margin_joint": "left_wrist_pitch_joint",
+     "bounds": [],
+     "wrist_min": 0.006248098953115455,
+     "wrist_collider": "collider_box_a1f69b3d",
+     "yaw_delta": -2.585325007529236,
+     "branch_name": "unseeded"
+    },
+    "seeded": {
+     "branch": "seeded",
+     "err": 0.0033,
+     "margin": 0.0191,
+     "margin_joint": "left_wrist_pitch_joint",
+     "bounds": [],
+     "wrist_min": 0.006248098953115455,
+     "wrist_collider": "collider_box_a1f69b3d",
+     "yaw_delta": -2.585325007529236
+    },
+    "best": {
+     "branch": "unseeded",
+     "err": 0.0033,
+     "margin": 0.0191,
+     "margin_joint": "left_wrist_pitch_joint",
+     "bounds": [],
+     "wrist_min": 0.006248098953115455,
+     "wrist_collider": "collider_box_a1f69b3d",
+     "yaw_delta": -2.585325007529236,
+     "branch_name": "unseeded"
+    }
+   },
+   {
+    "side": "left",
+    "approach": "diag",
+    "frac": 0.5,
+    "roll": 90,
+    "target": [
+     1.7031915198666503,
+     -0.03283509014278671,
+     0.9158039858173501
+    ],
+    "unseeded": {
+     "branch": "unseeded",
+     "err": 0.0262,
+     "margin": 0.0,
+     "margin_joint": "left_shoulder_roll_joint",
+     "bounds": [
+      "left_shoulder_roll_joint"
+     ],
+     "wrist_min": 0.011599041876647169,
+     "wrist_collider": "collider_box_8e968ea9",
+     "yaw_delta": -1.2213250075292361,
+     "branch_name": "unseeded"
+    },
+    "seeded": {
+     "branch": "seeded",
+     "err": 0.0035,
+     "margin": 0.0,
+     "margin_joint": "left_wrist_yaw_joint",
+     "bounds": [
+      "left_wrist_yaw_joint"
+     ],
+     "wrist_min": 0.006123036088103384,
+     "wrist_collider": "collider_box_a1f69b3d",
+     "yaw_delta": -2.622925007529236,
+     "branch_name": "seeded"
+    },
+    "best": {
+     "branch": "seeded",
+     "err": 0.0035,
+     "margin": 0.0,
+     "margin_joint": "left_wrist_yaw_joint",
+     "bounds": [
+      "left_wrist_yaw_joint"
+     ],
+     "wrist_min": 0.006123036088103384,
+     "wrist_collider": "collider_box_a1f69b3d",
+     "yaw_delta": -2.622925007529236,
+     "branch_name": "seeded"
+    }
+   },
+   {
+    "side": "left",
+    "approach": "diag",
+    "frac": 0.7,
+    "roll": 0,
+    "target": [
+     1.7070912253290669,
+     -0.032804027180699274,
+     0.9475654614190722
+    ],
+    "unseeded": {
+     "branch": "unseeded",
+     "err": 0.0028,
+     "margin": 0.0507,
+     "margin_joint": "left_wrist_pitch_joint",
+     "bounds": [],
+     "wrist_min": 0.0066990397011246275,
+     "wrist_collider": "collider_box_8e968ea9",
+     "yaw_delta": -2.517525007529236,
+     "branch_name": "unseeded"
+    },
+    "seeded": {
+     "branch": "seeded",
+     "err": 0.0028,
+     "margin": 0.0507,
+     "margin_joint": "left_wrist_pitch_joint",
+     "bounds": [],
+     "wrist_min": 0.0066990397011246275,
+     "wrist_collider": "collider_box_8e968ea9",
+     "yaw_delta": -2.517525007529236
+    },
+    "best": {
+     "branch": "unseeded",
+     "err": 0.0028,
+     "margin": 0.0507,
+     "margin_joint": "left_wrist_pitch_joint",
+     "bounds": [],
+     "wrist_min": 0.0066990397011246275,
+     "wrist_collider": "collider_box_8e968ea9",
+     "yaw_delta": -2.517525007529236,
+     "branch_name": "unseeded"
+    }
+   },
+   {
+    "side": "left",
+    "approach": "diag",
+    "frac": 0.7,
+    "roll": 90,
+    "target": [
+     1.7070912253290669,
+     -0.032804027180699274,
+     0.9475654614190722
+    ],
+    "unseeded": {
+     "branch": "unseeded",
+     "err": 0.0263,
+     "margin": 0.0,
+     "margin_joint": "left_shoulder_roll_joint",
+     "bounds": [
+      "left_shoulder_roll_joint"
+     ],
+     "wrist_min": 0.0,
+     "wrist_collider": "collider_box_8e968ea9",
+     "yaw_delta": -1.2336250075292363,
+     "branch_name": "unseeded"
+    },
+    "seeded": {
+     "branch": "seeded",
+     "err": 0.0039,
+     "margin": 0.0,
+     "margin_joint": "left_wrist_yaw_joint",
+     "bounds": [
+      "left_wrist_yaw_joint"
+     ],
+     "wrist_min": 0.0,
+     "wrist_collider": "collider_box_8e968ea9",
+     "yaw_delta": -2.623725007529236,
+     "branch_name": "seeded"
+    },
+    "best": {
+     "branch": "seeded",
+     "err": 0.0039,
+     "margin": 0.0,
+     "margin_joint": "left_wrist_yaw_joint",
+     "bounds": [
+      "left_wrist_yaw_joint"
+     ],
+     "wrist_min": 0.0,
+     "wrist_collider": "collider_box_8e968ea9",
+     "yaw_delta": -2.623725007529236,
+     "branch_name": "seeded"
+    }
+   },
+   {
+    "side": "left",
+    "approach": "diag",
+    "frac": 0.9,
+    "roll": 0,
+    "target": [
+     1.7109909307914835,
+     -0.03277296421861184,
+     0.9793269370207943
+    ],
+    "unseeded": {
+     "branch": "unseeded",
+     "err": 0.0025,
+     "margin": 0.0,
+     "margin_joint": "left_wrist_yaw_joint",
+     "bounds": [
+      "left_wrist_yaw_joint"
+     ],
+     "wrist_min": 0.0,
+     "wrist_collider": "collider_box_8e968ea9",
+     "yaw_delta": -2.483225007529236,
+     "branch_name": "unseeded"
+    },
+    "seeded": {
+     "branch": "seeded",
+     "err": 0.0025,
+     "margin": 0.0,
+     "margin_joint": "left_wrist_yaw_joint",
+     "bounds": [
+      "left_wrist_yaw_joint"
+     ],
+     "wrist_min": 0.0,
+     "wrist_collider": "collider_box_8e968ea9",
+     "yaw_delta": -2.483225007529236
+    },
+    "best": {
+     "branch": "unseeded",
+     "err": 0.0025,
+     "margin": 0.0,
+     "margin_joint": "left_wrist_yaw_joint",
+     "bounds": [
+      "left_wrist_yaw_joint"
+     ],
+     "wrist_min": 0.0,
+     "wrist_collider": "collider_box_8e968ea9",
+     "yaw_delta": -2.483225007529236,
+     "branch_name": "unseeded"
+    }
+   },
+   {
+    "side": "left",
+    "approach": "diag",
+    "frac": 0.9,
+    "roll": 90,
+    "target": [
+     1.7109909307914835,
+     -0.03277296421861184,
+     0.9793269370207943
+    ],
+    "unseeded": {
+     "branch": "unseeded",
+     "err": 0.031,
+     "margin": 0.0,
+     "margin_joint": "left_shoulder_roll_joint",
+     "bounds": [
+      "left_shoulder_roll_joint",
+      "left_wrist_pitch_joint"
+     ],
+     "wrist_min": 0.0,
+     "wrist_collider": "collider_box_8e968ea9",
+     "yaw_delta": -1.2761250075292363,
+     "branch_name": "unseeded"
+    },
+    "seeded": {
+     "branch": "seeded",
+     "err": 0.0046,
+     "margin": 0.0,
+     "margin_joint": "left_wrist_yaw_joint",
+     "bounds": [
+      "left_wrist_yaw_joint"
+     ],
+     "wrist_min": 0.0,
+     "wrist_collider": "collider_box_8e968ea9",
+     "yaw_delta": -2.663025007529236,
+     "branch_name": "seeded"
+    },
+    "best": {
+     "branch": "seeded",
+     "err": 0.0046,
+     "margin": 0.0,
+     "margin_joint": "left_wrist_yaw_joint",
+     "bounds": [
+      "left_wrist_yaw_joint"
+     ],
+     "wrist_min": 0.0,
+     "wrist_collider": "collider_box_8e968ea9",
+     "yaw_delta": -2.663025007529236,
+     "branch_name": "seeded"
+    }
+   }
+  ],
+  "base": {
+   "pos": [
+    1.4689,
+    0.0015,
+    0.748
+   ],
+   "yaw_deg": -0.2,
+   "tilt_deg": 3.68
+  },
+  "object": [
+   1.731,
+   0.03,
+   0.799
+  ],
+  "t0": 14.8,
+  "t1": 14.8
+ }
+}

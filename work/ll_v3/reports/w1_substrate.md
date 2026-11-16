@@ -1051,10 +1051,39 @@ Admissibility rule (operator): <= 1 joint at a bound and |yaw| <= 0.30.
 collider wrist clearance at the endpoint is 13.2 mm (battery box), below the
 0.02 used for route (a); flagged to the operator.
 Front roll 90 needs -0.41..-0.77 rad of yaw; every diag cell needs
--2.48..-2.70 (or +1.43) - consistent with the measured yaw floor, so the
-diag direction is excluded.
+-2.48..-2.70 (or +1.43). **These numbers are the yaw-floor evidence:**
+every diag cell demands 8-9x the measured <=0.3 rad budget, so the diag
+direction is not a viable grasp direction from this posture - it is the
+floor showing up as a cell property, not a reachable family.
 
 **Caveat carried with this grid:** stage 1 itself does not reach. The untuck
 to the down pose (dx -0.126, z 1.16) ends at worst_pad_error 0.480 m, so the
 grid is evaluated from the posture the chain actually holds, and the yaw
 deltas partly encode that offset.
+
+## 42. Staged approach to the single admissible cell (front 0.5 r0)
+
+Five short QP goals interpolated from the live pad position to the cell
+[1.62683, 0.02184, 0.88450], each driven by the true closed loop (clamp
+0.04 / near 0.02, comp 0.04), live collider guard at 0.02, base hold.
+
+- stage 1 (frac 0.2): pad error 0.0446, joint margin 0.000 at left_elbow,
+  no wrist abort.
+- stage 2 (frac 0.4): pad error 0.0919, joint margin 0.000 at left_elbow,
+  no wrist abort.
+- the harness stopped after stage 2 (its no-progress rule: pad error >
+  4 x stop_err); the arm had covered ~0.024 m of the ~0.24 m to the cell,
+  i.e. ~10% of the commanded travel. The elbow sat on its bound throughout.
+- live wrist clearance during the stages 0.146 (battery box); predicted
+  0.076. **The collider guard never fired**, so the battery question (13 mm
+  static at the endpoint) was never reached.
+- chain then closed and lifted: gate fails on `site` (0.0919 / 0.1424).
+  Displacements: tuck 0.0010, all others 0.0, pre_close 0.0010. Contacts
+  0/0, rise 0.0, no reset, no NaN.
+- The elbow-at-bound saturation is the same four-bound mechanism in
+  miniature: one joint pinned, the executed step moves the pads by ~10% of
+  the command.
+
+The staged framing is better than the single descent (pad error 0.29 ->
+0.092 instead of 0.29 -> 0.307) but the per-stage tracking is still ~10%,
+so five stages cannot cover 0.24 m.
