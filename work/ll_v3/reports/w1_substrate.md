@@ -727,3 +727,18 @@ Graph: `object_part_inventory` proposed as an L1 read capability
 (88a1b024-0bba-47b0-84eb-8bcd6bbba37c), validation accepted -> verified.
 The flat-plate class is relabelled 'panel' unless the parent body is a
 battery (drill battery -> 'battery', 03 panels -> 'panel').
+
+## 32. Item 3: walk gain vs arm posture (no posture effect measured)
+
+move_base(x=+0.12, dur=2.0) after the standoff:
+- tucked arms: moved [0.014, -0.026] m (commanded 0.24 m).
+- down pre-grasp posture: moved [0.017, 0.003] m.
+~6-7% of the commanded velocity in both; the arm posture is not the
+differentiator. This conflicts with the standoff servo's burst approaches
+(~0.15 m in 1.6 s from the backoff) and with the front-posture chain
+approach (0.04 m in 24 s). Unseparated explanations: gait ramp-up vs a
+single short call; the WBC avoiding the object/table when close; the
+base tilt/yaw at the standoff. The next measurement is a longer sustained
+burst at the standoff (tucked vs down) and from the backoff, reporting the
+distance vs the commanded velocity. Queued with the front-posture friction
+threshold and the wrist-clear waypoint.
