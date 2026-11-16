@@ -794,3 +794,30 @@ Consequence: the standoff aabb 0.15-0.163 is at the pelvis-table contact
 limit; no chain can bring the base closer, and earlier approaches that
 reached aabb 0.162 were already at that limit. Recorded: the approach stops
 at the table contact, not a WBC characteristic.
+
+## 36. The 6x arm-posture walk effect: q_arms into the lower-body ONNX policy
+
+Source read (wbc/policy/__init__.py G1DecoupledWholeBodyPolicy.get_action):
+- upper_body_action = the IdentityPolicy pass-through of the 31-D target;
+- q_arms = q[arms indices] of that commanded vector;
+- cache_forward_kinematics(q); torso_orientation =
+  frame_placement("torso_link").rotation; the rpy command =
+  matrixToRpy(yaw-removed torso orientation); then
+  lower_body_policy.get_action(time, q_arms, base_height_command,
+  torso_orientation_rpy).
+
+Two consequences:
+1. The torso rpy comes from the FK chain to torso_link, which is the
+   pelvis/waist chain. The waist target is the measured homie value in both
+   the tuck and the down posture (reach_box_qp task_dim 12 locks it), so the
+   rpy command is posture-independent - the rpy is NOT the lever.
+2. q_arms IS posture-dependent and is passed as an input to the lower-body
+   ONNX locomotion policy. The tuck (folded arms) vs the down pre-grasp
+   (extended arms) present very different q_arms, and the policy's gait
+   changes by ~6x. The named mechanism for the 6x effect is the lower-body
+   policy's arm-pose input (q_arms), i.e. the ONNX gait policy's
+   configuration dependence, not a perception, tilt, or rpy effect.
+Lever (harness-controllable): keep the arms near the trained configuration
+while the base must walk; do the arm unfold only when the base need not walk.
+The reordered chain already does this (approach tucked, unfold at the
+standoff).
