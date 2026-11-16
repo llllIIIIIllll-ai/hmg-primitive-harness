@@ -1,0 +1,4 @@
+standoff 0.16317561092271102
+GRID A_current_standoff cells 60 feasible 0 best_worst_ik 0.0715
+backoff moved [-0.277, -0.041]
+GRID B_backed_off cells 60 feasible 0 best_worst_ik 0.1869

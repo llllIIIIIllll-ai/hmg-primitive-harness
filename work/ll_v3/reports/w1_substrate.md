@@ -492,3 +492,20 @@ top-down - the pre-grasp is reachable and the seeded descent clears the
 wrists, but the grasp target is joint-limit infeasible (five joints at
 0.0 margin, 10-12 cm residual). Stopped for a manager-level decision;
 batch 0; no chain run.
+
+## 20. Top-down grasp feasibility grid: 0/120 cells
+
+Read-only seeded-QP solve of the grasp target over z 1.00/1.03/1.06/1.10 x
+dy 0.06/0.08/0.10 x vertical hand roll 0/+15/-15/+30/-30, at two standoffs:
+- A (aabb 0.163): 0/60 feasible, best worst-ik 0.0715 (z1.10 dy0.06 roll-30,
+  margin 0.0 at left_elbow).
+- B (backed off 0.277 m, aabb ~0.30): 0/60 feasible, best 0.1869.
+Feasible = both residuals <= 0.02 and joint_margin_min >= 0.05. Every cell
+has a joint at 0.0 margin; the best is 7.15 cm short. The z/dy/roll/standoff
+dimensions do not rescue the joint-limit infeasibility.
+
+Final measured constraint: side - target branch collides at the wrist
+(0/25 orientations clear); top-down - pre-grasp reachable and seeded descent
+clear, but the grasp target is joint-limit infeasible (0/120) and the torso
+grazes at the close standoff. Stopped for a manager-level task/gate
+decision; batch 0.
