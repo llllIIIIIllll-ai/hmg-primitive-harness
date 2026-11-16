@@ -45,7 +45,8 @@ def run(api, standoff=0.15, lateral_offset=0.0, z_pre=1.20, z_grasp=1.06,
                                             'standoff': d_standoff,
                                             'backoff': d_back}}}
     u_r = api.skill('arm_untuck', dx=pre_dx, dy=dy, z=z_pre,
-                    stop_err=0.05, max_steps=400, max_delta=0.04,
+                    stop_err=0.12, max_steps=250, max_delta=0.04,
+                    base_gain=0.3, base_deadband=0.005, base_vmax=0.05,
                     orient_mode='down', orientation='down',
                     deadband_comp=0.012, trace_contacts=True,
                     contact_match=object_match, joint_mode=True,
@@ -109,8 +110,8 @@ def run(api, standoff=0.15, lateral_offset=0.0, z_pre=1.20, z_grasp=1.06,
                    reorient_each_step=True, base_deadband=0.005,
                    base_yaw_deadband=0.003, base_yaw_gain=0.6,
                    base_wmax=0.1, wrist_guard=True, wrist_guard_dist=0.01,
-                   seed_mode='dls', trace_contacts=True,
-                   contact_match=object_match)
+                   seed_mode='dls', seed_force=True, deadband_comp=0.012,
+                   trace_contacts=True, contact_match=object_match)
     st = api.observe()
     o2 = (st.get('object') or {}).get('pos')
     d_reach = _dist(o2, o_u2)

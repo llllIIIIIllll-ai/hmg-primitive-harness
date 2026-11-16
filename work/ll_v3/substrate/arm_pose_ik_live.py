@@ -340,6 +340,7 @@ def run(api, grasp=None, orientation='keep', max_steps=50, max_delta=0.08,
                 seed_q_use = {}
             first_step['seed_choice'] = 'seeded' if pick_sd else 'unseeded'
             first_step['seed_surface'] = {'unseeded': su, 'seeded': ss}
+            first_step['seed_res'] = {'unseeded': wu, 'seeded': ws}
         else:
             sq = None
             if seed_q_use:
@@ -420,15 +421,18 @@ def run(api, grasp=None, orientation='keep', max_steps=50, max_delta=0.08,
                 bad = True
                 break
             c = np.clip(d, -md_step, md_step)
-            if joint_mode and deadband_comp > 0.0:
-                if c > 0.0 and c < deadband_comp:
-                    c = deadband_comp
-                if c < 0.0 and c > -deadband_comp:
-                    c = -deadband_comp
-                if c > md_step:
-                    c = md_step
-                if c < -md_step:
-                    c = -md_step
+            if deadband_comp > 0.0:
+                # Settle law: feed-forward only while |err| > deadband;
+                # inside the band the joint holds at the friction deadband
+                # instead of limit-cycling.
+                if d > deadband_comp:
+                    c = c + deadband_comp
+                    if c > md_step:
+                        c = md_step
+                elif d < -deadband_comp:
+                    c = c - deadband_comp
+                    if c < -md_step:
+                        c = -md_step
             if np.abs(c) > dmax:
                 dmax = np.abs(c)
             cmd[i] = q[i] + c
@@ -481,6 +485,17 @@ def run(api, grasp=None, orientation='keep', max_steps=50, max_delta=0.08,
             if dv > qm:
                 qm = dv
             iq = iq + 1
+        jres = None
+        if seed_vec is not None:
+            jmax = 0.0
+            i2 = 0
+            while i2 < 31:
+                dd = seed_vec[i2] - q[i2]
+                ad = dd if dd >= 0 else -dd
+                if ad > jmax:
+                    jmax = ad
+                    jres = dd
+                i2 = i2 + 1
         sd = None
         if seed_q_use:
             ut = r.get('upper_target') or []
@@ -504,7 +519,7 @@ def run(api, grasp=None, orientation='keep', max_steps=50, max_delta=0.08,
                       'yaw_before': b['yaw_deg'], 'yaw_after': b_a['yaw_deg'],
                       'yaw_err': hold_yaw - b['yaw_deg'],
                       'wrist_surface': wd, 'wrist_pred': wd_pred,
-                      'seed_dist': sd, 'q_moved': qm,
+                      'seed_dist': sd, 'q_moved': qm, 'jres': jres,
                       'base_jump': base_jump,
                       'delta_max': dmax, 'reset': reset,
                       'nav': nav, 'base_err': [dxr, dyr],

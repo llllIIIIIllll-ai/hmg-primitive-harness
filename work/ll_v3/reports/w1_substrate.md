@@ -474,3 +474,21 @@ error went 0.532 -> 0.1207 at k225 (previously plateaued at 0.25-0.55).
 Two residual defects remain, both named: the compensation limit-cycles at
 small residuals (~0.12 m) and the base creeps ~0.5 mm/step over a long
 unfold, producing a torso contact at k318 (0.68 mm, 15.3 mm displacement).
+
+## 19. Final pre-check: the top-down grasp target is joint-limit infeasible
+
+Read-only solve at the current standoff (the back-off moved only 8 mm - the
+WBC backward authority is weak): DLS preview err 0.121/0.092, seeded QP
+ik_err 0.1052/0.0914, binding joint left_shoulder_yaw_joint at margin 0.0.
+Margin map: left_shoulder_yaw 0.0, left_wrist_roll 0.0,
+right_shoulder_yaw 0.0, right_wrist_roll 0.0, right_wrist_pitch 0.0;
+shoulder_pitch 0.196/0.658, elbow 0.77/1.09, shoulder_roll 1.14/1.08,
+wrist_yaw 1.50/1.56. A larger standoff moves the base farther and would
+increase the reach, not fix the residual.
+
+Both branches are therefore kinematic/actuator limited for this object:
+side - the grasp target collides at the wrist (0/25 orientations clear);
+top-down - the pre-grasp is reachable and the seeded descent clears the
+wrists, but the grasp target is joint-limit infeasible (five joints at
+0.0 margin, 10-12 cm residual). Stopped for a manager-level decision;
+batch 0; no chain run.

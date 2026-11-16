@@ -349,6 +349,16 @@ the waist) and is recorded, never used. The 14-D base-height/yaw candidate was
 eliminated in round 0. Selection is by executed pad/contract, not by model
 residual.
 
+**Control-stack source first.** When a commanded motion does not happen, read
+the control stack before designing the measurement. `docs/control_stack.md`
+maps the live source: the WBC policy (arms are a pass-through — HOMIE ONNX
+writes only the lower body), the actuator/controller config (arm kp/kd, torque
+compensation), the G1 model (motor ctrlrange, joint frictionloss) and the
+robosuite joint position controller (`torque = M(q) @ (kp*e + kd*(-v)) + bias`,
+clipped by ctrlrange). Cite `path:line` as evidence. A tracking deficit is not
+a policy refusal until the source says so; a static-friction deadband, a torque
+clip or a contact must be excluded in that order before any control-law change.
+
 **Concentrate.** Work one task's grasp at a time — 05_drill_lift first, then
 generalize to 03/06/07/09. Do not spread a batch across six tasks that share
 one blocker.
@@ -379,9 +389,12 @@ independent jobs on the same task run concurrently. The host has 128 cores;
 Keep slot 0 for the base track and stop slots when their wave ends.
 
 If blocked, distinguish missing capability vs wrong implementation vs
-frame/assumption vs expressivity vs WBC/IK limits vs evidence. Request
-discovery only with a measured failure: signature, evidence, missing behavior,
-expected reuse, why existing skills are insufficient.
+frame/assumption vs expressivity vs WBC/IK limits vs evidence. A WBC/IK-limit
+claim requires the control-stack source read first (`docs/control_stack.md`:
+policy pass-through, actuator gains, ctrlrange, frictionloss) with a
+`path:line` citation. Request discovery only with a measured failure:
+signature, evidence, missing behavior, expected reuse, why existing skills are
+insufficient.
 
 ## Promotion and reuse
 

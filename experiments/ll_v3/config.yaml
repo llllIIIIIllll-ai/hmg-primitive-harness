@@ -126,10 +126,13 @@ execution:
 run_instructions: |
   Read prompts/coordinator.md, this config and docs/control_vocabulary.md.
 
-  ISOLATION: use only experiments/ll_v3 and work/ll_v3. Do not read other
-  experiment directories, work/tracks, library/, or any external skill
-  catalogue. A PreToolUse hook blocks ll_v1/ll_v2 and the archive; treat a
-  blocked call as out of scope.
+  ISOLATION: use only experiments/ll_v3 and work/ll_v3 for experiment
+  artifacts. Do not read other experiment directories, work/tracks, library/,
+  or any external skill catalogue. A PreToolUse hook blocks ll_v1/ll_v2 and
+  the archive; treat a blocked call as out of scope. The CONTROL-STACK SOURCE
+  is in scope and required for control anomalies: docs/control_stack.md maps
+  the live WBC policy, actuator config, G1 model and robosuite controllers —
+  reading it is not an isolation violation.
 
   DESIGN FIRST, GRAPH SECOND. Two phases, in this order:
 
@@ -169,7 +172,11 @@ run_instructions: |
   with the measured waist exogenous while its owner is homie; after an
   authorized handover it becomes a command target and the achieved gain must be
   verified. Ramp duration follows the measured lag curve. Every L1 reports its
-  physical outcome and one binding constraint.
+  physical outcome and one binding constraint. A control anomaly is diagnosed
+  from the source first (docs/control_stack.md: arms are pass-through; arm
+  joint friction deadband 0.2/0.1 N·m with kp 300/800 and motor ctrlrange
+  +/-25/+/-10 N·m) with a path:line citation, then measured.
+  min_gain_for_commands is an amplitude map, not a global constant.
 
   Each batch: run `coverage`; spawn Explore and Exploit with the same packet;
   merge the valid targets; execute one actor per capability in parallel waves;
