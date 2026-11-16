@@ -543,3 +543,36 @@ The one-hand chain (w2_onehand.py) is implemented and ready; it was not run
 because it would descend to a pre-grasp and close on air. The remaining
 lever is a hand orientation (R_des) with the wrist not below the palm, or a
 contact target the wrist can tolerate.
+
+## 23. Top-down one-hand contact grid: no closable contact cell
+
+192 cells (both hands x dx -0.06/-0.03/0/+0.03 x dy -0.03/0/+0.03 x z
+1.02/1.05/1.08/1.12 x roll 0/90), pad-surface = the pad's inner face
+(center - normal*half_thick) distance to the AABB. 3 cells pass
+(pad_surf <= 0.005, wrist >= 0.02, margin >= 0.05): right hand, z 1.08,
+dx +0.03, roll 90, pad_surf 0.0000, wrist 0.033, margin 0.161-0.183,
+pad normal -X. But the -X normal makes the close axis X: the pads must
+straddle the object's 0.19 m X depth, beyond the hand's ~0.10-0.12 m
+opening. Every roll-0 (Y close, 0.10 m width) cell has pad_surf 0.0000 but
+wrist 0.0 and margin 0.0 (the wrist inside the AABB). Practical closable
+contact cells: 0. Same wrist-below/behind-the-pad geometry as the two-palm
+branch, now one-handed.
+
+## 24. Grasp-topology design record (queued; 05 measured, others expected)
+
+| task | object | hands | grasp type | approach axis | expected contacts | basis |
+|------|--------|-------|------------|---------------|-------------------|-------|
+| 05 drill_lift | drill, AABB 0.19x0.10x0.226 | 1 | top-down, Y close preferred | -Z with -X faces | drill front/back faces at z 1.03-1.10 | measured (grids 20-23) |
+| 01 box_lift_floor | box | 2 | side, opposing palms | horizontal | two opposite box faces | expected |
+| 03 box_lift | box | 2 | side, opposing palms | horizontal | two opposite box faces | expected |
+| 07 box_* | box | 2 | side, opposing palms | horizontal | two opposite box faces | expected |
+| 02 press_button | button | contact task | press (no grasp) | normal to button | fingertip/pad press | expected |
+| 04 push_* | object | contact task | push (no grasp) | horizontal | palm push face | expected |
+| 06 tool | tool | 1 | one hand | top/side | tool body | expected |
+| 08 tool | tool | 1 | one hand | top/side | tool body | expected |
+| 09 tool | tool | 1 | one hand | top/side | tool body | expected |
+
+Anti-pattern note: a fixed two-palm 12-D target for 05 blocked W2 and made
+the failures look like tuning. The grasp mode is selected from the object.
+Per-task AABBs for tasks other than 05 are to be read live when each task is
+first loaded (read-only probe), then this table's rows are filled.

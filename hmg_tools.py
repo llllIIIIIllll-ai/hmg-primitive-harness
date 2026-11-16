@@ -1865,7 +1865,17 @@ class Tools:
                 if mj_name is None or margin0[nm_] < margin0[mj_name]:
                     mj_name = nm_
             wpos = {}
+            padframe = {}
             for gi in range(int(m.ngeom)):
+                nmg0 = m.geom(gi).name
+                if nmg0 in ('gripper0_left_g0_col',
+                            'gripper0_right_g0_col'):
+                    padframe[nmg0] = {
+                        'pos': np.round(np.asarray(
+                            cfg.data.geom_xpos[gi], float), 4).tolist(),
+                        'xmat': np.round(np.asarray(
+                            cfg.data.geom_xmat[gi], float).reshape(3, 3),
+                            4).tolist()}
                 nmg = m.geom(gi).name
                 if nmg in ('robot0_g27_col', 'robot0_g28_col',
                            'robot0_g34_col', 'robot0_g35_col',
@@ -1884,6 +1894,7 @@ class Tools:
                     'joint_margin_joint': mj_name,
                     'joint_margins': margin0,
                     'wrist_solved': wpos,
+                    'pad_frame': padframe,
                     'waist_exogenous': int(task_dim) < 17,
                     'waist_owner': owner, 'waist_solved': waist_solved,
                     'waist_commandable': waist_commandable,

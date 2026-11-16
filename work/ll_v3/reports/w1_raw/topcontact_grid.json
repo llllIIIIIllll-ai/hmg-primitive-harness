@@ -1,0 +1,5301 @@
+[
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.06,
+  "dy": -0.03,
+  "z": 1.02,
+  "roll": 0,
+  "ik": 0.0171,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.6669,
+   0.0074,
+   0.9211
+  ],
+  "pad_normal": [
+   0.0291,
+   0.9966,
+   0.0775
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.06,
+  "dy": -0.03,
+  "z": 1.02,
+  "roll": 90,
+  "ik": 0.006,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.6701,
+   0.0056,
+   0.9353
+  ],
+  "pad_normal": [
+   -0.9966,
+   0.03,
+   0.0768
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.06,
+  "dy": -0.03,
+  "z": 1.05,
+  "roll": 0,
+  "ik": 0.0424,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.6645,
+   0.0072,
+   0.9256
+  ],
+  "pad_normal": [
+   0.0278,
+   0.9966,
+   0.0774
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.06,
+  "dy": -0.03,
+  "z": 1.05,
+  "roll": 90,
+  "ik": 0.0132,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.6738,
+   0.0062,
+   0.9567
+  ],
+  "pad_normal": [
+   -0.9971,
+   0.0303,
+   0.0694
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.06,
+  "dy": -0.03,
+  "z": 1.08,
+  "roll": 0,
+  "ik": 0.0626,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.6665,
+   -0.0431,
+   0.9605
+  ],
+  "pad_normal": [
+   -0.001,
+   0.9975,
+   0.07
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.04424575,
+  "wrist_surface": 0.01940309253701599,
+  "faces": [
+   "-y"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.06,
+  "dy": -0.03,
+  "z": 1.08,
+  "roll": 90,
+  "ik": 0.0364,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.6799,
+   0.0079,
+   0.9625
+  ],
+  "pad_normal": [
+   -0.9983,
+   0.0311,
+   0.0499
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.000500000000000167,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.06,
+  "dy": -0.03,
+  "z": 1.12,
+  "roll": 0,
+  "ik": 0.0459,
+  "margin": 0.0,
+  "joint": "left_shoulder_yaw_joint",
+  "pad_center": [
+   1.7154,
+   -0.0028,
+   1.0151
+  ],
+  "pad_normal": [
+   0.0175,
+   0.9969,
+   0.0766
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.003932729999999999,
+  "wrist_surface": 0.05290000000000017,
+  "faces": [
+   "-y"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.06,
+  "dy": -0.03,
+  "z": 1.12,
+  "roll": 90,
+  "ik": 0.0751,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.7088,
+   0.0686,
+   0.9884
+  ],
+  "pad_normal": [
+   -0.9932,
+   -0.1121,
+   -0.0318
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.021400000000000086,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.06,
+  "dy": 0.0,
+  "z": 1.02,
+  "roll": 0,
+  "ik": 0.0317,
+  "margin": 0.0,
+  "joint": "left_wrist_roll_joint",
+  "pad_center": [
+   1.6865,
+   0.0123,
+   0.9214
+  ],
+  "pad_normal": [
+   0.0155,
+   0.9969,
+   0.077
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.06,
+  "dy": 0.0,
+  "z": 1.02,
+  "roll": 90,
+  "ik": 0.0049,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.6701,
+   0.0363,
+   0.9353
+  ],
+  "pad_normal": [
+   -0.9966,
+   0.03,
+   0.0768
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.06,
+  "dy": 0.0,
+  "z": 1.05,
+  "roll": 0,
+  "ik": 0.051,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.6687,
+   0.0105,
+   0.9243
+  ],
+  "pad_normal": [
+   0.0134,
+   0.997,
+   0.0767
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.06,
+  "dy": 0.0,
+  "z": 1.05,
+  "roll": 90,
+  "ik": 0.0097,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.6722,
+   0.0372,
+   0.9591
+  ],
+  "pad_normal": [
+   -0.997,
+   0.0302,
+   0.0716
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.06,
+  "dy": 0.0,
+  "z": 1.08,
+  "roll": 0,
+  "ik": 0.0749,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.6668,
+   0.0094,
+   0.9283
+  ],
+  "pad_normal": [
+   0.0116,
+   0.997,
+   0.0764
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.06,
+  "dy": 0.0,
+  "z": 1.08,
+  "roll": 90,
+  "ik": 0.0334,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.6771,
+   0.0399,
+   0.9645
+  ],
+  "pad_normal": [
+   -0.9982,
+   0.0307,
+   0.0523
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0025000000000001688,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.06,
+  "dy": 0.0,
+  "z": 1.12,
+  "roll": 0,
+  "ik": 0.0982,
+  "margin": 0.0,
+  "joint": "left_shoulder_pitch_joint",
+  "pad_center": [
+   1.586,
+   0.0175,
+   1.0031
+  ],
+  "pad_normal": [
+   0.0256,
+   0.9967,
+   0.0771
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.05185551999999993,
+  "wrist_surface": 0.06868049213568583,
+  "faces": [
+   "-x"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.06,
+  "dy": 0.0,
+  "z": 1.12,
+  "roll": 90,
+  "ik": 0.0663,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.6894,
+   0.1181,
+   1.0054
+  ],
+  "pad_normal": [
+   -0.957,
+   -0.2857,
+   -0.0514
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.04479968999999999,
+  "wrist_surface": 0.03460664676041297,
+  "faces": [
+   "+y"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.06,
+  "dy": 0.03,
+  "z": 1.02,
+  "roll": 0,
+  "ik": 0.104,
+  "margin": 0.0,
+  "joint": "left_wrist_pitch_joint",
+  "pad_center": [
+   1.6966,
+   -0.0243,
+   0.8909
+  ],
+  "pad_normal": [
+   -0.0185,
+   0.9976,
+   0.067
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.025447920000000002,
+  "wrist_surface": 0.0,
+  "faces": [
+   "-y"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.06,
+  "dy": 0.03,
+  "z": 1.02,
+  "roll": 90,
+  "ik": 0.0028,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.669,
+   0.0661,
+   0.9352
+  ],
+  "pad_normal": [
+   -0.9966,
+   0.0299,
+   0.0768
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.06,
+  "dy": 0.03,
+  "z": 1.05,
+  "roll": 0,
+  "ik": 0.0695,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.6744,
+   0.0149,
+   0.9217
+  ],
+  "pad_normal": [
+   -0.0005,
+   0.9971,
+   0.0759
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.06,
+  "dy": 0.03,
+  "z": 1.05,
+  "roll": 90,
+  "ik": 0.0051,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.6692,
+   0.0663,
+   0.9619
+  ],
+  "pad_normal": [
+   -0.9968,
+   0.0299,
+   0.0742
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.06,
+  "dy": 0.03,
+  "z": 1.08,
+  "roll": 0,
+  "ik": 0.0892,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.6705,
+   0.0126,
+   0.9271
+  ],
+  "pad_normal": [
+   -0.0028,
+   0.9971,
+   0.0755
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.06,
+  "dy": 0.03,
+  "z": 1.08,
+  "roll": 90,
+  "ik": 0.0302,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.671,
+   0.0684,
+   0.9662
+  ],
+  "pad_normal": [
+   -0.998,
+   0.0298,
+   0.0556
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.004200000000000204,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.06,
+  "dy": 0.03,
+  "z": 1.12,
+  "roll": 0,
+  "ik": 0.0677,
+  "margin": 0.0,
+  "joint": "left_shoulder_yaw_joint",
+  "pad_center": [
+   1.7248,
+   0.0204,
+   1.0249
+  ],
+  "pad_normal": [
+   -0.0062,
+   0.9971,
+   0.0754
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.06280000000000019,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.06,
+  "dy": 0.03,
+  "z": 1.12,
+  "roll": 90,
+  "ik": 0.0428,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.6779,
+   0.1291,
+   1.0151
+  ],
+  "pad_normal": [
+   -0.976,
+   -0.2159,
+   -0.0272
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.05428503,
+  "wrist_surface": 0.04800260409602815,
+  "faces": [
+   "+y"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.03,
+  "dy": -0.03,
+  "z": 1.02,
+  "roll": 0,
+  "ik": 0.0452,
+  "margin": 0.0,
+  "joint": "left_wrist_pitch_joint",
+  "pad_center": [
+   1.7192,
+   -0.0326,
+   0.9196
+  ],
+  "pad_normal": [
+   0.0112,
+   0.9972,
+   0.0737
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.03373923999999999,
+  "wrist_surface": 0.0,
+  "faces": [
+   "-y"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.03,
+  "dy": -0.03,
+  "z": 1.02,
+  "roll": 90,
+  "ik": 0.0011,
+  "margin": 0.0159,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.6944,
+   0.0045,
+   0.9354
+  ],
+  "pad_normal": [
+   -0.9966,
+   0.03,
+   0.0768
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.03,
+  "dy": -0.03,
+  "z": 1.05,
+  "roll": 0,
+  "ik": 0.0502,
+  "margin": 0.0,
+  "joint": "left_wrist_pitch_joint",
+  "pad_center": [
+   1.7244,
+   -0.0381,
+   0.9565
+  ],
+  "pad_normal": [
+   0.0094,
+   0.9972,
+   0.0746
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.039239239999999995,
+  "wrist_surface": 0.015001333274079466,
+  "faces": [
+   "-y"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.03,
+  "dy": -0.03,
+  "z": 1.05,
+  "roll": 90,
+  "ik": 0.0076,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.6938,
+   0.0048,
+   0.9588
+  ],
+  "pad_normal": [
+   -0.997,
+   0.0302,
+   0.0716
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.03,
+  "dy": -0.03,
+  "z": 1.08,
+  "roll": 0,
+  "ik": 0.0078,
+  "margin": 0.0,
+  "joint": "left_wrist_pitch_joint",
+  "pad_center": [
+   1.7095,
+   0.0019,
+   0.9948
+  ],
+  "pad_normal": [
+   0.0273,
+   0.9966,
+   0.0773
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.03280000000000016,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.03,
+  "dy": -0.03,
+  "z": 1.08,
+  "roll": 90,
+  "ik": 0.0332,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.6931,
+   0.0061,
+   0.9632
+  ],
+  "pad_normal": [
+   -0.9982,
+   0.0309,
+   0.0514
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0012000000000000899,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.03,
+  "dy": -0.03,
+  "z": 1.12,
+  "roll": 0,
+  "ik": 0.0245,
+  "margin": 0.0,
+  "joint": "left_shoulder_yaw_joint",
+  "pad_center": [
+   1.7251,
+   -0.002,
+   1.0256
+  ],
+  "pad_normal": [
+   0.0212,
+   0.9968,
+   0.0768
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.003130560000000001,
+  "wrist_surface": 0.06350000000000011,
+  "faces": [
+   "-y"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.03,
+  "dy": -0.03,
+  "z": 1.12,
+  "roll": 90,
+  "ik": 0.0935,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.7128,
+   0.0833,
+   0.9691
+  ],
+  "pad_normal": [
+   -0.9811,
+   -0.1932,
+   0.0092
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.007992440000000003,
+  "wrist_surface": 0.0,
+  "faces": [
+   "+y"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.03,
+  "dy": 0.0,
+  "z": 1.02,
+  "roll": 0,
+  "ik": 0.0702,
+  "margin": 0.0,
+  "joint": "left_wrist_pitch_joint",
+  "pad_center": [
+   1.7339,
+   -0.0225,
+   0.9107
+  ],
+  "pad_normal": [
+   0.0024,
+   0.9974,
+   0.0716
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.02364358,
+  "wrist_surface": 0.0,
+  "faces": [
+   "-y"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.03,
+  "dy": 0.0,
+  "z": 1.02,
+  "roll": 90,
+  "ik": 0.0013,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.6951,
+   0.0341,
+   0.9354
+  ],
+  "pad_normal": [
+   -0.9966,
+   0.0298,
+   0.0768
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.03,
+  "dy": 0.0,
+  "z": 1.05,
+  "roll": 0,
+  "ik": 0.0762,
+  "margin": 0.0,
+  "joint": "left_wrist_pitch_joint",
+  "pad_center": [
+   1.7403,
+   -0.0297,
+   0.9534
+  ],
+  "pad_normal": [
+   0.0001,
+   0.9973,
+   0.0735
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.030841410000000003,
+  "wrist_surface": 0.011800000000000033,
+  "faces": [
+   "-y"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.03,
+  "dy": 0.0,
+  "z": 1.05,
+  "roll": 90,
+  "ik": 0.0075,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.6937,
+   0.034,
+   0.9592
+  ],
+  "pad_normal": [
+   -0.9969,
+   0.0298,
+   0.0721
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.03,
+  "dy": 0.0,
+  "z": 1.08,
+  "roll": 0,
+  "ik": 0.0284,
+  "margin": 0.0,
+  "joint": "left_wrist_roll_joint",
+  "pad_center": [
+   1.7177,
+   0.0117,
+   0.9967
+  ],
+  "pad_normal": [
+   0.0161,
+   0.9969,
+   0.0769
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.034600000000000186,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.03,
+  "dy": 0.0,
+  "z": 1.08,
+  "roll": 90,
+  "ik": 0.0327,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.6916,
+   0.0347,
+   0.9641
+  ],
+  "pad_normal": [
+   -0.9982,
+   0.03,
+   0.0528
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0020999999999999908,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.03,
+  "dy": 0.0,
+  "z": 1.12,
+  "roll": 0,
+  "ik": 0.0306,
+  "margin": 0.0,
+  "joint": "left_shoulder_yaw_joint",
+  "pad_center": [
+   1.7295,
+   0.0204,
+   1.0255
+  ],
+  "pad_normal": [
+   0.0146,
+   0.997,
+   0.0766
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.06340000000000012,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.03,
+  "dy": 0.0,
+  "z": 1.12,
+  "roll": 90,
+  "ik": 0.0697,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.7066,
+   0.1001,
+   0.9873
+  ],
+  "pad_normal": [
+   -0.9859,
+   -0.167,
+   0.0134
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.024223899999999993,
+  "wrist_surface": 0.012900000000000134,
+  "faces": [
+   "+y"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.03,
+  "dy": 0.03,
+  "z": 1.02,
+  "roll": 0,
+  "ik": 0.0937,
+  "margin": 0.0,
+  "joint": "left_wrist_pitch_joint",
+  "pad_center": [
+   1.7557,
+   -0.0047,
+   0.8987
+  ],
+  "pad_normal": [
+   -0.0008,
+   0.9976,
+   0.0691
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0058479199999999995,
+  "wrist_surface": 0.0,
+  "faces": [
+   "-y"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.03,
+  "dy": 0.03,
+  "z": 1.02,
+  "roll": 90,
+  "ik": 0.003,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.6944,
+   0.0629,
+   0.9353
+  ],
+  "pad_normal": [
+   -0.9966,
+   0.0295,
+   0.0768
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.03,
+  "dy": 0.03,
+  "z": 1.05,
+  "roll": 0,
+  "ik": 0.1011,
+  "margin": 0.0,
+  "joint": "left_wrist_pitch_joint",
+  "pad_center": [
+   1.7651,
+   -0.0142,
+   0.9497
+  ],
+  "pad_normal": [
+   -0.0034,
+   0.9974,
+   0.0724
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.015343579999999999,
+  "wrist_surface": 0.0,
+  "faces": [
+   "-y"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.03,
+  "dy": 0.03,
+  "z": 1.05,
+  "roll": 90,
+  "ik": 0.0108,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.6914,
+   0.0617,
+   0.9576
+  ],
+  "pad_normal": [
+   -0.997,
+   0.0292,
+   0.0714
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.03,
+  "dy": 0.03,
+  "z": 1.08,
+  "roll": 0,
+  "ik": 0.0537,
+  "margin": 0.0,
+  "joint": "left_wrist_roll_joint",
+  "pad_center": [
+   1.7296,
+   0.0189,
+   0.9996
+  ],
+  "pad_normal": [
+   0.0041,
+   0.9971,
+   0.0762
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.03750000000000009,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.03,
+  "dy": 0.03,
+  "z": 1.08,
+  "roll": 90,
+  "ik": 0.0345,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.6873,
+   0.0608,
+   0.964
+  ],
+  "pad_normal": [
+   -0.9981,
+   0.0288,
+   0.0543
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0020000000000000018,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.03,
+  "dy": 0.03,
+  "z": 1.12,
+  "roll": 0,
+  "ik": 0.0494,
+  "margin": 0.0,
+  "joint": "left_shoulder_yaw_joint",
+  "pad_center": [
+   1.7391,
+   0.0296,
+   1.0336
+  ],
+  "pad_normal": [
+   0.0026,
+   0.9971,
+   0.0761
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.006848630000000133,
+  "wrist_surface": 0.07150000000000012,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": -0.03,
+  "dy": 0.03,
+  "z": 1.12,
+  "roll": 90,
+  "ik": 0.1109,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.6647,
+   0.0307,
+   0.9829
+  ],
+  "pad_normal": [
+   -0.9447,
+   0.2968,
+   0.1395
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.010200000000000209,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.0,
+  "dy": -0.03,
+  "z": 1.02,
+  "roll": 0,
+  "ik": 0.0326,
+  "margin": 0.0,
+  "joint": "left_wrist_pitch_joint",
+  "pad_center": [
+   1.7506,
+   -0.0202,
+   0.9253
+  ],
+  "pad_normal": [
+   0.0191,
+   0.997,
+   0.075
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0213349,
+  "wrist_surface": 0.0,
+  "faces": [
+   "-y"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.0,
+  "dy": -0.03,
+  "z": 1.02,
+  "roll": 90,
+  "ik": 0.0098,
+  "margin": 0.0,
+  "joint": "left_wrist_yaw_joint",
+  "pad_center": [
+   1.7274,
+   0.0033,
+   0.9269
+  ],
+  "pad_normal": [
+   -0.9971,
+   0.0302,
+   0.0694
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.0,
+  "dy": -0.03,
+  "z": 1.05,
+  "roll": 0,
+  "ik": 0.037,
+  "margin": 0.0,
+  "joint": "left_wrist_pitch_joint",
+  "pad_center": [
+   1.7544,
+   -0.0244,
+   0.9599
+  ],
+  "pad_normal": [
+   0.0177,
+   0.997,
+   0.0756
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.025534900000000003,
+  "wrist_surface": 0.008299999999999998,
+  "faces": [
+   "-y"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.0,
+  "dy": -0.03,
+  "z": 1.05,
+  "roll": 90,
+  "ik": 0.0209,
+  "margin": 0.0,
+  "joint": "left_shoulder_roll_joint",
+  "pad_center": [
+   1.7096,
+   0.0042,
+   0.9521
+  ],
+  "pad_normal": [
+   -0.9973,
+   0.0303,
+   0.0668
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.0,
+  "dy": -0.03,
+  "z": 1.08,
+  "roll": 0,
+  "ik": 0.007,
+  "margin": 0.0,
+  "joint": "left_wrist_pitch_joint",
+  "pad_center": [
+   1.739,
+   0.0016,
+   0.9944
+  ],
+  "pad_normal": [
+   0.0278,
+   0.9966,
+   0.0772
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.032299999999999995,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.0,
+  "dy": -0.03,
+  "z": 1.08,
+  "roll": 90,
+  "ik": 0.0069,
+  "margin": 0.0,
+  "joint": "left_wrist_yaw_joint",
+  "pad_center": [
+   1.7307,
+   0.0038,
+   0.9934
+  ],
+  "pad_normal": [
+   -0.9968,
+   0.0302,
+   0.0741
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.031400000000000095,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.0,
+  "dy": -0.03,
+  "z": 1.12,
+  "roll": 0,
+  "ik": 0.0057,
+  "margin": 0.0,
+  "joint": "left_wrist_pitch_joint",
+  "pad_center": [
+   1.7382,
+   0.0024,
+   1.0354
+  ],
+  "pad_normal": [
+   0.0282,
+   0.9966,
+   0.0771
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.008626930000000144,
+  "wrist_surface": 0.07330000000000014,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.0,
+  "dy": -0.03,
+  "z": 1.12,
+  "roll": 90,
+  "ik": 0.0195,
+  "margin": 0.0,
+  "joint": "left_shoulder_yaw_joint",
+  "pad_center": [
+   1.7418,
+   0.0075,
+   1.0262
+  ],
+  "pad_normal": [
+   -0.9976,
+   0.0313,
+   0.0611
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.06420000000000003,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.0,
+  "dy": 0.0,
+  "z": 1.02,
+  "roll": 0,
+  "ik": 0.0553,
+  "margin": 0.0,
+  "joint": "left_wrist_pitch_joint",
+  "pad_center": [
+   1.7682,
+   -0.0054,
+   0.9185
+  ],
+  "pad_normal": [
+   0.0138,
+   0.9972,
+   0.0735
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.006539239999999998,
+  "wrist_surface": 0.0,
+  "faces": [
+   "-y"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.0,
+  "dy": 0.0,
+  "z": 1.02,
+  "roll": 90,
+  "ik": 0.0088,
+  "margin": 0.0,
+  "joint": "left_wrist_yaw_joint",
+  "pad_center": [
+   1.7284,
+   0.0335,
+   0.9279
+  ],
+  "pad_normal": [
+   -0.9971,
+   0.03,
+   0.0704
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.0,
+  "dy": 0.0,
+  "z": 1.05,
+  "roll": 0,
+  "ik": 0.0172,
+  "margin": 0.0,
+  "joint": "left_wrist_roll_joint",
+  "pad_center": [
+   1.745,
+   0.0224,
+   0.9622
+  ],
+  "pad_normal": [
+   0.0224,
+   0.9968,
+   0.0772
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 9.999999999998899e-05,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.0,
+  "dy": 0.0,
+  "z": 1.05,
+  "roll": 90,
+  "ik": 0.0079,
+  "margin": 0.0,
+  "joint": "left_wrist_yaw_joint",
+  "pad_center": [
+   1.7316,
+   0.0346,
+   0.9611
+  ],
+  "pad_normal": [
+   -0.9969,
+   0.0301,
+   0.0725
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.0,
+  "dy": 0.0,
+  "z": 1.08,
+  "roll": 0,
+  "ik": 0.0165,
+  "margin": 0.0,
+  "joint": "left_wrist_roll_joint",
+  "pad_center": [
+   1.7448,
+   0.0227,
+   0.9954
+  ],
+  "pad_normal": [
+   0.0226,
+   0.9968,
+   0.0772
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.03330000000000011,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.0,
+  "dy": 0.0,
+  "z": 1.08,
+  "roll": 90,
+  "ik": 0.0065,
+  "margin": 0.0,
+  "joint": "left_wrist_yaw_joint",
+  "pad_center": [
+   1.7313,
+   0.0348,
+   0.9935
+  ],
+  "pad_normal": [
+   -0.9968,
+   0.0302,
+   0.0742
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.031400000000000095,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.0,
+  "dy": 0.0,
+  "z": 1.12,
+  "roll": 0,
+  "ik": 0.0114,
+  "margin": 0.0,
+  "joint": "left_shoulder_yaw_joint",
+  "pad_center": [
+   1.7439,
+   0.0295,
+   1.0324
+  ],
+  "pad_normal": [
+   0.0241,
+   0.9967,
+   0.0771
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.00562693000000003,
+  "wrist_surface": 0.07030000000000003,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.0,
+  "dy": 0.0,
+  "z": 1.12,
+  "roll": 90,
+  "ik": 0.0105,
+  "margin": 0.0,
+  "joint": "left_shoulder_yaw_joint",
+  "pad_center": [
+   1.7348,
+   0.0373,
+   1.0321
+  ],
+  "pad_normal": [
+   -0.9971,
+   0.0307,
+   0.0703
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0054744900000001095,
+  "wrist_surface": 0.07010000000000005,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.0,
+  "dy": 0.03,
+  "z": 1.02,
+  "roll": 0,
+  "ik": 0.0755,
+  "margin": 0.0,
+  "joint": "left_wrist_pitch_joint",
+  "pad_center": [
+   1.7905,
+   0.0186,
+   0.9108
+  ],
+  "pad_normal": [
+   0.0144,
+   0.9973,
+   0.072
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.0,
+  "dy": 0.03,
+  "z": 1.02,
+  "roll": 90,
+  "ik": 0.0071,
+  "margin": 0.0,
+  "joint": "left_wrist_yaw_joint",
+  "pad_center": [
+   1.7293,
+   0.0637,
+   0.9297
+  ],
+  "pad_normal": [
+   -0.997,
+   0.0298,
+   0.0721
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.0,
+  "dy": 0.03,
+  "z": 1.05,
+  "roll": 0,
+  "ik": 0.0814,
+  "margin": 0.0,
+  "joint": "left_wrist_pitch_joint",
+  "pad_center": [
+   1.7982,
+   0.0136,
+   0.956
+  ],
+  "pad_normal": [
+   0.0139,
+   0.9971,
+   0.0744
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.0,
+  "dy": 0.03,
+  "z": 1.05,
+  "roll": 90,
+  "ik": 0.0066,
+  "margin": 0.0,
+  "joint": "left_wrist_yaw_joint",
+  "pad_center": [
+   1.7314,
+   0.065,
+   0.9618
+  ],
+  "pad_normal": [
+   -0.9969,
+   0.03,
+   0.0734
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.0,
+  "dy": 0.03,
+  "z": 1.08,
+  "roll": 0,
+  "ik": 0.0401,
+  "margin": 0.0,
+  "joint": "left_wrist_roll_joint",
+  "pad_center": [
+   1.7597,
+   0.0337,
+   0.9983
+  ],
+  "pad_normal": [
+   0.0121,
+   0.997,
+   0.0767
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0363,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.0,
+  "dy": 0.03,
+  "z": 1.08,
+  "roll": 90,
+  "ik": 0.0058,
+  "margin": 0.0,
+  "joint": "left_wrist_yaw_joint",
+  "pad_center": [
+   1.7314,
+   0.0654,
+   0.9935
+  ],
+  "pad_normal": [
+   -0.9968,
+   0.0301,
+   0.0745
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.031500000000000083,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.0,
+  "dy": 0.03,
+  "z": 1.12,
+  "roll": 0,
+  "ik": 0.0317,
+  "margin": 0.0,
+  "joint": "left_shoulder_yaw_joint",
+  "pad_center": [
+   1.7567,
+   0.0419,
+   1.0389
+  ],
+  "pad_normal": [
+   0.0138,
+   0.997,
+   0.0766
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.012137779999999987,
+  "wrist_surface": 0.0768000000000002,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.0,
+  "dy": 0.03,
+  "z": 1.12,
+  "roll": 90,
+  "ik": 0.0048,
+  "margin": 0.0,
+  "joint": "left_wrist_yaw_joint",
+  "pad_center": [
+   1.7308,
+   0.0653,
+   1.0346
+  ],
+  "pad_normal": [
+   -0.9967,
+   0.0302,
+   0.0751
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.007870330000000036,
+  "wrist_surface": 0.0726,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.03,
+  "dy": -0.03,
+  "z": 1.02,
+  "roll": 0,
+  "ik": 0.0155,
+  "margin": 0.0,
+  "joint": "left_wrist_pitch_joint",
+  "pad_center": [
+   1.7736,
+   -0.0059,
+   0.9304
+  ],
+  "pad_normal": [
+   0.0263,
+   0.9967,
+   0.0763
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.007028389999999999,
+  "wrist_surface": 0.0,
+  "faces": [
+   "-y"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.03,
+  "dy": -0.03,
+  "z": 1.02,
+  "roll": 90,
+  "ik": 0.0057,
+  "margin": 0.0,
+  "joint": "left_wrist_yaw_joint",
+  "pad_center": [
+   1.7564,
+   0.0022,
+   0.931
+  ],
+  "pad_normal": [
+   -0.9969,
+   0.0302,
+   0.0726
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.03,
+  "dy": -0.03,
+  "z": 1.05,
+  "roll": 0,
+  "ik": 0.0193,
+  "margin": 0.0,
+  "joint": "left_wrist_pitch_joint",
+  "pad_center": [
+   1.7769,
+   -0.009,
+   0.9621
+  ],
+  "pad_normal": [
+   0.0253,
+   0.9968,
+   0.0764
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.01013056,
+  "wrist_surface": 0.0,
+  "faces": [
+   "-y"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.03,
+  "dy": -0.03,
+  "z": 1.05,
+  "roll": 90,
+  "ik": 0.0059,
+  "margin": 0.0,
+  "joint": "left_wrist_yaw_joint",
+  "pad_center": [
+   1.7582,
+   0.0023,
+   0.9617
+  ],
+  "pad_normal": [
+   -0.9969,
+   0.0302,
+   0.073
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.03,
+  "dy": -0.03,
+  "z": 1.08,
+  "roll": 0,
+  "ik": 0.0063,
+  "margin": 0.0,
+  "joint": "left_wrist_pitch_joint",
+  "pad_center": [
+   1.7685,
+   0.0012,
+   0.9941
+  ],
+  "pad_normal": [
+   0.0285,
+   0.9966,
+   0.077
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.03200000000000003,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.03,
+  "dy": -0.03,
+  "z": 1.08,
+  "roll": 90,
+  "ik": 0.0053,
+  "margin": 0.0,
+  "joint": "left_wrist_yaw_joint",
+  "pad_center": [
+   1.7586,
+   0.0026,
+   0.993
+  ],
+  "pad_normal": [
+   -0.9968,
+   0.0302,
+   0.0738
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.03090000000000015,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.03,
+  "dy": -0.03,
+  "z": 1.12,
+  "roll": 0,
+  "ik": 0.0048,
+  "margin": 0.0,
+  "joint": "left_wrist_pitch_joint",
+  "pad_center": [
+   1.7675,
+   0.0024,
+   1.0345
+  ],
+  "pad_normal": [
+   0.0288,
+   0.9966,
+   0.0769
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.007731270000000068,
+  "wrist_surface": 0.07240000000000002,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.03,
+  "dy": -0.03,
+  "z": 1.12,
+  "roll": 90,
+  "ik": 0.0044,
+  "margin": 0.0,
+  "joint": "left_wrist_yaw_joint",
+  "pad_center": [
+   1.7579,
+   0.0029,
+   1.0339
+  ],
+  "pad_normal": [
+   -0.9968,
+   0.0303,
+   0.0744
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.007185520000000167,
+  "wrist_surface": 0.07180000000000009,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.03,
+  "dy": 0.0,
+  "z": 1.02,
+  "roll": 0,
+  "ik": 0.0355,
+  "margin": 0.0,
+  "joint": "left_wrist_pitch_joint",
+  "pad_center": [
+   1.7905,
+   0.012,
+   0.9257
+  ],
+  "pad_normal": [
+   0.0228,
+   0.9969,
+   0.0752
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.03,
+  "dy": 0.0,
+  "z": 1.02,
+  "roll": 90,
+  "ik": 0.0054,
+  "margin": 0.0,
+  "joint": "left_wrist_yaw_joint",
+  "pad_center": [
+   1.7575,
+   0.0323,
+   0.9313
+  ],
+  "pad_normal": [
+   -0.9969,
+   0.03,
+   0.073
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.03,
+  "dy": 0.0,
+  "z": 1.05,
+  "roll": 0,
+  "ik": 0.0081,
+  "margin": 0.0,
+  "joint": "left_wrist_pitch_joint",
+  "pad_center": [
+   1.7706,
+   0.0299,
+   0.9632
+  ],
+  "pad_normal": [
+   0.0273,
+   0.9966,
+   0.0773
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.001100000000000101,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.03,
+  "dy": 0.0,
+  "z": 1.05,
+  "roll": 90,
+  "ik": 0.0055,
+  "margin": 0.0,
+  "joint": "left_wrist_yaw_joint",
+  "pad_center": [
+   1.759,
+   0.0328,
+   0.9621
+  ],
+  "pad_normal": [
+   -0.9969,
+   0.0301,
+   0.0734
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.03,
+  "dy": 0.0,
+  "z": 1.08,
+  "roll": 0,
+  "ik": 0.0078,
+  "margin": 0.0,
+  "joint": "left_wrist_pitch_joint",
+  "pad_center": [
+   1.7706,
+   0.0298,
+   0.9944
+  ],
+  "pad_normal": [
+   0.0272,
+   0.9966,
+   0.0773
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.032299999999999995,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.03,
+  "dy": 0.0,
+  "z": 1.08,
+  "roll": 90,
+  "ik": 0.005,
+  "margin": 0.0,
+  "joint": "left_wrist_yaw_joint",
+  "pad_center": [
+   1.7594,
+   0.0331,
+   0.9932
+  ],
+  "pad_normal": [
+   -0.9968,
+   0.0301,
+   0.0741
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.031200000000000117,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.03,
+  "dy": 0.0,
+  "z": 1.12,
+  "roll": 0,
+  "ik": 0.0064,
+  "margin": 0.0,
+  "joint": "left_wrist_pitch_joint",
+  "pad_center": [
+   1.7698,
+   0.0307,
+   1.0354
+  ],
+  "pad_normal": [
+   0.0276,
+   0.9966,
+   0.0771
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.008626930000000144,
+  "wrist_surface": 0.07340000000000013,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.03,
+  "dy": 0.0,
+  "z": 1.12,
+  "roll": 90,
+  "ik": 0.0042,
+  "margin": 0.0,
+  "joint": "left_wrist_yaw_joint",
+  "pad_center": [
+   1.759,
+   0.0333,
+   1.0341
+  ],
+  "pad_normal": [
+   -0.9968,
+   0.0302,
+   0.0746
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.007381180000000098,
+  "wrist_surface": 0.07210000000000005,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.03,
+  "dy": 0.03,
+  "z": 1.02,
+  "roll": 0,
+  "ik": 0.0523,
+  "margin": 0.0,
+  "joint": "left_wrist_pitch_joint",
+  "pad_center": [
+   1.8091,
+   0.0378,
+   0.9211
+  ],
+  "pad_normal": [
+   0.0239,
+   0.9969,
+   0.0744
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.03,
+  "dy": 0.03,
+  "z": 1.02,
+  "roll": 90,
+  "ik": 0.0048,
+  "margin": 0.0,
+  "joint": "left_wrist_yaw_joint",
+  "pad_center": [
+   1.7586,
+   0.0624,
+   0.9319
+  ],
+  "pad_normal": [
+   -0.9968,
+   0.0299,
+   0.0736
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.03,
+  "dy": 0.03,
+  "z": 1.05,
+  "roll": 0,
+  "ik": 0.0232,
+  "margin": 0.0,
+  "joint": "left_wrist_roll_joint",
+  "pad_center": [
+   1.7822,
+   0.0485,
+   0.9621
+  ],
+  "pad_normal": [
+   0.0207,
+   0.9968,
+   0.0771
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 9.999999999998899e-05,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.03,
+  "dy": 0.03,
+  "z": 1.05,
+  "roll": 90,
+  "ik": 0.0048,
+  "margin": 0.0,
+  "joint": "left_wrist_yaw_joint",
+  "pad_center": [
+   1.7597,
+   0.063,
+   0.9626
+  ],
+  "pad_normal": [
+   -0.9968,
+   0.03,
+   0.074
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.000500000000000167,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.03,
+  "dy": 0.03,
+  "z": 1.08,
+  "roll": 0,
+  "ik": 0.0221,
+  "margin": 0.0,
+  "joint": "left_wrist_roll_joint",
+  "pad_center": [
+   1.7816,
+   0.0491,
+   0.996
+  ],
+  "pad_normal": [
+   0.021,
+   0.9968,
+   0.0771
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.03400000000000003,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.03,
+  "dy": 0.03,
+  "z": 1.08,
+  "roll": 90,
+  "ik": 0.0045,
+  "margin": 0.0,
+  "joint": "left_wrist_yaw_joint",
+  "pad_center": [
+   1.76,
+   0.0634,
+   0.9935
+  ],
+  "pad_normal": [
+   -0.9968,
+   0.03,
+   0.0745
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.031400000000000095,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.03,
+  "dy": 0.03,
+  "z": 1.12,
+  "roll": 0,
+  "ik": 0.0132,
+  "margin": 0.0,
+  "joint": "left_wrist_roll_joint",
+  "pad_center": [
+   1.7754,
+   0.0557,
+   1.0381
+  ],
+  "pad_normal": [
+   0.0244,
+   0.9967,
+   0.0771
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.011326930000000068,
+  "wrist_surface": 0.07600000000000007,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "dx": 0.03,
+  "dy": 0.03,
+  "z": 1.12,
+  "roll": 90,
+  "ik": 0.004,
+  "margin": 0.0,
+  "joint": "left_wrist_yaw_joint",
+  "pad_center": [
+   1.7598,
+   0.0636,
+   1.0342
+  ],
+  "pad_normal": [
+   -0.9967,
+   0.0301,
+   0.0749
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.007474670000000128,
+  "wrist_surface": 0.07220000000000004,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.06,
+  "dy": -0.03,
+  "z": 1.02,
+  "roll": 0,
+  "ik": 0.1125,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7081,
+   0.0867,
+   0.8783
+  ],
+  "pad_normal": [
+   0.0824,
+   0.9937,
+   -0.0764
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.06,
+  "dy": -0.03,
+  "z": 1.02,
+  "roll": 90,
+  "ik": 0.0071,
+  "margin": 0.0,
+  "joint": "right_wrist_roll_joint",
+  "pad_center": [
+   1.6833,
+   0.0044,
+   0.9339
+  ],
+  "pad_normal": [
+   -0.9956,
+   0.0308,
+   -0.0889
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.06,
+  "dy": -0.03,
+  "z": 1.05,
+  "roll": 0,
+  "ik": 0.0779,
+  "margin": 0.0,
+  "joint": "right_shoulder_roll_joint",
+  "pad_center": [
+   1.6787,
+   0.0566,
+   0.9187
+  ],
+  "pad_normal": [
+   0.0692,
+   0.9938,
+   -0.0871
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.06,
+  "dy": -0.03,
+  "z": 1.05,
+  "roll": 90,
+  "ik": 0.0099,
+  "margin": 0.0,
+  "joint": "right_wrist_roll_joint",
+  "pad_center": [
+   1.6863,
+   0.0034,
+   0.9645
+  ],
+  "pad_normal": [
+   -0.9956,
+   0.0289,
+   -0.0891
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0024000000000001798,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.06,
+  "dy": -0.03,
+  "z": 1.08,
+  "roll": 0,
+  "ik": 0.0968,
+  "margin": 0.0,
+  "joint": "right_shoulder_roll_joint",
+  "pad_center": [
+   1.6741,
+   0.0602,
+   0.925
+  ],
+  "pad_normal": [
+   0.072,
+   0.9936,
+   -0.0866
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.06,
+  "dy": -0.03,
+  "z": 1.08,
+  "roll": 90,
+  "ik": 0.0102,
+  "margin": 0.0,
+  "joint": "right_wrist_roll_joint",
+  "pad_center": [
+   1.6868,
+   0.0033,
+   0.9959
+  ],
+  "pad_normal": [
+   -0.9956,
+   0.0285,
+   -0.0892
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.03380000000000005,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.06,
+  "dy": -0.03,
+  "z": 1.12,
+  "roll": 0,
+  "ik": 0.0784,
+  "margin": 0.0,
+  "joint": "right_shoulder_yaw_joint",
+  "pad_center": [
+   1.7295,
+   0.0509,
+   1.0279
+  ],
+  "pad_normal": [
+   0.0763,
+   0.9933,
+   -0.0867
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0046813900000002295,
+  "wrist_surface": 0.06580000000000008,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.06,
+  "dy": -0.03,
+  "z": 1.12,
+  "roll": 90,
+  "ik": 0.0072,
+  "margin": 0.0,
+  "joint": "right_wrist_roll_joint",
+  "pad_center": [
+   1.6839,
+   0.0043,
+   1.0371
+  ],
+  "pad_normal": [
+   -0.9956,
+   0.0301,
+   -0.0891
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.013933470000000003,
+  "wrist_surface": 0.07500000000000018,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.06,
+  "dy": 0.0,
+  "z": 1.02,
+  "roll": 0,
+  "ik": 0.0393,
+  "margin": 0.0,
+  "joint": "right_shoulder_roll_joint",
+  "pad_center": [
+   1.6779,
+   0.0583,
+   0.9154
+  ],
+  "pad_normal": [
+   0.0528,
+   0.9947,
+   -0.0882
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.06,
+  "dy": 0.0,
+  "z": 1.02,
+  "roll": 90,
+  "ik": 0.0108,
+  "margin": 0.0,
+  "joint": "right_wrist_roll_joint",
+  "pad_center": [
+   1.6881,
+   0.0349,
+   0.9329
+  ],
+  "pad_normal": [
+   -0.9956,
+   0.0286,
+   -0.089
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.06,
+  "dy": 0.0,
+  "z": 1.05,
+  "roll": 0,
+  "ik": 0.058,
+  "margin": 0.0,
+  "joint": "right_shoulder_roll_joint",
+  "pad_center": [
+   1.6724,
+   0.0624,
+   0.9223
+  ],
+  "pad_normal": [
+   0.0559,
+   0.9946,
+   -0.0879
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.06,
+  "dy": 0.0,
+  "z": 1.05,
+  "roll": 90,
+  "ik": 0.0155,
+  "margin": 0.0,
+  "joint": "right_wrist_roll_joint",
+  "pad_center": [
+   1.6931,
+   0.0334,
+   0.9642
+  ],
+  "pad_normal": [
+   -0.9957,
+   0.0262,
+   -0.0888
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0020999999999999908,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.06,
+  "dy": 0.0,
+  "z": 1.08,
+  "roll": 0,
+  "ik": 0.0806,
+  "margin": 0.0,
+  "joint": "right_shoulder_roll_joint",
+  "pad_center": [
+   1.67,
+   0.0641,
+   0.9265
+  ],
+  "pad_normal": [
+   0.0579,
+   0.9945,
+   -0.0876
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.06,
+  "dy": 0.0,
+  "z": 1.08,
+  "roll": 90,
+  "ik": 0.0147,
+  "margin": 0.0,
+  "joint": "right_wrist_roll_joint",
+  "pad_center": [
+   1.6926,
+   0.0341,
+   0.9964
+  ],
+  "pad_normal": [
+   -0.9957,
+   0.0256,
+   -0.0893
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0343,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.06,
+  "dy": 0.0,
+  "z": 1.12,
+  "roll": 0,
+  "ik": 0.1171,
+  "margin": 0.0,
+  "joint": "right_shoulder_roll_joint",
+  "pad_center": [
+   1.6716,
+   0.117,
+   0.963
+  ],
+  "pad_normal": [
+   0.0894,
+   0.9933,
+   -0.0737
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.015945390000000004,
+  "wrist_surface": 0.029699831649354587,
+  "faces": [
+   "+y"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.06,
+  "dy": 0.0,
+  "z": 1.12,
+  "roll": 90,
+  "ik": 0.0095,
+  "margin": 0.0,
+  "joint": "right_wrist_roll_joint",
+  "pad_center": [
+   1.6874,
+   0.035,
+   1.0378
+  ],
+  "pad_normal": [
+   -0.9956,
+   0.0287,
+   -0.0892
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.01463564000000006,
+  "wrist_surface": 0.0757000000000001,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.06,
+  "dy": 0.03,
+  "z": 1.02,
+  "roll": 0,
+  "ik": 0.0202,
+  "margin": 0.0,
+  "joint": "right_shoulder_roll_joint",
+  "pad_center": [
+   1.6707,
+   0.0646,
+   0.9195
+  ],
+  "pad_normal": [
+   0.0395,
+   0.9953,
+   -0.0888
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.06,
+  "dy": 0.03,
+  "z": 1.02,
+  "roll": 90,
+  "ik": 0.012,
+  "margin": 0.0,
+  "joint": "right_wrist_roll_joint",
+  "pad_center": [
+   1.6904,
+   0.0661,
+   0.9328
+  ],
+  "pad_normal": [
+   -0.9957,
+   0.0281,
+   -0.0881
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.06,
+  "dy": 0.03,
+  "z": 1.05,
+  "roll": 0,
+  "ik": 0.0452,
+  "margin": 0.0,
+  "joint": "right_shoulder_roll_joint",
+  "pad_center": [
+   1.6679,
+   0.0665,
+   0.9239
+  ],
+  "pad_normal": [
+   0.0417,
+   0.9952,
+   -0.0887
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.06,
+  "dy": 0.03,
+  "z": 1.05,
+  "roll": 90,
+  "ik": 0.0192,
+  "margin": 0.0,
+  "joint": "right_wrist_roll_joint",
+  "pad_center": [
+   1.6968,
+   0.0613,
+   0.9649
+  ],
+  "pad_normal": [
+   -0.9964,
+   0.0267,
+   -0.0803
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0028000000000001357,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.06,
+  "dy": 0.03,
+  "z": 1.08,
+  "roll": 0,
+  "ik": 0.0735,
+  "margin": 0.0,
+  "joint": "right_shoulder_roll_joint",
+  "pad_center": [
+   1.6733,
+   0.1179,
+   0.9576
+  ],
+  "pad_normal": [
+   0.0713,
+   0.9942,
+   -0.0807
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.016825860000000012,
+  "wrist_surface": 0.027261878145131535,
+  "faces": [
+   "+y"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.06,
+  "dy": 0.03,
+  "z": 1.08,
+  "roll": 90,
+  "ik": 0.0183,
+  "margin": 0.0,
+  "joint": "right_wrist_roll_joint",
+  "pad_center": [
+   1.6965,
+   0.0626,
+   0.9973
+  ],
+  "pad_normal": [
+   -0.9963,
+   0.0254,
+   -0.0821
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.03520000000000012,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.06,
+  "dy": 0.03,
+  "z": 1.12,
+  "roll": 0,
+  "ik": 0.1053,
+  "margin": 0.0,
+  "joint": "right_shoulder_yaw_joint",
+  "pad_center": [
+   1.6087,
+   0.1264,
+   0.9949
+  ],
+  "pad_normal": [
+   0.0832,
+   0.9933,
+   -0.0796
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.039583829726868275,
+  "wrist_surface": 0.06866068744194168,
+  "faces": [
+   "-x",
+   "+y"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.06,
+  "dy": 0.03,
+  "z": 1.12,
+  "roll": 90,
+  "ik": 0.0096,
+  "margin": 0.0,
+  "joint": "right_wrist_roll_joint",
+  "pad_center": [
+   1.6885,
+   0.0665,
+   1.0379
+  ],
+  "pad_normal": [
+   -0.9956,
+   0.0287,
+   -0.0892
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.01473564000000005,
+  "wrist_surface": 0.07580000000000009,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.03,
+  "dy": -0.03,
+  "z": 1.02,
+  "roll": 0,
+  "ik": 0.1012,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7672,
+   0.0592,
+   0.8891
+  ],
+  "pad_normal": [
+   0.0622,
+   0.9949,
+   -0.0791
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.03,
+  "dy": -0.03,
+  "z": 1.02,
+  "roll": 90,
+  "ik": 0.0037,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7101,
+   0.0041,
+   0.9348
+  ],
+  "pad_normal": [
+   -0.9955,
+   0.0326,
+   -0.089
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.03,
+  "dy": -0.03,
+  "z": 1.05,
+  "roll": 0,
+  "ik": 0.1109,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7815,
+   0.0703,
+   0.9422
+  ],
+  "pad_normal": [
+   0.0649,
+   0.9945,
+   -0.0828
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.03,
+  "dy": -0.03,
+  "z": 1.05,
+  "roll": 90,
+  "ik": 0.0038,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7103,
+   0.0041,
+   0.9651
+  ],
+  "pad_normal": [
+   -0.9955,
+   0.0324,
+   -0.0891
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0030000000000001137,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.03,
+  "dy": -0.03,
+  "z": 1.08,
+  "roll": 0,
+  "ik": 0.0661,
+  "margin": 0.0,
+  "joint": "right_wrist_roll_joint",
+  "pad_center": [
+   1.7371,
+   0.0508,
+   0.9988
+  ],
+  "pad_normal": [
+   0.0656,
+   0.994,
+   -0.0871
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.03670000000000018,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.03,
+  "dy": -0.03,
+  "z": 1.08,
+  "roll": 90,
+  "ik": 0.0035,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7102,
+   0.0042,
+   0.9954
+  ],
+  "pad_normal": [
+   -0.9955,
+   0.0324,
+   -0.0891
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.03330000000000011,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.03,
+  "dy": -0.03,
+  "z": 1.12,
+  "roll": 0,
+  "ik": 0.061,
+  "margin": 0.0,
+  "joint": "right_shoulder_yaw_joint",
+  "pad_center": [
+   1.7454,
+   0.039,
+   1.0371
+  ],
+  "pad_normal": [
+   0.067,
+   0.9939,
+   -0.0873
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.013894410000000024,
+  "wrist_surface": 0.07500000000000018,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.03,
+  "dy": -0.03,
+  "z": 1.12,
+  "roll": 90,
+  "ik": 0.0028,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7095,
+   0.0044,
+   1.0355
+  ],
+  "pad_normal": [
+   -0.9955,
+   0.0327,
+   -0.0892
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.012335640000000092,
+  "wrist_surface": 0.07340000000000013,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.03,
+  "dy": 0.0,
+  "z": 1.02,
+  "roll": 0,
+  "ik": 0.0792,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7446,
+   0.0854,
+   0.9037
+  ],
+  "pad_normal": [
+   0.0631,
+   0.9946,
+   -0.0819
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.03,
+  "dy": 0.0,
+  "z": 1.02,
+  "roll": 90,
+  "ik": 0.004,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7116,
+   0.0345,
+   0.9347
+  ],
+  "pad_normal": [
+   -0.9955,
+   0.0325,
+   -0.089
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.03,
+  "dy": 0.0,
+  "z": 1.05,
+  "roll": 0,
+  "ik": 0.087,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7534,
+   0.0945,
+   0.9483
+  ],
+  "pad_normal": [
+   0.0661,
+   0.9943,
+   -0.084
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.006900000000000128,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.03,
+  "dy": 0.0,
+  "z": 1.05,
+  "roll": 90,
+  "ik": 0.004,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7118,
+   0.0345,
+   0.9651
+  ],
+  "pad_normal": [
+   -0.9955,
+   0.0322,
+   -0.089
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0030000000000001137,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.03,
+  "dy": 0.0,
+  "z": 1.08,
+  "roll": 0,
+  "ik": 0.0404,
+  "margin": 0.0,
+  "joint": "right_wrist_roll_joint",
+  "pad_center": [
+   1.7242,
+   0.0593,
+   0.9964
+  ],
+  "pad_normal": [
+   0.0536,
+   0.9947,
+   -0.0881
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0343,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.03,
+  "dy": 0.0,
+  "z": 1.08,
+  "roll": 90,
+  "ik": 0.0037,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7116,
+   0.0345,
+   0.9955
+  ],
+  "pad_normal": [
+   -0.9955,
+   0.0322,
+   -0.0891
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.033400000000000096,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.03,
+  "dy": 0.0,
+  "z": 1.12,
+  "roll": 0,
+  "ik": 0.04,
+  "margin": 0.0,
+  "joint": "right_shoulder_yaw_joint",
+  "pad_center": [
+   1.735,
+   0.05,
+   1.0288
+  ],
+  "pad_normal": [
+   0.0555,
+   0.9946,
+   -0.0879
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.005607429999999969,
+  "wrist_surface": 0.0667000000000002,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.03,
+  "dy": 0.0,
+  "z": 1.12,
+  "roll": 90,
+  "ik": 0.003,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7109,
+   0.0346,
+   1.0357
+  ],
+  "pad_normal": [
+   -0.9955,
+   0.0325,
+   -0.0892
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.01253564000000007,
+  "wrist_surface": 0.07350000000000012,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.03,
+  "dy": 0.03,
+  "z": 1.02,
+  "roll": 0,
+  "ik": 0.055,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.729,
+   0.0997,
+   0.9149
+  ],
+  "pad_normal": [
+   0.0563,
+   0.9949,
+   -0.0843
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0039000000000000007,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.03,
+  "dy": 0.03,
+  "z": 1.02,
+  "roll": 90,
+  "ik": 0.0039,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7126,
+   0.065,
+   0.9347
+  ],
+  "pad_normal": [
+   -0.9955,
+   0.0325,
+   -0.089
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.03,
+  "dy": 0.03,
+  "z": 1.05,
+  "roll": 0,
+  "ik": 0.0614,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7355,
+   0.1066,
+   0.9533
+  ],
+  "pad_normal": [
+   0.0588,
+   0.9946,
+   -0.0854
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0055171799999999965,
+  "wrist_surface": 0.016137533888422987,
+  "faces": [
+   "+y"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.03,
+  "dy": 0.03,
+  "z": 1.05,
+  "roll": 90,
+  "ik": 0.004,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7128,
+   0.065,
+   0.9651
+  ],
+  "pad_normal": [
+   -0.9955,
+   0.0323,
+   -0.089
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0030000000000001137,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.03,
+  "dy": 0.03,
+  "z": 1.08,
+  "roll": 0,
+  "ik": 0.0148,
+  "margin": 0.0,
+  "joint": "right_wrist_roll_joint",
+  "pad_center": [
+   1.7144,
+   0.0659,
+   0.9952
+  ],
+  "pad_normal": [
+   0.0409,
+   0.9952,
+   -0.0887
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.03310000000000013,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.03,
+  "dy": 0.03,
+  "z": 1.08,
+  "roll": 90,
+  "ik": 0.0037,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7126,
+   0.0649,
+   0.9955
+  ],
+  "pad_normal": [
+   -0.9955,
+   0.0322,
+   -0.0891
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.03330000000000011,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.03,
+  "dy": 0.03,
+  "z": 1.12,
+  "roll": 0,
+  "ik": 0.0262,
+  "margin": 0.0,
+  "joint": "right_shoulder_yaw_joint",
+  "pad_center": [
+   1.7284,
+   0.0595,
+   1.0223
+  ],
+  "pad_normal": [
+   0.0438,
+   0.9951,
+   -0.0884
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.06010000000000004,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": -0.03,
+  "dy": 0.03,
+  "z": 1.12,
+  "roll": 90,
+  "ik": 0.0029,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7119,
+   0.0648,
+   1.0356
+  ],
+  "pad_normal": [
+   -0.9955,
+   0.0325,
+   -0.0892
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.012435640000000081,
+  "wrist_surface": 0.07350000000000012,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.0,
+  "dy": -0.03,
+  "z": 1.02,
+  "roll": 0,
+  "ik": 0.0816,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.799,
+   0.0328,
+   0.9052
+  ],
+  "pad_normal": [
+   0.0465,
+   0.9955,
+   -0.0828
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.0,
+  "dy": -0.03,
+  "z": 1.02,
+  "roll": 90,
+  "ik": 0.0012,
+  "margin": 0.0087,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7371,
+   0.0037,
+   0.9353
+  ],
+  "pad_normal": [
+   -0.9954,
+   0.0344,
+   -0.0892
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.0,
+  "dy": -0.03,
+  "z": 1.05,
+  "roll": 0,
+  "ik": 0.0892,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.8102,
+   0.0372,
+   0.9518
+  ],
+  "pad_normal": [
+   0.046,
+   0.9953,
+   -0.0854
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.0,
+  "dy": -0.03,
+  "z": 1.05,
+  "roll": 90,
+  "ik": 0.0014,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7374,
+   0.0037,
+   0.9652
+  ],
+  "pad_normal": [
+   -0.9954,
+   0.0342,
+   -0.0893
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0031000000000001027,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.0,
+  "dy": -0.03,
+  "z": 1.08,
+  "roll": 0,
+  "ik": 0.0515,
+  "margin": 0.0,
+  "joint": "right_wrist_roll_joint",
+  "pad_center": [
+   1.7679,
+   0.0309,
+   0.9983
+  ],
+  "pad_normal": [
+   0.0564,
+   0.9945,
+   -0.0881
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.03620000000000001,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.0,
+  "dy": -0.03,
+  "z": 1.08,
+  "roll": 90,
+  "ik": 0.0015,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7372,
+   0.0037,
+   0.9951
+  ],
+  "pad_normal": [
+   -0.9954,
+   0.0342,
+   -0.0893
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.03300000000000014,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.0,
+  "dy": -0.03,
+  "z": 1.12,
+  "roll": 0,
+  "ik": 0.0435,
+  "margin": 0.0,
+  "joint": "right_shoulder_yaw_joint",
+  "pad_center": [
+   1.764,
+   0.0234,
+   1.0414
+  ],
+  "pad_normal": [
+   0.0554,
+   0.9946,
+   -0.088
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.01820960000000027,
+  "wrist_surface": 0.07930000000000015,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.0,
+  "dy": -0.03,
+  "z": 1.12,
+  "roll": 90,
+  "ik": 0.0016,
+  "margin": 0.0415,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7372,
+   0.0038,
+   1.0349
+  ],
+  "pad_normal": [
+   -0.9954,
+   0.0341,
+   -0.0894
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.011739979999999983,
+  "wrist_surface": 0.0728000000000002,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.0,
+  "dy": 0.0,
+  "z": 1.02,
+  "roll": 0,
+  "ik": 0.0634,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7783,
+   0.064,
+   0.9136
+  ],
+  "pad_normal": [
+   0.0504,
+   0.9952,
+   -0.0842
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.0,
+  "dy": 0.0,
+  "z": 1.02,
+  "roll": 90,
+  "ik": 0.0014,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7386,
+   0.0336,
+   0.9352
+  ],
+  "pad_normal": [
+   -0.9954,
+   0.0341,
+   -0.0892
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.0,
+  "dy": 0.0,
+  "z": 1.05,
+  "roll": 0,
+  "ik": 0.0279,
+  "margin": 0.0,
+  "joint": "right_wrist_roll_joint",
+  "pad_center": [
+   1.7517,
+   0.0443,
+   0.9606
+  ],
+  "pad_normal": [
+   0.0466,
+   0.995,
+   -0.0885
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.0,
+  "dy": 0.0,
+  "z": 1.05,
+  "roll": 90,
+  "ik": 0.0017,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7391,
+   0.0336,
+   0.9652
+  ],
+  "pad_normal": [
+   -0.9954,
+   0.0338,
+   -0.0892
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0030000000000001137,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.0,
+  "dy": 0.0,
+  "z": 1.08,
+  "roll": 0,
+  "ik": 0.0282,
+  "margin": 0.0,
+  "joint": "right_wrist_roll_joint",
+  "pad_center": [
+   1.7521,
+   0.0448,
+   0.9959
+  ],
+  "pad_normal": [
+   0.0468,
+   0.995,
+   -0.0885
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.03380000000000005,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.0,
+  "dy": 0.0,
+  "z": 1.08,
+  "roll": 90,
+  "ik": 0.0016,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7389,
+   0.0336,
+   0.9951
+  ],
+  "pad_normal": [
+   -0.9954,
+   0.0338,
+   -0.0893
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.03300000000000014,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.0,
+  "dy": 0.0,
+  "z": 1.12,
+  "roll": 0,
+  "ik": 0.022,
+  "margin": 0.0,
+  "joint": "right_shoulder_yaw_joint",
+  "pad_center": [
+   1.7504,
+   0.0384,
+   1.0356
+  ],
+  "pad_normal": [
+   0.0455,
+   0.995,
+   -0.0884
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.012418280000000115,
+  "wrist_surface": 0.07350000000000012,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.0,
+  "dy": 0.0,
+  "z": 1.12,
+  "roll": 90,
+  "ik": 0.0016,
+  "margin": 0.0146,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7381,
+   0.0337,
+   1.0349
+  ],
+  "pad_normal": [
+   -0.9954,
+   0.0341,
+   -0.0894
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.011739979999999983,
+  "wrist_surface": 0.0728000000000002,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.0,
+  "dy": 0.03,
+  "z": 1.02,
+  "roll": 0,
+  "ik": 0.0417,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7606,
+   0.0836,
+   0.9217
+  ],
+  "pad_normal": [
+   0.0473,
+   0.9952,
+   -0.0858
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.0,
+  "dy": 0.03,
+  "z": 1.02,
+  "roll": 90,
+  "ik": 0.0013,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7395,
+   0.0636,
+   0.9352
+  ],
+  "pad_normal": [
+   -0.9954,
+   0.0342,
+   -0.0892
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.0,
+  "dy": 0.03,
+  "z": 1.05,
+  "roll": 0,
+  "ik": 0.0474,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.766,
+   0.0887,
+   0.9577
+  ],
+  "pad_normal": [
+   0.049,
+   0.995,
+   -0.0867
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.014399999999999996,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.0,
+  "dy": 0.03,
+  "z": 1.05,
+  "roll": 90,
+  "ik": 0.0016,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.74,
+   0.0636,
+   0.9652
+  ],
+  "pad_normal": [
+   -0.9954,
+   0.0338,
+   -0.0893
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0030000000000001137,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.0,
+  "dy": 0.03,
+  "z": 1.08,
+  "roll": 0,
+  "ik": 0.0079,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7415,
+   0.0578,
+   0.9945
+  ],
+  "pad_normal": [
+   0.0369,
+   0.9954,
+   -0.0888
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.032400000000000206,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.0,
+  "dy": 0.03,
+  "z": 1.08,
+  "roll": 90,
+  "ik": 0.0015,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7399,
+   0.0635,
+   0.9951
+  ],
+  "pad_normal": [
+   -0.9954,
+   0.0338,
+   -0.0893
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.03300000000000014,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.0,
+  "dy": 0.03,
+  "z": 1.12,
+  "roll": 0,
+  "ik": 0.0096,
+  "margin": 0.0,
+  "joint": "right_shoulder_yaw_joint",
+  "pad_center": [
+   1.7436,
+   0.0578,
+   1.0334
+  ],
+  "pad_normal": [
+   0.0383,
+   0.9953,
+   -0.0886
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.010222620000000182,
+  "wrist_surface": 0.07120000000000015,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.0,
+  "dy": 0.03,
+  "z": 1.12,
+  "roll": 90,
+  "ik": 0.0016,
+  "margin": 0.019,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7392,
+   0.0635,
+   1.0349
+  ],
+  "pad_normal": [
+   -0.9954,
+   0.0341,
+   -0.0894
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.011739979999999983,
+  "wrist_surface": 0.07270000000000021,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.03,
+  "dy": -0.03,
+  "z": 1.02,
+  "roll": 0,
+  "ik": 0.0575,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.8142,
+   0.0133,
+   0.9181
+  ],
+  "pad_normal": [
+   0.0379,
+   0.9956,
+   -0.0856
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.03,
+  "dy": -0.03,
+  "z": 1.02,
+  "roll": 90,
+  "ik": 0.0014,
+  "margin": 0.1951,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7674,
+   0.0024,
+   0.9352
+  ],
+  "pad_normal": [
+   -0.9954,
+   0.0341,
+   -0.0894
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.03,
+  "dy": -0.03,
+  "z": 1.05,
+  "roll": 0,
+  "ik": 0.0632,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.8218,
+   0.0152,
+   0.9576
+  ],
+  "pad_normal": [
+   0.037,
+   0.9955,
+   -0.087
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.03,
+  "dy": -0.03,
+  "z": 1.05,
+  "roll": 90,
+  "ik": 0.0014,
+  "margin": 0.1791,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7675,
+   0.0024,
+   0.9652
+  ],
+  "pad_normal": [
+   -0.9954,
+   0.0341,
+   -0.0894
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0031000000000001027,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.03,
+  "dy": -0.03,
+  "z": 1.08,
+  "roll": 0,
+  "ik": 0.0324,
+  "margin": 0.0,
+  "joint": "right_wrist_roll_joint",
+  "pad_center": [
+   1.7884,
+   0.0122,
+   0.9964
+  ],
+  "pad_normal": [
+   0.0465,
+   0.995,
+   -0.0885
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0343,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.03,
+  "dy": -0.03,
+  "z": 1.08,
+  "roll": 90,
+  "ik": 0.0015,
+  "margin": 0.183,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7675,
+   0.0024,
+   0.9951
+  ],
+  "pad_normal": [
+   -0.9954,
+   0.034,
+   -0.0895
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.03300000000000014,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.03,
+  "dy": -0.03,
+  "z": 1.12,
+  "roll": 0,
+  "ik": 0.0242,
+  "margin": 0.0,
+  "joint": "right_shoulder_yaw_joint",
+  "pad_center": [
+   1.7818,
+   0.0069,
+   1.0399
+  ],
+  "pad_normal": [
+   0.0443,
+   0.9951,
+   -0.0884
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.016718280000000085,
+  "wrist_surface": 0.07780000000000009,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.03,
+  "dy": -0.03,
+  "z": 1.12,
+  "roll": 90,
+  "ik": 0.0016,
+  "margin": 0.1594,
+  "joint": "right_wrist_yaw_joint",
+  "pad_center": [
+   1.7678,
+   0.0024,
+   1.0351
+  ],
+  "pad_normal": [
+   -0.9954,
+   0.0337,
+   -0.0895
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.011942150000000096,
+  "wrist_surface": 0.07300000000000018,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.03,
+  "dy": 0.0,
+  "z": 1.02,
+  "roll": 0,
+  "ik": 0.0425,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7985,
+   0.0444,
+   0.9228
+  ],
+  "pad_normal": [
+   0.0411,
+   0.9954,
+   -0.0863
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.03,
+  "dy": 0.0,
+  "z": 1.02,
+  "roll": 90,
+  "ik": 0.0013,
+  "margin": 0.1729,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7684,
+   0.0324,
+   0.9352
+  ],
+  "pad_normal": [
+   -0.9954,
+   0.0342,
+   -0.0894
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.03,
+  "dy": 0.0,
+  "z": 1.05,
+  "roll": 0,
+  "ik": 0.0118,
+  "margin": 0.0,
+  "joint": "right_wrist_roll_joint",
+  "pad_center": [
+   1.7731,
+   0.029,
+   0.9627
+  ],
+  "pad_normal": [
+   0.0385,
+   0.9953,
+   -0.0889
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.000600000000000156,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.03,
+  "dy": 0.0,
+  "z": 1.05,
+  "roll": 90,
+  "ik": 0.0013,
+  "margin": 0.1564,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7684,
+   0.0324,
+   0.9652
+  ],
+  "pad_normal": [
+   -0.9954,
+   0.0341,
+   -0.0894
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0031000000000001027,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.03,
+  "dy": 0.0,
+  "z": 1.08,
+  "roll": 0,
+  "ik": 0.0117,
+  "margin": 0.0,
+  "joint": "right_wrist_roll_joint",
+  "pad_center": [
+   1.7733,
+   0.0293,
+   0.9947
+  ],
+  "pad_normal": [
+   0.0388,
+   0.9953,
+   -0.0888
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.032600000000000184,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.03,
+  "dy": 0.0,
+  "z": 1.08,
+  "roll": 90,
+  "ik": 0.0014,
+  "margin": 0.1606,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7685,
+   0.0324,
+   0.9951
+  ],
+  "pad_normal": [
+   -0.9954,
+   0.034,
+   -0.0894
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.03300000000000014,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.03,
+  "dy": 0.0,
+  "z": 1.12,
+  "roll": 0,
+  "ik": 0.0076,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7704,
+   0.0265,
+   1.036
+  ],
+  "pad_normal": [
+   0.0372,
+   0.9954,
+   -0.0887
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.01282479000000003,
+  "wrist_surface": 0.07390000000000008,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.03,
+  "dy": 0.0,
+  "z": 1.12,
+  "roll": 90,
+  "ik": 0.0015,
+  "margin": 0.1919,
+  "joint": "right_wrist_yaw_joint",
+  "pad_center": [
+   1.7687,
+   0.0324,
+   1.0351
+  ],
+  "pad_normal": [
+   -0.9954,
+   0.0337,
+   -0.0895
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.011942150000000096,
+  "wrist_surface": 0.07300000000000018,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.03,
+  "dy": 0.03,
+  "z": 1.02,
+  "roll": 0,
+  "ik": 0.0237,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7826,
+   0.0666,
+   0.9282
+  ],
+  "pad_normal": [
+   0.0394,
+   0.9954,
+   -0.0874
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.03,
+  "dy": 0.03,
+  "z": 1.02,
+  "roll": 90,
+  "ik": 0.0013,
+  "margin": 0.1791,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7695,
+   0.0623,
+   0.9352
+  ],
+  "pad_normal": [
+   -0.9954,
+   0.0341,
+   -0.0894
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.03,
+  "dy": 0.03,
+  "z": 1.05,
+  "roll": 0,
+  "ik": 0.0073,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7711,
+   0.0556,
+   0.9633
+  ],
+  "pad_normal": [
+   0.036,
+   0.9954,
+   -0.0888
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0012000000000000899,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.03,
+  "dy": 0.03,
+  "z": 1.05,
+  "roll": 90,
+  "ik": 0.0013,
+  "margin": 0.1618,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7694,
+   0.0623,
+   0.9652
+  ],
+  "pad_normal": [
+   -0.9954,
+   0.0341,
+   -0.0894
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.0031000000000001027,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.03,
+  "dy": 0.03,
+  "z": 1.08,
+  "roll": 0,
+  "ik": 0.0069,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.771,
+   0.0555,
+   0.9943
+  ],
+  "pad_normal": [
+   0.0361,
+   0.9954,
+   -0.0887
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.032200000000000006,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.03,
+  "dy": 0.03,
+  "z": 1.08,
+  "roll": 90,
+  "ik": 0.0014,
+  "margin": 0.1659,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7695,
+   0.0623,
+   0.9951
+  ],
+  "pad_normal": [
+   -0.9954,
+   0.0339,
+   -0.0894
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.0,
+  "wrist_surface": 0.03300000000000014,
+  "faces": [],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.03,
+  "dy": 0.03,
+  "z": 1.12,
+  "roll": 0,
+  "ik": 0.0057,
+  "margin": 0.0,
+  "joint": "right_wrist_pitch_joint",
+  "pad_center": [
+   1.7702,
+   0.0549,
+   1.0351
+  ],
+  "pad_normal": [
+   0.0358,
+   0.9954,
+   -0.0885
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.011920450000000082,
+  "wrist_surface": 0.07300000000000018,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "dx": 0.03,
+  "dy": 0.03,
+  "z": 1.12,
+  "roll": 90,
+  "ik": 0.0015,
+  "margin": 0.1685,
+  "joint": "right_wrist_yaw_joint",
+  "pad_center": [
+   1.7697,
+   0.0623,
+   1.0351
+  ],
+  "pad_normal": [
+   -0.9954,
+   0.0337,
+   -0.0895
+  ],
+  "half_thick": 0.0217,
+  "pad_surface_dist": 0.011942150000000096,
+  "wrist_surface": 0.07300000000000018,
+  "faces": [
+   "+z"
+  ],
+  "t0": 9.8,
+  "t1": 9.8
+ }
+]

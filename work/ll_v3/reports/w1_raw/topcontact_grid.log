@@ -1,0 +1,11 @@
+standoff 0.16317561092271102
+cells 192 feasible 3
+  FEAS right dx 0.03 dy -0.03 z 1.08 roll 90 pad_surf 0.0000 wrist 0.033 margin 0.183 joint right_wrist_pitch_joint normal [-1.0, 0.03, -0.09] faces []
+  FEAS right dx 0.03 dy +0.03 z 1.08 roll 90 pad_surf 0.0000 wrist 0.033 margin 0.166 joint right_wrist_pitch_joint normal [-1.0, 0.03, -0.09] faces []
+  FEAS right dx 0.03 dy +0.00 z 1.08 roll 90 pad_surf 0.0000 wrist 0.033 margin 0.161 joint right_wrist_pitch_joint normal [-1.0, 0.03, -0.09] faces []
+closest pad surfaces:
+  left dx -0.06 dy -0.03 z 1.02 roll 0 pad_surf 0.0000 wrist 0.0 margin 0.0 normal [0.03, 1.0, 0.08]
+  left dx -0.06 dy -0.03 z 1.02 roll 90 pad_surf 0.0000 wrist 0.0 margin 0.0 normal [-1.0, 0.03, 0.08]
+  left dx -0.06 dy -0.03 z 1.05 roll 0 pad_surf 0.0000 wrist 0.0 margin 0.0 normal [0.03, 1.0, 0.08]
+  left dx -0.06 dy -0.03 z 1.05 roll 90 pad_surf 0.0000 wrist 0.0 margin 0.0 normal [-1.0, 0.03, 0.07]
+  left dx -0.06 dy -0.03 z 1.08 roll 90 pad_surf 0.0000 wrist 0.001 margin 0.0 normal [-1.0, 0.03, 0.05]
