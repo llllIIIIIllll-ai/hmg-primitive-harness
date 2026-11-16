@@ -3,8 +3,8 @@ def _dist(a, b):
             + (a[2] - b[2]) ** 2) ** 0.5
 
 
-def run(api, side='right', standoff=0.15, lateral_offset=0.0,
-        pre_dx=-0.20, grasp_dx=-0.12, dy=0.0, z_grasp=0.92, z_pre=1.10,
+def run(api, side='left', standoff=0.15, lateral_offset=0.0,
+        pre_dx=-0.205, grasp_dx=-0.105, dy=0.0, z_grasp=0.954, z_pre=0.954,
         lift_dz=0.10, **kw):
     """W2 one-hand grasp: tuck -> standoff -> backoff -> free-space unfold to
     a palms-down pre-grasp for the GRASPING hand -> approach -> seeded
@@ -42,7 +42,7 @@ def run(api, side='right', standoff=0.15, lateral_offset=0.0,
                                             'backoff': d_back}}}
     u_r = api.skill('arm_untuck', dx=pre_dx, dy=dy, z=z_pre,
                     stop_err=0.12, max_steps=250, max_delta=0.04,
-                    orient_mode='down', orientation='down', joint_mode=True,
+                    orient_mode='side', orientation='keep', joint_mode=True,
                     deadband_comp=0.012, wrist_guard=True,
                     wrist_guard_dist=0.01, seed_mode='dls',
                     sides=(side,), base_gain=0.3, base_deadband=0.005,
@@ -57,7 +57,8 @@ def run(api, side='right', standoff=0.15, lateral_offset=0.0,
                 'phase': {'displacements': {'backoff': d_back,
                                             'untuck': d_untuck}}}
     r1b = api.skill('base_standoff_servo_v3', standoff=standoff,
-                    lateral_target=lateral, object_match=om)
+                    lateral_target=lateral, object_match=om,
+                    finger_clearance=0.02)
     st = api.observe()
     o_u2 = (st.get('object') or {}).get('pos')
     d_rest = _dist(o_u2, o_u)
@@ -70,8 +71,8 @@ def run(api, side='right', standoff=0.15, lateral_offset=0.0,
                 'binding_constraint': 'object_displacement',
                 'standoff_after_untuck': r1b, 'untuck': u_r}
     grasp = {'dx': grasp_dx, 'dy': dy, 'z': z_grasp}
-    r2 = api.skill('arm_pose_ik_live', grasp=grasp, orientation='down',
-                   orient_mode='down', sides=(side,), max_delta=0.01,
+    r2 = api.skill('arm_pose_ik_live', grasp=grasp, orientation='keep',
+                   orient_mode='side', sides=(side,), max_delta=0.01,
                    max_steps=400, max_delta_near=0.005, freeze_frame=True,
                    reorient_each_step=True, base_deadband=0.005,
                    base_yaw_deadband=0.003, base_yaw_gain=0.6,
@@ -109,8 +110,8 @@ def run(api, side='right', standoff=0.15, lateral_offset=0.0,
     close_contacts = api.contact_detail(limit=60, match=om)
     closed = r3.get('closed_upper')
     grasp_l = {'dx': grasp_dx, 'dy': dy, 'z': z_grasp + lift_dz}
-    r4 = api.skill('arm_pose_ik_live', grasp=grasp_l, orientation='down',
-                   orient_mode='down', sides=(side,), hand_hold=closed,
+    r4 = api.skill('arm_pose_ik_live', grasp=grasp_l, orientation='keep',
+                   orient_mode='side', sides=(side,), hand_hold=closed,
                    max_delta=0.005, max_delta_near=0.005, freeze_frame=True,
                    reorient_each_step=True, base_deadband=0.005,
                    freeze_object_pos=True)

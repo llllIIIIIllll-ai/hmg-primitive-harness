@@ -1,0 +1,11 @@
+standoff 0.16317561092271102
+cells 48 feasible 3
+  FEAS left front frac 0.7 roll 90 pad_surf 0.0000 wrist 0.028 (collider_box_a1f69b3d) margin 0.782 joint left_elbow_joint ik 0.0007
+  FEAS right front frac 0.7 roll 90 pad_surf 0.0000 wrist 0.028 (collider_box_a1f69b3d) margin 0.732 joint right_elbow_joint ik 0.0009
+  FEAS right front frac 0.7 roll 0 pad_surf 0.0000 wrist 0.027 (collider_box_a1f69b3d) margin 0.643 joint right_elbow_joint ik 0.0013
+best wrist clearances:
+  left front frac 0.7 roll 90 wrist 0.028 (collider_box_a1f69b3d) pad_surf 0.0 margin 0.782 ik 0.001
+  right front frac 0.7 roll 90 wrist 0.028 (collider_box_a1f69b3d) pad_surf 0.0 margin 0.732 ik 0.001
+  right front frac 0.7 roll 0 wrist 0.027 (collider_box_a1f69b3d) pad_surf 0.0 margin 0.643 ik 0.001
+  left side_p frac 0.5 roll 0 wrist 0.027 (collider_box_a1f69b3d) pad_surf 0.0364 margin 0.0 ik 0.062
+  left front frac 0.7 roll 0 wrist 0.026 (collider_box_a1f69b3d) pad_surf 0.0026 margin 0.0 ik 0.006

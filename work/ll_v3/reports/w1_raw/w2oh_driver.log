@@ -1,0 +1,8 @@
+offset 0.0 ok False stage approach binding lateral_error err None
+  displacements None
+  resets/nans None None sim_time None
+  first_step null
+  site None normal None contacts None rise None guard None
+  budget null
+  reach trace n 0
+w2e driver done

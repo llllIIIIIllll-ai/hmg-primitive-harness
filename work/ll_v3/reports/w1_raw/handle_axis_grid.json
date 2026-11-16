@@ -1,0 +1,962 @@
+[
+ {
+  "ok": true,
+  "side": "left",
+  "approach": "front",
+  "frac": 0.3,
+  "roll": 0,
+  "target": [
+   1.622573157118376,
+   0.03200805076638477,
+   0.8527375585306451
+  ],
+  "ik": 0.0033,
+  "margin": 0.0,
+  "joint": "left_wrist_roll_joint",
+  "wrist_min": 0.013723209170245637,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.0037786322067543763,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "approach": "front",
+  "frac": 0.3,
+  "roll": 90,
+  "target": [
+   1.622573157118376,
+   0.03200805076638477,
+   0.8527375585306451
+  ],
+  "ik": 0.0005,
+  "margin": 0.8376,
+  "joint": "left_shoulder_roll_joint",
+  "wrist_min": 0.013526508513208246,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.0,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "approach": "front",
+  "frac": 0.5,
+  "roll": 0,
+  "target": [
+   1.6264728625807923,
+   0.03203911372847221,
+   0.8844990341323672
+  ],
+  "ik": 0.0037,
+  "margin": 0.1138,
+  "joint": "left_wrist_roll_joint",
+  "wrist_min": 0.011574261255643675,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.006026802657602399,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "approach": "front",
+  "frac": 0.5,
+  "roll": 90,
+  "target": [
+   1.6264728625807923,
+   0.03203911372847221,
+   0.8844990341323672
+  ],
+  "ik": 0.0006,
+  "margin": 0.8688,
+  "joint": "left_shoulder_roll_joint",
+  "wrist_min": 0.014478330850305185,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.0,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "approach": "front",
+  "frac": 0.7,
+  "roll": 0,
+  "target": [
+   1.6303725680432086,
+   0.032070176690559636,
+   0.9162605097340892
+  ],
+  "ik": 0.0056,
+  "margin": 0.0,
+  "joint": "left_wrist_pitch_joint",
+  "wrist_min": 0.025656971699813416,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.002592457760369789,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "approach": "front",
+  "frac": 0.7,
+  "roll": 90,
+  "target": [
+   1.6303725680432086,
+   0.032070176690559636,
+   0.9162605097340892
+  ],
+  "ik": 0.0007,
+  "margin": 0.7816,
+  "joint": "left_elbow_joint",
+  "wrist_min": 0.02785099444530076,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.0,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "approach": "side_p",
+  "frac": 0.3,
+  "roll": 0,
+  "target": [
+   1.6898924959447201,
+   -0.040573672966135246,
+   0.8527375585306451
+  ],
+  "ik": 0.0626,
+  "margin": 0.0,
+  "joint": "left_shoulder_pitch_joint",
+  "wrist_min": 0.01128212968085908,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.039914145190644186,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "approach": "side_p",
+  "frac": 0.3,
+  "roll": 90,
+  "target": [
+   1.6898924959447201,
+   -0.040573672966135246,
+   0.8527375585306451
+  ],
+  "ik": 0.04,
+  "margin": 0.0,
+  "joint": "left_wrist_yaw_joint",
+  "wrist_min": -0.021040540825682248,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.03804107936089012,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "approach": "side_p",
+  "frac": 0.5,
+  "roll": 0,
+  "target": [
+   1.6937922014071365,
+   -0.04054261000404782,
+   0.8844990341323672
+  ],
+  "ik": 0.0622,
+  "margin": 0.0,
+  "joint": "left_shoulder_yaw_joint",
+  "wrist_min": 0.02721742023266434,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.03637041637422398,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "approach": "side_p",
+  "frac": 0.5,
+  "roll": 90,
+  "target": [
+   1.6937922014071365,
+   -0.04054261000404782,
+   0.8844990341323672
+  ],
+  "ik": 0.035,
+  "margin": 0.0,
+  "joint": "left_wrist_yaw_joint",
+  "wrist_min": -0.013462209602957964,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.03409606714281655,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "approach": "side_p",
+  "frac": 0.7,
+  "roll": 0,
+  "target": [
+   1.6976919068695528,
+   -0.04051154704196039,
+   0.9162605097340892
+  ],
+  "ik": 0.0345,
+  "margin": 0.0,
+  "joint": "left_elbow_joint",
+  "wrist_min": 0.006424834432530183,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.028276614007930575,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "approach": "side_p",
+  "frac": 0.7,
+  "roll": 90,
+  "target": [
+   1.6976919068695528,
+   -0.04051154704196039,
+   0.9162605097340892
+  ],
+  "ik": 0.0319,
+  "margin": 0.0,
+  "joint": "left_wrist_yaw_joint",
+  "wrist_min": 0.0076874759005325435,
+  "wrist_collider": "collider_box_f302734d",
+  "pad_surface": 0.03146988040539751,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "approach": "side_m",
+  "frac": 0.3,
+  "roll": 0,
+  "target": [
+   1.695154880850896,
+   0.09932738959272903,
+   0.8527375585306451
+  ],
+  "ik": 0.0003,
+  "margin": 0.5451,
+  "joint": "left_wrist_yaw_joint",
+  "wrist_min": -0.005884598870797585,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.0,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "approach": "side_m",
+  "frac": 0.3,
+  "roll": 90,
+  "target": [
+   1.695154880850896,
+   0.09932738959272903,
+   0.8527375585306451
+  ],
+  "ik": 0.001,
+  "margin": 0.7205,
+  "joint": "left_wrist_pitch_joint",
+  "wrist_min": -0.005666518417958115,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.0,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "approach": "side_m",
+  "frac": 0.5,
+  "roll": 0,
+  "target": [
+   1.6990545863133124,
+   0.09935845255481646,
+   0.8844990341323672
+  ],
+  "ik": 0.0005,
+  "margin": 0.6011,
+  "joint": "left_wrist_yaw_joint",
+  "wrist_min": -0.001135334428684548,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.0,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "approach": "side_m",
+  "frac": 0.5,
+  "roll": 90,
+  "target": [
+   1.6990545863133124,
+   0.09935845255481646,
+   0.8844990341323672
+  ],
+  "ik": 0.0008,
+  "margin": 0.6682,
+  "joint": "left_wrist_pitch_joint",
+  "wrist_min": -0.00041580053294622277,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.0,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "approach": "side_m",
+  "frac": 0.7,
+  "roll": 0,
+  "target": [
+   1.7029542917757288,
+   0.09938951551690389,
+   0.9162605097340892
+  ],
+  "ik": 0.0007,
+  "margin": 0.6707,
+  "joint": "left_wrist_yaw_joint",
+  "wrist_min": 0.017451224792811013,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.0,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "approach": "side_m",
+  "frac": 0.7,
+  "roll": 90,
+  "target": [
+   1.7029542917757288,
+   0.09938951551690389,
+   0.9162605097340892
+  ],
+  "ik": 0.0005,
+  "margin": 0.6874,
+  "joint": "left_wrist_pitch_joint",
+  "wrist_min": 0.018449828920564182,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.0,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "approach": "diag",
+  "frac": 0.3,
+  "roll": 0,
+  "target": [
+   1.6901702783230126,
+   -0.03318879888791734,
+   0.8840425102156422
+  ],
+  "ik": 0.0074,
+  "margin": 0.0,
+  "joint": "left_shoulder_yaw_joint",
+  "wrist_min": -0.00830974625272718,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.005926849573108952,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "approach": "diag",
+  "frac": 0.3,
+  "roll": 90,
+  "target": [
+   1.6901702783230126,
+   -0.03318879888791734,
+   0.8840425102156422
+  ],
+  "ik": 0.0059,
+  "margin": 0.0,
+  "joint": "left_wrist_roll_joint",
+  "wrist_min": -0.010525411446612433,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.013689233130692082,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "approach": "diag",
+  "frac": 0.5,
+  "roll": 0,
+  "target": [
+   1.694069983785429,
+   -0.03315773592582991,
+   0.9158039858173642
+  ],
+  "ik": 0.0028,
+  "margin": 0.0,
+  "joint": "left_wrist_yaw_joint",
+  "wrist_min": 0.008217273613946655,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.002264779512389686,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "approach": "diag",
+  "frac": 0.5,
+  "roll": 90,
+  "target": [
+   1.694069983785429,
+   -0.03315773592582991,
+   0.9158039858173642
+  ],
+  "ik": 0.0084,
+  "margin": 0.0,
+  "joint": "left_wrist_roll_joint",
+  "wrist_min": 0.0031789933858454578,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.016253220779571254,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "approach": "diag",
+  "frac": 0.7,
+  "roll": 0,
+  "target": [
+   1.6979696892478453,
+   -0.033126672963742484,
+   0.9475654614190863
+  ],
+  "ik": 0.0025,
+  "margin": 0.0,
+  "joint": "left_wrist_yaw_joint",
+  "wrist_min": 0.007299043085083244,
+  "wrist_collider": "collider_box_8e968ea9",
+  "pad_surface": 0.0018329313576748354,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "left",
+  "approach": "diag",
+  "frac": 0.7,
+  "roll": 90,
+  "target": [
+   1.6979696892478453,
+   -0.033126672963742484,
+   0.9475654614190863
+  ],
+  "ik": 0.0042,
+  "margin": 0.0,
+  "joint": "left_wrist_yaw_joint",
+  "wrist_min": 0.0,
+  "wrist_collider": "collider_box_8e968ea9",
+  "pad_surface": 0.011593470905611263,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "approach": "front",
+  "frac": 0.3,
+  "roll": 0,
+  "target": [
+   1.622573157118376,
+   0.03200805076638477,
+   0.8527375585306451
+  ],
+  "ik": 0.0008,
+  "margin": 1.0004,
+  "joint": "right_elbow_joint",
+  "wrist_min": 0.013524363092638825,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.0,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "approach": "front",
+  "frac": 0.3,
+  "roll": 90,
+  "target": [
+   1.622573157118376,
+   0.03200805076638477,
+   0.8527375585306451
+  ],
+  "ik": 0.0007,
+  "margin": 0.8489,
+  "joint": "right_shoulder_roll_joint",
+  "wrist_min": 0.013328845016499849,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.0,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "approach": "front",
+  "frac": 0.5,
+  "roll": 0,
+  "target": [
+   1.6264728625807923,
+   0.03203911372847221,
+   0.8844990341323672
+  ],
+  "ik": 0.001,
+  "margin": 0.8049,
+  "joint": "right_elbow_joint",
+  "wrist_min": 0.014171752690896378,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.0,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "approach": "front",
+  "frac": 0.5,
+  "roll": 90,
+  "target": [
+   1.6264728625807923,
+   0.03203911372847221,
+   0.8844990341323672
+  ],
+  "ik": 0.0008,
+  "margin": 0.8479,
+  "joint": "right_elbow_joint",
+  "wrist_min": 0.014353821665621741,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.0,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "approach": "front",
+  "frac": 0.7,
+  "roll": 0,
+  "target": [
+   1.6303725680432086,
+   0.032070176690559636,
+   0.9162605097340892
+  ],
+  "ik": 0.0013,
+  "margin": 0.6433,
+  "joint": "right_elbow_joint",
+  "wrist_min": 0.02723908483932755,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.0,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "approach": "front",
+  "frac": 0.7,
+  "roll": 90,
+  "target": [
+   1.6303725680432086,
+   0.032070176690559636,
+   0.9162605097340892
+  ],
+  "ik": 0.0009,
+  "margin": 0.7317,
+  "joint": "right_elbow_joint",
+  "wrist_min": 0.027639115439524645,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.0,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "approach": "side_p",
+  "frac": 0.3,
+  "roll": 0,
+  "target": [
+   1.6898924959447201,
+   -0.040573672966135246,
+   0.8527375585306451
+  ],
+  "ik": 0.06,
+  "margin": 0.0,
+  "joint": "right_wrist_roll_joint",
+  "wrist_min": -0.04717090091629289,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.03791242800540994,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "approach": "side_p",
+  "frac": 0.3,
+  "roll": 90,
+  "target": [
+   1.6898924959447201,
+   -0.040573672966135246,
+   0.8527375585306451
+  ],
+  "ik": 0.001,
+  "margin": 0.6739,
+  "joint": "right_wrist_pitch_joint",
+  "wrist_min": -0.0038185271372095167,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.0,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "approach": "side_p",
+  "frac": 0.5,
+  "roll": 0,
+  "target": [
+   1.6937922014071365,
+   -0.04054261000404782,
+   0.8844990341323672
+  ],
+  "ik": 0.0731,
+  "margin": 0.0,
+  "joint": "right_wrist_roll_joint",
+  "wrist_min": -0.0465775558753688,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.056302346603516816,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "approach": "side_p",
+  "frac": 0.5,
+  "roll": 90,
+  "target": [
+   1.6937922014071365,
+   -0.04054261000404782,
+   0.8844990341323672
+  ],
+  "ik": 0.0007,
+  "margin": 0.6002,
+  "joint": "right_wrist_pitch_joint",
+  "wrist_min": 0.0010330778111520347,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.0,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "approach": "side_p",
+  "frac": 0.7,
+  "roll": 0,
+  "target": [
+   1.6976919068695528,
+   -0.04051154704196039,
+   0.9162605097340892
+  ],
+  "ik": 0.0799,
+  "margin": 0.0,
+  "joint": "right_wrist_roll_joint",
+  "wrist_min": -0.013151528597842785,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.07563815624002165,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "approach": "side_p",
+  "frac": 0.7,
+  "roll": 90,
+  "target": [
+   1.6976919068695528,
+   -0.04051154704196039,
+   0.9162605097340892
+  ],
+  "ik": 0.0004,
+  "margin": 0.6123,
+  "joint": "right_wrist_pitch_joint",
+  "wrist_min": 0.019238057531454647,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.0,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "approach": "side_m",
+  "frac": 0.3,
+  "roll": 0,
+  "target": [
+   1.695154880850896,
+   0.09932738959272903,
+   0.8527375585306451
+  ],
+  "ik": 0.0235,
+  "margin": 0.0,
+  "joint": "right_wrist_yaw_joint",
+  "wrist_min": -0.018582870359444052,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.0,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "approach": "side_m",
+  "frac": 0.3,
+  "roll": 90,
+  "target": [
+   1.695154880850896,
+   0.09932738959272903,
+   0.8527375585306451
+  ],
+  "ik": 0.0291,
+  "margin": 0.0,
+  "joint": "right_wrist_yaw_joint",
+  "wrist_min": -0.02027755465514386,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.0,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "approach": "side_m",
+  "frac": 0.5,
+  "roll": 0,
+  "target": [
+   1.6990545863133124,
+   0.09935845255481646,
+   0.8844990341323672
+  ],
+  "ik": 0.0161,
+  "margin": 0.0,
+  "joint": "right_wrist_yaw_joint",
+  "wrist_min": -0.007325058565156889,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.0,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "approach": "side_m",
+  "frac": 0.5,
+  "roll": 90,
+  "target": [
+   1.6990545863133124,
+   0.09935845255481646,
+   0.8844990341323672
+  ],
+  "ik": 0.0242,
+  "margin": 0.0,
+  "joint": "right_wrist_yaw_joint",
+  "wrist_min": -0.0121870153810784,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.0,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "approach": "side_m",
+  "frac": 0.7,
+  "roll": 0,
+  "target": [
+   1.7029542917757288,
+   0.09938951551690389,
+   0.9162605097340892
+  ],
+  "ik": 0.0113,
+  "margin": 0.0,
+  "joint": "right_wrist_yaw_joint",
+  "wrist_min": 0.014804304641892738,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.0,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "approach": "side_m",
+  "frac": 0.7,
+  "roll": 90,
+  "target": [
+   1.7029542917757288,
+   0.09938951551690389,
+   0.9162605097340892
+  ],
+  "ik": 0.0215,
+  "margin": 0.0,
+  "joint": "right_wrist_yaw_joint",
+  "wrist_min": 0.009863049429081325,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.0,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "approach": "diag",
+  "frac": 0.3,
+  "roll": 0,
+  "target": [
+   1.6901702783230126,
+   -0.03318879888791734,
+   0.8840425102156422
+  ],
+  "ik": 0.0209,
+  "margin": 0.0,
+  "joint": "right_wrist_roll_joint",
+  "wrist_min": -0.024671776526515074,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.017083971951360542,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "approach": "diag",
+  "frac": 0.3,
+  "roll": 90,
+  "target": [
+   1.6901702783230126,
+   -0.03318879888791734,
+   0.8840425102156422
+  ],
+  "ik": 0.0003,
+  "margin": 0.7035,
+  "joint": "right_wrist_pitch_joint",
+  "wrist_min": -0.005526550540057712,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.007952931894165691,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "approach": "diag",
+  "frac": 0.5,
+  "roll": 0,
+  "target": [
+   1.694069983785429,
+   -0.03315773592582991,
+   0.9158039858173642
+  ],
+  "ik": 0.0328,
+  "margin": 0.0,
+  "joint": "right_wrist_roll_joint",
+  "wrist_min": -0.018263104333093118,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.028349273922370542,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "approach": "diag",
+  "frac": 0.5,
+  "roll": 90,
+  "target": [
+   1.694069983785429,
+   -0.03315773592582991,
+   0.9158039858173642
+  ],
+  "ik": 0.0001,
+  "margin": 0.7352,
+  "joint": "right_wrist_pitch_joint",
+  "wrist_min": 0.009768904715128077,
+  "wrist_collider": "collider_box_a1f69b3d",
+  "pad_surface": 0.00791893568818647,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "approach": "diag",
+  "frac": 0.7,
+  "roll": 0,
+  "target": [
+   1.6979696892478453,
+   -0.033126672963742484,
+   0.9475654614190863
+  ],
+  "ik": 0.044,
+  "margin": 0.0,
+  "joint": "right_wrist_roll_joint",
+  "wrist_min": 0.001668427429550444,
+  "wrist_collider": "collider_box_f302734d",
+  "pad_surface": 0.03902710234795768,
+  "t0": 9.8,
+  "t1": 9.8
+ },
+ {
+  "ok": true,
+  "side": "right",
+  "approach": "diag",
+  "frac": 0.7,
+  "roll": 90,
+  "target": [
+   1.6979696892478453,
+   -0.033126672963742484,
+   0.9475654614190863
+  ],
+  "ik": 0.0003,
+  "margin": 0.6673,
+  "joint": "right_wrist_yaw_joint",
+  "wrist_min": 0.016399033322918408,
+  "wrist_collider": "collider_box_8e968ea9",
+  "pad_surface": 0.007887092128861005,
+  "t0": 9.8,
+  "t1": 9.8
+ }
+]

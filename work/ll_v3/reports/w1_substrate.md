@@ -617,3 +617,17 @@ The wrist radius (~0.047 m) sits 5-7 cm behind the pad; with the pad on the
 geometry, not the object model, is the binding constraint. Zero feasible
 one-hand cells; the final measured constraint for 05 across both grasp modes
 and both object representations. Stopped for the manager-level decision.
+
+## 27. One-hand handle chain: upstream blockers
+
+Approach-axis grid (48 cells: front/side_p/side_m/diag x frac x roll):
+3 feasible cells - front approach, handle frac 0.7, roll 90/0, both hands:
+pad_surf 0.0000, wrist 0.027-0.028 to the battery, margins 0.64-0.78,
+ik ~1 mm. Best: left front frac 0.7 roll 90 (margin 0.782).
+
+Chain run (left cell, front pre-grasp dx -0.205 z 0.954): unfold residual
+0.355 at the 251-step cap (stop_err 0.12 not reached), approach standoff
+aabb 0.167 but lateral_error 0.07 vs the 0.04 tolerance with base yaw
+14 deg after 60 bursts; the chain stops at the approach. Object
+displacement 0.0. The grasp cell is feasible read-only; the blockers are
+the front pre-grasp reachability and the base lateral/yaw after the unfold.
