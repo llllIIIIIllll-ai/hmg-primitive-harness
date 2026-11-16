@@ -509,3 +509,37 @@ Final measured constraint: side - target branch collides at the wrist
 clear, but the grasp target is joint-limit infeasible (0/120) and the torso
 grazes at the close standoff. Stopped for a manager-level task/gate
 decision; batch 0.
+
+## 21. Design lesson: the grasp mode follows the object
+
+A box is a two-hand object; a drill/tool is a one-hand object. Assuming a
+fixed two-palm (12-D) grasp for 05 was the wrong premise, not a WBC or G1
+geometry limit. The substrate contract now treats the grasp mode as a
+property of the object (box -> two palms; drill/tool -> one hand, 7-D palm
+pose), and the W2 gate reads bilateral pad contact on the object: for a
+one-hand object it means the GRASPING HAND'S TWO PADS; for a two-hand
+object it means both palms. Site <= 0.015 on the grasping pad(s), rise
+>= 0.05, no guard trip, one named binding constraint. A fixed two-palm
+assumption is the anti-pattern that blocked W2.
+
+## 22. One-hand grasp: the feasible cell is a pre-grasp
+
+One-hand grid (162 cells, both hands x dx x dy x z x front/down/inward):
+exactly 1 feasible cell (ik <= 0.02, margin >= 0.05, wrist >= 0.02) -
+right hand, down, dx -0.12, dy 0, z 0.92: ik 0.0050, margin 0.103
+(right_wrist_pitch), wrist surface 0.024. The lowest-residual cells
+(ik 0.0002-0.0005 at dx -0.04) all have wrist surface 0.0 (the wrist inside
+the AABB).
+
+Pad-surface check at the feasible cell: pad center [1.6153, 0.0302, 0.8323]
+is 2.2 cm OUTSIDE the object's -x face (x lo 1.6373), at z 0.832 (lower
+band), with pad normal [0.493, 0.869, -0.041] (lateral +y). The close along
+the normal pinches in y at x 1.615 - in front of the object. So the cell is
+a PRE-GRASP: the pads do not straddle the drill, and the solved hand is not
+oriented to pinch the -x face. The close-in cells that do reach the object
+have the wrist at 0.0.
+
+The one-hand chain (w2_onehand.py) is implemented and ready; it was not run
+because it would descend to a pre-grasp and close on air. The remaining
+lever is a hand orientation (R_des) with the wrist not below the palm, or a
+contact target the wrist can tolerate.

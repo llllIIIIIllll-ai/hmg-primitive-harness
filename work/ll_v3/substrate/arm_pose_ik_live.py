@@ -12,6 +12,7 @@ def run(api, grasp=None, orientation='keep', max_steps=50, max_delta=0.08,
         wrist_guard=False, wrist_guard_dist=0.010, max_delta_near=0.005,
         near_dist=0.15, orient_mode='side', seed_mode='none',
         seed_force=False, joint_mode=False, deadband_comp=0.0,
+        sides=('left', 'right'),
         live_guard_dist=0.02,
         budget=True, **kw):
     """True closed-loop reach: solve from the live state with apply=False,
@@ -192,7 +193,7 @@ def run(api, grasp=None, orientation='keep', max_steps=50, max_delta=0.08,
                 R_body = U @ Vt
                 r_body[side] = R_body.tolist()
             ip = api.ik_preview(targets=targets, orients=(orientation,),
-                                iters=150, sides=('left', 'right'))
+                                iters=150, sides=sides)
             ip_err = {}
             ip_dq = {}
             for row in (ip.get('rows') or []):
@@ -271,12 +272,13 @@ def run(api, grasp=None, orientation='keep', max_steps=50, max_delta=0.08,
             r_un = api.reach_box_qp(task_dim=12, targets=targets,
                                     R_body=r_body, orientation=orientation,
                                     dur=0.02, iters=iters,
-                                    hand_hold=hand_hold, apply=False)
+                                    hand_hold=hand_hold, apply=False,
+                                    sides=sides)
             r_sd = api.reach_box_qp(task_dim=12, targets=targets,
                                     R_body=r_body, orientation=orientation,
                                     dur=0.02, iters=iters,
                                     hand_hold=hand_hold, apply=False,
-                                    seed_q=seed_q)
+                                    seed_q=seed_q, sides=sides)
             wu = None
             for s_ in (r_un.get('ik_err') or {}):
                 v = r_un['ik_err'][s_]
@@ -349,7 +351,7 @@ def run(api, grasp=None, orientation='keep', max_steps=50, max_delta=0.08,
                                  R_body=r_body, orientation=orientation,
                                  dur=0.02, iters=iters,
                                  hand_hold=hand_hold, apply=False,
-                                 seed_q=sq)
+                                 seed_q=sq, sides=sides)
         if first_step is not None and first_step.get('ik_err') is None:
             first_step['ik_err'] = r.get('ik_err')
             first_step['joint_margin_min'] = r.get('joint_margin_min')

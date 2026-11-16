@@ -199,6 +199,25 @@ record decisions inline. Do not present open questions about labels; present
 decisions with reasons. The graph is seeded only after the manager reviews the
 design.
 
+**Grasp topology check (required before Phase G; run it before the predicate
+coverage).** For every task, derive the manipulation topology from the object,
+not from a default. The object decides how many hands, which grasp type and
+which approach — a box is a two-hand object, a drill/tool is a one-hand
+object. Record the decision with the live object dimensions and the reason:
+
+| input | what it decides |
+|---|---|
+| object's minor horizontal dimension vs the wrist/gripper collision radius | one hand (wrists cannot fit on opposite faces) vs two hands |
+| object height and the arm's down-reach at the standoff | top vs side vs front grasp |
+| task predicate (grasp/press/push) and the expected contact faces | contact type and the approach axis |
+| object width vs the two-palm lateral separation | whether a two-palm target is kinematically feasible at all |
+
+A fixed two-palm (12-D) target is an anti-pattern; `ee_pose_ik` takes the hand
+count as a parameter (7-D per grasping hand, 12-D for a two-hand grasp). Do not
+choose the IK dimension before the grasp topology is recorded; a grasp-type
+failure is not a tuning problem and must not be fixed by pre-grasp/orientation
+searches alone.
+
 **Predicate coverage check (required before Phase G).** For every task in the
 portfolio, list the quantity its success predicate reads, and name the
 capability in the design that measures it. If no capability measures it, add
@@ -330,7 +349,9 @@ A skill that hands the waist over also declares `waist_owner`,
 `waist_gain_before`, `waist_gain_after`, `handoff_events` (each HANDOFF event
 with its owner and the restore) and `lower_owner`.
 
-IK solves two palm poses (12-D) over the 14 arm joints, with the measured waist
+IK solves the palm pose(s) — one hand (7-D over one arm) for a one-hand object
+(a drill/tool), two palms (12-D) for a two-hand object (a box); the grasp mode
+follows the object, not a fixed two-palm assumption. The waist is measured
 exogenous while `waist_owner=homie`. **Default solver is mink QP** (`qp_reach`,
 qpsolvers/daqp) over the arm joints (17-D, adding the three waist joints, only
 while the waist is authorized to `ik`/`blend`), with joint limits, a base-lock

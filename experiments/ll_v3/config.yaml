@@ -77,9 +77,11 @@ warmup:
         base tilt, guard status
     - name: arm_pose_ik
       capability: ee_pose_ik
-      contract: two palm poses (12-D), measured waist exogenous, mink QP default
-        (DLS fallback), joint margin >= 0.05 rad, reports pad position/normal
-        error and binding constraint
+      contract: one or two palm poses (7-D per grasping hand / 12-D for a
+        two-hand grasp; the grasp mode follows the object — a box is a
+        two-hand object, a drill/tool is a one-hand object), measured waist
+        exogenous, mink QP default (DLS fallback), joint margin >= 0.05 rad,
+        reports pad position/normal error and binding constraint
     - name: hand_close_contact
       capability: grasp_close_contact
       contract: contact-triggered close, reports contact pairs, grip stability,
@@ -110,9 +112,11 @@ warmup:
   integration_benchmark:
     task: 05_drill_lift
     steps: reach -> close -> lift
-    pass: pad position error <= 0.015 m per side, bilateral contact on the
-      drill, object rise >= 0.05 m, no guard trip, and one named binding
-      constraint on failure
+    pass: pad position error <= 0.015 m per side; bilateral pad contact on the
+      drill — for a one-hand object (the drill) this is the grasping hand's two
+      pads, for a two-hand object (a box) both palms; object rise >= 0.05 m, no
+      guard trip, and one named binding constraint on failure. The grasp mode
+      follows the object, not a fixed two-palm assumption.
   gate: all substrate primitives (including authority_handover) verified and
     the integration benchmark passes before ANY discovery batch starts. Work
     that implements a missing capability to make W2 pass is a W2-closure job

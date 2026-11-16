@@ -1,0 +1,9 @@
+standoff 0.16317561092271102
+cells 162 feasible 1
+  FEAS right dx -0.12 dy +0.00 z 0.92 down ik 0.0050 margin 0.103 joint right_wrist_pitch_joint wrist 0.024
+best by residual:
+  right dx -0.04 dy +0.00 z 0.88 inward ik 0.0002 margin 0.790 joint right_shoulder_roll_joint wrist 0.0
+  right dx -0.04 dy +0.02 z 0.88 inward ik 0.0002 margin 0.733 joint right_shoulder_roll_joint wrist 0.0
+  right dx -0.04 dy -0.02 z 0.88 inward ik 0.0004 margin 0.854 joint right_shoulder_roll_joint wrist 0.0
+  right dx -0.04 dy +0.02 z 0.92 inward ik 0.0004 margin 0.684 joint right_shoulder_roll_joint wrist 0.0
+  right dx -0.04 dy +0.02 z 0.88 front ik 0.0005 margin 1.092 joint right_shoulder_roll_joint wrist 0.0

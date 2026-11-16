@@ -1868,7 +1868,9 @@ class Tools:
             for gi in range(int(m.ngeom)):
                 nmg = m.geom(gi).name
                 if nmg in ('robot0_g27_col', 'robot0_g28_col',
-                           'robot0_g34_col', 'robot0_g35_col'):
+                           'robot0_g34_col', 'robot0_g35_col',
+                           'gripper0_left_g0_col',
+                           'gripper0_right_g0_col'):
                     wpos[nmg] = np.round(
                         np.asarray(cfg.data.geom_xpos[gi], float),
                         4).tolist()
