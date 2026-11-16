@@ -21,6 +21,7 @@ SRCS = {
     "arm_pose_ik_live": "arm_pose_ik_live.py",
     "hand_close_contact": "hand_close_contact.py",
     "safety_guard": "safety_guard.py",
+    "arm_stage_reach": "arm_stage_reach.py",
     "w2_onehand": "w2_onehand.py",
 }
 
@@ -65,7 +66,9 @@ def main():
         qtool({"tool": "reset", "seed": 0})
         r = qtool({"tool": "call", "name": "w2_onehand",
                    "kwargs": {"standoff": 0.15, "lift_dz": 0.10,
-                              "lateral_offset": off}})
+                              "lateral_offset": off,
+                              "target_site": [1.62683, 0.02184, 0.88450],
+                              "n_stages": 5}})
         res = r.get("result") or {}
         with open(os.path.join(RAW, "w2oh_offset_%+.2f.json" % off), "w",
                   encoding="utf-8") as fh:
@@ -77,6 +80,12 @@ def main():
         print("  resets/nans", ph.get("resets"), ph.get("nans"),
               "sim_time", ph.get("reach_sim_time"))
         print("  first_step", json.dumps(ph.get("first_step"))[:900])
+        sr = res.get("stage_reach") or {}
+        for st_ in (sr.get("stages") or []):
+            print("  stage", st_.get("stage"), "frac", st_.get("frac"),
+                  "ok", st_.get("ok"), "pe", st_.get("pad_error"),
+                  "margin", st_.get("margin_min"), st_.get("margin_joint"),
+                  "wrist", st_.get("wrist_dist_min"), "abort", st_.get("wrist_abort"))
         print("  site", res.get("pad_error"), "normal", res.get(
             "normal_error_deg"), "contacts", res.get("contacts"),
               "rise", res.get("object_rise"),

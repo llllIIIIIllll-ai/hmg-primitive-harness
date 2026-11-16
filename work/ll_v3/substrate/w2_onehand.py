@@ -5,7 +5,8 @@ def _dist(a, b):
 
 def run(api, side='left', standoff=0.15, lateral_offset=0.0,
         pre_dx=-0.205, grasp_dx=-0.105, dy=0.0, z_grasp=0.954, z_pre=0.954,
-        lift_dz=0.10, front_pre=False, use_waypoint=False, **kw):
+        lift_dz=0.10, front_pre=False, use_waypoint=False, route='stage', target_site=None,
+        n_stages=5, **kw):
     """W2 one-hand grasp: tuck -> standoff -> backoff -> free-space unfold to
     a palms-down pre-grasp for the GRASPING hand -> approach -> seeded
     descent -> close -> lift.  The non-grasping arm stays tucked clear."""
@@ -154,46 +155,86 @@ def run(api, side='left', standoff=0.15, lateral_offset=0.0,
                                                     'untuck_down': d_u1,
                                                     'waypoint': d_wp}}}
     grasp = {'dx': grasp_dx, 'dy': dy, 'z': z_grasp}
-    r2 = api.skill('arm_pose_ik_live', grasp=grasp, orientation='keep',
-                   orient_mode='side', sides=(side,), max_delta=0.04,
-                   max_steps=400, max_delta_near=0.02, near_dist=0.03,
-                   freeze_frame=True, pred_guard=False,
-                   reorient_each_step=True, base_deadband=0.005,
-                   base_yaw_deadband=0.003, base_yaw_gain=0.6,
-                   base_wmax=0.1, wrist_guard=True, wrist_guard_dist=0.02,
-                   seed_mode='dls', seed_force=True, deadband_comp=0.04,
-                   base_gain=0.3, base_vmax=0.05,
-                   trace_contacts=True, contact_match=om)
-    st = api.observe()
-    o2 = (st.get('object') or {}).get('pos')
-    d_reach = _dist(o2, o_u2)
-    pre_close = _dist(o2, obj0)
-    if r2.get('wrist_abort'):
-        return {'ok': False, 'stage': 'descent_wrist_guard',
-                'binding_constraint': 'wrist_guard',
-                'wrist_abort_step': r2.get('wrist_abort_step'),
-                'wrist_dist_min': r2.get('wrist_dist_min'),
-                'wrist_dist_by_side': r2.get('wrist_dist_by_side'),
-                'waypoint': r_wp, 'reach': r2, 'untuck': u_r,
-                'phase': {'displacements': {'standoff': d_standoff,
-                                            'untuck': d_untuck,
-                                            'rest_standoff': d_rest,
-                                            'reach': d_reach}}}
-    if d_reach > 0.001:
-        return {'ok': False, 'stage': 'descent',
-                'binding_constraint': 'object_displacement',
-                'waypoint': r_wp, 'reach': r2, 'untuck': u_r,
-                'phase': {'displacements': {'standoff': d_standoff,
-                                            'untuck': d_untuck,
-                                            'rest_standoff': d_rest,
-                                            'reach': d_reach}}}
+    sr = None
+    if route == 'stage':
+        # (i) Staged approach: interpolate the SITE target from the live pad
+        # position to the selected cell and drive each short QP goal with the
+        # true closed loop, re-solving from the live state every step.  Live
+        # collider guard on every stage.
+        sr = api.skill('arm_stage_reach', target_site=target_site, side=side,
+                       n_stages=n_stages, stop_err=0.02,
+                       max_delta=0.04, max_delta_near=0.02, near_dist=0.03,
+                       deadband_comp=0.04, orient_mode='side',
+                       orientation='keep', trace_contacts=True,
+                       contact_match=om)
+        r2 = sr.get('last_result') or {}
+        fin = (sr.get('final') or {}).get('grasp')
+        if fin is not None:
+            grasp = {'dx': fin['dx'], 'dy': fin['dy'], 'z': fin['z']}
+        st = api.observe()
+        o2 = (st.get('object') or {}).get('pos')
+        d_reach = _dist(o2, o_u2)
+        pre_close = _dist(o2, obj0)
+        if r2.get('wrist_abort'):
+            return {'ok': False, 'stage': 'stage_reach_wrist_guard',
+                    'binding_constraint': 'wrist_guard',
+                    'wrist_abort_step': r2.get('wrist_abort_step'),
+                    'wrist_dist_min': r2.get('wrist_dist_min'),
+                    'stage_reach': sr, 'reach': r2, 'untuck': u_r,
+                    'phase': {'displacements': {'standoff': d_standoff,
+                                                'untuck': d_untuck,
+                                                'rest_standoff': d_rest,
+                                                'reach': d_reach}}}
+        if d_reach > 0.001:
+            return {'ok': False, 'stage': 'stage_reach',
+                    'binding_constraint': 'object_displacement',
+                    'stage_reach': sr, 'reach': r2, 'untuck': u_r,
+                    'phase': {'displacements': {'standoff': d_standoff,
+                                                'untuck': d_untuck,
+                                                'rest_standoff': d_rest,
+                                                'reach': d_reach}}}
+    else:
+        r2 = api.skill('arm_pose_ik_live', grasp=grasp, orientation='keep',
+                       orient_mode='side', sides=(side,), max_delta=0.04,
+                       max_steps=400, max_delta_near=0.02, near_dist=0.03,
+                       freeze_frame=True, pred_guard=False,
+                       reorient_each_step=True, base_deadband=0.005,
+                       base_yaw_deadband=0.003, base_yaw_gain=0.6,
+                       base_wmax=0.1, wrist_guard=True, wrist_guard_dist=0.02,
+                       seed_mode='dls', seed_force=True, deadband_comp=0.04,
+                       base_gain=0.3, base_vmax=0.05,
+                       trace_contacts=True, contact_match=om)
+        st = api.observe()
+        o2 = (st.get('object') or {}).get('pos')
+        d_reach = _dist(o2, o_u2)
+        pre_close = _dist(o2, obj0)
+        if r2.get('wrist_abort'):
+            return {'ok': False, 'stage': 'descent_wrist_guard',
+                    'binding_constraint': 'wrist_guard',
+                    'wrist_abort_step': r2.get('wrist_abort_step'),
+                    'wrist_dist_min': r2.get('wrist_dist_min'),
+                    'wrist_dist_by_side': r2.get('wrist_dist_by_side'),
+                    'waypoint': r_wp, 'reach': r2, 'untuck': u_r,
+                    'phase': {'displacements': {'standoff': d_standoff,
+                                                'untuck': d_untuck,
+                                                'rest_standoff': d_rest,
+                                                'reach': d_reach}}}
+        if d_reach > 0.001:
+            return {'ok': False, 'stage': 'descent',
+                    'binding_constraint': 'object_displacement',
+                    'waypoint': r_wp, 'reach': r2, 'untuck': u_r,
+                    'phase': {'displacements': {'standoff': d_standoff,
+                                                'untuck': d_untuck,
+                                                'rest_standoff': d_rest,
+                                                'reach': d_reach}}}
     r3 = api.skill('hand_close_contact')
     st = api.observe()
     o3 = (st.get('object') or {}).get('pos')
     d_close = _dist(o3, o2)
     close_contacts = api.contact_detail(limit=60, match=om)
     closed = r3.get('closed_upper')
-    grasp_l = {'dx': grasp_dx, 'dy': dy, 'z': z_grasp + lift_dz}
+    grasp_l = {'dx': grasp['dx'], 'dy': grasp['dy'],
+               'z': grasp['z'] + lift_dz}
     r4 = api.skill('arm_pose_ik_live', grasp=grasp_l, orientation='keep',
                    orient_mode='side', sides=(side,), hand_hold=closed,
                    max_delta=0.005, max_delta_near=0.005, freeze_frame=True,
@@ -254,5 +295,5 @@ def run(api, side='left', standoff=0.15, lateral_offset=0.0,
             'phase': phase, 'budget': budget,
             'standoff': r1, 'untuck': u_r,
             'rest_standoff': r1b, 'lateral_accepted': lat_ok,
-            'waypoint': r_wp, 'reach': r2, 'close': r3,
+            'waypoint': r_wp, 'stage_reach': sr, 'reach': r2, 'close': r3,
             'lift_ik': r4, 'binding_constraint': binding}

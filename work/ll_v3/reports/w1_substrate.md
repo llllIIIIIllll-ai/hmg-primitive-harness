@@ -989,18 +989,26 @@ Descent with the LIVE-collider guard only (endpoint check off, clamp
   0.2897, max 0.3130), solver residual 0.14, base drift 0.018, yaw -5 deg.
   `q_moved` mean 0.0075 (max 0.026) on a 0.04 command: the arm wiggles
   rather than tracking.
-- Cause visible in the QP's own margins: the solved configuration sits on
-  FOUR joint bounds simultaneously - `left_shoulder_pitch`, `left_shoulder_roll`,
-  `left_shoulder_yaw`, `left_wrist_roll`, all margin 0.000. The target cell
-  is at the edge of the QP's feasible box from this posture, so the
-  solution is saturated and the executed steps do not move the pads toward
-  it.
+- **Mechanism of the wiggle (named): four-bound saturation.** The solved
+  configuration sits on FOUR joint bounds simultaneously -
+  `left_shoulder_pitch`, `left_shoulder_roll`, `left_shoulder_yaw`,
+  `left_wrist_roll`, all margin 0.000. The target cell is at the edge of the
+  QP's feasible box from this posture, so the solution is saturated; the
+  executed steps re-solve to slightly different saturated configurations and
+  the pads oscillate instead of approaching the target.
 - Both seed branches are inside the motor capsule at the destination
   (seeded -0.0248, unseeded -0.0387), so seed selection cannot rescue it.
 
 Chain state: runs through close and lift, gate fails on `site`
 (0.306 / 0.333). Displacements: tuck 0.0010, everything else 0.0,
 pre_close 0.0010 (limit 0.010). Contacts 0/0, rise 0.0. No reset, no NaN.
+
+Selection rule for any future cell (operator directive): a cell is
+admissible only if the QP solution saturates at most ONE joint bound and the
+shoulder-yaw travel it requires is <= ~0.3 rad (the measured yaw floor means
+no interpolation may be asked to traverse a large yaw in the
+extended-forward configuration). (iii) is therefore a constraint on the cell
+choice, not a controller lever.
 
 Implication: the handle-cell target at z 0.954 is not reachable from the
 stage-1 down posture by either controller (QP: saturated at four bounds and
@@ -1010,3 +1018,43 @@ an arm already extended at the front pre-grasp - a posture the chain cannot
 establish. The pre-grasp is therefore still the missing piece, and it needs
 a controller that can move the arm to a nearby Cartesian pose without
 committing to a distant DLS branch.
+
+## 41. Cell grid from the stage-1 posture (read-only, 16 cells)
+
+Grid: handle frac 0.3/0.5/0.7/0.9 x roll 0/90 x approach front/diag, left
+hand, palm_off 0.07, QP `apply=False` from the live stage-1 pose. Per cell:
+best-branch residual, joints at a bound (margin < 1e-4), collider wrist
+clearance at the solved endpoint, shoulder-yaw change to the solution.
+
+| cell | err | bounds | wrist (collider) | yaw |
+|---|---|---|---|---|
+| front 0.3 r0 | 0.0053 | shoulder_roll | 0.0152 (battery) | -0.485 |
+| front 0.3 r90 | 0.0007 | - | 0.0133 (battery) | -0.408 |
+| front 0.5 r0 | 0.0020 | - | 0.0132 (battery) | **+0.168** |
+| front 0.5 r90 | 0.0008 | - | 0.0144 (battery) | -0.574 |
+| front 0.7 r0 | 0.0041 | shoulder_roll | 0.0244 (battery) | +0.533 |
+| front 0.7 r90 | 0.0008 | - | 0.0279 (battery) | -0.692 |
+| front 0.9 r0 | 0.0052 | wrist_pitch | 0.0055 (motor) | -2.564 |
+| front 0.9 r90 | 0.0008 | - | 0.0065 (motor) | -0.766 |
+| diag 0.3 r0 | 0.0039 | - | -0.0104 (battery) | -2.694 |
+| diag 0.3 r90 | 0.0072 | wrist_roll | -0.0132 (battery) | +1.425 |
+| diag 0.5 r0 | 0.0033 | - | 0.0062 (battery) | -2.585 |
+| diag 0.5 r90 | 0.0035 | wrist_yaw | 0.0061 (battery) | -2.623 |
+| diag 0.7 r0 | 0.0028 | - | 0.0067 (motor) | -2.518 |
+| diag 0.7 r90 | 0.0039 | wrist_yaw | 0.0000 (motor) | -2.624 |
+| diag 0.9 r0 | 0.0025 | wrist_yaw | 0.0000 (motor) | -2.483 |
+| diag 0.9 r90 | 0.0046 | wrist_yaw | 0.0000 (motor) | -2.663 |
+
+Admissibility rule (operator): <= 1 joint at a bound and |yaw| <= 0.30.
+**Exactly one cell passes: front frac 0.5, roll 0**, site target
+[1.62683, 0.02184, 0.88450], residual 0.0020, no bound, yaw +0.168. Its
+collider wrist clearance at the endpoint is 13.2 mm (battery box), below the
+0.02 used for route (a); flagged to the operator.
+Front roll 90 needs -0.41..-0.77 rad of yaw; every diag cell needs
+-2.48..-2.70 (or +1.43) - consistent with the measured yaw floor, so the
+diag direction is excluded.
+
+**Caveat carried with this grid:** stage 1 itself does not reach. The untuck
+to the down pose (dx -0.126, z 1.16) ends at worst_pad_error 0.480 m, so the
+grid is evaluated from the posture the chain actually holds, and the yaw
+deltas partly encode that offset.
