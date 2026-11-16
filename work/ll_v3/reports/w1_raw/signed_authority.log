@@ -1,0 +1,38 @@
+standoff True
+start left_elbow_joint             q 0.403 [-1.047, 2.094]
+start left_shoulder_yaw_joint      q 0.173 [-2.618, 2.618]
+start left_shoulder_pitch_joint    q 0.472 [-3.089, 2.670]
+start left_wrist_pitch_joint       q 0.011 [-1.614, 1.614]
+left_elbow_joint            sign +1 step 0.01 gain +0.005  q 0.390 -> 0.392
+left_elbow_joint            sign +1 step 0.02 gain +0.051  q 0.391 -> 0.432
+left_elbow_joint            sign +1 step 0.04 gain +0.096  q 0.400 -> 0.554
+left_elbow_joint            sign +1 step 0.08 gain +0.137  q 0.392 -> 0.830
+left_elbow_joint            sign -1 step 0.01 gain +0.077  q 0.442 -> 0.412
+left_elbow_joint            sign -1 step 0.02 gain +0.018  q 0.400 -> 0.386
+left_elbow_joint            sign -1 step 0.04 gain +0.019  q 0.398 -> 0.367
+left_elbow_joint            sign -1 step 0.08 gain +0.016  q 0.393 -> 0.342
+left_shoulder_yaw_joint     sign +1 step 0.01 gain +0.151  q 0.200 -> 0.260
+left_shoulder_yaw_joint     sign +1 step 0.02 gain +0.318  q 0.200 -> 0.455
+left_shoulder_yaw_joint     sign +1 step 0.04 gain +0.377  q 0.171 -> 0.774
+left_shoulder_yaw_joint     sign +1 step 0.08 gain +0.404  q 0.167 -> 1.460
+left_shoulder_yaw_joint     sign -1 step 0.01 gain +0.088  q 0.179 -> 0.143
+left_shoulder_yaw_joint     sign -1 step 0.02 gain +0.066  q 0.175 -> 0.122
+left_shoulder_yaw_joint     sign -1 step 0.04 gain +0.043  q 0.179 -> 0.110
+left_shoulder_yaw_joint     sign -1 step 0.08 gain +0.036  q 0.181 -> 0.065
+left_shoulder_pitch_joint   sign +1 step 0.01 gain +0.053  q 0.477 -> 0.498
+left_shoulder_pitch_joint   sign +1 step 0.02 gain +0.114  q 0.473 -> 0.564
+left_shoulder_pitch_joint   sign +1 step 0.04 gain +0.286  q 0.477 -> 0.934
+left_shoulder_pitch_joint   sign +1 step 0.08 gain +0.497  q 0.500 -> 2.090
+left_shoulder_pitch_joint   sign -1 step 0.01 gain +0.434  q 0.485 -> 0.312
+left_shoulder_pitch_joint   sign -1 step 0.02 gain +0.313  q 0.480 -> 0.230
+left_shoulder_pitch_joint   sign -1 step 0.04 gain +0.262  q 0.478 -> 0.060
+left_shoulder_pitch_joint   sign -1 step 0.08 gain +0.225  q 0.474 -> -0.247
+left_wrist_pitch_joint      sign +1 step 0.01 gain +0.107  q 0.017 -> 0.059
+left_wrist_pitch_joint      sign +1 step 0.02 gain +0.263  q 0.010 -> 0.220
+left_wrist_pitch_joint      sign +1 step 0.04 gain +0.325  q 0.012 -> 0.532
+left_wrist_pitch_joint      sign +1 step 0.08 gain +0.239  q 0.015 -> 0.781
+left_wrist_pitch_joint      sign -1 step 0.01 gain +0.474  q 0.017 -> -0.172
+left_wrist_pitch_joint      sign -1 step 0.02 gain +0.577  q 0.012 -> -0.450
+left_wrist_pitch_joint      sign -1 step 0.04 gain +0.323  q 0.015 -> -0.503
+left_wrist_pitch_joint      sign -1 step 0.08 gain +0.179  q 0.016 -> -0.556
+EXIT=0

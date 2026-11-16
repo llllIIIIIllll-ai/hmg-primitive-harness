@@ -1119,3 +1119,46 @@ solution from the standoff (the IK's own residual is 0.098 and the branch
 is limit-pinned), so joint interpolation chases an unreachable
 configuration. The backoff's 0.119 presumably came from a different
 (solvable) branch because the base was farther away.
+
+## 44. SIGNED authority map at the standoff tuck (posture restored per probe)
+
+Every probe is preceded by a 50-step restore to the captured standoff-tuck
+vector, so no row is contaminated by an earlier probe. 40-step steady gain,
+both command signs, at the standoff (tuck, q elbow 0.403, yaw 0.173, pitch
+0.472, wrist_pitch 0.011).
+
+| joint | sign | 0.01 | 0.02 | 0.04 | 0.08 |
+|---|---|---|---|---|---|
+| elbow | + (flex) | 0.005 | 0.051 | 0.096 | 0.137 |
+| elbow | - (extend) | 0.077 | 0.018 | 0.019 | 0.016 |
+| shoulder_yaw | + | 0.151 | 0.318 | 0.377 | 0.404 |
+| shoulder_yaw | - | 0.088 | 0.066 | 0.043 | 0.036 |
+| shoulder_pitch | + | 0.053 | 0.114 | 0.286 | 0.497 |
+| shoulder_pitch | - | 0.434 | 0.313 | 0.262 | 0.225 |
+| wrist_pitch | + | 0.107 | 0.263 | 0.325 | 0.239 |
+| wrist_pitch | - | 0.474 | 0.577 | 0.323 | 0.179 |
+
+Findings:
+1. **The elbow's weak extension is real, not a sign artifact.** The
+   restored posture starts at q 0.39-0.48 every time (nowhere near a limit),
+   and the negative (extension) gains are 0.016-0.077 against 0.14 for
+   flexion. The down target's DLS branch needs elbow -1.292 (extension), so
+   the branch is on the wrong side of a direction-dependent authority
+   asymmetry.
+2. **Shoulder yaw is also direction-asymmetric** at this posture: +0.40
+   positive vs 0.036 negative at 0.08. The down branch needs -0.12 (only
+   0.12 rad, so it is small, but in the weak direction).
+3. Shoulder pitch and wrist pitch move well in both directions.
+4. Therefore the stage-1 branch is unreachable on multiple counts: three
+   joints pinned at limits (shoulder_roll -1.588, wrist_pitch +1.614,
+   wrist_yaw +1.614), and its elbow travel is in the 0.02-gain direction.
+   This is item (2) of the operator's contingency: the standoff's tuck is a
+   dead end for the down pre-grasp by joint-space interpolation.
+
+Correction to sect. 37: that table was measured with sign +1 only and with
+successive probes; the elbow row there (gain 0.013 at 0.08) was measured at
+q 2.05-2.09 against the 2.094 upper limit, i.e. commanded INTO the limit -
+that row is a directional/limit artifact and must not be used. The
+front-posture elbow measurement in sect. 38 did use the negative direction
+from q 0.161 and still gave 0.01, so the front-posture elbow finding
+stands; the sect. 37 elbow row does not.
