@@ -652,6 +652,10 @@ def handle(req):
         # Read-only 12/14/17 dimension comparison on scratch data: no command,
         # no state change (same information class as ik_preview).
         return tools.ik_compare(**(req.get('kwargs') or {}))
+    if tool == 'object_info':
+        # Read-only object/affordance inventory (L1 object_part_inventory):
+        # bodies, geoms, structural part classification, grasp parts/axes.
+        return tools.object_info()
     if tool == 'audit':
         # per-joint authority + execution audit of the last command
         return tools.command_audit(**(req.get('kwargs') or {}))

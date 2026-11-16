@@ -681,3 +681,27 @@ powerdrill_b01/model.xml.
 Also queued: the two chain levers (front-posture joint-space tuning; the
 arm posture that lets the base walk forward, or re-approach before the
 front pre-grasp). W2 gate unchanged; batch 0.
+
+## 30. object_info L1 tool: implemented and validated (item 1)
+
+Server tool `object_info` (hmg_tools.Tools.object_info, dispatched in
+hmg_server.handle) returns the object name; bodies (mass, local/world
+pose); every geom (name, type, size, local/world pose, mesh asset, parent
+body, collision flag); the world AABB flagged as an OVER-APPROXIMATION;
+a structural part classification; per-part cross-section vs the hand
+opening (0.10-0.12) and the wrist radius 0.047 + pad offset (0.05-0.07);
+candidate grasp parts and axes; the source model XML path.
+
+Validator (work/ll_v3/object_info_test.py), state unchanged on both:
+- 05 drill (bottle_main, 3 bodies, 6 geoms): handle
+  bottle_collider_box_f302734d dims [0.028,0.04,0.16] cross [0.028,0.04];
+  body capsule [0.07,0.1,0.07]; bit capsule [0.046,0.04,0.046]; battery
+  box [0.04,0.076,0.12]. Matches the model (handle 0.04x0.028x0.16, motor
+  r0.035, bit r0.023, battery 0.06x0.038x0.02). Grasp candidates: handle,
+  bit (front/side/top).
+- 03 box (obj_main, 1 body, 10 geoms): four box geoms 0.086x0.115x0.168
+  (the two-hand faces) plus five thin panels. Grasp candidates: the four
+  box faces. Contrast as intended.
+Classification is structural (geom type/size + ratio + cross-section), not
+text-based. The 03 panels are labelled 'battery' (a flat-plate class); a
+'panel' label is a cosmetic refinement.

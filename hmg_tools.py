@@ -707,6 +707,131 @@ class Tools:
                 'lo': None if lo is None else np.round(lo, 4).tolist(),
                 'hi': None if hi is None else np.round(hi, 4).tolist()}
 
+    def object_info(self):
+        """Read-only object/affordance inventory (L1 object_part_inventory).
+
+        Returns the task object's body tree, every geom (name, type, size,
+        local/world pose, mesh asset, parent body), the world AABB flagged
+        as an OVER-APPROXIMATION (not the object model), a structural
+        part classification (handle/body/bit/battery/base) with evidence,
+        the per-part cross-section vs the hand opening (~0.10-0.12 m) and
+        the wrist radius (0.047) + wrist-pad offset (5-7 cm), the candidate
+        grasp parts and approach axes, and the source model XML path.
+        No state change (same class as geom()/object_aabb()).
+        """
+        import mujoco
+        m, d = self.raw
+        mujoco.mj_forward(m, d)
+        objs, sel = task_object(self.env)
+        if sel is None:
+            return {'error': 'no object'}
+        root = int(mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_BODY,
+                                     sel.root_body))
+        if root < 0:
+            return {'error': 'root body missing'}
+        members = []
+        for b in range(int(m.nbody)):
+            x = b
+            for _ in range(16):
+                if x == root:
+                    members.append(b)
+                    break
+                if x <= 0:
+                    break
+                x = int(m.body_parentid[x])
+        bodies = []
+        for b in members:
+            bodies.append({'name': m.body(b).name,
+                           'mass': float(m.body_mass[b]),
+                           'local_pos': np.round(m.body_pos[b], 4).tolist(),
+                           'world_pos': np.round(d.xpos[b], 4).tolist()})
+        TN = {int(mujoco.mjtGeom.mjGEOM_BOX): 'box',
+              int(mujoco.mjtGeom.mjGEOM_SPHERE): 'sphere',
+              int(mujoco.mjtGeom.mjGEOM_CAPSULE): 'capsule',
+              int(mujoco.mjtGeom.mjGEOM_CYLINDER): 'cylinder',
+              int(mujoco.mjtGeom.mjGEOM_MESH): 'mesh'}
+        geoms = []
+        parts = []
+        for gi in range(int(m.ngeom)):
+            if int(m.geom_bodyid[gi]) not in members:
+                continue
+            gtype = int(m.geom_type[gi])
+            sz = np.asarray(m.geom_size[gi], float)
+            mesh = ''
+            if gtype == int(mujoco.mjtGeom.mjGEOM_MESH):
+                aid = int(m.geom_dataid[gi])
+                mesh = m.mesh(aid).name if aid >= 0 else ''
+            coll = bool(int(m.geom_contype[gi]) or
+                        int(m.geom_conaffinity[gi]))
+            rec = {'name': m.geom(gi).name, 'type': TN.get(gtype, str(gtype)),
+                   'size': np.round(sz, 4).tolist(),
+                   'local_pos': np.round(m.geom_pos[gi], 4).tolist(),
+                   'world_pos': np.round(d.geom_xpos[gi], 4).tolist(),
+                   'mesh': mesh,
+                   'body': m.body(int(m.geom_bodyid[gi])).name,
+                   'collision': coll}
+            geoms.append(rec)
+            if not coll:
+                continue
+            if gtype == int(mujoco.mjtGeom.mjGEOM_BOX):
+                dims = [2.0 * sz[0], 2.0 * sz[1], 2.0 * sz[2]]
+                dims.sort()
+                cross = [dims[0], dims[1]]
+                ratio = dims[2] / max(dims[1], 1e-9)
+                if ratio >= 2.0 and dims[1] <= 0.06:
+                    kind = 'handle'
+                elif dims[0] < 0.045 and dims[2] > 0.10:
+                    kind = 'battery'
+                else:
+                    kind = 'box'
+            elif gtype in (int(mujoco.mjtGeom.mjGEOM_CAPSULE),
+                           int(mujoco.mjtGeom.mjGEOM_CYLINDER)):
+                r = float(sz[0])
+                ln = 2.0 * float(sz[1])
+                cross = [2.0 * r, 2.0 * r]
+                ratio = ln / max(2.0 * r, 1e-9)
+                kind = 'body' if r >= 0.03 else 'bit'
+            else:
+                cross = [2.0 * float(sz[0]), 2.0 * float(sz[0])]
+                ratio = 1.0
+                kind = 'other'
+            parts.append({'part': kind, 'evidence_geom': rec['name'],
+                          'type': rec['type'], 'dims': np.round(
+                              dims if gtype == int(mujoco.mjtGeom.mjGEOM_BOX)
+                              else [2.0 * sz[0], 2.0 * sz[1],
+                                    2.0 * sz[0]], 4).tolist(),
+                          'cross_section': np.round(cross, 4).tolist(),
+                          'hand_opening_range': [0.10, 0.12],
+                          'fits_hand_opening': bool(max(cross) <= 0.12),
+                          'wrist_radius': 0.047,
+                          'wrist_pad_offset_range': [0.05, 0.07],
+                          'min_wrist_clearance_needed': round(
+                              0.047 + 0.05, 3)})
+        aabb = self.object_aabb()
+        grasp = []
+        for pt in parts:
+            if pt['part'] in ('handle', 'box', 'bit') and \
+                    pt['fits_hand_opening']:
+                grasp.append({'part': pt['part'],
+                              'geom': pt['evidence_geom'],
+                              'approach_axes': ['front', 'side', 'top']})
+        path = ('humanoidmimicgen/locomanipulation/models/assets/objects/'
+                'omniverse/locomanip/powerdrill_b01/model.xml'
+                if 'drill' in (sel.root_body or '') or
+                'drill' in str(objs) else
+                'assets/objects/omniverse/locomanip/<object>/model.xml')
+        return {'object': sel.root_body, 'bodies': bodies, 'geoms': geoms,
+                'aabb': aabb,
+                'aabb_note': 'world AABB is an OVER-APPROXIMATION of the '
+                             'body tree, NOT the object model; use the '
+                             'collision geoms for grasp planning',
+                'parts': parts, 'candidate_grasp_parts': grasp,
+                'source_model_xml': path,
+                'summary': 'object %s: %d bodies, %d geoms, %d parts (%s)'
+                           % (sel.root_body, len(bodies), len(geoms),
+                              len(parts), ','.join(sorted(
+                                  set(p['part'] for p in parts))))}
+
     def scene_objects(self, detail=False):
         """Read-only inventory of every ``mujoco_objects`` SceneObject in the
         task env, with world body pose and geom AABB (added 2026-11-09,
