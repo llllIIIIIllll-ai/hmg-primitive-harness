@@ -822,22 +822,100 @@ while the base must walk; do the arm unfold only when the base need not walk.
 The reordered chain already does this (approach tucked, unfold at the
 standoff).
 
-## 37. Front-posture friction threshold (40-step steady gains)
+## 37. FRONT-POSTURE AUTHORITY MAP (third posture after backoff/down)
 
-Stage 1 at the standoff: 0.478 (vs 0.119 at the backoff - the down pre-grasp
-is much harder from the standoff's tuck). Stage 2 front: 0.307.
-Steady gains (step -> gain, q before->after):
-- left_shoulder_pitch: 0.005 0.038; 0.01 0.040; 0.02 0.096; 0.04 0.413;
-  0.08 0.423. Threshold between 0.02 and 0.04; the comp must be ~0.03-0.04.
-- left_elbow: 0.005 1.086; 0.01 0.261; 0.02 0.399; 0.04 0.468;
-  0.08 0.013 (q 2.05->2.09, at its range end).
-- left_wrist_pitch: 0.005 0.474; 0.01 0.482; 0.02 0.015; 0.04 0.001;
-  0.08 0.001 (q ~1.48-1.49, at its limit).
-Implication: at the front posture the shoulder needs a >=0.03-0.04 comp/step;
-the wrist is at its limit (no orientation authority); the descent's
-0.005/0.01 near clamp is below the friction threshold, which is why the
-unseeded branch crept 0.0002-0.003/step. A descent at the front posture needs
-a >=0.04 clamp - but the unseeded branch's 0.155 residual then travels fast
-through the wrist's 0.052 clearance (the guard would trip mid-path). The
-seeded branch (residual 0.032, wrist -0.028) with the wrist-clear waypoint is
-the route. Recorded; the next run is that route.
+The arm-command authority at the front pre-grasp posture, measured as
+40-step steady gain (joint displacement / commanded step) at increasing
+`deadband_comp` / step clamp. The companion maps are the backoff posture
+(sect. 18) and the down pre-grasp at the standoff (sect. 31). Everything here
+is a command-layer property: same model, same physics, only the commanded
+step size changes.
+
+Steady gain by commanded step (rad/step -> gain):
+| joint | 0.005 | 0.01 | 0.02 | 0.04 | 0.08 | limit note |
+|---|---|---|---|---|---|---|
+| left_shoulder_pitch | 0.038 | 0.040 | 0.096 | 0.413 | 0.423 | **threshold 0.02-0.04** |
+| left_elbow | 1.086 | 0.261 | 0.399 | 0.468 | 0.013 | q 2.05->2.09, range end |
+| left_wrist_pitch | 0.474 | 0.482 | 0.015 | 0.001 | 0.001 | q 1.48-1.49, at its limit |
+| left_shoulder_yaw | - | 0.01 | 0.01 | 0.02 | 0.02 | **authority floor (sect. 38)** |
+
+Map rules (front posture):
+1. **Shoulder pitch is the gated joint**: gains collapse below ~0.02 and
+   recover only at >= 0.04. A front-posture command with a comp/step below
+   0.03 sits on the friction floor (~0.04 gain) and the chain does not move.
+   The comp/step must be >= 0.04 at this posture.
+2. **Elbow** moves readily at small steps but ends at its range end
+   (q ~2.09); it cannot absorb extra travel.
+3. **Wrist pitch has no authority above 0.02** (q ~1.48-1.49, at its limit):
+   orientation cannot be served by a larger step; the wrist must arrive
+   oriented, not be rotated on the way in.
+4. Consequence: the front approach cannot use the descent's 0.005/0.01 near
+   clamp - those steps are below the shoulder threshold. It also cannot use a
+   large clamp once the wrist clearance is small, because the wrist is the
+   binding surface. Hence the multi-stage route: coarse front unfold at
+   >=0.04 comp (posture proven), then a wrist-clear waypoint, then a short
+   seeded descent.
+Stage-2 residual at this posture from the standoff tuck: 0.307 (stage 1 down:
+0.478; backoff down: 0.119).
+
+## 38. Front pre-grasp is NOT reachable by joint interpolation (authority floor)
+
+Waypoint-route run (`w2_onehand_driver.py 0.0`, seed 0), gate unchanged:
+- displaced 0.0 in every phase (tuck, standoff, unfold_down, unfold_front);
+  the chain stopped at `unfold_front_unreached` **before** the waypoint.
+- The run before it (same chain, old clamps) reported `descent_wrist_guard`
+  while stage 2 had silently *not reached*: `worst_pad_error` 0.307 and
+  `normal_error` 151 deg on the left. The waypoint/descent results were
+  computed from a pose the arm never attained. The chain now gates on
+  `u2.ok`, so this can no longer be mistaken for progress.
+
+Two independent causes, both measured:
+
+1. **The near clamp, not the object, was gating the approach.** The
+   `arm_pose_ik_live` default `near_dist=0.15` engages whenever a wrist geom
+   is within 15 cm of the object AABB. The wrist surface during the whole
+   approach is 0.126-0.146 m, so *every* step ran at `max_delta_near=0.005`.
+   Trace: `delta_max` 0.005 for 300/300 steps, `q_moved` 2e-4, `jres` -1.47
+   unchanged, site error 0.290 -> 0.275. With `near_dist=0.03` /
+   `max_delta_near=0.02` the steps become 0.04 and the arm moves
+   (`q_moved` 0.006-0.017/step for ~60 steps, then collapses to 2e-4). So
+   the near clamp was one real cause; it is fixed in the chain.
+
+2. **The DLS branch for the front pre-grasp needs the two joints that have
+   no authority there.** The front target (dx -0.205, z 0.954) solved to
+   `dq_need` 1.363-1.471 rad. Reconstructed at the stalled live pose
+   (`ik_preview`, 150 iters, `keep`, sides=left), per-joint seed minus live:
+   shoulder_yaw **-1.363**, elbow **-1.084**, wrist_yaw +0.936,
+   shoulder_pitch +0.779, wrist_roll +0.315, shoulder_roll -0.308,
+   wrist_pitch +0.240. Joint-range check: **no arm joint near a limit**
+   (smallest arm margin 1.07 rad; only finger joints are at 0.00-0.02).
+   Unfiltered contacts at the pose: no arm-object contact and no arm-table
+   contact (only battery-on-table, plus right-arm self-contact).
+   Authority measured at that posture (40-step steady gain, sign toward the
+   seed): shoulder_yaw 0.01 at 0.005/0.01/0.02/0.04/0.08; elbow 0.09, 0.01,
+   0.01, 0.02, 0.01. Same probe at the tuck posture: yaw 0.15/0.41/0.45,
+   elbow 0.27/0.40/0.45, shoulder_pitch 0.33/0.40/0.45.
+   Discriminating test: with the *same arm joint configuration* restored but
+   the base away from the object, the elbow recovers (0.44 at 0.04) and
+   shoulder_yaw stays low (0.08 at 0.04, 0.05 at 0.08).
+
+**Mechanism named:** shoulder yaw in the arm-extended-forward configuration
+is an *authority floor* (~0.01-0.08 gain), not a friction threshold that a
+larger step can clear - it does not recover at 0.08 rad. Shoulder pitch and
+elbow obey the threshold model (sect. 37); yaw does not. The front pre-grasp
+target's DLS branch is dominated by shoulder yaw (-1.36 rad), so the
+joint-space interpolation route cannot reach the front pre-grasp, at any
+clamp. The elbow's front-posture immobility is partly object proximity (it
+recovers when the base is away); the yaw floor is configuration-inherent.
+
+**Consequence for the waypoint route:** the wrist-clear waypoint cannot be
+entered from the front pre-grasp, because the front pre-grasp itself is not
+reachable by this path. Any route that requires the front pre-grasp must
+either (a) enter it with a QP branch (the previously measured seeded branch
+does reach the *descent* cell with residual 0.032), or (b) start the
+waypoint from the stage-1 down posture, where pitch/roll/yaw authority is
+available. The wrist guard's surface is still AABB-based; the
+-0.028 m "wrist in object" reading on the seeded QP branch is against the
+AABB, not against the drill's actual colliders (handle box, motor capsule
+r0.035, bit capsule r0.023, battery box), and has not yet been resolved
+against them.

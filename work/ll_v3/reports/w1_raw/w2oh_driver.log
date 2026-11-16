@@ -1,8 +1,9 @@
-offset 0.0 ok False stage descent_wrist_guard binding wrist_guard err None
-  displacements {'standoff': 0.0, 'untuck': 0.0, 'rest_standoff': 0.0, 'reach': 0.0}
+offset 0.0 ok False stage unfold_front_unreached binding pad_error err None
+  displacements {'standoff': 0.0, 'untuck_down': 0.0, 'untuck': 0.0}
   resets/nans None None sim_time None
   first_step null
   site None normal None contacts None rise None guard None
   budget null
   reach trace n 0
 w2e driver done
+EXIT=0
