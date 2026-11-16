@@ -576,3 +576,27 @@ Anti-pattern note: a fixed two-palm 12-D target for 05 blocked W2 and made
 the failures look like tuning. The grasp mode is selected from the object.
 Per-task AABBs for tasks other than 05 are to be read live when each task is
 first loaded (read-only probe), then this table's rows are filled.
+
+## 25. Object model breakthrough: the drill is not a box (geom-level grasp)
+
+The drill's collision geoms (powerdrill_b01/model.xml, confirmed):
+- collider_box_f302734d HANDLE: box pos [-0.035,0,0.054], size
+  [0.02,0.014,0.08] (4 x 2.8 x 16 cm), quat 0.998/0.061 about y.
+- collider_box_8e968ea9 MOTOR: capsule r 0.035, half-len 0.05 at
+  [-0.02,0,0.159].
+- collider_cylinder99aba387 CHUCK/BIT: capsule r 0.023, half-len 0.02 at
+  [0.06,0,0.16].
+- collider_box_a1f69b3d BATTERY: box size [0.06,0.038,0.02] at
+  [-0.0143,0,0.02].
+
+The body-tree AABB used for every earlier wrist/clearance check spans all of
+these and is a large over-approximation. The handle is a thin box; a one-hand
+grasp on the handle keeps the wrist outside the actual colliders. The
+"wrist inside the AABB" verdicts (sections 22-23) are NOT collision
+verdicts and must be re-measured at the geom level: clearance = wrist geoms
+to each named collider (box/capsule), pad surface to the handle, per-cell
+pad normal and contact face.
+
+Topology record update: the drill's grasp part is the HANDLE
+(collider_box_f302734d), one hand; grasp type top/side on the handle; the
+AABB must not be used as the object model for grasp planning.
