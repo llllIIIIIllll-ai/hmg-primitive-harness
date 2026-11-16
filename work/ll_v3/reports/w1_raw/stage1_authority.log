@@ -1,0 +1,27 @@
+standoff True
+down seed target [1.6077202361501102, 0.10468667769499032, 1.16]
+  seed dq 1.6701 err 0.098
+    left_shoulder_pitch_joint      now   0.472 seed  -0.574 delta  -1.046
+    left_shoulder_roll_joint       now   0.010 seed  -1.588 delta  -1.598
+    left_shoulder_yaw_joint        now   0.173 seed   0.053 delta  -0.120
+    left_elbow_joint               now   0.403 seed  -0.889 delta  -1.292
+    left_wrist_roll_joint          now  -0.159 seed   0.204 delta   0.363
+    left_wrist_pitch_joint         now   0.011 seed   1.614 delta   1.603
+    left_wrist_yaw_joint           now  -0.056 seed   1.614 delta   1.670
+left_shoulder_pitch_joint    step 0.02 gain 0.17 q 0.472 -> 0.605
+left_shoulder_pitch_joint    step 0.04 gain 0.47 q 0.605 -> 1.350
+left_shoulder_pitch_joint    step 0.08 gain 0.39 q 1.350 -> 2.613
+left_shoulder_roll_joint     step 0.02 gain 0.54 q 0.031 -> 0.460
+left_shoulder_roll_joint     step 0.04 gain 0.54 q 0.460 -> 1.318
+left_shoulder_roll_joint     step 0.08 gain 0.29 q 1.318 -> 2.253
+left_shoulder_yaw_joint      step 0.02 gain 0.03 q 0.931 -> 0.957
+left_shoulder_yaw_joint      step 0.04 gain 0.15 q 0.957 -> 1.192
+left_shoulder_yaw_joint      step 0.08 gain 0.32 q 1.192 -> 2.230
+left_elbow_joint             step 0.02 gain 0.18 q 0.480 -> 0.628
+left_elbow_joint             step 0.04 gain 0.40 q 0.628 -> 1.267
+left_elbow_joint             step 0.08 gain 0.26 q 1.267 -> 2.095
+left_wrist_pitch_joint       step 0.02 gain 0.26 q 1.370 -> 1.576
+left_wrist_pitch_joint       step 0.04 gain 0.00 q 1.576 -> 1.583
+left_wrist_pitch_joint       step 0.08 gain 0.00 q 1.583 -> 1.596
+(post-probe arm is displaced; stage-1 itself not run)
+EXIT=0

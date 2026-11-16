@@ -1087,3 +1087,35 @@ Five short QP goals interpolated from the live pad position to the cell
 The staged framing is better than the single descent (pad error 0.29 ->
 0.092 instead of 0.29 -> 0.307) but the per-stage tracking is still ~10%,
 so five stages cannot cover 0.24 m.
+
+## 43. Why stage 1 is 0.478 at the standoff: the DLS branch is saturated, not weak
+
+Measured at the standoff (after tuck + standoff servo), for the down
+pre-grasp target (dx -0.126, dy 0.07, z 1.16):
+
+DLS branch (ik_preview, orients=down), seed minus live:
+- shoulder_pitch -1.046, shoulder_roll **-1.598**, shoulder_yaw -0.120,
+  elbow -1.292, wrist_roll +0.363, wrist_pitch **+1.603**, wrist_yaw
+  **+1.670**. `dq` 1.67; **the IK does not reach the target either:
+  err 0.098 m.**
+- Joint ranges: shoulder_roll seed -1.588 = its exact LOWER limit
+  (range [-1.588, 2.252]); wrist_pitch +1.614 = its UPPER limit;
+  wrist_yaw +1.614 = its UPPER limit. The branch is pinned on three
+  limits, so it is not a configuration the arm can hold, let alone reach.
+
+Per-joint authority at the standoff (40-step gain; the probes displace the
+arm successively, so later rows are at slightly later postures):
+- shoulder_pitch: 0.17 @0.02, 0.47 @0.04, 0.39 @0.08
+- shoulder_roll:  0.54 @0.02, 0.54 @0.04, 0.29 @0.08
+- shoulder_yaw:   0.03 @0.02, 0.15 @0.04, 0.32 @0.08 (a threshold here,
+  unlike the front posture's floor)
+- elbow:          0.18 @0.02, 0.40 @0.04, 0.26 @0.08
+- wrist_pitch:    0.26 @0.02, 0.00 @0.04, 0.00 @0.08 (sitting at its limit)
+
+Conclusion: stage 1's 0.478 is **not** an authority/friction deficit - the
+joints track at 0.4-0.5. It is the same distant-saturated-branch mechanism
+as the cells: the down orientation at z 1.16 has no admissible joint-space
+solution from the standoff (the IK's own residual is 0.098 and the branch
+is limit-pinned), so joint interpolation chases an unreachable
+configuration. The backoff's 0.119 presumably came from a different
+(solvable) branch because the base was farther away.
