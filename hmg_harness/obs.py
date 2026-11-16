@@ -86,9 +86,10 @@ def build_torque_limits(m):
 def object_aabb(m, d, obj_gids):
     """World AABB of the task object's geom tree at the CURRENT state.
 
-    Boxes use their oriented corners; every other geom type (sphere, capsule,
-    cylinder, mesh) uses MuJoCo's bounding-sphere radius, which is exact for
-    spheres and conservative for the rest.  Read-only.
+    Meshes use their exact transformed vertices; box/sphere/capsule/cylinder
+    use their oriented extent (|R| @ size).  This matches
+    ``hmg_tools.Tools.object_aabb`` so the debug probe and a primitive read the
+    same extent at the same instant.  Read-only.
     """
     if not obj_gids:
         return None
@@ -99,15 +100,27 @@ def object_aabb(m, d, obj_gids):
         Rg = np.asarray(d.geom_xmat[gi], float).reshape(3, 3)
         sz = np.asarray(m.geom_size[gi], float)
         gtype = int(m.geom_type[gi])
-        if gtype == int(mujoco.mjtGeom.mjGEOM_BOX):
+        if gtype == int(mujoco.mjtGeom.mjGEOM_MESH):
+            # Exact mesh vertices (2026-11-15, ll_v2 W1): the bounding-sphere
+            # radius overestimated every mesh object (probe extent 0.330 m vs
+            # exact 0.188 m on the 05 drill), so the debug probe and the
+            # primitive's api.object_aabb() disagreed at the same instant.
+            aid = int(m.geom_dataid[gi])
+            v0 = int(m.mesh_vertadr[aid])
+            v1 = v0 + int(m.mesh_vertnum[aid])
+            pts = np.asarray(m.mesh_vert[v0:v1], float) @ Rg.T + cen
+            blo, bhi = pts.min(axis=0), pts.max(axis=0)
+        elif gtype in (int(mujoco.mjtGeom.mjGEOM_BOX),
+                       int(mujoco.mjtGeom.mjGEOM_SPHERE),
+                       int(mujoco.mjtGeom.mjGEOM_CAPSULE),
+                       int(mujoco.mjtGeom.mjGEOM_CYLINDER)):
             ext = np.abs(Rg) @ sz
             pts = cen + np.array([[sx * ext[0], sy * ext[1], sz2 * ext[2]]
                                   for sx in (-1, 1) for sy in (-1, 1)
                                   for sz2 in (-1, 1)])
             blo, bhi = pts.min(axis=0), pts.max(axis=0)
         else:
-            r = float(m.geom_rbound[gi])
-            blo, bhi = cen - r, cen + r
+            blo, bhi = cen, cen
         lo = blo if lo is None else np.minimum(lo, blo)
         hi = bhi if hi is None else np.maximum(hi, bhi)
     return lo, hi
@@ -457,6 +470,338 @@ class ObsEpisode:
         out['recording'] = True
         return out
 
+    # ---- failure windows (trace analysis only) -------------------------
+    # The signature definitions and the regime rule below are deliberately
+    # narrow: they read the per-step recorder arrays only.  They never touch
+    # the success predicate, the reward, or the live sim, and they never
+    # command anything.
+    FAILURE_SIGNALS = ('obj_z', 'obj_xy', 'hand_contacts', 'base_tilt',
+                       'joint_track_err')
+    FAILURE_RULES = ('below', 'above', 'drop_by', 'rise_by')
+
+    @staticmethod
+    def _joint_candidates(nm):
+        """Model-name candidates for one contract joint name.
+
+        The control contract uses bare names; the model puts hand joints
+        under the gripper namespace (``gripper0_left_<name>`` for
+        ``left_hand_*``, ``gripper0_right_<name>`` for ``right_hand_*``)
+        and arm joints under ``robot0_<name>``.  Same candidate order as
+        hmg_tools.
+        """
+        cands = []
+        if nm.startswith('left_hand_'):
+            cands.append('gripper0_left_' + nm)
+        elif nm.startswith('right_hand_'):
+            cands.append('gripper0_right_' + nm)
+        cands += ['robot0_' + nm, nm]
+        return cands
+
+    def _failure_signal(self, signal, joints=None):
+        """Return (values, meta).  ``meta`` carries a reference or an error."""
+        n = len(self.rec.t)
+        if signal == 'obj_z':
+            vals = [np.nan if o is None else
+                    float(np.asarray(o, float)[2]) for o in self.rec.obj]
+            return np.asarray(vals, float), {}
+        if signal == 'obj_xy':
+            pts = [None if o is None else np.asarray(o, float)[:2]
+                   for o in self.rec.obj]
+            ref = None
+            for p in pts:
+                if p is not None:
+                    ref = np.asarray(p, float)
+                    break
+            if ref is None:
+                return np.full(n, np.nan), {'reference': None}
+            vals = [np.nan if p is None else
+                    float(np.linalg.norm(np.asarray(p, float) - ref))
+                    for p in pts]
+            return np.asarray(vals, float), {
+                'reference': [round(float(ref[0]), 5),
+                              round(float(ref[1]), 5)],
+                'origin': 'first valid obj xy in the search range'}
+        if signal == 'hand_contacts':
+            return np.asarray([np.nan if h is None else float(h)
+                               for h in self.rec.hand_n], float), {}
+        if signal == 'base_tilt':
+            return np.asarray(self.rec.tilt, float), {}
+        if signal == 'joint_track_err':
+            from .contract import ALLOWED_UPPER
+            # The waist is observed_exogenous (HOMIE is its final writer),
+            # so its commanded value is not a tracking target by default.
+            # The hand joints live under the gripper namespace, so the
+            # default set is the arm joints (resolvable as robot0_<name>).
+            names = [nm for nm in ALLOWED_UPPER
+                     if not nm.startswith('waist')
+                     and '_hand_' not in nm]
+            if joints:
+                bad = [j for j in joints if j not in ALLOWED_UPPER]
+                if bad:
+                    return None, {'error': 'unknown joints %s (choose from '
+                                  'ALLOWED_UPPER)' % bad}
+                names = [str(j) for j in joints]
+            import mujoco
+            adr = []
+            resolved = []
+            for nm in names:
+                jid = -1
+                for cand in self._joint_candidates(nm):
+                    jid = int(mujoco.mj_name2id(
+                        self.m, mujoco.mjtObj.mjOBJ_JOINT, cand))
+                    if jid >= 0:
+                        break
+                if jid < 0:
+                    return None, {'error': 'joint not in model: %s'
+                                  % nm}
+                adr.append(int(self.m.jnt_qposadr[jid]))
+                resolved.append(nm)
+            ci = [ALLOWED_UPPER.index(nm) for nm in names]
+            vals = np.full(n, np.nan)
+            for k in range(n):
+                try:
+                    q = np.asarray(self.rec.q[k], float)
+                    a = np.asarray(self.rec.a[k], float)
+                except Exception:
+                    continue
+                err = np.abs(q[adr] - a[ci])
+                if err.size:
+                    vals[k] = float(np.max(err))
+            return vals, {'joints': names,
+                          'definition': 'max over joints of |qpos - commanded|'
+                                        ' (rad); waist excluded by default'}
+        return None, {'error': 'unknown signal %r (choose from %s)'
+                      % (signal, list(self.FAILURE_SIGNALS))}
+
+    @staticmethod
+    def _failure_cond(vals, rule, threshold, delta):
+        """Boolean condition per step; NaN never satisfies a rule."""
+        ok = np.isfinite(vals)
+        if rule == 'below':
+            return ok & (vals <= float(threshold))
+        if rule == 'above':
+            return ok & (vals >= float(threshold))
+        # Change rules compare against the running extremum of the values
+        # already seen, so the anchor is always earlier than the crossing.
+        cond = np.zeros(vals.shape[0], bool)
+        anchor = np.nan
+        for k in range(vals.shape[0]):
+            v = vals[k]
+            if not np.isfinite(v):
+                continue
+            if not np.isfinite(anchor):
+                anchor = v
+                continue
+            if rule == 'drop_by':
+                cond[k] = bool(v <= anchor - float(delta))
+                anchor = max(anchor, v)
+            else:  # rise_by
+                cond[k] = bool(v >= anchor + float(delta))
+                anchor = min(anchor, v)
+        return cond
+
+    def failure_window(self, signal='obj_z', rule='below', threshold=None,
+                       delta=None, hold=1, t0=None, t1=None, pad=0.1,
+                       max_samples=30, joints=None):
+        """Onset/end of a failure signature in the recorded trace.
+
+        ``rule`` is one of ``below``/``above`` (absolute ``threshold``) or
+        ``drop_by``/``rise_by`` (``delta`` against the running extremum).
+        ``hold`` is the number of consecutive steps that must satisfy the
+        condition to confirm the onset (and, symmetrically, the recovery).
+        When the condition never recovers before the last recorded step the
+        window is ``terminal`` and ``end_step`` is that last step.  Only the
+        recorder's per-step arrays are read; no success/reward is touched.
+        """
+        if self.rec is None:
+            return {'recording': False}
+        if not self.rec.t:
+            return {'recording': True, 'error': 'no recorded steps'}
+        if signal not in self.FAILURE_SIGNALS:
+            return {'recording': True, 'error':
+                    'unknown signal %r (choose from %s)'
+                    % (signal, list(self.FAILURE_SIGNALS))}
+        if rule not in self.FAILURE_RULES:
+            return {'recording': True, 'error':
+                    'unknown rule %r (choose from %s)'
+                    % (rule, list(self.FAILURE_RULES))}
+        if rule in ('below', 'above'):
+            if threshold is None:
+                return {'recording': True, 'error':
+                        'rule %r needs an absolute threshold' % rule}
+        elif delta is None:
+            return {'recording': True, 'error':
+                    'rule %r needs a delta' % rule}
+        vals, meta = self._failure_signal(signal, joints=joints)
+        if vals is None:
+            return {'recording': True, 'error': meta.get('error', 'bad signal'),
+                    'signal': signal}
+        tt = np.asarray(self.rec.t, float)
+        in_range = np.ones(tt.shape[0], bool)
+        if t0 is not None:
+            in_range &= (tt >= float(t0))
+        if t1 is not None:
+            in_range &= (tt <= float(t1))
+        sel = np.where(in_range)[0]
+        if sel.size == 0:
+            return {'recording': True, 'error':
+                    'no recorded steps in [%r, %r]' % (t0, t1),
+                    'signal': signal}
+        cond_all = self._failure_cond(vals, rule, threshold, delta)
+        cond = cond_all[sel]
+        n_sel = int(sel.size)
+        hold_n = max(1, int(hold))
+
+        # First confirmed crossing (hold consecutive satisfied steps).
+        onset_k = None
+        for a in range(n_sel):
+            if not cond[a]:
+                continue
+            if a + hold_n > n_sel:
+                break
+            if bool(np.all(cond[a:a + hold_n])):
+                onset_k = a
+                break
+
+        def _joint_detail(j):
+            if signal != 'joint_track_err':
+                return None
+            import mujoco
+            from .contract import ALLOWED_UPPER
+            q = np.asarray(self.rec.q[int(j)], float)
+            a = np.asarray(self.rec.a[int(j)], float)
+            out = {}
+            for nm in meta.get('joints') or []:
+                jid = -1
+                for cand in self._joint_candidates(nm):
+                    jid = int(mujoco.mj_name2id(
+                        self.m, mujoco.mjtObj.mjOBJ_JOINT, cand))
+                    if jid >= 0:
+                        break
+                ci = ALLOWED_UPPER.index(nm)
+                qa = int(self.m.jnt_qposadr[int(jid)])
+                out[nm] = round(float(abs(q[qa] - a[ci])), 6)
+            return out
+
+        def _anchor(onset_k):
+            # The value the change rule compared against when it crossed.
+            if rule in ('drop_by', 'rise_by'):
+                hist = vals[sel[:onset_k + 1]]
+                hist = hist[np.isfinite(hist)]
+                if not hist.size:
+                    return None
+                v = (np.max(hist) if rule == 'drop_by' else np.min(hist))
+                return round(float(v), 6)
+            if onset_k <= 0:
+                return None
+            return _row(int(sel[onset_k - 1]))['value']
+
+        def _row(j):
+            j = int(j)
+            row = {'step': j, 't': round(float(tt[j]), 5),
+                   'value': (None if not np.isfinite(vals[j])
+                             else round(float(vals[j]), 6))}
+            objs = {'obj': self.rec.obj, 'obj_lo': self.rec.obj_lo,
+                    'obj_hi': self.rec.obj_hi}
+            for key, src in objs.items():
+                v = src[j] if j < len(src) else None
+                row[key] = (None if v is None else
+                            [round(float(x), 6) for x in
+                             np.asarray(v, float).ravel()])
+            row['base_z'] = (None if self.rec.base_z[j] is None else
+                             round(float(self.rec.base_z[j]), 6))
+            row['tilt'] = round(float(self.rec.tilt[j]), 6)
+            hn = self.rec.hand_n[j] if j < len(self.rec.hand_n) else None
+            row['hand_n'] = None if hn is None else int(hn)
+            return row
+
+        def _series(center):
+            if center is None:
+                return None
+            pre = max(1, int(round(float(pad) / max(self.dt, 1e-9))))
+            lo = max(0, int(center) - pre)
+            hi = min(tt.shape[0] - 1, int(center) + pre)
+            js = list(range(lo, hi + 1))
+            cap = max(1, int(max_samples))
+            if len(js) > cap:
+                stride = int(np.ceil(len(js) / float(cap)))
+                js = js[::stride]
+                if int(center) not in js:
+                    js.append(int(center))
+                    js.sort()
+            return [_row(j) for j in js]
+
+        base = {'recording': True, 'signal': signal, 'rule': rule,
+                'threshold': (None if threshold is None else
+                              float(threshold)),
+                'delta': None if delta is None else float(delta),
+                'hold': hold_n, 'pad': float(pad),
+                'n_steps': int(tt.shape[0]),
+                'range': {'t0': None if t0 is None else float(t0),
+                          't1': None if t1 is None else float(t1),
+                          'n': n_sel},
+                'signal_definition': meta}
+        if onset_k is None:
+            base.update({'onset_step': None, 'onset_t': None,
+                         'onset_value': None, 'end_step': None,
+                         'end_t': None, 'end_value': None,
+                         'terminal': False, 'recovered': False,
+                         'series_around_onset': None,
+                         'series_around_end': None,
+                         'note': 'condition never held for %d consecutive '
+                                 'step(s)' % hold_n})
+            return base
+
+        # Recovery: first run of hold_n non-failing steps after the onset.
+        recov_k = None
+        last_fail_k = onset_k + hold_n - 1
+        b = onset_k + hold_n
+        while b < n_sel:
+            if cond[b]:
+                last_fail_k = b
+                b += 1
+                continue
+            run = 0
+            c = b
+            while c < n_sel and not cond[c]:
+                run += 1
+                c += 1
+            if run >= hold_n:
+                recov_k = b
+                break
+            b = c
+        g_on = int(sel[onset_k])
+        if recov_k is None:
+            g_end = int(sel[n_sel - 1])
+            g_last_fail = int(sel[last_fail_k])
+            terminal = True
+        else:
+            g_end = int(sel[recov_k])
+            g_last_fail = int(sel[last_fail_k])
+            terminal = False
+        base.update({
+            'onset_step': g_on,
+            'onset_t': round(float(tt[g_on]), 5),
+            'onset_value': _row(g_on)['value'],
+            'end_step': g_end,
+            'end_t': round(float(tt[g_end]), 5),
+            'end_value': _row(g_end)['value'],
+            'last_failure_step': g_last_fail,
+            'last_failure_t': round(float(tt[g_last_fail]), 5),
+            'terminal': bool(terminal),
+            'recovered': not bool(terminal),
+            'onset_anchor': _anchor(onset_k),
+            'series_around_onset': _series(g_on),
+            'series_around_end': _series(g_end),
+        })
+        detail = _joint_detail(g_on)
+        if detail is not None:
+            base['onset_joint_err'] = detail
+        detail = _joint_detail(g_end)
+        if detail is not None:
+            base['end_joint_err'] = detail
+        return base
+
     def trace_snapshot(self, fields=None, stride=1, t0=None, t1=None,
                        fmt='npz'):
         """Write the current high-rate series to disk (npz or csv) and return
@@ -510,37 +855,23 @@ class ObsEpisode:
                    comments='')
 
     # ---- stills / short mp4 around an event ---------------------------
-    def stills(self, kind=None, index=0, pad=0.2, n=3, width=640,
-               height=480, lookat=(1.7, 0.0, 0.9), dist=1.2, azim=-90.0,
-               elev=15.0, mp4=False, fps=10, prefix='still'):
-        """Render n frames around an event on SCRATCH MjData (the live sim is
-        not modified).  Returns the PNG paths (and an mp4 path if asked)."""
-        if self.rec is None:
-            return {'recording': False}
-        i, ev = self.rec._event(kind, index)
-        if ev is None:
-            return {'event': None, 'n_events': len(self.rec.events)}
-        t = np.asarray(self.rec.t, float)
-        qs = self.rec.q
-        if not qs:
-            return {'event': ev, 'error': 'no recorded steps'}
-        lo_t, hi_t = ev['t'] - float(pad), ev['t'] + float(pad)
-        sel = np.where((t >= lo_t) & (t <= hi_t))[0]
-        if sel.size == 0:
-            sel = np.array([int(np.argmin(np.abs(t - ev['t'])))])
-        pick = np.linspace(0, sel.size - 1, max(1, int(n))).astype(int)
-        idxs = [int(sel[k]) for k in pick]
+    def _render_sequence(self, idxs, width, height, lookat, dist, azim,
+                         elev, path_for):
+        """Render recorded qpos snapshots on a SCRATCH MjData.
+
+        The live sim is never written.  ``path_for(k, step, t)`` names each
+        PNG.  Returns ``(frames, paths)``.
+        """
         import mujoco
-        m, _live = self.m, self.d
-        r = mujoco.Renderer(m, int(height), int(width))
+        rec_t = np.asarray(self.rec.t, float)
+        qs = self.rec.q
+        r = mujoco.Renderer(self.m, int(height), int(width))
         cam = mujoco.MjvCamera()
         cam.type = int(mujoco.mjtCamera.mjCAMERA_FREE)
         lookat_obj = isinstance(lookat, str) and lookat == 'object'
         if lookat_obj:
-            # initial value; updated per frame from the recorded trace
             if self.obj_bid is not None:
-                cam.lookat[:] = np.asarray(self.d.xpos[self.obj_bid],
-                                           float)
+                cam.lookat[:] = np.asarray(self.d.xpos[self.obj_bid], float)
         else:
             cam.lookat[:] = [float(x) for x in lookat]
         cam.distance = float(dist)
@@ -554,14 +885,14 @@ class ObsEpisode:
                           and self.rec.obj[j] is not None else None)
                     if op is not None:
                         cam.lookat[:] = np.asarray(op, float)
-                ds = mujoco.MjData(m)
+                ds = mujoco.MjData(self.m)
                 ds.qpos[:] = np.asarray(qs[j], float)
-                mujoco.mj_forward(m, ds)   # scratch: live data untouched
+                mujoco.mj_forward(self.m, ds)  # scratch: live data untouched
                 r.update_scene(ds, camera=cam)
                 img = np.asarray(r.render())
                 frames.append(np.array(img[:, :, :3], copy=True))
-                p = os.path.join(self.dir, '%s_%s_%02d_t%.3f.png' % (
-                    prefix, ev['kind'], k, float(t[j])))
+                p = os.path.join(self.dir, path_for(k, int(j),
+                                                   float(rec_t[j])))
                 try:
                     import cv2
                     cv2.imwrite(p, frames[-1])
@@ -571,7 +902,102 @@ class ObsEpisode:
                 paths.append(p)
         finally:
             r.close()
-        out = {'event': ev, 'frames': paths, 't': [float(t[j]) for j in idxs]}
+        return frames, paths
+
+    def _stills_at_times(self, req_t=None, t_range=None, width=640,
+                         height=480, lookat=(1.7, 0.0, 0.9), dist=1.2,
+                         azim=-90.0, elev=15.0, mp4=False, fps=10,
+                         prefix='still'):
+        """Render the recorded frame nearest each requested time."""
+        t = np.asarray(self.rec.t, float)
+        if t.size == 0:
+            return {'mode': 'times', 'recording': True,
+                    'error': 'no recorded steps', 'frames': []}
+        reqs = []
+        if t_range is not None:
+            try:
+                rng = [float(x) for x in t_range]
+                if len(rng) == 2:
+                    rng = [rng[0], rng[1], 2]
+                n = max(1, int(rng[2]))
+                reqs.extend(np.linspace(rng[0], rng[1], n).tolist())
+            except Exception as exc:
+                return {'mode': 'times', 'recording': True,
+                        'error': 'bad t_range: %s: %s'
+                                 % (type(exc).__name__, exc), 'frames': []}
+        if req_t is not None:
+            vals = (req_t if isinstance(req_t, (list, tuple, np.ndarray))
+                    else [req_t])
+            try:
+                reqs.extend([float(x) for x in vals])
+            except Exception as exc:
+                return {'mode': 'times', 'recording': True,
+                        'error': 'bad t: %s: %s'
+                                 % (type(exc).__name__, exc), 'frames': []}
+        if not reqs:
+            return {'mode': 'times', 'recording': True,
+                    'error': 'no times requested', 'frames': []}
+        idxs = [int(np.argmin(np.abs(t - float(x)))) for x in reqs]
+        frames, paths = self._render_sequence(
+            idxs, width, height, lookat, dist, azim, elev,
+            lambda k, j, tt: '%s_t%.3f_%02d.png' % (prefix, tt, k))
+        out = {'mode': 'times', 'recording': True, 'frames': paths,
+               't': [round(float(t[j]), 5) for j in idxs],
+               'requested_t': [round(float(x), 5) for x in reqs],
+               'steps': idxs, 'dt': round(float(self.dt), 5)}
+        if mp4 and frames:
+            try:
+                import cv2
+                p = os.path.join(self.dir, '%s_times_clip.mp4' % prefix)
+                h, w = frames[0].shape[:2]
+                vw = cv2.VideoWriter(p, cv2.VideoWriter_fourcc(*'mp4v'),
+                                     float(fps), (w, h))
+                for fr in frames:
+                    vw.write(fr[:, :, ::-1])
+                vw.release()
+                out['mp4'] = p
+            except Exception as exc:
+                out['mp4_error'] = '%s: %s' % (type(exc).__name__, exc)
+        return out
+
+    def stills(self, kind=None, index=0, pad=0.2, n=3, width=640,
+               height=480, lookat=(1.7, 0.0, 0.9), dist=1.2, azim=-90.0,
+               elev=15.0, mp4=False, fps=10, prefix='still',
+               t=None, t_range=None):
+        """Render frames on SCRATCH MjData (the live sim is not modified).
+
+        Event mode (default; unchanged): n frames around one recorder event,
+        selected by ``kind``/``index`` over ``[t_event - pad, t_event + pad]``.
+        Time mode (new, additive): pass ``t=<s>``, ``t=[t1, t2, ...]`` or
+        ``t_range=(t0, t1, n)`` to render the recorded qpos nearest each
+        requested time.  Returns the PNG paths (and an mp4 path if asked).
+        """
+        if self.rec is None:
+            return {'recording': False}
+        if t is not None or t_range is not None:
+            return self._stills_at_times(
+                req_t=t, t_range=t_range, width=width, height=height,
+                lookat=lookat, dist=dist, azim=azim, elev=elev, mp4=mp4,
+                fps=fps, prefix=prefix)
+        i, ev = self.rec._event(kind, index)
+        if ev is None:
+            return {'event': None, 'n_events': len(self.rec.events)}
+        tt = np.asarray(self.rec.t, float)
+        qs = self.rec.q
+        if not qs:
+            return {'event': ev, 'error': 'no recorded steps'}
+        lo_t, hi_t = ev['t'] - float(pad), ev['t'] + float(pad)
+        sel = np.where((tt >= lo_t) & (tt <= hi_t))[0]
+        if sel.size == 0:
+            sel = np.array([int(np.argmin(np.abs(tt - ev['t'])))])
+        pick = np.linspace(0, sel.size - 1, max(1, int(n))).astype(int)
+        idxs = [int(sel[k]) for k in pick]
+        frames, paths = self._render_sequence(
+            idxs, width, height, lookat, dist, azim, elev,
+            lambda k, j, tval: '%s_%s_%02d_t%.3f.png' % (
+                prefix, ev['kind'], k, tval))
+        out = {'event': ev, 'frames': paths,
+               't': [float(tt[j]) for j in idxs]}
         if mp4 and frames:
             try:
                 import cv2

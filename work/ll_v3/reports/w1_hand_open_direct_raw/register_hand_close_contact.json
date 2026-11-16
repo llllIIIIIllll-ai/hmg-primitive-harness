@@ -1,0 +1,13 @@
+{
+ "ok": true,
+ "result": {
+  "primitives": [
+   "arm_pose_ik",
+   "base_standoff_servo",
+   "hand_close_contact",
+   "hand_open",
+   "validator_probe",
+   "validator_probe2"
+  ]
+ }
+}

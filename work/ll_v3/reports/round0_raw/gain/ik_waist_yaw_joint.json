@@ -1,0 +1,53 @@
+{
+ "track_gain": {
+  "ok": true,
+  "result": {
+   "joints": {
+    "waist_yaw_joint": {
+     "q0": 0.0,
+     "q1": -0.1998,
+     "delta_meas": -0.1998,
+     "gain": 0.999
+    }
+   },
+   "delta_cmd": -0.2,
+   "dur": 1.5,
+   "hold": 1.0,
+   "waist_owner": "ik",
+   "waist_channel": "upper_target final writer"
+  }
+ },
+ "state": {
+  "ok": true,
+  "result": {
+   "t": 2.5,
+   "base": [
+    -0.082,
+    -0.006,
+    0.75
+   ],
+   "base_tilt_deg": 3.7,
+   "object": {
+    "name": "bottle",
+    "pos": [
+     1.731,
+     0.03,
+     0.799
+    ],
+    "hand": {
+     "left": [
+      0.122,
+      0.123,
+      0.833
+     ],
+     "right": [
+      0.082,
+      -0.182,
+      0.836
+     ]
+    }
+   },
+   "hand_object_contacts": 0
+  }
+ }
+}

@@ -1,0 +1,105 @@
+{
+  "validator": "independent-validator (clean-room)",
+  "experiment": "ll_v3",
+  "warmup": "W1",
+  "substrate": "arm_pose_ik",
+  "capability": "ee_pose_ik",
+  "task": "05_drill_lift",
+  "server_slot": "05_drill_lift__2",
+  "seed": 0,
+  "contract_ref": "experiments/ll_v3/config.yaml warmup.substrate[arm_pose_ik]",
+  "source_path": "work/ll_v3/substrate/arm_pose_ik.py",
+  "prerequisite": {
+    "name": "base_standoff_servo",
+    "kwargs": {"standoff": 0.15},
+    "ok": true,
+    "standoff_aabb_m": 0.16601400543327657,
+    "standoff_error_m": 0.01601400543327658,
+    "final_xy_error_m": 0.009600000000000053,
+    "yaw_error_deg": 0.5043144131945589,
+    "tilt_deg": 1.6,
+    "bursts": 23
+  },
+  "contract_checks": {
+    "two_palm_poses_12d": {"pass": true, "evidence": "task_dim=12, both sides solved; target contains left+right"},
+    "waist_measured_exogenous": {"pass": true, "waist_exogenous": true, "waist_owner": "homie", "evidence": "12-D branch locks the measured waist every step and never writes it"},
+    "mink_qp_default": {"pass": true, "solver_reported": "mink-qp", "evidence": "mink.solve_ik + ConfigurationLimit; fallback_dls=True route reported as dls-fallback"},
+    "dls_fallback_present": {"pass": true, "evidence": "hmg_tools.reach_box_qp catches QP exception and returns solver='dls-fallback' when fallback_dls"},
+    "joint_margin_ge_0p05": {"pass": true, "joint_margin_min_generic_rad": 0.3705, "joint_margin_min_custom_rad": 0.975, "independent_arm_margin_after_run_rad": 1.0125, "n_arm_joints": 14},
+    "reports_pad_position_error": {"pass": true},
+    "reports_pad_normal_error": {"pass": true},
+    "reports_binding_constraint": {"pass": true}
+  },
+  "runs": {
+    "generic_target": {
+      "kwargs": {},
+      "solver": "mink-qp",
+      "waist_owner": "homie",
+      "waist_exogenous": true,
+      "joint_margin_min": 0.3705,
+      "worst_pad_error": 0.09449089903265825,
+      "pad_error_at_ramp_end": {"left": 0.04789572005931218, "right": 0.04657252408878007},
+      "pad_error": {"left": 0.09449089903265825, "right": 0.07287180524729724},
+      "normal_error_deg": {"left": 3.963546305706421, "right": 4.482830765587335},
+      "ramp_s": 0.35,
+      "hold_s": 0.2,
+      "target": {"left": [1.739, 0.195, 1.251], "right": [1.739, -0.115, 1.251]},
+      "ik_err": {"left": 0.0013, "right": 0.0013},
+      "ik_rot": {"left": 0.0007, "right": 0.0007},
+      "binding_constraint": "pad_error",
+      "ok_reported": false,
+      "t0": 9.2,
+      "t1": 9.74
+    },
+    "custom_target": {
+      "kwargs": {
+        "targets": {
+          "left": [1.6572, 0.115, 0.94],
+          "right": [1.6572, -0.025, 0.94]
+        },
+        "orientation": "keep"
+      },
+      "objx": 1.741,
+      "objy": 0.045,
+      "solver": "mink-qp",
+      "waist_owner": "homie",
+      "waist_exogenous": true,
+      "joint_margin_min": 0.975,
+      "worst_pad_error": 0.07814972808653915,
+      "pad_error_at_ramp_end": {"left": 0.08048602363143553, "right": 0.05971599450733446},
+      "pad_error": {"left": 0.07814972808653915, "right": 0.058912901812760904},
+      "normal_error_deg": {"left": 23.623840059741358, "right": 14.857791717264767},
+      "ramp_s": 0.35,
+      "hold_s": 0.2,
+      "target": {"left": [1.657, 0.115, 0.94], "right": [1.657, -0.025, 0.94]},
+      "ik_err": {"left": 0.001, "right": 0.0011},
+      "ik_rot": {"left": 0.0004, "right": 0.0004},
+      "binding_constraint": "pad_error",
+      "ok_reported": false,
+      "t0": 9.74,
+      "t1": 10.28,
+      "post_run_state": {
+        "base": [1.378, 0.027, 0.75],
+        "base_tilt_deg": 0.9,
+        "object_pos": [1.729, 0.107, 0.813],
+        "hand_object_contacts": 2
+      }
+    }
+  },
+  "pad_gate_0p015": {
+    "met": false,
+    "note": "This is the W2 integration-benchmark gate, not the substrate contract gate.",
+    "generic_worst_m": 0.09449089903265825,
+    "custom_worst_m": 0.07814972808653915,
+    "binding_constraint": "pad_error",
+    "mechanism": "IK model residual is ~0.001 m, but the base drifted ~0.055 m in x during the 0.35 s ramp + 0.2 s hold (base x 1.433 -> 1.378) and the object was pushed ~0.065 m in y; the executed site error is dominated by base motion, not the solve."
+  },
+  "caveats": [
+    "arm_pose_ik.run() sets its own ok flag with worst_pad_error <= 0.015, i.e. it applies the W2 pad gate inside the substrate. The substrate contract's hard gate is joint_margin >= 0.05 rad, which passes; downstream should read pad_error as a report, not the substrate ok flag.",
+    "pad_error is measured from the palm site (the solve target) while the normal error is measured from the gripper pad geom; the two use different reference points."
+  ],
+  "verdict": "accept",
+  "verdict_reason": "All substrate contract checks pass: 12-D two-palm solve, waist_owner=homie and measured exogenous, solver=mink-qp with a DLS fallback path, joint_margin_min 0.3705 (generic) / 0.975 (custom) far above 0.05 rad, and pad position/normal error plus a binding constraint reported.",
+  "substrate_binding_constraint": null,
+  "w2_binding_constraint": "pad_error"
+}

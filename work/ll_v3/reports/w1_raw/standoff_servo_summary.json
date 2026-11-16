@@ -1,0 +1,321 @@
+{
+  "01_box_lift_floor": [
+    {
+      "target_standoff": 0.35,
+      "servo_ok": false,
+      "standoff_aabb": null,
+      "xy_error": null,
+      "tilt_deg": 16.29,
+      "servo_binding": "tilt_guard_after_height"
+    },
+    {
+      "target_standoff": 0.25,
+      "servo_ok": false,
+      "standoff_aabb": null,
+      "xy_error": null,
+      "tilt_deg": 16.29,
+      "servo_binding": "tilt_guard_after_height"
+    },
+    {
+      "target_standoff": 0.2,
+      "servo_ok": false,
+      "standoff_aabb": null,
+      "xy_error": null,
+      "tilt_deg": 16.29,
+      "servo_binding": "tilt_guard_after_height"
+    }
+  ],
+  "02_push_button": [
+    {
+      "target_standoff": 0.35,
+      "servo_ok": true,
+      "standoff_aabb": 0.36019999999999996,
+      "xy_error": 0.010199999999999987,
+      "tilt_deg": 1.33,
+      "servo_binding": null,
+      "arm_ok": null,
+      "pad_error": null,
+      "worst_pad_error": null,
+      "joint_margin_min": null,
+      "arm_binding": null
+    },
+    {
+      "target_standoff": 0.25,
+      "servo_ok": true,
+      "standoff_aabb": 0.2683,
+      "xy_error": 0.018299999999999983,
+      "tilt_deg": 1.78,
+      "servo_binding": null,
+      "arm_ok": null,
+      "pad_error": null,
+      "worst_pad_error": null,
+      "joint_margin_min": null,
+      "arm_binding": null
+    },
+    {
+      "target_standoff": 0.2,
+      "servo_ok": true,
+      "standoff_aabb": 0.2127,
+      "xy_error": 0.012700000000000045,
+      "tilt_deg": 1.63,
+      "servo_binding": null,
+      "arm_ok": null,
+      "pad_error": null,
+      "worst_pad_error": null,
+      "joint_margin_min": null,
+      "arm_binding": null
+    }
+  ],
+  "03_box_lift": [
+    {
+      "target_standoff": 0.35,
+      "servo_ok": true,
+      "standoff_aabb": 0.369807409336265,
+      "xy_error": 0.016599999999999726,
+      "tilt_deg": 4.6,
+      "servo_binding": null,
+      "arm_ok": false,
+      "pad_error": {
+        "left": 0.7067003396065409,
+        "right": 0.48789902643887295
+      },
+      "worst_pad_error": 0.7067003396065409,
+      "joint_margin_min": -0.107,
+      "arm_binding": "pad_error"
+    },
+    {
+      "target_standoff": 0.25,
+      "servo_ok": true,
+      "standoff_aabb": 0.26247380821712474,
+      "xy_error": 0.008499999999999952,
+      "tilt_deg": 0.98,
+      "servo_binding": null,
+      "arm_ok": false,
+      "pad_error": {
+        "left": 0.2127160078602456,
+        "right": 0.1747130790753802
+      },
+      "worst_pad_error": 0.2127160078602456,
+      "joint_margin_min": 0.6732,
+      "arm_binding": "pad_error"
+    },
+    {
+      "target_standoff": 0.2,
+      "servo_ok": null,
+      "standoff_aabb": null,
+      "xy_error": null,
+      "tilt_deg": null,
+      "servo_binding": null
+    }
+  ],
+  "04_push_shelf_forward": [
+    {
+      "target_standoff": 0.35,
+      "servo_ok": true,
+      "standoff_aabb": 0.36160000000000003,
+      "xy_error": 0.011600000000000055,
+      "tilt_deg": 2.12,
+      "servo_binding": null,
+      "arm_ok": false,
+      "pad_error": {
+        "left": 0.10239794919821393,
+        "right": 0.1028121588140236
+      },
+      "worst_pad_error": 0.1028121588140236,
+      "joint_margin_min": 0.3669,
+      "arm_binding": "pad_error"
+    },
+    {
+      "target_standoff": 0.25,
+      "servo_ok": true,
+      "standoff_aabb": 0.23719999999999997,
+      "xy_error": 0.012800000000000034,
+      "tilt_deg": 2.46,
+      "servo_binding": null,
+      "arm_ok": false,
+      "pad_error": {
+        "left": 0.08014050162059133,
+        "right": 0.04098402127659021
+      },
+      "worst_pad_error": 0.08014050162059133,
+      "joint_margin_min": 0.1046,
+      "arm_binding": "pad_error"
+    },
+    {
+      "target_standoff": 0.2,
+      "servo_ok": false,
+      "standoff_aabb": 0.2258,
+      "xy_error": null,
+      "tilt_deg": null,
+      "servo_binding": "fingertip_guard"
+    }
+  ],
+  "06_drill_pnp": [
+    {
+      "target_standoff": 0.35,
+      "servo_ok": true,
+      "standoff_aabb": 0.3677573248760656,
+      "xy_error": 0.014410757250660867,
+      "tilt_deg": 4.42,
+      "servo_binding": null,
+      "arm_ok": false,
+      "pad_error": {
+        "left": 0.2492181574444367,
+        "right": 0.3720810395599324
+      },
+      "worst_pad_error": 0.3720810395599324,
+      "joint_margin_min": -0.0324,
+      "arm_binding": "pad_error"
+    },
+    {
+      "target_standoff": 0.25,
+      "servo_ok": true,
+      "standoff_aabb": 0.25740289431162194,
+      "xy_error": 0.0025000000000000577,
+      "tilt_deg": 4.48,
+      "servo_binding": null,
+      "arm_ok": false,
+      "pad_error": {
+        "left": 0.10606078445872448,
+        "right": 0.09290527433897389
+      },
+      "worst_pad_error": 0.10606078445872448,
+      "joint_margin_min": 1.0566,
+      "arm_binding": "pad_error"
+    },
+    {
+      "target_standoff": 0.2,
+      "servo_ok": true,
+      "standoff_aabb": 0.2143814357634541,
+      "xy_error": 0.00880000000000003,
+      "tilt_deg": 4.69,
+      "servo_binding": null,
+      "arm_ok": false,
+      "pad_error": {
+        "left": 0.0697110464704124,
+        "right": 0.06545975863078023
+      },
+      "worst_pad_error": 0.0697110464704124,
+      "joint_margin_min": 1.1946,
+      "arm_binding": "pad_error"
+    }
+  ],
+  "07_box_table_to_shelf": [
+    {
+      "target_standoff": 0.35,
+      "servo_ok": null,
+      "standoff_aabb": null,
+      "xy_error": null,
+      "tilt_deg": null,
+      "servo_binding": null
+    },
+    {
+      "target_standoff": 0.25,
+      "servo_ok": true,
+      "standoff_aabb": 0.25070000000000003,
+      "xy_error": 0.0007000000000000339,
+      "tilt_deg": 0.0,
+      "servo_binding": null,
+      "arm_ok": false,
+      "pad_error": {
+        "left": 0.6967193193819157,
+        "right": 0.2956238150081958
+      },
+      "worst_pad_error": 0.6967193193819157,
+      "joint_margin_min": -0.1493,
+      "arm_binding": "pad_error"
+    },
+    {
+      "target_standoff": 0.2,
+      "servo_ok": true,
+      "standoff_aabb": 0.23150000000000004,
+      "xy_error": 0.03149999999999997,
+      "tilt_deg": 7.13,
+      "servo_binding": null,
+      "arm_ok": false,
+      "pad_error": {
+        "left": 0.29025673118809836,
+        "right": 0.24704307316741342
+      },
+      "worst_pad_error": 0.29025673118809836,
+      "joint_margin_min": 0.1089,
+      "arm_binding": "pad_error"
+    }
+  ],
+  "08_pick_drill_from_holder": [
+    {
+      "target_standoff": 0.35,
+      "servo_ok": true,
+      "standoff_aabb": 0.3678,
+      "xy_error": 0.017800000000000014,
+      "tilt_deg": 3.91,
+      "servo_binding": null,
+      "arm_ok": false,
+      "pad_error": {
+        "left": 0.36381864987930457,
+        "right": 0.3630549407458876
+      },
+      "worst_pad_error": 0.36381864987930457,
+      "joint_margin_min": 0.0539,
+      "arm_binding": "pad_error"
+    },
+    {
+      "target_standoff": 0.25,
+      "servo_ok": true,
+      "standoff_aabb": 0.2561,
+      "xy_error": 0.006099999999999994,
+      "tilt_deg": 1.63,
+      "servo_binding": null,
+      "arm_ok": false,
+      "pad_error": {
+        "left": 0.05097499386954353,
+        "right": 0.06392503421977969
+      },
+      "worst_pad_error": 0.06392503421977969,
+      "joint_margin_min": 0.8614,
+      "arm_binding": "pad_error"
+    },
+    {
+      "target_standoff": 0.2,
+      "servo_ok": true,
+      "standoff_aabb": 0.2198,
+      "xy_error": 0.019799999999999984,
+      "tilt_deg": 4.81,
+      "servo_binding": null,
+      "arm_ok": false,
+      "pad_error": {
+        "left": 0.05406486844522978,
+        "right": 0.036355604794859345
+      },
+      "worst_pad_error": 0.05406486844522978,
+      "joint_margin_min": 1.3023,
+      "arm_binding": "pad_error"
+    }
+  ],
+  "09_obstacle_aware_pick_drill": [
+    {
+      "target_standoff": 0.35,
+      "servo_ok": false,
+      "standoff_aabb": 1.2872246346306462,
+      "xy_error": null,
+      "tilt_deg": null,
+      "servo_binding": "tilt_guard"
+    },
+    {
+      "target_standoff": 0.25,
+      "servo_ok": false,
+      "standoff_aabb": 1.2872246346306462,
+      "xy_error": null,
+      "tilt_deg": null,
+      "servo_binding": "tilt_guard"
+    },
+    {
+      "target_standoff": 0.2,
+      "servo_ok": false,
+      "standoff_aabb": 1.2872246346306462,
+      "xy_error": null,
+      "tilt_deg": null,
+      "servo_binding": "tilt_guard"
+    }
+  ]
+}

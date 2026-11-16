@@ -1,0 +1,261 @@
+{
+ "capability": "base_navigate_to_standoff",
+ "primitive": "base_standoff_servo",
+ "contract": "config warmup.substrate[base_standoff_servo]: measured standoff from the live object AABB, closed-loop bursts, fingertip guard, tilt guard; reports standoff error, final xy/yaw error, base tilt, guard status.",
+ "task": "05_drill_lift",
+ "seed": 0,
+ "slot": 1,
+ "queue": "HMG_TASK=05_drill_lift__1",
+ "micro_benchmark_gate": "per S: call returns ok, standoff_error <= 0.05 m, base tilt <= 8 deg",
+ "commands": [
+  "HMG_TASK=05_drill_lift__1 ./scripts/qtool.sh <{\"tool\":\"write\",\"name\":\"base_standoff_servo\",\"source\":<source>}> (source from work/ll_v3/substrate/base_standoff_servo.py, JSON via python json.dumps)",
+  "HMG_TASK=05_drill_lift__1 ./scripts/qtool.sh <{\"tool\":\"reset\",\"seed\":0}>",
+  "HMG_TASK=05_drill_lift__1 ./scripts/qtool.sh <{\"tool\":\"call\",\"name\":\"base_standoff_servo\",\"kwargs\":{\"standoff\":0.25}}>",
+  "(reset seed 0)",
+  "... {\"standoff\":0.20}",
+  "(reset seed 0)",
+  "... {\"standoff\":0.15}",
+  "guard probes: ... {\"standoff\":0.25,\"tilt_limit\":0.5} and ... {\"standoff\":0.15,\"finger_clearance\":0.5}"
+ ],
+ "raw_results": {
+  "standoff_0.25": {
+   "ok": true,
+   "result": {
+    "ok": true,
+    "standoff_aabb": 0.2656463814923891,
+    "standoff_error": 0.015646381492389116,
+    "final_xy_error": 0.011199999999999877,
+    "yaw_error_deg": 6.835294081127061,
+    "tilt_deg": 4.19,
+    "base": {
+     "pos": [
+      1.3761,
+      0.019,
+      0.7511
+     ],
+     "yaw_deg": -5.06,
+     "tilt_deg": 4.19
+    },
+    "object": [
+     1.731,
+     0.03,
+     0.799
+    ],
+    "object_aabb": {
+     "lo": [
+      1.6373,
+      -0.0205,
+      0.7995
+     ],
+     "hi": [
+      1.8255,
+      0.0795,
+      1.0251
+     ]
+    },
+    "bursts": 27,
+    "events": [],
+    "binding_constraint": null,
+    "t0": 0.0,
+    "t1": 10.8
+   }
+  },
+  "standoff_0.20": {
+   "ok": true,
+   "result": {
+    "ok": true,
+    "standoff_aabb": 0.21516584301417352,
+    "standoff_error": 0.015165843014173508,
+    "final_xy_error": 0.010299999999999976,
+    "yaw_error_deg": 1.436525421175154,
+    "tilt_deg": 1.87,
+    "base": {
+     "pos": [
+      1.427,
+      0.0538,
+      0.754
+     ],
+     "yaw_deg": -3.04,
+     "tilt_deg": 1.87
+    },
+    "object": [
+     1.731,
+     0.03,
+     0.799
+    ],
+    "object_aabb": {
+     "lo": [
+      1.6373,
+      -0.0205,
+      0.7995
+     ],
+     "hi": [
+      1.8255,
+      0.0795,
+      1.0251
+     ]
+    },
+    "bursts": 21,
+    "events": [],
+    "binding_constraint": null,
+    "t0": 0.0,
+    "t1": 8.4
+   }
+  },
+  "standoff_0.15": {
+   "ok": true,
+   "result": {
+    "ok": true,
+    "standoff_aabb": 0.16601400543327657,
+    "standoff_error": 0.01601400543327658,
+    "final_xy_error": 0.009600000000000053,
+    "yaw_error_deg": 0.5043144131945589,
+    "tilt_deg": 1.6,
+    "base": {
+     "pos": [
+      1.4838,
+      0.0555,
+      0.7541
+     ],
+     "yaw_deg": -3.98,
+     "tilt_deg": 1.6
+    },
+    "object": [
+     1.739,
+     0.04,
+     0.801
+    ],
+    "object_aabb": {
+     "lo": [
+      1.6434,
+      -0.0076,
+      0.7998
+     ],
+     "hi": [
+      1.8341,
+      0.1006,
+      1.028
+     ]
+    },
+    "bursts": 23,
+    "events": [],
+    "binding_constraint": null,
+    "t0": 0.0,
+    "t1": 9.2
+   }
+  },
+  "guard_tilt_probe": {
+   "ok": true,
+   "result": {
+    "ok": false,
+    "binding_constraint": "tilt_guard",
+    "events": [],
+    "standoff_aabb": 1.637314963591306,
+    "base": {
+     "pos": [
+      0.0257,
+      -0.0209,
+      0.7481
+     ],
+     "yaw_deg": -1.04,
+     "tilt_deg": 1.99
+    },
+    "object": [
+     1.731,
+     0.03,
+     0.8
+    ],
+    "t0": 0.0,
+    "t1": 0.4
+   }
+  },
+  "guard_finger_probe": {
+   "ok": true,
+   "result": {
+    "ok": false,
+    "binding_constraint": "fingertip_guard",
+    "events": [],
+    "standoff_aabb": 0.6442997206269764,
+    "base": {
+     "pos": [
+      0.9955,
+      0.0321,
+      0.7428
+     ],
+     "yaw_deg": 0.54,
+     "tilt_deg": 5.55
+    },
+    "object": [
+     1.731,
+     0.03,
+     0.799
+    ],
+    "guard_side": "left",
+    "t0": 0.0,
+    "t1": 4.8
+   }
+  }
+ },
+ "metrics": {
+  "S=0.25": {
+   "ok": true,
+   "standoff_aabb": 0.2656463814923891,
+   "standoff_error": 0.015646381492389116,
+   "final_xy_error": 0.011199999999999877,
+   "yaw_error_deg": 6.835294081127061,
+   "tilt_deg": 4.19,
+   "bursts": 27,
+   "binding_constraint": null,
+   "t1_s": 10.8,
+   "pass": true
+  },
+  "S=0.20": {
+   "ok": true,
+   "standoff_aabb": 0.21516584301417352,
+   "standoff_error": 0.015165843014173508,
+   "final_xy_error": 0.010299999999999976,
+   "yaw_error_deg": 1.436525421175154,
+   "tilt_deg": 1.87,
+   "bursts": 21,
+   "binding_constraint": null,
+   "t1_s": 8.4,
+   "pass": true
+  },
+  "S=0.15": {
+   "ok": true,
+   "standoff_aabb": 0.16601400543327657,
+   "standoff_error": 0.01601400543327658,
+   "final_xy_error": 0.009600000000000053,
+   "yaw_error_deg": 0.5043144131945589,
+   "tilt_deg": 1.6,
+   "bursts": 23,
+   "binding_constraint": null,
+   "t1_s": 9.2,
+   "pass": true
+  }
+ },
+ "guard_inspection": {
+  "tilt_guard": {
+   "mechanism": "checked after every move_base burst (and after height/waypoint moves); returns ok=false with binding_constraint=tilt_guard when tilt_deg > tilt_limit (default 8.0)",
+   "reported_if_tripped": true,
+   "evidence": "tilt_limit=0.5 probe returned ok=false, binding_constraint=tilt_guard, tilt_deg=1.99"
+  },
+  "fingertip_guard": {
+   "mechanism": "each control loop compares both hand pads to the live object AABB; returns ok=false with binding_constraint=fingertip_guard and guard_side when a pad is nearer than finger_clearance (default 0.06 m)",
+   "reported_if_tripped": true,
+   "evidence": "finger_clearance=0.5 probe returned ok=false, binding_constraint=fingertip_guard, guard_side=left at standoff_aabb=0.6443"
+  },
+  "on_success": "binding_constraint=null and tilt_deg is reported; fingertip clearance is not exposed as a positive guard-status field on success (implicit only). Not a gate failure."
+ },
+ "thresholds": {
+  "standoff_error_max_m": 0.05,
+  "tilt_max_deg": 8.0
+ },
+ "verdict": "accept",
+ "binding_constraint": null,
+ "notes": [
+  "Each standoff was measured from a fresh in-process reset(seed=0) so the three runs start from the identical state.",
+  "Standoff is measured from the live object AABB (api.object_aabb()) each loop, not a captured constant: AABB shifted slightly in the S=0.15 run (object disturbed) and the loop re-derived the target.",
+  "All three calls reached the tolerance band early-stopped (da <= standoff+0.02) with bursts << max_bursts=60."
+ ]
+}

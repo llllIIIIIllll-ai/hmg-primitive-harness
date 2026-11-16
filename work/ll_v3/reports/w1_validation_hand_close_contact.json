@@ -1,0 +1,173 @@
+{
+ "validator": "independent W1 validator (clean-room)",
+ "experiment": "ll_v3",
+ "warmup_round": "W1",
+ "primitive": "hand_close_contact",
+ "capability": "grasp_close_contact",
+ "source": "work/ll_v3/substrate/hand_close_contact.py (registered, not modified)",
+ "task": "05_drill_lift",
+ "seed": 0,
+ "slot": 3,
+ "queue": "05_drill_lift__3",
+ "validated_at": "2026-11-16T13:23:53",
+ "sequence": [
+  "register base_standoff_servo, arm_pose_ik, hand_close_contact (json.dumps via scripts/qtool.sh)",
+  "reset {seed:0}",
+  "call base_standoff_servo {standoff:0.15}",
+  "probe state -> objx,objy",
+  "call arm_pose_ik {targets: left=[objx-0.0838,objy+0.07,0.94], right=[objx-0.0838,objy-0.07,0.94]}",
+  "call hand_close_contact {}",
+  "probe contacts (truthful source) after close"
+ ],
+ "registration": {
+  "base_standoff_servo": true,
+  "arm_pose_ik": true,
+  "hand_close_contact": true
+ },
+ "standoff": {
+  "ok": true,
+  "standoff_aabb": 0.16601400543327657,
+  "standoff_error": 0.01601400543327658,
+  "final_xy_error": 0.009600000000000053,
+  "yaw_error_deg": 0.5043144131945589,
+  "tilt_deg": 1.6,
+  "bursts": 23,
+  "binding_constraint": null
+ },
+ "probe_state_object_pos": [
+  1.739,
+  0.04,
+  0.801
+ ],
+ "targets": {
+  "left": [
+   1.6552,
+   0.11000000000000001,
+   0.94
+  ],
+  "right": [
+   1.6552,
+   -0.030000000000000006,
+   0.94
+  ]
+ },
+ "arm_pose_ik": {
+  "ok": false,
+  "pad_error": {
+   "left": 0.018695721435665422,
+   "right": 0.07267881396940928
+  },
+  "worst_pad_error": 0.07267881396940928,
+  "pad_error_at_ramp_end": {
+   "left": 0.019209372712298545,
+   "right": 0.05378661543544081
+  },
+  "joint_margin_min": 0.5236,
+  "waist_owner": "homie",
+  "solver": "mink-qp",
+  "binding_constraint": "pad_error"
+ },
+ "hand_close_contact": {
+  "ok": false,
+  "closed_angle": 0.8,
+  "steps": 9,
+  "bilateral_at_close": false,
+  "contacts": {
+   "left": 0,
+   "right": 1,
+   "pairs": [
+    [
+     "gripper0_right_right_hand_palm_link",
+     "bottle_collider_cylinder99aba387",
+     "gripper0_right_g0_col"
+    ]
+   ]
+  },
+  "contacts_after_hold": {
+   "left": 0,
+   "right": 1,
+   "pairs": [
+    [
+     "gripper0_right_right_hand_palm_link",
+     "bottle_collider_cylinder99aba387",
+     "gripper0_right_g0_col"
+    ]
+   ]
+  },
+  "object_before": [
+   1.73,
+   -0.026,
+   0.866
+  ],
+  "object_after": [
+   1.704,
+   0.01,
+   0.814
+  ],
+  "object_disturbance": 0.06838128398911508,
+  "binding_constraint": "object_disturbance"
+ },
+ "truthful_contacts_after_close": {
+  "hand_object_contacts": 1,
+  "ncon": 10,
+  "object_contact_pairs": [
+   {
+    "g1": "bottle_collider_box_8e968ea9",
+    "g2": "robot0_g28_col",
+    "b1": "bottle_body",
+    "b2": "robot0_left_wrist_yaw_link",
+    "dist": -4.1e-05,
+    "force_normal": 0.071
+   },
+   {
+    "g1": "bottle_collider_cylinder99aba387",
+    "g2": "gripper0_right_g0_col",
+    "b1": "bottle_body",
+    "b2": "gripper0_right_right_hand_palm_link",
+    "dist": -2.1e-05,
+    "force_normal": 0.036
+   }
+  ],
+  "note": "bottle_collider_box vs robot0_left_wrist_yaw_link is a non-pad (wrist) contact; the left gripper pad is not in contact. Right pad contact is real. Bilateral pad contact = false."
+ },
+ "measured_derived": {
+  "close_phase_object_displacement_m": 0.06838,
+  "ik_phase_object_displacement_m": 0.09307,
+  "close_disturbance_tolerance_m": 0.02,
+  "close_disturbance_excess_m": 0.04838
+ },
+ "micro_benchmark": {
+  "reaches_target_angle_or_bilateral_contact": {
+   "pass": true,
+   "evidence": "closed_angle=0.8 == max_angle=0.8; steps=9 (8 ramp iterations, no bilateral early break). The contract's OR clause is satisfied by reaching the target angle."
+  },
+  "object_disturbance_le_0.02_m": {
+   "pass": false,
+   "measured_m": 0.06838,
+   "tolerance_m": 0.02,
+   "excess_m": 0.04838
+  },
+  "contact_pairs_reported": {
+   "pass": true,
+   "evidence": "contacts dict contains left/right counts and per-pair link names; truthful probe confirms the right pad pair and a left wrist (non-pad) pair."
+  },
+  "contacts_after_hold_reported": {
+   "pass": true,
+   "evidence": "contacts_after_hold={'left':0,'right':1,pairs:[...]} present and equals the pre-hold contact set."
+  },
+  "grip_does_not_degrade_during_hold": {
+   "pass": true,
+   "evidence": "contacts_after_hold.left(0) >= contacts.left(0) and .right(1) >= contacts.right(1); stability predicate true. Caveat: left was already 0, so this is a non-degradation check only, not a bilateral-grip check."
+  }
+ },
+ "close_phase_contact_note": "Per round-0 measurement and the primitive's own docstring, close-phase contact is not the reliable signal on 05_drill_lift; the lift-phase bilateral contact is. This run shows close-phase left=0, right=1 (right pad only), which is NOT treated as a close-contract failure. The close contract is judged on reaching the close target, reporting contact pairs and contacts_after_hold, hold stability, and object disturbance; the lift gate (bilateral contact + rise) is out of scope here.",
+ "upstream_confound": {
+  "statement": "The object was already displaced 0.09307 m during the preceding arm_pose_ik step, before the close began: probe-state object was [1.739, 0.04, 0.801] and the close's object_before was [1.73, -0.026, 0.866]. arm_pose_ik itself failed its own contract (worst pad error 0.07268 m > 0.015 m gate; left 0.01870 m, right 0.07268 m; binding pad_error). The close was therefore executed from an invalid pregrasp, on an object already in motion, so the close-phase disturbance is at least partly a downstream symptom rather than a defect in the close law itself.",
+  "root_cause_primitive": "arm_pose_ik",
+  "root_cause_binding_constraint": "pad_error"
+ },
+ "verdict": "restrict",
+ "binding_constraint": "object_disturbance",
+ "rationale": "The hand_close_contact law itself behaves as specified: it steps the fingers to the 0.8 rad close target, reports both contact-pair sets (close and after-hold), and the held contact set does not degrade. It fails the object-disturbance gate (0.06838 m > 0.02 m) in the prescribed integrated sequence. Because the object had already been displaced 0.09307 m by the preceding arm_pose_ik, which failed its own pad gate (0.07268 m), the close cannot be credited as verified in this run and is not rejected as a law. Restriction: hand_close_contact may only be credited once the pregrasp pad error is within the 0.015 m gate; this run does not satisfy that precondition. Binding constraint on the measured failure: object_disturbance.",
+ "raw_evidence": "/home/pjy0422/hmg_primitive_harness/.claude/worktrees/ll-v1-run/work/ll_v3/reports/w1_raw/w1_validation_hand_close_contact_run.json"
+}

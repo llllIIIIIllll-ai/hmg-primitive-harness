@@ -1,0 +1,53 @@
+{
+ "ok": true,
+ "result": {
+  "target": {
+   "left": [
+    1.731,
+    0.182,
+    1.25
+   ],
+   "right": [
+    1.731,
+    -0.128,
+    1.25
+   ]
+  },
+  "base": {
+   "pos": [
+    1.4879,
+    0.0142,
+    0.7531
+   ],
+   "yaw_deg": 0.31,
+   "tilt_deg": 2.44
+  },
+  "waist_owner": "ik",
+  "rows": [
+   {
+    "task_dim": 12,
+    "worst_pad_err_m": 0.00012,
+    "joint_margin_rad": 0.0742,
+    "solve_s": 0.0134,
+    "meets_pad_0p015": true,
+    "meets_margin_0p05": true,
+    "best_base_search": null,
+    "waist_move_rad": null,
+    "waist_authoritative": false,
+    "binding_constraint": null
+   },
+   {
+    "task_dim": 17,
+    "worst_pad_err_m": 1e-05,
+    "joint_margin_rad": 0.1338,
+    "solve_s": 0.009,
+    "meets_pad_0p015": true,
+    "meets_margin_0p05": true,
+    "best_base_search": null,
+    "waist_move_rad": 0.0229,
+    "waist_authoritative": true,
+    "binding_constraint": null
+   }
+  ]
+ }
+}

@@ -1,0 +1,552 @@
+{
+  "episodes": [
+    {
+      "condition": "good",
+      "seed": 0,
+      "ok": true,
+      "proxy_grasped": true,
+      "close_phase_bilateral": false,
+      "lift_phase_bilateral": true,
+      "object_rise": 0.16799999999999993,
+      "contacts_before": {
+        "left": 0,
+        "right": 0,
+        "pairs": []
+      },
+      "contacts_after": {
+        "left": 3,
+        "right": 2,
+        "pairs": [
+          [
+            "gripper0_left_left_hand_thumb_1_link",
+            "bottle_collider_box_8e968ea9",
+            "gripper0_left_left_hand_thumb_1_link_col"
+          ],
+          [
+            "gripper0_left_left_hand_thumb_1_link",
+            "bottle_collider_box_8e968ea9",
+            "gripper0_left_left_hand_thumb_1_link_col"
+          ],
+          [
+            "gripper0_left_left_hand_thumb_2_link",
+            "bottle_collider_box_8e968ea9",
+            "gripper0_left_left_hand_thumb_2_link_col"
+          ],
+          [
+            "gripper0_right_right_hand_palm_link",
+            "bottle_collider_box_8e968ea9",
+            "gripper0_right_g0_col"
+          ],
+          [
+            "gripper0_right_right_hand_index_0_link",
+            "bottle_collider_box_8e968ea9",
+            "gripper0_right_right_hand_index_0_link_col"
+          ]
+        ]
+      },
+      "benchmark_task_success": true,
+      "benchmark_success_detail": {
+        "task": true
+      }
+    },
+    {
+      "condition": "good",
+      "seed": 1,
+      "ok": true,
+      "proxy_grasped": false,
+      "close_phase_bilateral": false,
+      "lift_phase_bilateral": false,
+      "object_rise": 0.18499999999999994,
+      "contacts_before": {
+        "left": 0,
+        "right": 2,
+        "pairs": [
+          [
+            "gripper0_right_right_hand_palm_link",
+            "bottle_collider_box_8e968ea9",
+            "gripper0_right_g0_col"
+          ],
+          [
+            "gripper0_right_right_hand_index_1_link",
+            "bottle_collider_cylinder99aba387",
+            "gripper0_right_right_hand_index_1_link_col"
+          ]
+        ]
+      },
+      "contacts_after": {
+        "left": 0,
+        "right": 1,
+        "pairs": [
+          [
+            "gripper0_right_right_hand_thumb_1_link",
+            "bottle_collider_box_8e968ea9",
+            "gripper0_right_right_hand_thumb_1_link_col"
+          ]
+        ]
+      },
+      "benchmark_task_success": false,
+      "benchmark_success_detail": {
+        "task": false
+      }
+    },
+    {
+      "condition": "good",
+      "seed": 2,
+      "ok": true,
+      "proxy_grasped": true,
+      "close_phase_bilateral": true,
+      "lift_phase_bilateral": true,
+      "object_rise": 0.2220000000000001,
+      "contacts_before": {
+        "left": 3,
+        "right": 2,
+        "pairs": [
+          [
+            "gripper0_left_left_hand_palm_link",
+            "bottle_collider_box_a1f69b3d",
+            "gripper0_left_g0_col"
+          ],
+          [
+            "gripper0_left_left_hand_palm_link",
+            "bottle_collider_box_a1f69b3d",
+            "gripper0_left_g1_col"
+          ],
+          [
+            "gripper0_left_left_hand_thumb_2_link",
+            "bottle_collider_box_f302734d",
+            "gripper0_left_left_hand_thumb_2_link_col"
+          ],
+          [
+            "gripper0_right_right_hand_thumb_2_link",
+            "bottle_collider_box_a1f69b3d",
+            "gripper0_right_right_hand_thumb_2_link_col"
+          ],
+          [
+            "gripper0_right_right_hand_index_1_link",
+            "bottle_collider_box_a1f69b3d",
+            "gripper0_right_right_hand_index_1_link_col"
+          ]
+        ]
+      },
+      "contacts_after": {
+        "left": 5,
+        "right": 3,
+        "pairs": [
+          [
+            "gripper0_left_left_hand_palm_link",
+            "bottle_collider_box_a1f69b3d",
+            "gripper0_left_g0_col"
+          ],
+          [
+            "gripper0_left_left_hand_palm_link",
+            "bottle_collider_box_a1f69b3d",
+            "gripper0_left_g1_col"
+          ],
+          [
+            "gripper0_left_left_hand_thumb_2_link",
+            "bottle_collider_box_f302734d",
+            "gripper0_left_left_hand_thumb_2_link_col"
+          ],
+          [
+            "gripper0_left_left_hand_middle_0_link",
+            "bottle_collider_box_a1f69b3d",
+            "gripper0_left_left_hand_middle_0_link_col"
+          ],
+          [
+            "gripper0_left_left_hand_middle_1_link",
+            "bottle_collider_box_a1f69b3d",
+            "gripper0_left_left_hand_middle_1_link_col"
+          ],
+          [
+            "gripper0_right_right_hand_thumb_2_link",
+            "bottle_collider_box_a1f69b3d",
+            "gripper0_right_right_hand_thumb_2_link_col"
+          ],
+          [
+            "gripper0_right_right_hand_index_0_link",
+            "bottle_collider_box_f302734d",
+            "gripper0_right_right_hand_index_0_link_col"
+          ],
+          [
+            "gripper0_right_right_hand_index_1_link",
+            "bottle_collider_box_f302734d",
+            "gripper0_right_right_hand_index_1_link_col"
+          ]
+        ]
+      },
+      "benchmark_task_success": true,
+      "benchmark_success_detail": {
+        "task": true
+      }
+    },
+    {
+      "condition": "good",
+      "seed": 3,
+      "ok": true,
+      "proxy_grasped": true,
+      "close_phase_bilateral": false,
+      "lift_phase_bilateral": true,
+      "object_rise": 0.1489999999999999,
+      "contacts_before": {
+        "left": 0,
+        "right": 0,
+        "pairs": []
+      },
+      "contacts_after": {
+        "left": 2,
+        "right": 2,
+        "pairs": [
+          [
+            "gripper0_left_left_hand_thumb_1_link",
+            "bottle_collider_box_8e968ea9",
+            "gripper0_left_left_hand_thumb_1_link_col"
+          ],
+          [
+            "gripper0_left_left_hand_thumb_2_link",
+            "bottle_collider_box_8e968ea9",
+            "gripper0_left_left_hand_thumb_2_link_col"
+          ],
+          [
+            "gripper0_right_right_hand_thumb_1_link",
+            "bottle_collider_box_8e968ea9",
+            "gripper0_right_right_hand_thumb_1_link_col"
+          ],
+          [
+            "gripper0_right_right_hand_thumb_2_link",
+            "bottle_collider_box_8e968ea9",
+            "gripper0_right_right_hand_thumb_2_link_col"
+          ]
+        ]
+      },
+      "benchmark_task_success": true,
+      "benchmark_success_detail": {
+        "task": true
+      }
+    },
+    {
+      "condition": "low",
+      "seed": 0,
+      "ok": true,
+      "proxy_grasped": true,
+      "close_phase_bilateral": false,
+      "lift_phase_bilateral": true,
+      "object_rise": 0.06799999999999995,
+      "contacts_before": {
+        "left": 0,
+        "right": 0,
+        "pairs": []
+      },
+      "contacts_after": {
+        "left": 2,
+        "right": 2,
+        "pairs": [
+          [
+            "gripper0_left_left_hand_thumb_1_link",
+            "bottle_collider_box_8e968ea9",
+            "gripper0_left_left_hand_thumb_1_link_col"
+          ],
+          [
+            "gripper0_left_left_hand_thumb_2_link",
+            "bottle_collider_box_8e968ea9",
+            "gripper0_left_left_hand_thumb_2_link_col"
+          ],
+          [
+            "gripper0_right_right_hand_palm_link",
+            "bottle_collider_box_8e968ea9",
+            "gripper0_right_g0_col"
+          ],
+          [
+            "gripper0_right_right_hand_thumb_1_link",
+            "gripper0_right_right_hand_thumb_1_link_col",
+            "bottle_collider_box_f302734d"
+          ]
+        ]
+      },
+      "benchmark_task_success": false,
+      "benchmark_success_detail": {
+        "task": false
+      }
+    },
+    {
+      "condition": "low",
+      "seed": 1,
+      "ok": true,
+      "proxy_grasped": true,
+      "close_phase_bilateral": false,
+      "lift_phase_bilateral": true,
+      "object_rise": 0.08099999999999996,
+      "contacts_before": {
+        "left": 0,
+        "right": 2,
+        "pairs": [
+          [
+            "gripper0_right_right_hand_palm_link",
+            "bottle_collider_box_8e968ea9",
+            "gripper0_right_g0_col"
+          ],
+          [
+            "gripper0_right_right_hand_index_1_link",
+            "bottle_collider_cylinder99aba387",
+            "gripper0_right_right_hand_index_1_link_col"
+          ]
+        ]
+      },
+      "contacts_after": {
+        "left": 1,
+        "right": 1,
+        "pairs": [
+          [
+            "gripper0_left_left_hand_thumb_2_link",
+            "bottle_collider_box_8e968ea9",
+            "gripper0_left_left_hand_thumb_2_link_col"
+          ],
+          [
+            "gripper0_right_right_hand_thumb_1_link",
+            "bottle_collider_box_8e968ea9",
+            "gripper0_right_right_hand_thumb_1_link_col"
+          ]
+        ]
+      },
+      "benchmark_task_success": false,
+      "benchmark_success_detail": {
+        "task": false
+      }
+    },
+    {
+      "condition": "low",
+      "seed": 2,
+      "ok": true,
+      "proxy_grasped": true,
+      "close_phase_bilateral": true,
+      "lift_phase_bilateral": true,
+      "object_rise": 0.126,
+      "contacts_before": {
+        "left": 3,
+        "right": 2,
+        "pairs": [
+          [
+            "gripper0_left_left_hand_palm_link",
+            "bottle_collider_box_a1f69b3d",
+            "gripper0_left_g0_col"
+          ],
+          [
+            "gripper0_left_left_hand_palm_link",
+            "bottle_collider_box_a1f69b3d",
+            "gripper0_left_g1_col"
+          ],
+          [
+            "gripper0_left_left_hand_thumb_2_link",
+            "bottle_collider_box_f302734d",
+            "gripper0_left_left_hand_thumb_2_link_col"
+          ],
+          [
+            "gripper0_right_right_hand_thumb_2_link",
+            "bottle_collider_box_a1f69b3d",
+            "gripper0_right_right_hand_thumb_2_link_col"
+          ],
+          [
+            "gripper0_right_right_hand_index_1_link",
+            "bottle_collider_box_a1f69b3d",
+            "gripper0_right_right_hand_index_1_link_col"
+          ]
+        ]
+      },
+      "contacts_after": {
+        "left": 5,
+        "right": 3,
+        "pairs": [
+          [
+            "gripper0_left_left_hand_palm_link",
+            "bottle_collider_box_a1f69b3d",
+            "gripper0_left_g0_col"
+          ],
+          [
+            "gripper0_left_left_hand_palm_link",
+            "bottle_collider_box_a1f69b3d",
+            "gripper0_left_g1_col"
+          ],
+          [
+            "gripper0_left_left_hand_thumb_2_link",
+            "bottle_collider_box_f302734d",
+            "gripper0_left_left_hand_thumb_2_link_col"
+          ],
+          [
+            "gripper0_left_left_hand_middle_0_link",
+            "bottle_collider_box_a1f69b3d",
+            "gripper0_left_left_hand_middle_0_link_col"
+          ],
+          [
+            "gripper0_left_left_hand_middle_1_link",
+            "bottle_collider_box_a1f69b3d",
+            "gripper0_left_left_hand_middle_1_link_col"
+          ],
+          [
+            "gripper0_right_right_hand_thumb_2_link",
+            "bottle_collider_box_a1f69b3d",
+            "gripper0_right_right_hand_thumb_2_link_col"
+          ],
+          [
+            "gripper0_right_right_hand_index_0_link",
+            "bottle_collider_box_f302734d",
+            "gripper0_right_right_hand_index_0_link_col"
+          ],
+          [
+            "gripper0_right_right_hand_index_1_link",
+            "bottle_collider_box_f302734d",
+            "gripper0_right_right_hand_index_1_link_col"
+          ]
+        ]
+      },
+      "benchmark_task_success": true,
+      "benchmark_success_detail": {
+        "task": true
+      }
+    },
+    {
+      "condition": "low",
+      "seed": 3,
+      "ok": true,
+      "proxy_grasped": true,
+      "close_phase_bilateral": false,
+      "lift_phase_bilateral": true,
+      "object_rise": 0.04499999999999993,
+      "contacts_before": {
+        "left": 0,
+        "right": 0,
+        "pairs": []
+      },
+      "contacts_after": {
+        "left": 1,
+        "right": 1,
+        "pairs": [
+          [
+            "gripper0_left_left_hand_thumb_2_link",
+            "bottle_collider_box_8e968ea9",
+            "gripper0_left_left_hand_thumb_2_link_col"
+          ],
+          [
+            "gripper0_right_right_hand_thumb_2_link",
+            "bottle_collider_box_8e968ea9",
+            "gripper0_right_right_hand_thumb_2_link_col"
+          ]
+        ]
+      },
+      "benchmark_task_success": false,
+      "benchmark_success_detail": {
+        "task": false
+      }
+    },
+    {
+      "condition": "miss",
+      "seed": 0,
+      "ok": true,
+      "proxy_grasped": false,
+      "close_phase_bilateral": false,
+      "lift_phase_bilateral": false,
+      "object_rise": -0.0010000000000000009,
+      "contacts_before": {
+        "left": 0,
+        "right": 0,
+        "pairs": []
+      },
+      "contacts_after": {
+        "left": 0,
+        "right": 0,
+        "pairs": []
+      },
+      "benchmark_task_success": false,
+      "benchmark_success_detail": {
+        "task": false
+      }
+    },
+    {
+      "condition": "miss",
+      "seed": 1,
+      "ok": true,
+      "proxy_grasped": false,
+      "close_phase_bilateral": false,
+      "lift_phase_bilateral": false,
+      "object_rise": 0.03399999999999992,
+      "contacts_before": {
+        "left": 0,
+        "right": 0,
+        "pairs": []
+      },
+      "contacts_after": {
+        "left": 0,
+        "right": 0,
+        "pairs": []
+      },
+      "benchmark_task_success": false,
+      "benchmark_success_detail": {
+        "task": false
+      }
+    },
+    {
+      "condition": "miss",
+      "seed": 2,
+      "ok": true,
+      "proxy_grasped": false,
+      "close_phase_bilateral": false,
+      "lift_phase_bilateral": false,
+      "object_rise": 0.15500000000000003,
+      "contacts_before": {
+        "left": 0,
+        "right": 0,
+        "pairs": []
+      },
+      "contacts_after": {
+        "left": 0,
+        "right": 0,
+        "pairs": []
+      },
+      "benchmark_task_success": false,
+      "benchmark_success_detail": {
+        "task": false
+      }
+    },
+    {
+      "condition": "miss",
+      "seed": 3,
+      "ok": true,
+      "proxy_grasped": false,
+      "close_phase_bilateral": false,
+      "lift_phase_bilateral": false,
+      "object_rise": -0.0030000000000000027,
+      "contacts_before": {
+        "left": 0,
+        "right": 0,
+        "pairs": []
+      },
+      "contacts_after": {
+        "left": 0,
+        "right": 0,
+        "pairs": []
+      },
+      "benchmark_task_success": false,
+      "benchmark_success_detail": {
+        "task": false
+      }
+    }
+  ],
+  "confusion": {
+    "tp": 4,
+    "fp": 3,
+    "fn": 0,
+    "tn": 5
+  },
+  "n": 12,
+  "conditions": {
+    "good": {
+      "lift_dz": 0.15
+    },
+    "low": {
+      "lift_dz": 0.05
+    },
+    "miss": {
+      "lift_dz": 0.15,
+      "grasp_z": 1.15
+    }
+  },
+  "note": "benchmark outcome = full 05 task success; the exact IsGrasped sub-condition is not exposed (success_detail only has 'task')"
+}

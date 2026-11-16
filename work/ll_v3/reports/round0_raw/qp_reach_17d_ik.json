@@ -1,0 +1,155 @@
+{
+ "ok": true,
+ "result": {
+  "solver": "mink-qp",
+  "task_dim": 17,
+  "ik_err": {
+   "left": 0.0,
+   "right": 0.0
+  },
+  "ik_rot": {
+   "left": 0.0,
+   "right": 0.0
+  },
+  "palm_residual": {
+   "left": [
+    -0.01,
+    0.003,
+    0.003
+   ],
+   "right": [
+    -0.008,
+    0.002,
+    0.003
+   ]
+  },
+  "pad": {
+   "left": {
+    "pos": [
+     1.8236,
+     0.1909,
+     1.2549
+    ],
+    "normal": [
+     -0.141,
+     0.989,
+     -0.033
+    ],
+    "half_thick": 0.0217
+   },
+   "right": {
+    "pos": [
+     1.8226,
+     -0.1311,
+     1.2535
+    ],
+    "normal": [
+     0.024,
+     0.996,
+     -0.089
+    ],
+    "half_thick": 0.0217
+   }
+  },
+  "solved_joints": [
+   "left_elbow_joint",
+   "left_shoulder_pitch_joint",
+   "left_shoulder_roll_joint",
+   "left_shoulder_yaw_joint",
+   "left_wrist_pitch_joint",
+   "left_wrist_roll_joint",
+   "left_wrist_yaw_joint",
+   "right_elbow_joint",
+   "right_shoulder_pitch_joint",
+   "right_shoulder_roll_joint",
+   "right_shoulder_yaw_joint",
+   "right_wrist_pitch_joint",
+   "right_wrist_roll_joint",
+   "right_wrist_yaw_joint",
+   "waist_pitch_joint",
+   "waist_roll_joint",
+   "waist_yaw_joint"
+  ],
+  "joint_margin_min": 0.1394,
+  "waist_exogenous": false,
+  "waist_owner": "ik",
+  "waist_solved": true,
+  "waist_commandable": true,
+  "target": {
+   "left": [
+    1.731,
+    0.182,
+    1.249
+   ],
+   "right": [
+    1.731,
+    -0.128,
+    1.249
+   ]
+  },
+  "upper_target": [
+   0.0631,
+   -0.0414,
+   -0.0875,
+   -1.7063,
+   0.3373,
+   0.2652,
+   0.3497,
+   -0.0806,
+   1.3065,
+   0.0879,
+   -1.6386,
+   -0.4549,
+   -0.1807,
+   0.1557,
+   0.0776,
+   1.4797,
+   0.0603,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   -0.0031,
+   -0.0023,
+   0.0,
+   0.0017,
+   0.0003,
+   0.0016,
+   0.0003,
+   -0.0031,
+   0.0012,
+   0.0
+  ],
+  "t": 10.5,
+  "state": {
+   "t": 10.5,
+   "base": [
+    1.492,
+    0.014,
+    0.753
+   ],
+   "base_tilt_deg": 2.9,
+   "object": {
+    "name": "bottle",
+    "pos": [
+     1.731,
+     0.027,
+     0.799
+    ],
+    "hand": {
+     "left": [
+      1.741,
+      0.179,
+      1.246
+     ],
+     "right": [
+      1.739,
+      -0.13,
+      1.246
+     ]
+    }
+   },
+   "hand_object_contacts": 0
+  }
+ }
+}

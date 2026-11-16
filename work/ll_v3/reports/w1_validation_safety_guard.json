@@ -1,0 +1,256 @@
+{
+ "capability": "safety_limit_monitor",
+ "primitive": "safety_guard",
+ "source_revision": "patched: margin scan skips joint names containing '_hand_' (14 hand joints); arm/waist joints still checked. Source re-registered from work/ll_v3/substrate/safety_guard.py, unmodified by the validator.",
+ "contract": "config warmup.substrate[safety_guard]: joint margin, base tilt, penetration; aborts or flags before a limit. Delegated contract adds: never commands.",
+ "task": "05_drill_lift",
+ "seed": 0,
+ "slot": 6,
+ "queue": "HMG_TASK=05_drill_lift__6",
+ "micro_benchmark_gate": "(1) normal state: safety_guard {} returns ok=true, reporting base_tilt_deg, joint_margin_min, penetration_max. (2) forced violation (margin < 0.05, base tilt > 8 deg, or penetration > 2 mm): safety_guard returns abort=true with the violation named.",
+ "commands": [
+  "HMG_TASK=05_drill_lift__6 ./scripts/qtool.sh <{\"tool\":\"write\",\"name\":\"safety_guard\",\"source\":<work/ll_v3/substrate/safety_guard.py>}> (JSON built with python3 json.dumps)",
+  "HMG_TASK=05_drill_lift__6 ./scripts/qtool.sh <{\"tool\":\"reset\",\"seed\":0}>",
+  "HMG_TASK=05_drill_lift__6 ./scripts/qtool.sh <{\"tool\":\"probe\",\"what\":\"state\"}>  (before)",
+  "HMG_TASK=05_drill_lift__6 ./scripts/qtool.sh <{\"tool\":\"call\",\"name\":\"safety_guard\",\"kwargs\":{}}>  (normal-state check)",
+  "HMG_TASK=05_drill_lift__6 ./scripts/qtool.sh <{\"tool\":\"probe\",\"what\":\"state\"}>  (after; read-only check)",
+  "HMG_TASK=05_drill_lift__6 ./scripts/qtool.sh <{\"tool\":\"reset\",\"seed\":0}>",
+  "HMG_TASK=05_drill_lift__6 ./scripts/qtool.sh <{\"tool\":\"qp_reach\",\"kwargs\":{\"task_dim\":12,\"z_off\":0.60,\"dur\":0.35,\"iters\":80}}>  (forced violation)",
+  "HMG_TASK=05_drill_lift__6 ./scripts/qtool.sh <{\"tool\":\"call\",\"name\":\"safety_guard\",\"kwargs\":{}}>  (forced-state check)"
+ ],
+ "raw_results": {
+  "register_patched": {
+   "ok": true,
+   "primitives": [
+    "safety_guard"
+   ]
+  },
+  "reset": {
+   "seed": 0,
+   "t": 0.0
+  },
+  "state_before_guard": {
+   "t": 0.0,
+   "base": [
+    0.0,
+    0.0,
+    0.793
+   ],
+   "base_tilt_deg": 0.0,
+   "object": {
+    "name": "bottle",
+    "pos": [
+     1.731,
+     0.03,
+     0.8
+    ],
+    "hand": {
+     "left": [
+      0.18,
+      0.154,
+      0.888
+     ],
+     "right": [
+      0.18,
+      -0.154,
+      0.888
+     ]
+    }
+   },
+   "hand_object_contacts": 0
+  },
+  "normal_state_guard": {
+   "ok": true,
+   "abort": false,
+   "violations": [],
+   "base_tilt_deg": 0.0,
+   "joint_margin_min": 0.52,
+   "joint_margin_joint": "waist_roll_joint",
+   "penetration_max": 0.0,
+   "penetration_pairs": [],
+   "binding_constraint": null,
+   "t0": 0.0,
+   "t1": 0.0
+  },
+  "state_after_guard": {
+   "t": 0.0,
+   "base": [
+    0.0,
+    0.0,
+    0.793
+   ],
+   "base_tilt_deg": 0.0,
+   "object": {
+    "name": "bottle",
+    "pos": [
+     1.731,
+     0.03,
+     0.8
+    ],
+    "hand": {
+     "left": [
+      0.18,
+      0.154,
+      0.888
+     ],
+     "right": [
+      0.18,
+      -0.154,
+      0.888
+     ]
+    }
+   },
+   "hand_object_contacts": 0
+  },
+  "reset_before_forced": {
+   "seed": 0,
+   "t": 0.0
+  },
+  "qp_reach_forced": {
+   "solver": "mink-qp",
+   "task_dim": 12,
+   "joint_margin_min": -0.0798,
+   "waist_owner": "homie",
+   "waist_exogenous": true,
+   "t": 0.34,
+   "state": {
+    "t": 0.34,
+    "base": [
+     -0.0,
+     0.012,
+     0.764
+    ],
+    "base_tilt_deg": 4.6,
+    "object": {
+     "name": "bottle",
+     "pos": [
+      1.731,
+      0.03,
+      0.799
+     ],
+     "hand": {
+      "left": [
+       0.102,
+       0.43,
+       1.153
+      ],
+      "right": [
+       0.002,
+       -0.399,
+       0.998
+      ]
+     }
+    },
+    "hand_object_contacts": 0
+   }
+  },
+  "forced_state_guard": {
+   "ok": false,
+   "abort": true,
+   "violations": [
+    "joint_margin",
+    "penetration"
+   ],
+   "base_tilt_deg": 4.6,
+   "joint_margin_min": -0.08000000000000007,
+   "joint_margin_joint": "right_elbow_joint",
+   "penetration_max": 0.00205,
+   "penetration_pairs": [
+    {
+     "g1": "robot0_g33_col",
+     "g2": "robot0_g35_col",
+     "dist": -0.00205
+    }
+   ],
+   "binding_constraint": "joint_margin",
+   "t0": 0.34,
+   "t1": 0.34
+  }
+ },
+ "metrics": {
+  "normal_state": {
+   "base_tilt_deg": 0.0,
+   "joint_margin_min": 0.52,
+   "joint_margin_joint": "waist_roll_joint",
+   "penetration_max": 0.0,
+   "violations": [],
+   "ok": true,
+   "abort": false,
+   "binding_constraint": null,
+   "pass": true
+  },
+  "forced_violation": {
+   "base_tilt_deg": 4.6,
+   "joint_margin_min": -0.08000000000000007,
+   "joint_margin_joint": "right_elbow_joint",
+   "penetration_max": 0.00205,
+   "penetration_pairs": [
+    {
+     "g1": "robot0_g33_col",
+     "g2": "robot0_g35_col",
+     "dist": -0.00205
+    }
+   ],
+   "violations": [
+    "joint_margin",
+    "penetration"
+   ],
+   "ok": false,
+   "abort": true,
+   "binding_constraint": "joint_margin",
+   "pass": true
+  }
+ },
+ "guard_inspection": {
+  "read_only": {
+   "mechanism": "run() only calls api.base_state(), api.joint_ranges() and api.contact_detail(limit=200); no command/step/act call.",
+   "evidence": "probe state before and after the normal-state guard call is identical: t=0.0, base=[0.0, 0.0, 0.793], object at [1.731, 0.03, 0.8], hands [0.18, 0.154, 0.888] / [0.18, -0.154, 0.888].",
+   "commands_issued": false
+  },
+  "joint_margin": {
+   "mechanism": "scans api.joint_ranges() excluding joint names containing '_hand_' (14 skipped, 17 checked); margin = min(q-lo, hi-q); worst margin compared to joint_margin_min (default 0.05).",
+   "default_threshold_rad": 0.05,
+   "scanned_joint_count": 17,
+   "hand_joints_excluded": 14,
+   "worst_joint_at_reset": "waist_roll_joint",
+   "arm_joint_check_preserved": true
+  },
+  "base_tilt": {
+   "mechanism": "base_state()['tilt_deg'] compared to tilt_limit (default 8 deg).",
+   "default_threshold_deg": 8.0,
+   "observed_in_forced_state_deg": 4.6
+  },
+  "penetration": {
+   "mechanism": "contact_detail(); any contact with dist < -penetration_tol (default 2 mm) is recorded; max |dist| over pairs must exceed 2 mm to violate.",
+   "default_threshold_m": 0.002,
+   "observed_pair": [
+    {
+     "g1": "robot0_g33_col",
+     "g2": "robot0_g35_col",
+     "dist": -0.00205
+    }
+   ]
+  },
+  "violation_precedence": [
+   "base_tilt",
+   "joint_margin",
+   "penetration"
+  ],
+  "binding_constraint_definition": "first entry of violations in precedence order"
+ },
+ "thresholds": {
+  "joint_margin_min_rad": 0.05,
+  "base_tilt_max_deg": 8.0,
+  "penetration_tol_m": 0.002
+ },
+ "verdict": "accept",
+ "binding_constraint": null,
+ "notes": [
+  "Both micro-benchmark cases pass after the patch: normal reset state ok=true with no violations; forced qp_reach state abort=true with joint_margin and penetration named.",
+  "Normal-state worst scanned joint is now waist_roll_joint at 0.52 rad; the 10 finger joints seated at q=0.0 on a range bound are excluded by the '_hand_' skip.",
+  "The arm joint check is preserved: the forced state still detects right_elbow_joint at -0.0800 rad, so the 0.05 rad rule still guards the joints the primitives command.",
+  "Read-only verified again: probe state before and after the guard call is identical.",
+  "Documented scope change: hand-joint range excursions are no longer surfaced by this guard. Accepted because the hand joints are commanded to targets by hand_close_contact/hand_open and rest at their bounds by design; the guard now measures the commanded arm/waist joints.",
+  "Revision history: the first registration (unpatched source scanning all 31 joints) aborted at the reset state with joint_margin_min=0.0 at left_hand_index_0_joint (verdict restrict). That raw evidence remains in work/ll_v3/reports/w1_validator_raw/ files 01-09 and this report's prior version."
+ ]
+}

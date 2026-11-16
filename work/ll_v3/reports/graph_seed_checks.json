@@ -1,0 +1,431 @@
+{
+  "counts": {
+    "nodes": {
+      "TASK": 9,
+      "CAPABILITY": 33,
+      "STRATEGY": 18,
+      "by_level": {
+        "L1": 22,
+        "L2": 11
+      },
+      "by_kind": {
+        "control": 15,
+        "read": 6,
+        "decision": 1,
+        "composition": 11
+      },
+      "by_status": {
+        "proposed": 33
+      }
+    },
+    "edges": {
+      "REQUIRES": 187,
+      "HAS_STRATEGY": 18
+    }
+  },
+  "checks": {
+    "l1_zero_requires": {
+      "pass": true,
+      "violations": []
+    },
+    "l2_at_least_two_requires": {
+      "pass": true,
+      "violations": []
+    },
+    "no_missing_level": {
+      "pass": true,
+      "violations": []
+    },
+    "two_strategies_per_task": {
+      "pass": true,
+      "violations": {},
+      "counts": {
+        "01_box_lift_floor": 2,
+        "02_push_button": 2,
+        "03_box_lift": 2,
+        "04_push_shelf_forward": 2,
+        "05_drill_lift": 2,
+        "06_drill_pnp": 2,
+        "07_box_table_to_shelf": 2,
+        "08_pick_drill_from_holder": 2,
+        "09_obstacle_aware_pick_drill": 2
+      }
+    },
+    "predicate_coverage_resolves": {
+      "pass": true,
+      "violations": {},
+      "required_reads": {
+        "01_box_lift_floor": [
+          "object_pose_tracking"
+        ],
+        "02_push_button": [
+          "scene_joint_state_tracking"
+        ],
+        "03_box_lift": [
+          "object_pose_tracking",
+          "scene_geometry_tracking",
+          "contact_sensing"
+        ],
+        "04_push_shelf_forward": [
+          "object_pose_tracking",
+          "scene_geometry_tracking",
+          "contact_sensing"
+        ],
+        "05_drill_lift": [
+          "object_pose_tracking",
+          "scene_geometry_tracking",
+          "contact_sensing",
+          "grasp_state_tracking"
+        ],
+        "06_drill_pnp": [
+          "object_pose_tracking",
+          "scene_geometry_tracking",
+          "contact_sensing"
+        ],
+        "07_box_table_to_shelf": [
+          "object_pose_tracking",
+          "scene_geometry_tracking",
+          "contact_sensing"
+        ],
+        "08_pick_drill_from_holder": [
+          "scene_geometry_tracking",
+          "contact_sensing",
+          "grasp_state_tracking"
+        ],
+        "09_obstacle_aware_pick_drill": [
+          "object_pose_tracking",
+          "scene_geometry_tracking",
+          "contact_sensing",
+          "grasp_state_tracking"
+        ]
+      }
+    },
+    "strategy_direct_sets_match_design": {
+      "pass": true,
+      "violations": {}
+    },
+    "l2_requires_match_design": {
+      "pass": true,
+      "violations": {}
+    },
+    "no_requires_cycle": {
+      "pass": true
+    }
+  },
+  "l2_detail": [
+    {
+      "capability": "base_navigate_to_standoff",
+      "requires": [
+        "base_velocity_command",
+        "object_pose_tracking",
+        "safety_limit_monitor"
+      ],
+      "n": 3,
+      "n_l1": 3
+    },
+    {
+      "capability": "bimanual_grasp_object",
+      "requires": [
+        "hand_pre_shape",
+        "ee_pose_ik",
+        "grasp_close_contact"
+      ],
+      "n": 3,
+      "n_l1": 3
+    },
+    {
+      "capability": "collision_free_reach_trajectory",
+      "requires": [
+        "ee_pose_ik",
+        "object_pose_tracking",
+        "constrained_servo",
+        "safety_limit_monitor"
+      ],
+      "n": 4,
+      "n_l1": 4
+    },
+    {
+      "capability": "control_authority_handover",
+      "requires": [
+        "waist_pose_servo",
+        "base_velocity_command",
+        "safety_limit_monitor"
+      ],
+      "n": 3,
+      "n_l1": 3
+    },
+    {
+      "capability": "extract_object_from_holder",
+      "requires": [
+        "bimanual_grasp_object",
+        "ee_position_servo",
+        "grasp_hold",
+        "contact_sensing",
+        "scene_geometry_tracking"
+      ],
+      "n": 5,
+      "n_l1": 4
+    },
+    {
+      "capability": "lift_object",
+      "requires": [
+        "bimanual_grasp_object",
+        "joint_space_transport",
+        "grasp_hold",
+        "object_pose_tracking",
+        "scene_geometry_tracking",
+        "contact_sensing",
+        "grasp_state_tracking"
+      ],
+      "n": 7,
+      "n_l1": 6
+    },
+    {
+      "capability": "place_object",
+      "requires": [
+        "joint_space_transport",
+        "grasp_hold",
+        "loaded_release",
+        "ee_position_servo",
+        "object_pose_tracking",
+        "scene_geometry_tracking",
+        "contact_sensing"
+      ],
+      "n": 7,
+      "n_l1": 7
+    },
+    {
+      "capability": "press_panel_button",
+      "requires": [
+        "contact_push",
+        "contact_sensing",
+        "scene_joint_state_tracking",
+        "safety_limit_monitor"
+      ],
+      "n": 4,
+      "n_l1": 4
+    },
+    {
+      "capability": "push_object_to_target",
+      "requires": [
+        "contact_push",
+        "base_velocity_command",
+        "object_pose_tracking",
+        "scene_geometry_tracking",
+        "contact_sensing",
+        "safety_limit_monitor"
+      ],
+      "n": 6,
+      "n_l1": 6
+    },
+    {
+      "capability": "whole_body_ik_14d",
+      "requires": [
+        "base_navigate_to_pose",
+        "base_height_setpoint",
+        "ee_pose_ik"
+      ],
+      "n": 3,
+      "n_l1": 3
+    },
+    {
+      "capability": "whole_body_ik_17d",
+      "requires": [
+        "ee_pose_ik",
+        "waist_pose_servo"
+      ],
+      "n": 2,
+      "n_l1": 2
+    }
+  ],
+  "task_closure": {
+    "01_box_lift_floor": [
+      "base_height_setpoint",
+      "base_navigate_to_pose",
+      "base_navigate_to_standoff",
+      "base_velocity_command",
+      "bimanual_grasp_object",
+      "collision_free_reach_trajectory",
+      "constrained_servo",
+      "contact_sensing",
+      "ee_pose_ik",
+      "ee_position_servo",
+      "grasp_close_contact",
+      "grasp_hold",
+      "grasp_state_tracking",
+      "hand_pre_shape",
+      "joint_space_transport",
+      "lift_object",
+      "object_pose_tracking",
+      "safety_limit_monitor",
+      "scene_geometry_tracking"
+    ],
+    "02_push_button": [
+      "base_navigate_to_pose",
+      "base_navigate_to_standoff",
+      "base_velocity_command",
+      "collision_free_reach_trajectory",
+      "constrained_servo",
+      "contact_push",
+      "contact_sensing",
+      "ee_pose_ik",
+      "ee_position_servo",
+      "hand_pre_shape",
+      "object_pose_tracking",
+      "press_panel_button",
+      "safety_limit_monitor",
+      "scene_geometry_tracking",
+      "scene_joint_state_tracking"
+    ],
+    "03_box_lift": [
+      "base_navigate_to_pose",
+      "base_navigate_to_standoff",
+      "base_velocity_command",
+      "bimanual_grasp_object",
+      "collision_free_reach_trajectory",
+      "constrained_servo",
+      "contact_sensing",
+      "ee_pose_ik",
+      "ee_position_servo",
+      "grasp_close_contact",
+      "grasp_hold",
+      "grasp_state_tracking",
+      "hand_pre_shape",
+      "joint_space_transport",
+      "lift_object",
+      "object_pose_tracking",
+      "safety_limit_monitor",
+      "scene_geometry_tracking"
+    ],
+    "04_push_shelf_forward": [
+      "base_navigate_to_pose",
+      "base_navigate_to_standoff",
+      "base_velocity_command",
+      "collision_free_reach_trajectory",
+      "constrained_servo",
+      "contact_push",
+      "contact_sensing",
+      "ee_pose_ik",
+      "ee_position_servo",
+      "hand_pre_shape",
+      "object_pose_tracking",
+      "push_object_to_target",
+      "safety_limit_monitor",
+      "scene_geometry_tracking"
+    ],
+    "05_drill_lift": [
+      "base_height_setpoint",
+      "base_navigate_to_pose",
+      "base_navigate_to_standoff",
+      "base_velocity_command",
+      "bimanual_grasp_object",
+      "collision_free_reach_trajectory",
+      "constrained_servo",
+      "contact_sensing",
+      "ee_pose_ik",
+      "ee_position_servo",
+      "grasp_close_contact",
+      "grasp_hold",
+      "grasp_state_tracking",
+      "hand_pre_shape",
+      "joint_space_transport",
+      "lift_object",
+      "object_pose_tracking",
+      "safety_limit_monitor",
+      "scene_geometry_tracking"
+    ],
+    "06_drill_pnp": [
+      "base_navigate_to_pose",
+      "base_navigate_to_standoff",
+      "base_velocity_command",
+      "bimanual_grasp_object",
+      "collision_free_reach_trajectory",
+      "constrained_servo",
+      "contact_sensing",
+      "ee_pose_ik",
+      "ee_position_servo",
+      "grasp_close_contact",
+      "grasp_hold",
+      "grasp_state_tracking",
+      "hand_pre_shape",
+      "joint_space_transport",
+      "lift_object",
+      "loaded_release",
+      "object_pose_tracking",
+      "place_object",
+      "safety_limit_monitor",
+      "scene_geometry_tracking"
+    ],
+    "07_box_table_to_shelf": [
+      "base_navigate_to_pose",
+      "base_navigate_to_standoff",
+      "base_velocity_command",
+      "bimanual_grasp_object",
+      "collision_free_reach_trajectory",
+      "constrained_servo",
+      "contact_sensing",
+      "ee_pose_ik",
+      "ee_position_servo",
+      "grasp_close_contact",
+      "grasp_hold",
+      "grasp_state_tracking",
+      "hand_pre_shape",
+      "joint_space_transport",
+      "lift_object",
+      "loaded_release",
+      "object_pose_tracking",
+      "place_object",
+      "safety_limit_monitor",
+      "scene_geometry_tracking"
+    ],
+    "08_pick_drill_from_holder": [
+      "base_navigate_to_pose",
+      "base_navigate_to_standoff",
+      "base_velocity_command",
+      "bimanual_grasp_object",
+      "collision_free_reach_trajectory",
+      "constrained_servo",
+      "contact_sensing",
+      "ee_pose_ik",
+      "ee_position_servo",
+      "extract_object_from_holder",
+      "grasp_close_contact",
+      "grasp_hold",
+      "grasp_state_tracking",
+      "hand_pre_shape",
+      "object_pose_tracking",
+      "safety_limit_monitor",
+      "scene_geometry_tracking"
+    ],
+    "09_obstacle_aware_pick_drill": [
+      "base_height_setpoint",
+      "base_navigate_to_pose",
+      "base_navigate_to_standoff",
+      "base_velocity_command",
+      "bimanual_grasp_object",
+      "collision_free_reach_trajectory",
+      "constrained_servo",
+      "contact_sensing",
+      "ee_pose_ik",
+      "ee_position_servo",
+      "grasp_close_contact",
+      "grasp_hold",
+      "grasp_state_tracking",
+      "hand_pre_shape",
+      "joint_space_transport",
+      "lift_object",
+      "object_pose_tracking",
+      "safety_limit_monitor",
+      "scene_geometry_tracking"
+    ]
+  },
+  "unclaimed": [
+    "control_authority_handover",
+    "failure_visualization",
+    "grasp_close_force_limited",
+    "grasp_open_release",
+    "waist_pose_servo",
+    "whole_body_ik_14d",
+    "whole_body_ik_17d"
+  ]
+}

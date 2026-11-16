@@ -1,0 +1,179 @@
+experiment:
+  name: ll_v3
+  mode: warmup
+  use_legacy_library: false
+  max_batches: 8
+  hard_stop_after_max_batches: true
+  on_stop: report_and_exit
+  calibration_round: 0
+
+batch:
+  max_parallel: auto
+
+task_portfolio:
+  - 01_box_lift_floor
+  - 02_push_button
+  - 03_box_lift
+  - 04_push_shelf_forward
+  - 05_drill_lift
+  - 06_drill_pnp
+  - 07_box_table_to_shelf
+  - 08_pick_drill_from_holder
+  - 09_obstacle_aware_pick_drill
+
+prompts:
+  coordinator: prompts/coordinator.md
+  proposal_actor: prompts/proposal_actor.md
+  execution_actor: prompts/execution_actor.md
+  validator: prompts/validator.md
+
+control:
+  robot: g1
+  dof_total: 43
+  wbc: homie_v2
+  upper_command: 31
+  authority_registry: docs/joint_authority.json
+  parameterization: docs/control_parameterization.md
+  vocabulary_doc: docs/control_vocabulary.md
+  # The bootstrap is a written reasoning pass over the live model and registry.
+  # No fixed capability count; no external skill catalogue to copy from.
+  require_vocabulary_bootstrap: true
+  require_vocabulary_reasoning: true
+  require_unclaimed_verb_check: true
+  # IK candidates are measured in round 0; the smallest that meets the pad and
+  # contract thresholds is adopted.
+  ik_task_dim_candidates: [12, 14, 17]
+  ik_task_dim_default: 12
+  ik_solver: mink-qp
+  ik_solver_fallback: dls
+  ik_fallback_when: "QP infeasible/no solution, read-only previews, or an explicit diagnostic comparison"
+  ik_solver_budget_iters: 80
+  waist_owner_default: homie
+  waist_owner_modes: [homie, ik, blend]
+  exogenous_joints: [waist_yaw_joint, waist_roll_joint, waist_pitch_joint]
+  min_gain_for_commands: 0.8
+
+evaluation:
+  success_criteria: docs/task_success_criteria.md
+  eval_seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  graph_validation_seeds: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+
+graph:
+  db: experiments/ll_v3/skill_system.db
+  cli: graph_cli.py
+  source_of_truth: sqlite
+
+micro:
+  runner: micro/run_micro.py
+  scenarios: micro/scenarios
+
+warmup:
+  rounds: [W0, W1, W2]
+  substrate:
+    - name: base_standoff_servo
+      capability: base_navigate_to_standoff
+      contract: measured standoff from the live object AABB, closed-loop bursts,
+        fingertip guard, tilt guard; reports standoff error, final xy/yaw error,
+        base tilt, guard status
+    - name: arm_pose_ik
+      capability: ee_pose_ik
+      contract: two palm poses (12-D), measured waist exogenous, mink QP default
+        (DLS fallback), joint margin >= 0.05 rad, reports pad position/normal
+        error and binding constraint
+    - name: hand_close_contact
+      capability: grasp_close_contact
+      contract: contact-triggered close, reports contact pairs, grip stability,
+        object disturbance
+    - name: hand_open
+      capability: grasp_open_release
+      contract: contact-triggered open, reports contacts after open and
+        disturbance
+    - name: object_pose_track
+      capability: object_pose_tracking
+      contract: live pose/AABB from the scene, reports pose error and tracking
+        gap
+    - name: safety_guard
+      capability: safety_limit_monitor
+      contract: joint margin, base tilt, penetration; aborts or flags before a
+        limit
+    - name: debug_visual
+      capability: failure_visualization
+      contract: find the failure onset/end steps in the trace, render the frames
+        at those timesteps, report the onset/end steps plus the visual finding;
+        never reads the success predicate
+    - name: authority_handover
+      capability: control_authority_handover
+      contract: runtime handover and re-handover of a control channel (waist
+        owner homie|ik|blend, lower-body owner policy|hold); verifies the
+        achieved gain before and after the switch, records a HANDOFF event, and
+        requires balance metrics to stay in bounds
+  integration_benchmark:
+    task: 05_drill_lift
+    steps: reach -> close -> lift
+    pass: pad position error <= 0.015 m per side, bilateral contact on the
+      drill, object rise >= 0.05 m, no guard trip, and one named binding
+      constraint on failure
+  gate: all substrate primitives (including authority_handover) verified and
+    the integration benchmark passes before ANY discovery batch starts. Work
+    that implements a missing capability to make W2 pass is a W2-closure job
+    (label it W2c, W2d, ...), not batch 1; the batch counter stays 0 until W2
+    passes.
+
+execution:
+  servers_per_task: 2
+  max_parallel_servers: 18
+
+run_instructions: |
+  Read prompts/coordinator.md, this config and docs/control_vocabulary.md.
+
+  ISOLATION: use only experiments/ll_v3 and work/ll_v3. Do not read other
+  experiment directories, work/tracks, library/, or any external skill
+  catalogue. A PreToolUse hook blocks ll_v1/ll_v2 and the archive; treat a
+  blocked call as out of scope.
+
+  DESIGN FIRST, GRAPH SECOND. Two phases, in this order:
+
+  PHASE D (design, no graph writes): run the control-vocabulary reasoning pass
+  over the live model and registry and write work/ll_v3/reports/capability_design.md.
+  For every joint group answer what can be commanded, what physical effect each
+  command has, what the task portfolio needs from it, and what failure follows
+  if the group has no verb. Give every candidate a level using the Level rules
+  in docs/control_vocabulary.md (L1 = one channel, one closed-loop law, zero
+  REQUIRES; L2 = >= 2 distinct L1s composed or switched). Include the worked
+  level examples and run the four label-consistency checks. List the unclaimed
+  verbs and every failure class that maps to a gap. Stop and report when the
+  design is complete; do not write the graph yet.
+
+  PHASE G (graph seeding, only after the manager reviews the design): create
+  the CAPABILITY nodes with the level recorded in spec, add strategies and
+  REQUIRES edges from the portfolio, then run the same consistency checks on
+  the graph (L1 with zero REQUIRES, L2 with >= 2 REQUIRES).
+
+  ROUND 0 (calibration, mandatory): authority + measured gain per joint; ramp
+  lag curve; reach envelope per arm; standoff envelope per task; IK dimension
+  A/B (12/14/17); and the grasp-proxy check: `grasp_state_tracking` vs the
+  benchmark's own grasp outcome on a few episodes, recorded as a correlation
+  with its failure boundary (IsGrasped is not exposed; the proxy must be
+  validated, not assumed). Write experiments/ll_v3/calibration.json and
+  docs/control_contract.md.
+
+  WARM-UP (W1/W2): implement the substrate primitives in warmup.substrate with
+  job type IMPLEMENT_SUBSTRATE, each with a contract, micro-benchmark and an
+  independent Validator. Then run the integration benchmark. The gate above is
+  blocking: no discovery batch until it passes.
+
+  RULES: an L1 may list a joint in `commands` only if the registry says
+  final_writer=upper_target and measured_gain >= min_gain_for_commands;
+  otherwise it is observed_exogenous (read every step) or assumes_fixed (with a
+  measured drift bound). IK solves two palm poses (12-D) over the 14 arm joints
+  with the measured waist exogenous while its owner is homie; after an
+  authorized handover it becomes a command target and the achieved gain must be
+  verified. Ramp duration follows the measured lag curve. Every L1 reports its
+  physical outcome and one binding constraint.
+
+  Each batch: run `coverage`; spawn Explore and Exploit with the same packet;
+  merge the valid targets; execute one actor per capability in parallel waves;
+  one Validator per candidate; update the graph; run the 9-task seeds 0-9
+  sweep; checkpoint `batch_N`.
+
+  HARD STOP after batch 8. Write the final report and exit.

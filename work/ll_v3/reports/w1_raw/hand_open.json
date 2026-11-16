@@ -1,0 +1,21 @@
+{
+ "ok": true,
+ "result": {
+  "ok": false,
+  "contacts_before": {
+   "left": 0,
+   "right": 0,
+   "pairs": []
+  },
+  "contacts_after": {
+   "left": 0,
+   "right": 0,
+   "pairs": []
+  },
+  "object_disturbance": 0.0,
+  "open_joint_error": 0.469,
+  "binding_constraint": "no_grasp_to_open",
+  "t0": 11.36,
+  "t1": 12.0
+ }
+}

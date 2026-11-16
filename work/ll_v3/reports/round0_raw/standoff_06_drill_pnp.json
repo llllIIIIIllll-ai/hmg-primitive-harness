@@ -1,0 +1,940 @@
+{
+ "ok": true,
+ "result": {
+  "measurements": [
+   {
+    "target_standoff": 0.35,
+    "achieved_standoff_aabb": 0.33920899162610657,
+    "achieved_standoff_root": 0.4304273457855576,
+    "bursts": 6,
+    "base": {
+     "pos": [
+      0.5081,
+      -0.0153,
+      0.742
+     ],
+     "yaw_deg": 1.83,
+     "tilt_deg": 5.3
+    },
+    "object": [
+     0.938,
+     0.006,
+     0.799
+    ],
+    "object_aabb": {
+     "lo": [
+      0.8424,
+      -0.0459,
+      0.7995
+     ],
+     "hi": [
+      1.0329,
+      0.0533,
+      1.0251
+     ]
+    },
+    "reach": {
+     "solver": "mink-qp",
+     "task_dim": 12,
+     "ik_err": {
+      "left": 0.2283,
+      "right": 0.6104
+     },
+     "ik_rot": {
+      "left": 0.0386,
+      "right": 1.6209
+     },
+     "palm_residual": {
+      "left": [
+       0.195,
+       -0.001,
+       0.144
+      ],
+      "right": [
+       0.42,
+       0.338,
+       0.213
+      ]
+     },
+     "pad": {
+      "left": {
+       "pos": [
+        0.8257,
+        0.1728,
+        1.1011
+       ],
+       "normal": [
+        -0.137,
+        0.986,
+        -0.092
+       ],
+       "half_thick": 0.0217
+      },
+      "right": {
+       "pos": [
+        0.5421,
+        -0.5606,
+        1.0673
+       ],
+       "normal": [
+        0.631,
+        -0.129,
+        -0.765
+       ],
+       "half_thick": 0.0217
+      }
+     },
+     "solved_joints": [
+      "left_elbow_joint",
+      "left_shoulder_pitch_joint",
+      "left_shoulder_roll_joint",
+      "left_shoulder_yaw_joint",
+      "left_wrist_pitch_joint",
+      "left_wrist_roll_joint",
+      "left_wrist_yaw_joint",
+      "right_elbow_joint",
+      "right_shoulder_pitch_joint",
+      "right_shoulder_roll_joint",
+      "right_shoulder_yaw_joint",
+      "right_wrist_pitch_joint",
+      "right_wrist_roll_joint",
+      "right_wrist_yaw_joint"
+     ],
+     "joint_margin_min": -0.0026,
+     "waist_exogenous": true,
+     "waist_owner": "homie",
+     "waist_solved": false,
+     "waist_commandable": false,
+     "target": {
+      "left": [
+       0.938,
+       0.161,
+       1.249
+      ],
+      "right": [
+       0.938,
+       -0.149,
+       1.249
+      ]
+     },
+     "upper_target": [
+      -0.0234,
+      0.0954,
+      -0.0007,
+      -1.212,
+      0.2455,
+      0.3148,
+      -0.3487,
+      -0.0299,
+      1.5466,
+      -0.025,
+      -1.9897,
+      -1.9508,
+      -2.618,
+      0.6704,
+      1.9711,
+      -0.8743,
+      -0.6256,
+      -0.0002,
+      -0.0,
+      -0.0002,
+      -0.0,
+      -0.001,
+      -0.0006,
+      0.0,
+      0.0002,
+      0.0,
+      0.0002,
+      0.0,
+      -0.001,
+      0.0005,
+      0.0
+     ],
+     "t": 4.0,
+     "state": {
+      "t": 4.0,
+      "base": [
+       0.485,
+       -0.039,
+       0.749
+      ],
+      "base_tilt_deg": 5.0,
+      "object": {
+       "name": "obj",
+       "pos": [
+        0.938,
+        0.006,
+        0.799
+       ],
+       "hand": {
+        "left": [
+         0.743,
+         0.162,
+         1.105
+        ],
+        "right": [
+         0.518,
+         -0.487,
+         1.036
+        ]
+       }
+      },
+      "hand_object_contacts": 0
+     }
+    },
+    "pad_error": {
+     "left": 0.2424087457168161,
+     "right": 0.5796662833044545
+    },
+    "pad_error_definition": "executed palm/site residual (harness palm_residual); the pad is rigidly offset"
+   },
+   {
+    "target_standoff": 0.3,
+    "achieved_standoff_aabb": 0.27895757741993676,
+    "achieved_standoff_root": 0.3698026500716293,
+    "bursts": 1,
+    "base": {
+     "pos": [
+      0.5682,
+      0.0074,
+      0.7482
+     ],
+     "yaw_deg": 9.09,
+     "tilt_deg": 3.23
+    },
+    "object": [
+     0.938,
+     0.006,
+     0.799
+    ],
+    "object_aabb": {
+     "lo": [
+      0.8424,
+      -0.0459,
+      0.7995
+     ],
+     "hi": [
+      1.0329,
+      0.0533,
+      1.0251
+     ]
+    },
+    "reach": {
+     "solver": "mink-qp",
+     "task_dim": 12,
+     "ik_err": {
+      "left": 0.0467,
+      "right": 0.0297
+     },
+     "ik_rot": {
+      "left": 0.0488,
+      "right": 0.0228
+     },
+     "palm_residual": {
+      "left": [
+       -0.023,
+       -0.085,
+       0.008
+      ],
+      "right": [
+       -0.072,
+       -0.11,
+       -0.047
+      ]
+     },
+     "pad": {
+      "left": {
+       "pos": [
+        1.0396,
+        0.2762,
+        1.2412
+       ],
+       "normal": [
+        -0.359,
+        0.918,
+        -0.167
+       ],
+       "half_thick": 0.0217
+      },
+      "right": {
+       "pos": [
+        1.0519,
+        -0.0992,
+        1.3361
+       ],
+       "normal": [
+        0.649,
+        -0.068,
+        -0.757
+       ],
+       "half_thick": 0.0217
+      }
+     },
+     "solved_joints": [
+      "left_elbow_joint",
+      "left_shoulder_pitch_joint",
+      "left_shoulder_roll_joint",
+      "left_shoulder_yaw_joint",
+      "left_wrist_pitch_joint",
+      "left_wrist_roll_joint",
+      "left_wrist_yaw_joint",
+      "right_elbow_joint",
+      "right_shoulder_pitch_joint",
+      "right_shoulder_roll_joint",
+      "right_shoulder_yaw_joint",
+      "right_wrist_pitch_joint",
+      "right_wrist_roll_joint",
+      "right_wrist_yaw_joint"
+     ],
+     "joint_margin_min": 0.0015,
+     "waist_exogenous": true,
+     "waist_owner": "homie",
+     "waist_solved": false,
+     "waist_commandable": false,
+     "target": {
+      "left": [
+       0.938,
+       0.161,
+       1.249
+      ],
+      "right": [
+       0.938,
+       -0.149,
+       1.249
+      ]
+     },
+     "upper_target": [
+      0.0131,
+      -0.1096,
+      0.1078,
+      -2.1765,
+      0.1218,
+      0.464,
+      1.1214,
+      0.0885,
+      0.8881,
+      0.2978,
+      -1.999,
+      -0.8038,
+      -2.618,
+      2.0944,
+      1.9722,
+      1.1357,
+      0.4444,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      -0.0014,
+      -0.0005,
+      0.0,
+      0.0031,
+      0.0005,
+      0.0032,
+      0.0005,
+      -0.0012,
+      0.0004,
+      -0.0001
+     ],
+     "t": 5.5,
+     "state": {
+      "t": 5.5,
+      "base": [
+       0.691,
+       0.018,
+       0.758
+      ],
+      "base_tilt_deg": 2.6,
+      "object": {
+       "name": "obj",
+       "pos": [
+        0.938,
+        0.006,
+        0.799
+       ],
+       "hand": {
+        "left": [
+         0.961,
+         0.246,
+         1.241
+        ],
+        "right": [
+         1.01,
+         -0.039,
+         1.296
+        ]
+       }
+      },
+      "hand_object_contacts": 0
+     }
+    },
+    "pad_error": {
+     "left": 0.0884194548727824,
+     "right": 0.13961733416735903
+    },
+    "pad_error_definition": "executed palm/site residual (harness palm_residual); the pad is rigidly offset"
+   },
+   {
+    "target_standoff": 0.25,
+    "achieved_standoff_aabb": 0.1565557408720613,
+    "achieved_standoff_root": 0.2468167336304408,
+    "bursts": 0,
+    "base": {
+     "pos": [
+      0.6915,
+      0.0185,
+      0.7578
+     ],
+     "yaw_deg": 13.63,
+     "tilt_deg": 2.59
+    },
+    "object": [
+     0.938,
+     0.006,
+     0.799
+    ],
+    "object_aabb": {
+     "lo": [
+      0.8424,
+      -0.0459,
+      0.7995
+     ],
+     "hi": [
+      1.0329,
+      0.0533,
+      1.0251
+     ]
+    },
+    "reach": {
+     "solver": "mink-qp",
+     "task_dim": 12,
+     "ik_err": {
+      "left": 0.001,
+      "right": 0.0931
+     },
+     "ik_rot": {
+      "left": 0.0002,
+      "right": 0.0481
+     },
+     "palm_residual": {
+      "left": [
+       0.025,
+       -0.029,
+       0.004
+      ],
+      "right": [
+       -0.015,
+       -0.028,
+       -0.085
+      ]
+     },
+     "pad": {
+      "left": {
+       "pos": [
+        0.9878,
+        0.2285,
+        1.2473
+       ],
+       "normal": [
+        -0.464,
+        0.883,
+        -0.073
+       ],
+       "half_thick": 0.0217
+      },
+      "right": {
+       "pos": [
+        0.995,
+        -0.1814,
+        1.3746
+       ],
+       "normal": [
+        0.628,
+        -0.099,
+        -0.772
+       ],
+       "half_thick": 0.0217
+      }
+     },
+     "solved_joints": [
+      "left_elbow_joint",
+      "left_shoulder_pitch_joint",
+      "left_shoulder_roll_joint",
+      "left_shoulder_yaw_joint",
+      "left_wrist_pitch_joint",
+      "left_wrist_roll_joint",
+      "left_wrist_yaw_joint",
+      "right_elbow_joint",
+      "right_shoulder_pitch_joint",
+      "right_shoulder_roll_joint",
+      "right_shoulder_yaw_joint",
+      "right_wrist_pitch_joint",
+      "right_wrist_roll_joint",
+      "right_wrist_yaw_joint"
+     ],
+     "joint_margin_min": -0.0,
+     "waist_exogenous": true,
+     "waist_owner": "homie",
+     "waist_solved": false,
+     "waist_commandable": false,
+     "target": {
+      "left": [
+       0.938,
+       0.161,
+       1.249
+      ],
+      "right": [
+       0.938,
+       -0.149,
+       1.249
+      ]
+     },
+     "upper_target": [
+      0.0663,
+      -0.2236,
+      0.0642,
+      -2.1693,
+      -0.1803,
+      0.4833,
+      0.7672,
+      0.0662,
+      1.0987,
+      0.5759,
+      -2.095,
+      -1.1432,
+      -2.618,
+      2.0944,
+      1.9722,
+      0.8083,
+      0.5524,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      -0.0017,
+      -0.0001,
+      0.0001,
+      0.0057,
+      0.0009,
+      0.0059,
+      0.0009,
+      -0.0013,
+      0.0014,
+      0.0
+     ],
+     "t": 6.5,
+     "state": {
+      "t": 6.5,
+      "base": [
+       0.669,
+       0.008,
+       0.754
+      ],
+      "base_tilt_deg": 3.7,
+      "object": {
+       "name": "obj",
+       "pos": [
+        0.938,
+        0.006,
+        0.799
+       ],
+       "hand": {
+        "left": [
+         0.913,
+         0.19,
+         1.245
+        ],
+        "right": [
+         0.953,
+         -0.121,
+         1.334
+        ]
+       }
+      },
+      "hand_object_contacts": 0
+     }
+    },
+    "pad_error": {
+     "left": 0.03849675310984032,
+     "right": 0.09074139077620533
+    },
+    "pad_error_definition": "executed palm/site residual (harness palm_residual); the pad is rigidly offset"
+   },
+   {
+    "target_standoff": 0.2,
+    "achieved_standoff_aabb": 0.1796111911880772,
+    "achieved_standoff_root": 0.2693081877700713,
+    "bursts": 0,
+    "base": {
+     "pos": [
+      0.6687,
+      0.0081,
+      0.7538
+     ],
+     "yaw_deg": 13.88,
+     "tilt_deg": 3.67
+    },
+    "object": [
+     0.938,
+     0.006,
+     0.799
+    ],
+    "object_aabb": {
+     "lo": [
+      0.8424,
+      -0.0459,
+      0.7995
+     ],
+     "hi": [
+      1.0329,
+      0.0533,
+      1.0251
+     ]
+    },
+    "reach": {
+     "solver": "mink-qp",
+     "task_dim": 12,
+     "ik_err": {
+      "left": 0.0103,
+      "right": 0.0821
+     },
+     "ik_rot": {
+      "left": 0.0055,
+      "right": 0.0493
+     },
+     "palm_residual": {
+      "left": [
+       0.029,
+       -0.017,
+       0.004
+      ],
+      "right": [
+       0.001,
+       -0.025,
+       -0.088
+      ]
+     },
+     "pad": {
+      "left": {
+       "pos": [
+        0.9809,
+        0.2202,
+        1.2536
+       ],
+       "normal": [
+        -0.499,
+        0.857,
+        -0.131
+       ],
+       "half_thick": 0.0217
+      },
+      "right": {
+       "pos": [
+        0.9771,
+        -0.1841,
+        1.3791
+       ],
+       "normal": [
+        0.631,
+        -0.122,
+        -0.766
+       ],
+       "half_thick": 0.0217
+      }
+     },
+     "solved_joints": [
+      "left_elbow_joint",
+      "left_shoulder_pitch_joint",
+      "left_shoulder_roll_joint",
+      "left_shoulder_yaw_joint",
+      "left_wrist_pitch_joint",
+      "left_wrist_roll_joint",
+      "left_wrist_yaw_joint",
+      "right_elbow_joint",
+      "right_shoulder_pitch_joint",
+      "right_shoulder_roll_joint",
+      "right_shoulder_yaw_joint",
+      "right_wrist_pitch_joint",
+      "right_wrist_roll_joint",
+      "right_wrist_yaw_joint"
+     ],
+     "joint_margin_min": 0.0003,
+     "waist_exogenous": true,
+     "waist_owner": "homie",
+     "waist_solved": false,
+     "waist_commandable": false,
+     "target": {
+      "left": [
+       0.938,
+       0.161,
+       1.249
+      ],
+      "right": [
+       0.938,
+       -0.149,
+       1.249
+      ]
+     },
+     "upper_target": [
+      0.098,
+      -0.2751,
+      0.0757,
+      -2.3884,
+      -0.0568,
+      0.3934,
+      1.4303,
+      -0.0053,
+      0.7128,
+      0.6134,
+      -2.0362,
+      -1.1524,
+      -2.618,
+      2.0944,
+      1.9722,
+      0.8351,
+      0.5406,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      -0.002,
+      -0.0002,
+      0.0001,
+      0.008,
+      0.0012,
+      0.0081,
+      0.0012,
+      -0.0014,
+      0.0028,
+      0.0
+     ],
+     "t": 7.5,
+     "state": {
+      "t": 7.5,
+      "base": [
+       0.663,
+       -0.006,
+       0.753
+      ],
+      "base_tilt_deg": 2.4,
+      "object": {
+       "name": "obj",
+       "pos": [
+        0.938,
+        0.006,
+        0.799
+       ],
+       "hand": {
+        "left": [
+         0.909,
+         0.178,
+         1.245
+        ],
+        "right": [
+         0.937,
+         -0.124,
+         1.337
+        ]
+       }
+      },
+      "hand_object_contacts": 0
+     }
+    },
+    "pad_error": {
+     "left": 0.03385262175962152,
+     "right": 0.09148770409186144
+    },
+    "pad_error_definition": "executed palm/site residual (harness palm_residual); the pad is rigidly offset"
+   },
+   {
+    "target_standoff": 0.15,
+    "achieved_standoff_aabb": 0.15954074714630118,
+    "achieved_standoff_root": 0.24990360141462542,
+    "bursts": 1,
+    "base": {
+     "pos": [
+      0.6914,
+      0.0465,
+      0.748
+     ],
+     "yaw_deg": 13.31,
+     "tilt_deg": 2.01
+    },
+    "object": [
+     0.938,
+     0.006,
+     0.799
+    ],
+    "object_aabb": {
+     "lo": [
+      0.8424,
+      -0.0459,
+      0.7995
+     ],
+     "hi": [
+      1.0329,
+      0.0533,
+      1.0251
+     ]
+    },
+    "reach": {
+     "solver": "mink-qp",
+     "task_dim": 12,
+     "ik_err": {
+      "left": 0.0196,
+      "right": 0.0985
+     },
+     "ik_rot": {
+      "left": 0.0102,
+      "right": 0.0729
+     },
+     "palm_residual": {
+      "left": [
+       -0.003,
+       -0.046,
+       0.007
+      ],
+      "right": [
+       -0.028,
+       -0.046,
+       -0.084
+      ]
+     },
+     "pad": {
+      "left": {
+       "pos": [
+        1.0121,
+        0.2522,
+        1.2467
+       ],
+       "normal": [
+        -0.536,
+        0.839,
+        -0.091
+       ],
+       "half_thick": 0.0217
+      },
+      "right": {
+       "pos": [
+        1.0047,
+        -0.1655,
+        1.3731
+       ],
+       "normal": [
+        0.607,
+        -0.143,
+        -0.782
+       ],
+       "half_thick": 0.0217
+      }
+     },
+     "solved_joints": [
+      "left_elbow_joint",
+      "left_shoulder_pitch_joint",
+      "left_shoulder_roll_joint",
+      "left_shoulder_yaw_joint",
+      "left_wrist_pitch_joint",
+      "left_wrist_roll_joint",
+      "left_wrist_yaw_joint",
+      "right_elbow_joint",
+      "right_shoulder_pitch_joint",
+      "right_shoulder_roll_joint",
+      "right_shoulder_yaw_joint",
+      "right_wrist_pitch_joint",
+      "right_wrist_roll_joint",
+      "right_wrist_yaw_joint"
+     ],
+     "joint_margin_min": -0.0002,
+     "waist_exogenous": true,
+     "waist_owner": "homie",
+     "waist_solved": false,
+     "waist_commandable": false,
+     "target": {
+      "left": [
+       0.938,
+       0.161,
+       1.249
+      ],
+      "right": [
+       0.938,
+       -0.149,
+       1.249
+      ]
+     },
+     "upper_target": [
+      0.0867,
+      -0.213,
+      0.0295,
+      -2.1843,
+      -0.2307,
+      0.315,
+      1.0524,
+      -0.0221,
+      0.7743,
+      0.7547,
+      -2.0129,
+      -1.2205,
+      -2.618,
+      2.0944,
+      1.9722,
+      0.7981,
+      0.5543,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      -0.0025,
+      -0.0007,
+      0.0,
+      0.0115,
+      0.0017,
+      0.0116,
+      0.0018,
+      -0.0016,
+      0.0048,
+      0.0
+     ],
+     "t": 9.0,
+     "state": {
+      "t": 9.0,
+      "base": [
+       0.693,
+       0.037,
+       0.753
+      ],
+      "base_tilt_deg": 1.8,
+      "object": {
+       "name": "obj",
+       "pos": [
+        0.938,
+        0.006,
+        0.799
+       ],
+       "hand": {
+        "left": [
+         0.941,
+         0.207,
+         1.242
+        ],
+        "right": [
+         0.966,
+         -0.103,
+         1.333
+        ]
+       }
+      },
+      "hand_object_contacts": 0
+     }
+    },
+    "pad_error": {
+     "left": 0.04662617290749906,
+     "right": 0.09977975746613138
+    },
+    "pad_error_definition": "executed palm/site residual (harness palm_residual); the pad is rigidly offset"
+   }
+  ],
+  "height": null,
+  "t0": 0.0,
+  "t1": 9.0
+ }
+}

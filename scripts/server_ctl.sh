@@ -1,6 +1,9 @@
 #!/bin/bash
 # Local (non-Slurm) server control for the HMG harness.
-# Usage: ./server_ctl.sh start <task> [seed] | stop [task] | status
+# Usage: ./server_ctl.sh start <task> [seed] [slot] | stop [task] | status
+# A slot starts an additional server for the same task with its own queue
+# (queue/<task>__<slot>), so several execution actors can drive one task in
+# parallel.  Slot 0 / no slot is the original per-task queue.
 set -euo pipefail
 
 HERE=$(cd "$(dirname "$0")/.." && pwd)
@@ -15,18 +18,20 @@ mkdir -p "$RUN" "$LOGDIR"
 up() { [ -f "$RUN/$1.pid" ] && kill -0 "$(cat "$RUN/$1.pid")" 2>/dev/null; }
 
 start() {
-  local task=$1 seed=${2:-0}
-  if up "$task"; then
-    echo "already running $task pid $(cat "$RUN/$task.pid")"
+  local task=$1 seed=${2:-0} slot=${3:-0}
+  local name=$task
+  [ "$slot" != "0" ] && name="${task}__${slot}"
+  if up "$name"; then
+    echo "already running $name pid $(cat "$RUN/$name.pid")"
     return
   fi
-  export HMG_QUEUE="$HERE/queue/$task"
+  export HMG_QUEUE="$HERE/queue/$name"
   mkdir -p "$HMG_QUEUE"
   cd "$HERE"
-  local log="$LOGDIR/srv_${task}_$(date +%H%M%S).log"
+  local log="$LOGDIR/srv_${name}_$(date +%H%M%S).log"
   nohup nice -n 10 "$VENV/bin/python" "$HERE/hmg_server.py" "$task" "$seed" > "$log" 2>&1 &
-  echo $! > "$RUN/$task.pid"
-  echo "started $task seed=$seed pid=$(cat "$RUN/$task.pid") queue=$HMG_QUEUE log=$log"
+  echo $! > "$RUN/$name.pid"
+  echo "started $name seed=$seed pid=$(cat "$RUN/$name.pid") queue=$HMG_QUEUE log=$log"
 }
 
 status() {
@@ -54,13 +59,16 @@ stop() {
     echo "stopped all"
     return
   fi
-  [ -f "$RUN/$task.pid" ] && kill "$(cat "$RUN/$task.pid")" 2>/dev/null || true
-  rm -f "$RUN/$task.pid"
-  echo "stopped $task"
+  for f in "$RUN/$task.pid" "$RUN/$task"__*.pid; do
+    [ -e "$f" ] || continue
+    kill "$(cat "$f")" 2>/dev/null || true
+    rm -f "$f"
+  done
+  echo "stopped $task (all slots)"
 }
 
 case "${1:-}" in
-  start) start "${2:?task}" "${3:-0}" ;;
+  start) start "${2:?task}" "${3:-0}" "${4:-0}" ;;
   stop) stop "${2:-}" ;;
   status) status ;;
   *) echo "usage: $0 {start <task> [seed]|stop [task]|status}"; exit 1 ;;

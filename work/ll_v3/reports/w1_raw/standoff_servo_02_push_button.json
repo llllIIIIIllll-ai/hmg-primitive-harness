@@ -1,0 +1,49 @@
+{
+ "task": "02_push_button",
+ "grid": [
+  0.35,
+  0.25,
+  0.2
+ ],
+ "rows": [
+  {
+   "target_standoff": 0.35,
+   "servo_ok": true,
+   "standoff_aabb": 0.36019999999999996,
+   "xy_error": 0.010199999999999987,
+   "tilt_deg": 1.33,
+   "servo_binding": null,
+   "arm_ok": null,
+   "pad_error": null,
+   "worst_pad_error": null,
+   "joint_margin_min": null,
+   "arm_binding": null
+  },
+  {
+   "target_standoff": 0.25,
+   "servo_ok": true,
+   "standoff_aabb": 0.2683,
+   "xy_error": 0.018299999999999983,
+   "tilt_deg": 1.78,
+   "servo_binding": null,
+   "arm_ok": null,
+   "pad_error": null,
+   "worst_pad_error": null,
+   "joint_margin_min": null,
+   "arm_binding": null
+  },
+  {
+   "target_standoff": 0.2,
+   "servo_ok": true,
+   "standoff_aabb": 0.2127,
+   "xy_error": 0.012700000000000045,
+   "tilt_deg": 1.63,
+   "servo_binding": null,
+   "arm_ok": null,
+   "pad_error": null,
+   "worst_pad_error": null,
+   "joint_margin_min": null,
+   "arm_binding": null
+  }
+ ]
+}

@@ -1,0 +1,50 @@
+{
+ "task": "07_box_table_to_shelf",
+ "grid": [
+  0.35,
+  0.25,
+  0.2
+ ],
+ "rows": [
+  {
+   "target_standoff": 0.35,
+   "servo_ok": null,
+   "standoff_aabb": null,
+   "xy_error": null,
+   "tilt_deg": null,
+   "servo_binding": null
+  },
+  {
+   "target_standoff": 0.25,
+   "servo_ok": true,
+   "standoff_aabb": 0.25070000000000003,
+   "xy_error": 0.0007000000000000339,
+   "tilt_deg": 0.0,
+   "servo_binding": null,
+   "arm_ok": false,
+   "pad_error": {
+    "left": 0.6967193193819157,
+    "right": 0.2956238150081958
+   },
+   "worst_pad_error": 0.6967193193819157,
+   "joint_margin_min": -0.1493,
+   "arm_binding": "pad_error"
+  },
+  {
+   "target_standoff": 0.2,
+   "servo_ok": true,
+   "standoff_aabb": 0.23150000000000004,
+   "xy_error": 0.03149999999999997,
+   "tilt_deg": 7.13,
+   "servo_binding": null,
+   "arm_ok": false,
+   "pad_error": {
+    "left": 0.29025673118809836,
+    "right": 0.24704307316741342
+   },
+   "worst_pad_error": 0.29025673118809836,
+   "joint_margin_min": 0.1089,
+   "arm_binding": "pad_error"
+  }
+ ]
+}

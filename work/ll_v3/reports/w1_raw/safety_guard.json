@@ -1,0 +1,16 @@
+{
+ "ok": true,
+ "result": {
+  "ok": true,
+  "abort": false,
+  "violations": [],
+  "base_tilt_deg": 4.67,
+  "joint_margin_min": 0.3390000000000002,
+  "joint_margin_joint": "left_wrist_pitch_joint",
+  "penetration_max": 0.0,
+  "penetration_pairs": [],
+  "binding_constraint": null,
+  "t0": 11.36,
+  "t1": 11.36
+ }
+}

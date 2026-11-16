@@ -1,0 +1,145 @@
+{
+ "ok": true,
+ "result": {
+  "contacts_detail": [
+   {
+    "b1": "gear_factory",
+    "b2": "robot0_left_ankle_roll_link",
+    "g1": "floor",
+    "g2": "robot0_g6_col",
+    "pos": [
+     1.4352,
+     0.1763,
+     -0.0004
+    ],
+    "dist": -0.00084,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "force": [
+     71.596,
+     -7.08,
+     -2.321,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "b1": "gear_factory",
+    "b2": "robot0_left_ankle_roll_link",
+    "g1": "floor",
+    "g2": "robot0_g7_col",
+    "pos": [
+     1.4329,
+     0.1263,
+     -0.0004
+    ],
+    "dist": -0.00079,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "force": [
+     69.014,
+     -6.782,
+     -1.324,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "b1": "gear_factory",
+    "b2": "robot0_left_ankle_roll_link",
+    "g1": "floor",
+    "g2": "robot0_g8_col",
+    "pos": [
+     1.6053,
+     0.1734,
+     -0.0005
+    ],
+    "dist": -0.00093,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "force": [
+     86.312,
+     -10.831,
+     -2.383,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "b1": "gear_factory",
+    "b2": "robot0_left_ankle_roll_link",
+    "g1": "floor",
+    "g2": "robot0_g9_col",
+    "pos": [
+     1.6025,
+     0.1135,
+     -0.0004
+    ],
+    "dist": -0.00087,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "force": [
+     84.108,
+     -10.506,
+     -1.162,
+     0.0,
+     0.0,
+     0.0
+    ]
+   }
+  ],
+  "hand_contacts_side": {
+   "left": 0,
+   "right": 0,
+   "pairs": []
+  },
+  "object": [
+   1.739,
+   0.04,
+   0.801
+  ],
+  "base": {
+   "pos": [
+    1.4838,
+    0.0555,
+    0.7541
+   ],
+   "yaw_deg": -3.98,
+   "tilt_deg": 1.6
+  },
+  "hand_joints": {
+   "left_hand_index_0_joint": -0.001,
+   "left_hand_index_1_joint": -0.0,
+   "left_hand_middle_0_joint": -0.001,
+   "left_hand_middle_1_joint": -0.0,
+   "left_hand_thumb_0_joint": -0.003,
+   "left_hand_thumb_1_joint": -0.001,
+   "left_hand_thumb_2_joint": -0.0,
+   "right_hand_index_0_joint": 0.0,
+   "right_hand_index_1_joint": 0.0,
+   "right_hand_middle_0_joint": 0.0,
+   "right_hand_middle_1_joint": 0.0,
+   "right_hand_thumb_0_joint": -0.003,
+   "right_hand_thumb_1_joint": 0.007,
+   "right_hand_thumb_2_joint": 0.0
+  },
+  "t": 9.199999999999893,
+  "t0": 9.2,
+  "t1": 9.2
+ }
+}

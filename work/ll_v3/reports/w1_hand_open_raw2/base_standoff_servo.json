@@ -1,0 +1,42 @@
+{
+ "ok": true,
+ "result": {
+  "ok": true,
+  "standoff_aabb": 0.16601400543327657,
+  "standoff_error": 0.01601400543327658,
+  "final_xy_error": 0.009600000000000053,
+  "yaw_error_deg": 0.5043144131945589,
+  "tilt_deg": 1.6,
+  "base": {
+   "pos": [
+    1.4838,
+    0.0555,
+    0.7541
+   ],
+   "yaw_deg": -3.98,
+   "tilt_deg": 1.6
+  },
+  "object": [
+   1.739,
+   0.04,
+   0.801
+  ],
+  "object_aabb": {
+   "lo": [
+    1.6434,
+    -0.0076,
+    0.7998
+   ],
+   "hi": [
+    1.8341,
+    0.1006,
+    1.028
+   ]
+  },
+  "bursts": 23,
+  "events": [],
+  "binding_constraint": null,
+  "t0": 0.0,
+  "t1": 9.2
+ }
+}

@@ -1,0 +1,959 @@
+{
+ "robot": "g1",
+ "dof": 43,
+ "authority_rule": "Default: G1DecoupledWholeBodyPolicy.get_action writes upper_body first, lower_body last, so a joint in both groups is finally written by HOMIE v2 (lower wins). A user-authorized runtime handover (api.authority) may change the waist's final writer to upper_target (owner=ik) or blend; the default owner is homie and is restored on exit.",
+ "gain_note": "measured_gain is dynamic, filled by track_gain; it never confers authority. final_writer decides authority. With owner=homie the waist is observed_exogenous (read, never command).",
+ "joints": [
+  {
+   "joint": "left_hip_pitch_joint",
+   "groups_enable_waist_false": {
+    "upper_body": false,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": false,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "measured_gain": null,
+   "measured_gain_channel": "wbc_only",
+   "measured_gain_direction": null,
+   "measured_gain_pos": null,
+   "measured_gain_neg": null,
+   "measured_gain_note": "not commandable through the 31-D upper channel; WBC/homie_v2 owns it",
+   "effective_bounds": null
+  },
+  {
+   "joint": "left_hip_roll_joint",
+   "groups_enable_waist_false": {
+    "upper_body": false,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": false,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "measured_gain": null,
+   "measured_gain_channel": "wbc_only",
+   "measured_gain_direction": null,
+   "measured_gain_pos": null,
+   "measured_gain_neg": null,
+   "measured_gain_note": "not commandable through the 31-D upper channel; WBC/homie_v2 owns it",
+   "effective_bounds": null
+  },
+  {
+   "joint": "left_hip_yaw_joint",
+   "groups_enable_waist_false": {
+    "upper_body": false,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": false,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "measured_gain": null,
+   "measured_gain_channel": "wbc_only",
+   "measured_gain_direction": null,
+   "measured_gain_pos": null,
+   "measured_gain_neg": null,
+   "measured_gain_note": "not commandable through the 31-D upper channel; WBC/homie_v2 owns it",
+   "effective_bounds": null
+  },
+  {
+   "joint": "left_knee_joint",
+   "groups_enable_waist_false": {
+    "upper_body": false,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": false,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "measured_gain": null,
+   "measured_gain_channel": "wbc_only",
+   "measured_gain_direction": null,
+   "measured_gain_pos": null,
+   "measured_gain_neg": null,
+   "measured_gain_note": "not commandable through the 31-D upper channel; WBC/homie_v2 owns it",
+   "effective_bounds": null
+  },
+  {
+   "joint": "left_ankle_pitch_joint",
+   "groups_enable_waist_false": {
+    "upper_body": false,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": false,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "measured_gain": null,
+   "measured_gain_channel": "wbc_only",
+   "measured_gain_direction": null,
+   "measured_gain_pos": null,
+   "measured_gain_neg": null,
+   "measured_gain_note": "not commandable through the 31-D upper channel; WBC/homie_v2 owns it",
+   "effective_bounds": null
+  },
+  {
+   "joint": "left_ankle_roll_joint",
+   "groups_enable_waist_false": {
+    "upper_body": false,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": false,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "measured_gain": null,
+   "measured_gain_channel": "wbc_only",
+   "measured_gain_direction": null,
+   "measured_gain_pos": null,
+   "measured_gain_neg": null,
+   "measured_gain_note": "not commandable through the 31-D upper channel; WBC/homie_v2 owns it",
+   "effective_bounds": null
+  },
+  {
+   "joint": "right_hip_pitch_joint",
+   "groups_enable_waist_false": {
+    "upper_body": false,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": false,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "measured_gain": null,
+   "measured_gain_channel": "wbc_only",
+   "measured_gain_direction": null,
+   "measured_gain_pos": null,
+   "measured_gain_neg": null,
+   "measured_gain_note": "not commandable through the 31-D upper channel; WBC/homie_v2 owns it",
+   "effective_bounds": null
+  },
+  {
+   "joint": "right_hip_roll_joint",
+   "groups_enable_waist_false": {
+    "upper_body": false,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": false,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "measured_gain": null,
+   "measured_gain_channel": "wbc_only",
+   "measured_gain_direction": null,
+   "measured_gain_pos": null,
+   "measured_gain_neg": null,
+   "measured_gain_note": "not commandable through the 31-D upper channel; WBC/homie_v2 owns it",
+   "effective_bounds": null
+  },
+  {
+   "joint": "right_hip_yaw_joint",
+   "groups_enable_waist_false": {
+    "upper_body": false,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": false,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "measured_gain": null,
+   "measured_gain_channel": "wbc_only",
+   "measured_gain_direction": null,
+   "measured_gain_pos": null,
+   "measured_gain_neg": null,
+   "measured_gain_note": "not commandable through the 31-D upper channel; WBC/homie_v2 owns it",
+   "effective_bounds": null
+  },
+  {
+   "joint": "right_knee_joint",
+   "groups_enable_waist_false": {
+    "upper_body": false,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": false,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "measured_gain": null,
+   "measured_gain_channel": "wbc_only",
+   "measured_gain_direction": null,
+   "measured_gain_pos": null,
+   "measured_gain_neg": null,
+   "measured_gain_note": "not commandable through the 31-D upper channel; WBC/homie_v2 owns it",
+   "effective_bounds": null
+  },
+  {
+   "joint": "right_ankle_pitch_joint",
+   "groups_enable_waist_false": {
+    "upper_body": false,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": false,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "measured_gain": null,
+   "measured_gain_channel": "wbc_only",
+   "measured_gain_direction": null,
+   "measured_gain_pos": null,
+   "measured_gain_neg": null,
+   "measured_gain_note": "not commandable through the 31-D upper channel; WBC/homie_v2 owns it",
+   "effective_bounds": null
+  },
+  {
+   "joint": "right_ankle_roll_joint",
+   "groups_enable_waist_false": {
+    "upper_body": false,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": false,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "measured_gain": null,
+   "measured_gain_channel": "wbc_only",
+   "measured_gain_direction": null,
+   "measured_gain_pos": null,
+   "measured_gain_neg": null,
+   "measured_gain_note": "not commandable through the 31-D upper channel; WBC/homie_v2 owns it",
+   "effective_bounds": null
+  },
+  {
+   "joint": "waist_yaw_joint",
+   "groups_enable_waist_false": {
+    "upper_body": false,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "measured_gain": 1.142,
+   "measured_gain_channel": "upper_target command, homie_v2 final writer",
+   "measured_gain_direction": "neg",
+   "measured_gain_pos": 1.082,
+   "measured_gain_neg": 1.142,
+   "measured_gain_note": "gain is the upper-channel response only; HOMIE overwrites the waist, so this is not command authority",
+   "effective_bounds": null,
+   "final_writer_owners": {
+    "homie": "homie_v2",
+    "ik": "upper_target",
+    "blend": "blend"
+   },
+   "measured_gain_handover": {
+    "homie": 1.137,
+    "ik": 1.0,
+    "rehandover": 1.135
+   }
+  },
+  {
+   "joint": "waist_roll_joint",
+   "groups_enable_waist_false": {
+    "upper_body": false,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "measured_gain": 0.415,
+   "measured_gain_channel": "upper_target command, homie_v2 final writer",
+   "measured_gain_direction": "neg",
+   "measured_gain_pos": 0.158,
+   "measured_gain_neg": 0.415,
+   "measured_gain_note": "gain is the upper-channel response only; HOMIE overwrites the waist, so this is not command authority",
+   "effective_bounds": null,
+   "final_writer_owners": {
+    "homie": "homie_v2",
+    "ik": "upper_target",
+    "blend": "blend"
+   },
+   "measured_gain_handover": {
+    "homie": -0.026,
+    "ik": 0.998,
+    "rehandover": -0.062
+   }
+  },
+  {
+   "joint": "waist_pitch_joint",
+   "groups_enable_waist_false": {
+    "upper_body": false,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": true,
+    "final_writer": "homie_v2"
+   },
+   "measured_gain": 1.189,
+   "measured_gain_channel": "upper_target command, homie_v2 final writer",
+   "measured_gain_direction": "neg",
+   "measured_gain_pos": 0.261,
+   "measured_gain_neg": 1.189,
+   "measured_gain_note": "gain is the upper-channel response only; HOMIE overwrites the waist, so this is not command authority",
+   "effective_bounds": null,
+   "final_writer_owners": {
+    "homie": "homie_v2",
+    "ik": "upper_target",
+    "blend": "blend"
+   },
+   "measured_gain_handover": {
+    "homie": 0.137,
+    "ik": 1.0,
+    "rehandover": 0.139
+   }
+  },
+  {
+   "joint": "left_shoulder_pitch_joint",
+   "groups_enable_waist_false": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "measured_gain": 0.997,
+   "measured_gain_channel": "upper_target (IK)",
+   "measured_gain_direction": "pos",
+   "measured_gain_pos": 0.997,
+   "measured_gain_neg": 0.997,
+   "measured_gain_note": "usable direction measured at delta 0.20 rad",
+   "effective_bounds": null
+  },
+  {
+   "joint": "left_shoulder_roll_joint",
+   "groups_enable_waist_false": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "measured_gain": 0.968,
+   "measured_gain_channel": "upper_target (IK)",
+   "measured_gain_direction": "pos",
+   "measured_gain_pos": 0.968,
+   "measured_gain_neg": 0.22,
+   "measured_gain_note": "usable direction measured at delta 0.20 rad",
+   "effective_bounds": [
+    -0.05,
+    2.252
+   ]
+  },
+  {
+   "joint": "left_shoulder_yaw_joint",
+   "groups_enable_waist_false": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "measured_gain": 0.975,
+   "measured_gain_channel": "upper_target (IK)",
+   "measured_gain_direction": "neg",
+   "measured_gain_pos": 0.969,
+   "measured_gain_neg": 0.975,
+   "measured_gain_note": "usable direction measured at delta 0.20 rad",
+   "effective_bounds": null
+  },
+  {
+   "joint": "left_elbow_joint",
+   "groups_enable_waist_false": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "measured_gain": 0.97,
+   "measured_gain_channel": "upper_target (IK)",
+   "measured_gain_direction": "pos",
+   "measured_gain_pos": 0.97,
+   "measured_gain_neg": 0.959,
+   "measured_gain_note": "usable direction measured at delta 0.20 rad",
+   "effective_bounds": null
+  },
+  {
+   "joint": "left_wrist_roll_joint",
+   "groups_enable_waist_false": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "measured_gain": 0.977,
+   "measured_gain_channel": "upper_target (IK)",
+   "measured_gain_direction": "pos",
+   "measured_gain_pos": 0.977,
+   "measured_gain_neg": 0.977,
+   "measured_gain_note": "usable direction measured at delta 0.20 rad",
+   "effective_bounds": null
+  },
+  {
+   "joint": "left_wrist_pitch_joint",
+   "groups_enable_waist_false": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "measured_gain": 0.987,
+   "measured_gain_channel": "upper_target (IK)",
+   "measured_gain_direction": "neg",
+   "measured_gain_pos": 0.97,
+   "measured_gain_neg": 0.987,
+   "measured_gain_note": "usable direction measured at delta 0.20 rad",
+   "effective_bounds": null
+  },
+  {
+   "joint": "left_wrist_yaw_joint",
+   "groups_enable_waist_false": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "measured_gain": 0.983,
+   "measured_gain_channel": "upper_target (IK)",
+   "measured_gain_direction": "neg",
+   "measured_gain_pos": 0.982,
+   "measured_gain_neg": 0.983,
+   "measured_gain_note": "usable direction measured at delta 0.20 rad",
+   "effective_bounds": null
+  },
+  {
+   "joint": "left_hand_index_0_joint",
+   "groups_enable_waist_false": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "measured_gain": 0.856,
+   "measured_gain_channel": "upper_target (contact-driven close/open)",
+   "measured_gain_direction": "neg",
+   "measured_gain_pos": null,
+   "measured_gain_neg": 0.856,
+   "measured_gain_note": "one-sided range: command only the closing direction",
+   "effective_bounds": null
+  },
+  {
+   "joint": "left_hand_index_1_joint",
+   "groups_enable_waist_false": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "measured_gain": 0.857,
+   "measured_gain_channel": "upper_target (contact-driven close/open)",
+   "measured_gain_direction": "neg",
+   "measured_gain_pos": null,
+   "measured_gain_neg": 0.857,
+   "measured_gain_note": "one-sided range: command only the closing direction",
+   "effective_bounds": null
+  },
+  {
+   "joint": "left_hand_middle_0_joint",
+   "groups_enable_waist_false": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "measured_gain": 0.856,
+   "measured_gain_channel": "upper_target (contact-driven close/open)",
+   "measured_gain_direction": "neg",
+   "measured_gain_pos": null,
+   "measured_gain_neg": 0.856,
+   "measured_gain_note": "one-sided range: command only the closing direction",
+   "effective_bounds": null
+  },
+  {
+   "joint": "left_hand_middle_1_joint",
+   "groups_enable_waist_false": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "measured_gain": 0.857,
+   "measured_gain_channel": "upper_target (contact-driven close/open)",
+   "measured_gain_direction": "neg",
+   "measured_gain_pos": null,
+   "measured_gain_neg": 0.857,
+   "measured_gain_note": "one-sided range: command only the closing direction",
+   "effective_bounds": null
+  },
+  {
+   "joint": "left_hand_thumb_0_joint",
+   "groups_enable_waist_false": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "measured_gain": 0.863,
+   "measured_gain_channel": "upper_target (contact-driven close/open)",
+   "measured_gain_direction": "neg",
+   "measured_gain_pos": 0.851,
+   "measured_gain_neg": 0.863,
+   "measured_gain_note": "one-sided range: command only the closing direction",
+   "effective_bounds": null
+  },
+  {
+   "joint": "left_hand_thumb_1_joint",
+   "groups_enable_waist_false": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "measured_gain": 0.857,
+   "measured_gain_channel": "upper_target (contact-driven close/open)",
+   "measured_gain_direction": "pos",
+   "measured_gain_pos": 0.857,
+   "measured_gain_neg": 0.856,
+   "measured_gain_note": "one-sided range: command only the closing direction",
+   "effective_bounds": null
+  },
+  {
+   "joint": "left_hand_thumb_2_joint",
+   "groups_enable_waist_false": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "measured_gain": 0.857,
+   "measured_gain_channel": "upper_target (contact-driven close/open)",
+   "measured_gain_direction": "pos",
+   "measured_gain_pos": 0.857,
+   "measured_gain_neg": null,
+   "measured_gain_note": "one-sided range: command only the closing direction",
+   "effective_bounds": null
+  },
+  {
+   "joint": "right_shoulder_pitch_joint",
+   "groups_enable_waist_false": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "measured_gain": 0.996,
+   "measured_gain_channel": "upper_target (IK)",
+   "measured_gain_direction": "pos",
+   "measured_gain_pos": 0.996,
+   "measured_gain_neg": 0.994,
+   "measured_gain_note": "usable direction measured at delta 0.20 rad",
+   "effective_bounds": null
+  },
+  {
+   "joint": "right_shoulder_roll_joint",
+   "groups_enable_waist_false": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "measured_gain": 0.972,
+   "measured_gain_channel": "upper_target (IK)",
+   "measured_gain_direction": "neg",
+   "measured_gain_pos": 0.264,
+   "measured_gain_neg": 0.972,
+   "measured_gain_note": "usable direction measured at delta 0.20 rad",
+   "effective_bounds": [
+    -2.252,
+    0.05
+   ]
+  },
+  {
+   "joint": "right_shoulder_yaw_joint",
+   "groups_enable_waist_false": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "measured_gain": 0.971,
+   "measured_gain_channel": "upper_target (IK)",
+   "measured_gain_direction": "pos",
+   "measured_gain_pos": 0.971,
+   "measured_gain_neg": 0.968,
+   "measured_gain_note": "usable direction measured at delta 0.20 rad",
+   "effective_bounds": null
+  },
+  {
+   "joint": "right_elbow_joint",
+   "groups_enable_waist_false": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "measured_gain": 0.962,
+   "measured_gain_channel": "upper_target (IK)",
+   "measured_gain_direction": "pos",
+   "measured_gain_pos": 0.962,
+   "measured_gain_neg": 0.95,
+   "measured_gain_note": "usable direction measured at delta 0.20 rad",
+   "effective_bounds": null
+  },
+  {
+   "joint": "right_wrist_roll_joint",
+   "groups_enable_waist_false": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "measured_gain": 0.977,
+   "measured_gain_channel": "upper_target (IK)",
+   "measured_gain_direction": "pos",
+   "measured_gain_pos": 0.977,
+   "measured_gain_neg": 0.977,
+   "measured_gain_note": "usable direction measured at delta 0.20 rad",
+   "effective_bounds": null
+  },
+  {
+   "joint": "right_wrist_pitch_joint",
+   "groups_enable_waist_false": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "measured_gain": 0.987,
+   "measured_gain_channel": "upper_target (IK)",
+   "measured_gain_direction": "neg",
+   "measured_gain_pos": 0.969,
+   "measured_gain_neg": 0.987,
+   "measured_gain_note": "usable direction measured at delta 0.20 rad",
+   "effective_bounds": null
+  },
+  {
+   "joint": "right_wrist_yaw_joint",
+   "groups_enable_waist_false": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "measured_gain": 0.983,
+   "measured_gain_channel": "upper_target (IK)",
+   "measured_gain_direction": "neg",
+   "measured_gain_pos": 0.982,
+   "measured_gain_neg": 0.983,
+   "measured_gain_note": "usable direction measured at delta 0.20 rad",
+   "effective_bounds": null
+  },
+  {
+   "joint": "right_hand_index_0_joint",
+   "groups_enable_waist_false": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "measured_gain": 0.857,
+   "measured_gain_channel": "upper_target (contact-driven close/open)",
+   "measured_gain_direction": "pos",
+   "measured_gain_pos": 0.857,
+   "measured_gain_neg": null,
+   "measured_gain_note": "one-sided range: command only the closing direction",
+   "effective_bounds": null
+  },
+  {
+   "joint": "right_hand_index_1_joint",
+   "groups_enable_waist_false": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "measured_gain": 0.857,
+   "measured_gain_channel": "upper_target (contact-driven close/open)",
+   "measured_gain_direction": "pos",
+   "measured_gain_pos": 0.857,
+   "measured_gain_neg": null,
+   "measured_gain_note": "one-sided range: command only the closing direction",
+   "effective_bounds": null
+  },
+  {
+   "joint": "right_hand_middle_0_joint",
+   "groups_enable_waist_false": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "measured_gain": 0.857,
+   "measured_gain_channel": "upper_target (contact-driven close/open)",
+   "measured_gain_direction": "pos",
+   "measured_gain_pos": 0.857,
+   "measured_gain_neg": null,
+   "measured_gain_note": "one-sided range: command only the closing direction",
+   "effective_bounds": null
+  },
+  {
+   "joint": "right_hand_middle_1_joint",
+   "groups_enable_waist_false": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "measured_gain": 0.857,
+   "measured_gain_channel": "upper_target (contact-driven close/open)",
+   "measured_gain_direction": "pos",
+   "measured_gain_pos": 0.857,
+   "measured_gain_neg": null,
+   "measured_gain_note": "one-sided range: command only the closing direction",
+   "effective_bounds": null
+  },
+  {
+   "joint": "right_hand_thumb_0_joint",
+   "groups_enable_waist_false": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "measured_gain": 0.863,
+   "measured_gain_channel": "upper_target (contact-driven close/open)",
+   "measured_gain_direction": "neg",
+   "measured_gain_pos": 0.851,
+   "measured_gain_neg": 0.863,
+   "measured_gain_note": "one-sided range: command only the closing direction",
+   "effective_bounds": null
+  },
+  {
+   "joint": "right_hand_thumb_1_joint",
+   "groups_enable_waist_false": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "measured_gain": 0.857,
+   "measured_gain_channel": "upper_target (contact-driven close/open)",
+   "measured_gain_direction": "neg",
+   "measured_gain_pos": 0.856,
+   "measured_gain_neg": 0.857,
+   "measured_gain_note": "one-sided range: command only the closing direction",
+   "effective_bounds": null
+  },
+  {
+   "joint": "right_hand_thumb_2_joint",
+   "groups_enable_waist_false": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "groups_enable_waist_true": {
+    "upper_body": true,
+    "lower_body": false,
+    "final_writer": "upper_target"
+   },
+   "measured_gain": 0.857,
+   "measured_gain_channel": "upper_target (contact-driven close/open)",
+   "measured_gain_direction": "neg",
+   "measured_gain_pos": null,
+   "measured_gain_neg": 0.857,
+   "measured_gain_note": "one-sided range: command only the closing direction",
+   "effective_bounds": null
+  }
+ ],
+ "waist_handover": {
+  "channel": "waist",
+  "joints": [
+   "waist_pitch_joint",
+   "waist_roll_joint",
+   "waist_yaw_joint"
+  ],
+  "default_owner": "homie",
+  "modes": {
+   "homie": "homie_v2",
+   "ik": "upper_target",
+   "blend": "blend"
+  },
+  "authorized": "user-authorized 2026-11-15; recorded in experiments/ll_v2/config.yaml control.waist_owner_modes",
+  "verified_by": "authority_handover",
+  "restore_default_on_exit": true,
+  "gain_probe": "track_gain(delta=0.1, dur=1.5, hold=1.0), 2 s pre-settle, 05_drill_lift seeds 0-3 (bit-identical)",
+  "measured_gain": {
+   "homie_before": {
+    "waist_pitch_joint": 0.137,
+    "waist_roll_joint": -0.026,
+    "waist_yaw_joint": 1.137
+   },
+   "ik_after": {
+    "waist_pitch_joint": 1.0,
+    "waist_roll_joint": 0.998,
+    "waist_yaw_joint": 1.0
+   },
+   "homie_again": {
+    "waist_pitch_joint": 0.139,
+    "waist_roll_joint": -0.062,
+    "waist_yaw_joint": 1.135
+   }
+  },
+  "restore_error_rad": {
+   "waist_pitch_joint": 0.002,
+   "waist_roll_joint": 0.036,
+   "waist_yaw_joint": 0.002
+  },
+  "restore_error_tol_rad": 0.05,
+  "null_control_noise_floor": 0.02,
+  "pitch_rise": {
+   "measured": 0.863,
+   "min_required": 0.5
+  },
+  "note": "A high measured gain never confers authority: authority is the structural final_writer. With owner=homie the waist is observed_exogenous: read every control step, never command it. Under owner=ik (upper_target) or blend the waist is a command target; verify achieved gain before and after and restore homie on exit."
+ },
+ "measurement": {
+  "date": "2026-11-15T17:05:16",
+  "delta_rad": 0.2,
+  "hold_s": 1.0,
+  "task": "05_drill_lift",
+  "seed": 0,
+  "rule": "commandable only if final_writer=upper_target AND usable_gain >= 0.8"
+ }
+}

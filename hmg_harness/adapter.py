@@ -301,21 +301,36 @@ class TaskEnv:
         return []
 
     def hand_contacts(self, obj_name=None):
-        """Contacts between any hand body and the task object."""
+        """Contacts between any hand body and the task object TREE.
+
+        The object's collision geoms can sit on child bodies (05_drill_lift:
+        root ``bottle_main`` has no geoms; the 3 collision bodies are
+        descendants).  Counting only the root body reported 0 contacts while
+        the drill was visibly contacted and tilted (measured by the ll_v2
+        arm_pose_ik validator).  This walks the root body and every descendant.
+        """
         m, d = self.sim.model, self.sim.data
         objs = self._inner_objects()
         if not objs:
             return 0
         o = next((x for x in objs if x.name == obj_name), objs[0])
         bid = m.body_name2id(o.root_body)
+        members = set()
+        for b in range(int(m.nbody)):
+            x = b
+            while x > 0:
+                if x == bid:
+                    members.add(b)
+                    break
+                x = int(m.body_parentid[x])
         n = 0
         for ci in range(d.ncon):
             c = d.contact[ci]
             b1 = m.geom_bodyid[c.geom1]
             b2 = m.geom_bodyid[c.geom2]
-            if bid not in (b1, b2):
+            if b1 not in members and b2 not in members:
                 continue
-            other = b2 if b1 == bid else b1
+            other = b2 if b1 in members else b1
             if 'hand' in m.body(other).name or 'gripper' in m.body(other).name:
                 n += 1
         return n

@@ -175,24 +175,191 @@ def cmd_get_task_strategies(conn, args):
     emit({"ok": True, "result": {"task": node_dict(task), "strategies": out}})
 
 
+def required_closure(conn, strategy_id):
+    """All capabilities reachable from a strategy through REQUIRES edges."""
+    seen = {}
+    queue = [strategy_id]
+    while queue:
+        node = queue.pop(0)
+        for row in conn.execute(
+            "SELECT n.* FROM nodes n JOIN edges e ON e.target=n.id"
+            " WHERE e.source=? AND e.relation='REQUIRES'", (node,)
+        ):
+            if row["id"] in seen:
+                continue
+            seen[row["id"]] = row
+            queue.append(row["id"])
+    return list(seen.values())
+
+
+def has_verified_skill(conn, capability_id):
+    row = conn.execute(
+        "SELECT s.id FROM nodes s JOIN edges e ON e.source=s.id"
+        " WHERE e.target=? AND e.relation='IMPLEMENTS' AND s.type='SKILL'"
+        " AND s.status='verified' LIMIT 1", (capability_id,)
+    ).fetchone()
+    return row is not None
+
+
+def would_cycle(conn, source, target):
+    """True if adding source -> target creates a cycle."""
+    stack = [target]
+    seen = set()
+    while stack:
+        node = stack.pop()
+        if node == source:
+            return True
+        if node in seen:
+            continue
+        seen.add(node)
+        stack.extend(
+            r["target"] for r in conn.execute(
+                "SELECT target FROM edges WHERE source=? AND relation='REQUIRES'",
+                (node,)
+            )
+        )
+    return False
+
+
+def cmd_add_requires(conn, args):
+    source = resolve(conn, args.capability, "CAPABILITY")
+    targets = [resolve(conn, x.strip(), "CAPABILITY")
+               for x in args.requires.split(",") if x.strip()]
+    added = []
+    for target in targets:
+        if target["id"] == source["id"]:
+            fail("a capability cannot require itself")
+        if would_cycle(conn, source["id"], target["id"]):
+            fail("cycle: %s -> %s" % (source["name"], target["name"]))
+        conn.execute(
+            "INSERT OR IGNORE INTO edges(source,target,relation) VALUES(?,?,?)",
+            (source["id"], target["id"], "REQUIRES"),
+        )
+        added.append(target["id"])
+    conn.commit()
+    emit({"ok": True, "result": {"capability": source["id"], "requires": added}})
+
+
 def cmd_get_missing_capabilities(conn, args):
     strategy = resolve(conn, args.strategy, "STRATEGY")
-    caps = conn.execute(
-        "SELECT n.* FROM nodes n JOIN edges e ON e.target=n.id"
-        " WHERE e.source=? AND e.relation='REQUIRES'",
-        (strategy["id"],),
-    ).fetchall()
-    missing = []
-    for cap in caps:
-        verified = conn.execute(
-            "SELECT s.id FROM nodes s JOIN edges e ON e.source=s.id"
-            " WHERE e.target=? AND e.relation='IMPLEMENTS' AND s.type='SKILL'"
-            " AND s.status='verified'",
-            (cap["id"],),
+    caps = required_closure(conn, strategy["id"])
+    missing = [node_dict(cap) for cap in caps
+               if not has_verified_skill(conn, cap["id"])]
+    emit({"ok": True, "result": {"strategy": node_dict(strategy),
+                                 "missing": missing}})
+
+
+def cmd_coverage(conn, args):
+    """Per-task capability coverage: what the task graph requires vs what is verified."""
+    if args.task:
+        tasks = [resolve(conn, args.task, "TASK")]
+    else:
+        tasks = conn.execute(
+            "SELECT * FROM nodes WHERE type='TASK' ORDER BY name"
         ).fetchall()
-        if not verified:
-            missing.append(node_dict(cap))
-    emit({"ok": True, "result": {"strategy": node_dict(strategy), "missing": missing}})
+    out = []
+    union = {}
+    for task in tasks:
+        strategies = conn.execute(
+            "SELECT n.* FROM nodes n JOIN edges e ON e.target=n.id"
+            " WHERE e.source=? AND e.relation='HAS_STRATEGY' ORDER BY n.name",
+            (task["id"],),
+        ).fetchall()
+        caps = {}
+        for strategy in strategies:
+            for cap in required_closure(conn, strategy["id"]):
+                caps[cap["id"]] = cap
+        rows = []
+        uncovered = []
+        for cap in sorted(caps.values(), key=lambda r: r["name"]):
+            verified = has_verified_skill(conn, cap["id"])
+            level = parse_json(cap["spec_json"], {}).get("level", "L1")
+            rows.append({"name": cap["name"], "level": level,
+                         "status": cap["status"], "verified": verified})
+            if not verified:
+                uncovered.append(cap["name"])
+                union[cap["name"]] = level
+        out.append({
+            "task": task["name"],
+            "strategies": [s["name"] for s in strategies],
+            "capabilities": rows,
+            "uncovered": uncovered,
+            "covered": len(rows) - len(uncovered),
+            "total": len(rows),
+        })
+    emit({"ok": True, "result": {
+        "tasks": out,
+        "uncovered_union": [{"name": n, "level": union[n]}
+                            for n in sorted(union)],
+        "complete": not union,
+    }})
+
+
+def cmd_set_strategy_capabilities(conn, args):
+    """Replace a strategy's REQUIRES set with the given capabilities."""
+    strategy = resolve(conn, args.strategy, "STRATEGY")
+    caps = [resolve(conn, x.strip(), "CAPABILITY")
+            for x in args.capabilities.split(",") if x.strip()]
+    conn.execute("DELETE FROM edges WHERE source=? AND relation='REQUIRES'",
+                 (strategy["id"],))
+    for cap in caps:
+        conn.execute(
+            "INSERT OR IGNORE INTO edges(source,target,relation) VALUES(?,?,?)",
+            (strategy["id"], cap["id"], "REQUIRES"),
+        )
+    conn.commit()
+    emit({"ok": True, "result": {"strategy": strategy["id"],
+                                 "capabilities": [c["id"] for c in caps]}})
+
+
+def resolve_requires_source(conn, ref):
+    """Resolve a REQUIRES source, preferring CAPABILITY then STRATEGY.
+
+    Skill nodes may share a name with the capability they implement, so a bare
+    name is ambiguous; a REQUIRES edge can only originate from a capability or
+    a strategy.
+    """
+    rows = conn.execute(
+        "SELECT * FROM nodes WHERE (id=? OR name=?)"
+        " AND type IN ('CAPABILITY','STRATEGY')", (ref, ref)
+    ).fetchall()
+    if not rows:
+        fail("no capability or strategy named %r" % ref)
+    if len(rows) > 1:
+        fail("ambiguous reference %r: %s" % (ref, [r["id"] for r in rows]))
+    return rows[0]
+
+
+def cmd_remove_requires(conn, args):
+    """Remove REQUIRES edges from a source node to the named targets."""
+    source = resolve_requires_source(conn, args.source)
+    targets = [resolve(conn, x.strip(), "CAPABILITY")
+               for x in args.requires.split(",") if x.strip()]
+    removed = []
+    for target in targets:
+        cur = conn.execute(
+            "DELETE FROM edges WHERE source=? AND target=? AND relation='REQUIRES'",
+            (source["id"], target["id"]),
+        )
+        if cur.rowcount:
+            removed.append(target["id"])
+    conn.commit()
+    emit({"ok": True, "result": {"source": source["id"], "removed": removed}})
+
+
+def cmd_retire_capability(conn, args):
+    """Retire a capability and drop the REQUIRES edges that point at it."""
+    cap = resolve(conn, args.capability, "CAPABILITY")
+    spec = json.loads(cap["spec_json"] or "{}")
+    spec["retire_reason"] = args.reason
+    conn.execute("UPDATE nodes SET status='retired', spec_json=? WHERE id=?",
+                 (json.dumps(spec), cap["id"]))
+    cur = conn.execute(
+        "DELETE FROM edges WHERE target=? AND relation='REQUIRES'", (cap["id"],)
+    )
+    conn.commit()
+    emit({"ok": True, "result": {"id": cap["id"], "status": "retired",
+                                 "requires_edges_removed": cur.rowcount}})
 
 
 def cmd_propose_capability(conn, args):
@@ -363,9 +530,25 @@ def cmd_reset(conn, args):
     src = sqlite3.connect(path)
     src.backup(conn)
     src.close()
+    conn.execute("INSERT OR REPLACE INTO state(key,value) VALUES('batch','0')")
     conn.execute("INSERT OR REPLACE INTO state(key,value) VALUES('round','0')")
     conn.commit()
-    emit({"ok": True, "result": {"reset_to": path, "round": 0}})
+    emit({"ok": True, "result": {"reset_to": path, "batch": 0}})
+
+
+def cmd_batch_get(conn, args):
+    init_db(conn)
+    row = conn.execute("SELECT value FROM state WHERE key='batch'").fetchone()
+    emit({"ok": True, "result": {"batch": int(row["value"]) if row else 0}})
+
+
+def cmd_batch_inc(conn, args):
+    init_db(conn)
+    row = conn.execute("SELECT value FROM state WHERE key='batch'").fetchone()
+    n = (int(row["value"]) if row else 0) + 1
+    conn.execute("INSERT OR REPLACE INTO state(key,value) VALUES('batch',?)", (str(n),))
+    conn.commit()
+    emit({"ok": True, "result": {"batch": n}})
 
 
 def cmd_round_get(conn, args):
@@ -421,6 +604,20 @@ def build_parser():
 
     s = sub.add_parser("get_missing_capabilities"); s.add_argument("--strategy", required=True)
     s.set_defaults(fn=cmd_get_missing_capabilities)
+    s = sub.add_parser("coverage"); s.add_argument("--task", default="")
+    s.set_defaults(fn=cmd_coverage)
+    s = sub.add_parser("set_strategy_capabilities")
+    s.add_argument("--strategy", required=True)
+    s.add_argument("--capabilities", required=True)
+    s.set_defaults(fn=cmd_set_strategy_capabilities)
+    s = sub.add_parser("remove_requires")
+    s.add_argument("--source", required=True)
+    s.add_argument("--requires", required=True)
+    s.set_defaults(fn=cmd_remove_requires)
+    s = sub.add_parser("retire_capability")
+    s.add_argument("--capability", required=True)
+    s.add_argument("--reason", default="")
+    s.set_defaults(fn=cmd_retire_capability)
 
     s = sub.add_parser("propose_capability")
     s.add_argument("--name", required=True); s.add_argument("--description", default="")
@@ -459,6 +656,11 @@ def build_parser():
     s.add_argument("--keep", required=True); s.add_argument("--merge", required=True)
     s.set_defaults(fn=cmd_merge_capabilities)
 
+    s = sub.add_parser("add_requires")
+    s.add_argument("--capability", required=True)
+    s.add_argument("--requires", required=True)
+    s.set_defaults(fn=cmd_add_requires)
+
     s = sub.add_parser("checkpoint"); s.add_argument("--name", required=True)
     s.set_defaults(fn=cmd_checkpoint)
 
@@ -468,6 +670,8 @@ def build_parser():
     s = sub.add_parser("reset"); s.add_argument("--name", default="initial")
     s.set_defaults(fn=cmd_reset)
 
+    s = sub.add_parser("batch_get"); s.set_defaults(fn=cmd_batch_get)
+    s = sub.add_parser("batch_inc"); s.set_defaults(fn=cmd_batch_inc)
     s = sub.add_parser("round_get"); s.set_defaults(fn=cmd_round_get)
     s = sub.add_parser("round_inc"); s.set_defaults(fn=cmd_round_inc)
     s = sub.add_parser("list"); s.set_defaults(fn=cmd_list)

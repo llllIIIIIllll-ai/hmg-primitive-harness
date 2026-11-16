@@ -10,9 +10,13 @@ if [ -x scripts/server_ctl.sh ]; then
 fi
 
 rm -rf experiments/ll_v1/skills experiments/ll_v1/logs \
-       experiments/ll_v1/library experiments/ll_v1/out
-rm -f experiments/ll_v1/checkpoints/round_*.db \
-      experiments/ll_v1/checkpoints/round_*.db-*
+       experiments/ll_v1/library experiments/ll_v1/out \
+       experiments/ll_v1/evidence experiments/ll_v1/experiment_log.md \
+       experiments/ll_v1/proof experiments/ll_v1/micro
+rm -f experiments/ll_v1/proposal_packet_batch_*.md \
+      experiments/ll_v1/bootstrap_graph.sh experiments/ll_v1/EXEC_ENV.md
+rm -f experiments/ll_v1/checkpoints/batch_*.db \
+      experiments/ll_v1/checkpoints/batch_*.db-*
 rm -f experiments/ll_v1/skill_system.db experiments/ll_v1/skill_system.db-*
 
 python3 graph_cli.py --db experiments/ll_v1/skill_system.db reset

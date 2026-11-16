@@ -1,0 +1,50 @@
+{
+ "ok": true,
+ "result": {
+  "ok": true,
+  "object": {
+   "name": "bottle",
+   "pos": [
+    1.741,
+    0.045,
+    0.799
+   ],
+   "hand": {
+    "left": [
+     1.59,
+     0.171,
+     1.232
+    ],
+    "right": [
+     1.637,
+     -0.139,
+     1.23
+    ]
+   }
+  },
+  "aabb": {
+   "body": "bottle_main",
+   "body_pos": [
+    1.7413,
+    0.0452,
+    0.7995
+   ],
+   "lo": [
+    1.6445,
+    -0.0029,
+    0.7995
+   ],
+   "hi": [
+    1.8349,
+    0.1005,
+    1.0251
+   ]
+  },
+  "pose_error": null,
+  "tracking_gap": 0.0,
+  "target": null,
+  "binding_constraint": null,
+  "t0": 11.36,
+  "t1": 11.36
+ }
+}

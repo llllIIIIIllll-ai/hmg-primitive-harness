@@ -1,0 +1,374 @@
+{
+  "task": "05_drill_lift",
+  "seed": 0,
+  "delta_rad": 0.2,
+  "dur_s": 1.5,
+  "hold_s": 1.0,
+  "authority_registry": "docs/joint_authority.json",
+  "homie": {
+    "waist_yaw_joint": {
+      "final_writer_default": "homie_v2",
+      "authority_note": "gain is the upper-channel response only; HOMIE overwrites the waist, so this is not command authority",
+      "delta_cmd": -0.2,
+      "measured_gain": 1.142,
+      "delta_meas": -0.2283,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.8
+    },
+    "waist_roll_joint": {
+      "final_writer_default": "homie_v2",
+      "authority_note": "gain is the upper-channel response only; HOMIE overwrites the waist, so this is not command authority",
+      "delta_cmd": -0.2,
+      "measured_gain": 0.415,
+      "delta_meas": -0.083,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.3
+    },
+    "waist_pitch_joint": {
+      "final_writer_default": "homie_v2",
+      "authority_note": "gain is the upper-channel response only; HOMIE overwrites the waist, so this is not command authority",
+      "delta_cmd": -0.2,
+      "measured_gain": 1.189,
+      "delta_meas": -0.2378,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.1
+    },
+    "left_shoulder_pitch_joint": {
+      "final_writer_default": "upper_target",
+      "authority_note": "usable direction measured at delta 0.20 rad",
+      "delta_cmd": 0.2,
+      "measured_gain": 0.997,
+      "delta_meas": 0.1994,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.0
+    },
+    "left_shoulder_roll_joint": {
+      "final_writer_default": "upper_target",
+      "authority_note": "usable direction measured at delta 0.20 rad",
+      "delta_cmd": 0.2,
+      "measured_gain": 0.968,
+      "delta_meas": 0.1936,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.1
+    },
+    "left_shoulder_yaw_joint": {
+      "final_writer_default": "upper_target",
+      "authority_note": "usable direction measured at delta 0.20 rad",
+      "delta_cmd": -0.2,
+      "measured_gain": 0.975,
+      "delta_meas": -0.1951,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.1
+    },
+    "left_elbow_joint": {
+      "final_writer_default": "upper_target",
+      "authority_note": "usable direction measured at delta 0.20 rad",
+      "delta_cmd": 0.2,
+      "measured_gain": 0.97,
+      "delta_meas": 0.194,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.1
+    },
+    "left_wrist_roll_joint": {
+      "final_writer_default": "upper_target",
+      "authority_note": "usable direction measured at delta 0.20 rad",
+      "delta_cmd": 0.2,
+      "measured_gain": 0.977,
+      "delta_meas": 0.1954,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.1
+    },
+    "left_wrist_pitch_joint": {
+      "final_writer_default": "upper_target",
+      "authority_note": "usable direction measured at delta 0.20 rad",
+      "delta_cmd": -0.2,
+      "measured_gain": 0.987,
+      "delta_meas": -0.1973,
+      "waist_owner": "homie",
+      "base_tilt_deg": 4.9
+    },
+    "left_wrist_yaw_joint": {
+      "final_writer_default": "upper_target",
+      "authority_note": "usable direction measured at delta 0.20 rad",
+      "delta_cmd": -0.2,
+      "measured_gain": 0.983,
+      "delta_meas": -0.1966,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.0
+    },
+    "left_hand_index_0_joint": {
+      "final_writer_default": "upper_target",
+      "authority_note": "one-sided range: command only the closing direction",
+      "delta_cmd": -0.2,
+      "measured_gain": 0.856,
+      "delta_meas": -0.1713,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.0
+    },
+    "left_hand_index_1_joint": {
+      "final_writer_default": "upper_target",
+      "authority_note": "one-sided range: command only the closing direction",
+      "delta_cmd": -0.2,
+      "measured_gain": 0.857,
+      "delta_meas": -0.1714,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.0
+    },
+    "left_hand_middle_0_joint": {
+      "final_writer_default": "upper_target",
+      "authority_note": "one-sided range: command only the closing direction",
+      "delta_cmd": -0.2,
+      "measured_gain": 0.856,
+      "delta_meas": -0.1713,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.0
+    },
+    "left_hand_middle_1_joint": {
+      "final_writer_default": "upper_target",
+      "authority_note": "one-sided range: command only the closing direction",
+      "delta_cmd": -0.2,
+      "measured_gain": 0.857,
+      "delta_meas": -0.1714,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.0
+    },
+    "left_hand_thumb_0_joint": {
+      "final_writer_default": "upper_target",
+      "authority_note": "one-sided range: command only the closing direction",
+      "delta_cmd": -0.2,
+      "measured_gain": 0.863,
+      "delta_meas": -0.1726,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.0
+    },
+    "left_hand_thumb_1_joint": {
+      "final_writer_default": "upper_target",
+      "authority_note": "one-sided range: command only the closing direction",
+      "delta_cmd": 0.2,
+      "measured_gain": 0.857,
+      "delta_meas": 0.1715,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.0
+    },
+    "left_hand_thumb_2_joint": {
+      "final_writer_default": "upper_target",
+      "authority_note": "one-sided range: command only the closing direction",
+      "delta_cmd": 0.2,
+      "measured_gain": 0.857,
+      "delta_meas": 0.1714,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.0
+    },
+    "right_shoulder_pitch_joint": {
+      "final_writer_default": "upper_target",
+      "authority_note": "usable direction measured at delta 0.20 rad",
+      "delta_cmd": 0.2,
+      "measured_gain": 0.996,
+      "delta_meas": 0.1991,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.2
+    },
+    "right_shoulder_roll_joint": {
+      "final_writer_default": "upper_target",
+      "authority_note": "usable direction measured at delta 0.20 rad",
+      "delta_cmd": -0.2,
+      "measured_gain": 0.972,
+      "delta_meas": -0.1943,
+      "waist_owner": "homie",
+      "base_tilt_deg": 4.9
+    },
+    "right_shoulder_yaw_joint": {
+      "final_writer_default": "upper_target",
+      "authority_note": "usable direction measured at delta 0.20 rad",
+      "delta_cmd": 0.2,
+      "measured_gain": 0.971,
+      "delta_meas": 0.1941,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.2
+    },
+    "right_elbow_joint": {
+      "final_writer_default": "upper_target",
+      "authority_note": "usable direction measured at delta 0.20 rad",
+      "delta_cmd": 0.2,
+      "measured_gain": 0.962,
+      "delta_meas": 0.1924,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.2
+    },
+    "right_wrist_roll_joint": {
+      "final_writer_default": "upper_target",
+      "authority_note": "usable direction measured at delta 0.20 rad",
+      "delta_cmd": 0.2,
+      "measured_gain": 0.977,
+      "delta_meas": 0.1954,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.0
+    },
+    "right_wrist_pitch_joint": {
+      "final_writer_default": "upper_target",
+      "authority_note": "usable direction measured at delta 0.20 rad",
+      "delta_cmd": -0.2,
+      "measured_gain": 0.987,
+      "delta_meas": -0.1974,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.0
+    },
+    "right_wrist_yaw_joint": {
+      "final_writer_default": "upper_target",
+      "authority_note": "usable direction measured at delta 0.20 rad",
+      "delta_cmd": -0.2,
+      "measured_gain": 0.983,
+      "delta_meas": -0.1965,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.0
+    },
+    "right_hand_index_0_joint": {
+      "final_writer_default": "upper_target",
+      "authority_note": "one-sided range: command only the closing direction",
+      "delta_cmd": 0.2,
+      "measured_gain": 0.857,
+      "delta_meas": 0.1714,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.0
+    },
+    "right_hand_index_1_joint": {
+      "final_writer_default": "upper_target",
+      "authority_note": "one-sided range: command only the closing direction",
+      "delta_cmd": 0.2,
+      "measured_gain": 0.857,
+      "delta_meas": 0.1714,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.0
+    },
+    "right_hand_middle_0_joint": {
+      "final_writer_default": "upper_target",
+      "authority_note": "one-sided range: command only the closing direction",
+      "delta_cmd": 0.2,
+      "measured_gain": 0.857,
+      "delta_meas": 0.1714,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.0
+    },
+    "right_hand_middle_1_joint": {
+      "final_writer_default": "upper_target",
+      "authority_note": "one-sided range: command only the closing direction",
+      "delta_cmd": 0.2,
+      "measured_gain": 0.857,
+      "delta_meas": 0.1714,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.0
+    },
+    "right_hand_thumb_0_joint": {
+      "final_writer_default": "upper_target",
+      "authority_note": "one-sided range: command only the closing direction",
+      "delta_cmd": -0.2,
+      "measured_gain": 0.863,
+      "delta_meas": -0.1726,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.0
+    },
+    "right_hand_thumb_1_joint": {
+      "final_writer_default": "upper_target",
+      "authority_note": "one-sided range: command only the closing direction",
+      "delta_cmd": -0.2,
+      "measured_gain": 0.857,
+      "delta_meas": -0.1715,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.0
+    },
+    "right_hand_thumb_2_joint": {
+      "final_writer_default": "upper_target",
+      "authority_note": "one-sided range: command only the closing direction",
+      "delta_cmd": -0.2,
+      "measured_gain": 0.857,
+      "delta_meas": -0.1714,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.0
+    }
+  },
+  "ik": {
+    "waist_yaw_joint": {
+      "final_writer": "upper_target",
+      "delta_cmd": -0.2,
+      "measured_gain": 0.999,
+      "delta_meas": -0.1998,
+      "waist_owner": "ik",
+      "base_tilt_deg": 3.7
+    },
+    "waist_roll_joint": {
+      "final_writer": "upper_target",
+      "delta_cmd": -0.2,
+      "measured_gain": 1.0,
+      "delta_meas": -0.2,
+      "waist_owner": "ik",
+      "base_tilt_deg": 4.3
+    },
+    "waist_pitch_joint": {
+      "final_writer": "upper_target",
+      "delta_cmd": -0.2,
+      "measured_gain": 1.011,
+      "delta_meas": -0.2022,
+      "waist_owner": "ik",
+      "base_tilt_deg": 4.9
+    }
+  },
+  "restore": {
+    "waist_yaw_joint": {
+      "final_writer": "homie_v2",
+      "delta_cmd": -0.2,
+      "measured_gain": 1.142,
+      "delta_meas": -0.2283,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.8
+    },
+    "waist_roll_joint": {
+      "final_writer": "homie_v2",
+      "delta_cmd": -0.2,
+      "measured_gain": 0.415,
+      "delta_meas": -0.083,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.3
+    },
+    "waist_pitch_joint": {
+      "final_writer": "homie_v2",
+      "delta_cmd": -0.2,
+      "measured_gain": 1.189,
+      "delta_meas": -0.2378,
+      "waist_owner": "homie",
+      "base_tilt_deg": 5.1
+    }
+  },
+  "waist_handover": {
+    "switch_to_ik": {
+      "waist_owner": "ik",
+      "waist_blend": 0.5,
+      "lower_owner": "policy",
+      "lower_policy_action": true
+    },
+    "restore_homie": {
+      "waist_owner": "homie",
+      "waist_blend": 0.5,
+      "lower_owner": "policy",
+      "lower_policy_action": true
+    },
+    "measured_gain": {
+      "homie_before": {
+        "waist_yaw_joint": 1.142,
+        "waist_roll_joint": 0.415,
+        "waist_pitch_joint": 1.189
+      },
+      "ik_after": {
+        "waist_yaw_joint": 0.999,
+        "waist_roll_joint": 1.0,
+        "waist_pitch_joint": 1.011
+      },
+      "homie_again": {
+        "waist_yaw_joint": 1.142,
+        "waist_roll_joint": 0.415,
+        "waist_pitch_joint": 1.189
+      }
+    },
+    "restore_ok": true,
+    "balance_ok": true
+  }
+}

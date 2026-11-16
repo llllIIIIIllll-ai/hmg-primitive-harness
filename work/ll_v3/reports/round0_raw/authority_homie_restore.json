@@ -1,0 +1,9 @@
+{
+ "ok": true,
+ "result": {
+  "waist_owner": "homie",
+  "waist_blend": 0.5,
+  "lower_owner": "policy",
+  "lower_policy_action": true
+ }
+}

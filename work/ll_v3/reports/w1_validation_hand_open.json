@@ -1,0 +1,310 @@
+{
+  "validator": "independent W1 validator (ll_v3)",
+  "primitive": "hand_open",
+  "task": "05_drill_lift",
+  "seed": 0,
+  "slot": "05_drill_lift__4",
+  "source": "work/ll_v3/substrate/hand_open.py",
+  "source_sha256": "0f1c0ca72751bfd2079374ad859a4f20b2717459e7d70ee86e75ee3805f1dd48",
+  "source_modified_by_validator": false,
+  "revision_validated": "patched: holds close_grip upper_target after the ramp; open_joint_error evaluated before the no-grasp branch; setup_note='no_grasp_to_open'; ok = open target reached AND (no valid grasp OR contacts drop)",
+  "contract": "contact-triggered open, reports contacts after open and disturbance",
+  "micro_benchmark": "lift must produce bilateral contact; hand_open returns ok; contacts_after fewer than contacts_before; open_joint_error <= 0.15; report contacts_before, contacts_after, object_disturbance, open_joint_error, binding_constraint",
+  "verdict": "restrict",
+  "binding_constraint": "result_serialization",
+  "setup_constraint": "no_bilateral_grasp",
+  "verdict_rationale": [
+    "The previous open-target defect is fixed: holding the close_grip target vector instead of api.upper() makes the fingers actually travel to neutral. In the free-finger run the measured open_joint_error is 0.057 rad (<= 0.15) with ok=true, binding_constraint=null; in the delegated run the index/middle joints go from 0.64-0.69 rad closed to 0.056-0.06 rad after open, proving the held vector is the neutral target.",
+    "The primitive still fails to reach the 0.15 gate whenever a finger is physically blocked: delegated open_joint_error = 0.323 rad (left thumb_1) because the two hands' thumb_2 links press each other at 17.434 N in the delegated 'keep'-orientation pose; direct two-pad attempt 2 gives 0.263 rad (right thumb_1) because the right thumb is pinned against the drill while the open is commanded.",
+    "The patched source has a failure-path defect: ok = open_ok and release_ok returns a numpy.bool_ when open_ok is False (numpy.short-circuit returns the falsy left operand), and numpy.bool_ is not JSON-serializable while numpy.float64 is (float subclass). The tool server answers {\"ok\": false, \"error\": \"unserializable result: TypeError: Object of type bool_ is not JSON serializable\"} and the caller receives no report at all - exactly in the failing-open cases the contract requires it to report contacts_after, object_disturbance and open_joint_error. Reproduced identically on the delegated run and on direct attempt 2. A bool(...) cast on ok/open_ok would fix it; the validator did not modify the source.",
+    "The release half of the contract is unexercised: no setup produced a bilateral grasp, so release_test_applicable was false in every run that returned a result, and the 'contacts drop after open' branch was never exercised on a real grasp. The one successful open (direct attempt 1) had contacts_before {left 0, right 0}.",
+    "Restrict rather than reject: the open command and target are correct where the fingers are unimpeded, and the returned values that do arrive (contacts_before/after, object_disturbance, open_joint_error, setup_note) are truthful. The remaining setup constraint is upstream W2: arm_pose_ik with orientation='keep' cannot place opposing pads on the drill, so no bilateral grasp is formed by any delegated or direct attempt."
+  ],
+  "sequence": {
+    "reset": {"tool": "reset", "seed": 0},
+    "steps": [
+      "base_standoff_servo {standoff: 0.15}",
+      "arm_pose_ik {targets: left [objx-0.0838, objy+0.07, 0.94], right [objx-0.0838, objy-0.07, 0.94]}",
+      "hand_close_contact {}",
+      "qp_reach {task_dim: 12, targets: arm_pose_ik target + 0.10 m z, orientation: keep, hand_hold: closed_upper, dur: 0.35, iters: 80}",
+      "hold 0.2 s (validator_probe)",
+      "hand_open {}",
+      "validator_probe (contacts_detail, hand_contacts_side, object, base, hand joints)"
+    ]
+  },
+  "runs": {
+    "delegated": {
+      "raw_dir": "work/ll_v3/reports/w1_hand_open_raw2",
+      "standoff": {"ok": true, "inner_ok": true, "binding_constraint": null},
+      "object_after_standoff": [1.739, 0.04, 0.801],
+      "arm_pose_ik": {
+        "ok": true,
+        "inner_ok": false,
+        "worst_pad_error": 0.07267881396940928,
+        "ik_err": {"left": 0.0008, "right": 0.0007},
+        "binding_constraint": "pad_error",
+        "targets_left": [1.6552, 0.11, 0.94],
+        "targets_right": [1.6552, -0.03, 0.94]
+      },
+      "hand_close_contact": {
+        "ok": true,
+        "inner_ok": false,
+        "contacts": {"left": 0, "right": 1, "pairs": [["gripper0_right_right_hand_palm_link", "bottle_collider_cylinder99aba387", "gripper0_right_g0_col"]]},
+        "bilateral_at_close": false,
+        "binding_constraint": "object_disturbance"
+      },
+      "lift": {
+        "ok": true,
+        "ik_err": {"left": 0.0007, "right": 0.0007},
+        "joint_margin_min": 0.4796,
+        "object_at_t11_7": [1.752, 0.036, 0.951],
+        "hand_object_contacts": 0
+      },
+      "after_lift_probe": {
+        "object": [1.745, 0.024, 0.946],
+        "hand_contacts_side": {"left": 0, "right": 0, "pairs": []},
+        "hand_joints_closed": {
+          "left_hand_index_0_joint": -0.644, "left_hand_index_1_joint": -0.679,
+          "left_hand_middle_0_joint": -0.692, "left_hand_middle_1_joint": -0.687,
+          "left_hand_thumb_0_joint": 0.002, "left_hand_thumb_1_joint": 0.681,
+          "left_hand_thumb_2_joint": 0.686, "right_hand_index_0_joint": 0.647,
+          "right_hand_index_1_joint": 0.676, "right_hand_middle_0_joint": 0.69,
+          "right_hand_middle_1_joint": 0.687, "right_hand_thumb_0_joint": -0.001,
+          "right_hand_thumb_1_joint": -0.683, "right_hand_thumb_2_joint": -0.686
+        },
+        "handish_contacts": [
+          {"b1": "bottle_body", "b2": "robot0_left_wrist_yaw_link", "force_n": 0.077},
+          {"b1": "gripper0_left_left_hand_index_1_link", "b2": "gripper0_right_right_hand_index_1_link", "force_n": 3.903}
+        ]
+      },
+      "hand_open": {
+        "server_ok": false,
+        "error": "unserializable result: TypeError: Object of type bool_ is not JSON serializable",
+        "report_received": false
+      },
+      "after_open_probe": {
+        "object": [1.765, 0.089, 0.867],
+        "hand_contacts_side": {"left": 0, "right": 0, "pairs": []},
+        "hand_joints": {
+          "left_hand_index_0_joint": -0.058, "left_hand_index_1_joint": -0.056,
+          "left_hand_middle_0_joint": -0.06, "left_hand_middle_1_joint": -0.056,
+          "left_hand_thumb_0_joint": 0.041, "left_hand_thumb_1_joint": 0.323,
+          "left_hand_thumb_2_joint": 0.207, "right_hand_index_0_joint": 0.058,
+          "right_hand_index_1_joint": 0.056, "right_hand_middle_0_joint": 0.059,
+          "right_hand_middle_1_joint": 0.056, "right_hand_thumb_0_joint": 0.048,
+          "right_hand_thumb_1_joint": -0.317, "right_hand_thumb_2_joint": -0.21
+        },
+        "open_joint_error_measured": 0.323,
+        "open_joint_error_argmax": "left_hand_thumb_1_joint",
+        "thumb_thumb_contact": {
+          "b1": "gripper0_left_left_hand_thumb_2_link",
+          "b2": "gripper0_right_right_hand_thumb_2_link",
+          "pos": [1.7772, 0.0643, 1.0335],
+          "dist": -0.00077,
+          "force_n": 17.434
+        },
+        "object_displacement_across_open_m": 0.1042
+      },
+      "benchmark_result": {
+        "bilateral_contact_from_lift": false,
+        "hand_open_ok": false,
+        "contacts_after_fewer_than_before": null,
+        "open_joint_error_le_0.15": false,
+        "report_complete": false
+      }
+    },
+    "direct_two_pad_1": {
+      "raw_dir": "work/ll_v3/reports/w1_hand_open_direct_raw",
+      "orientation": "per-side R_body: left diag(1,-1,-1), right identity (opposing pad normals)",
+      "reach": {
+        "ok": true,
+        "ik_err": {"left": 0.0009, "right": 0.0004},
+        "pad_left": {"pos": [1.8099, 0.0807, 0.9586], "normal": [-0.075, -0.997, -0.012]},
+        "pad_right": {"pos": [1.8158, -0.0562, 0.9546], "normal": [0.045, 0.997, -0.06]}
+      },
+      "hand_close_contact": {
+        "ok": true,
+        "contacts": {"left": 0, "right": 0, "pairs": []},
+        "bilateral_at_close": false,
+        "object_disturbance": 0.04554119014694272
+      },
+      "lift": {"ok": true, "ik_err": {"left": 0.0009, "right": 0.0009}},
+      "after_lift_probe": {
+        "object": [1.975, 0.113, 0.874],
+        "hand_contacts_side": {"left": 0, "right": 0, "pairs": []}
+      },
+      "hand_open": {
+        "server_ok": true,
+        "result": {
+          "ok": true,
+          "contacts_before": {"left": 0, "right": 0, "pairs": []},
+          "contacts_after": {"left": 0, "right": 0, "pairs": []},
+          "object_disturbance": 0.0036055512754639926,
+          "open_joint_error": 0.057,
+          "open_target_present": true,
+          "release_test_applicable": false,
+          "binding_constraint": null,
+          "setup_note": "no_grasp_to_open",
+          "t0": 11.96,
+          "t1": 12.6
+        }
+      },
+      "after_open_probe": {
+        "object": [1.973, 0.117, 0.873],
+        "hand_contacts_side": {"left": 0, "right": 0, "pairs": []},
+        "open_joint_error_measured": 0.057,
+        "open_joint_error_argmax": "left_hand_thumb_1_joint",
+        "hand_joints": {
+          "left_hand_index_0_joint": -0.055, "left_hand_index_1_joint": -0.056,
+          "left_hand_middle_0_joint": -0.055, "left_hand_middle_1_joint": -0.056,
+          "left_hand_thumb_0_joint": -0.003, "left_hand_thumb_1_joint": 0.057,
+          "left_hand_thumb_2_joint": 0.056, "right_hand_index_0_joint": 0.056,
+          "right_hand_index_1_joint": 0.056, "right_hand_middle_0_joint": 0.056,
+          "right_hand_middle_1_joint": 0.056, "right_hand_thumb_0_joint": 0.001,
+          "right_hand_thumb_1_joint": -0.057, "right_hand_thumb_2_joint": -0.056
+        }
+      },
+      "benchmark_result": {
+        "bilateral_contact_from_lift": false,
+        "hand_open_ok": true,
+        "contacts_after_fewer_than_before": null,
+        "open_joint_error_le_0.15": true,
+        "report_complete": true,
+        "note": "open target reached with free fingers; no grasp was formed (before 0/0), so the release test was not applicable and the open success is not a grasp-release success"
+      }
+    },
+    "direct_two_pad_2": {
+      "raw_dir": "work/ll_v3/reports/w1_hand_open_direct2_raw",
+      "orientation": "per-side R_body: left diag(1,-1,-1), right identity; site targets corrected by measured pad-site offset",
+      "reach": {
+        "ok": true,
+        "ik_err": {"left": 0.0044, "right": 0.0005},
+        "pad_left": {"pos": [1.7455, 0.1077, 0.9252], "normal": [-0.031, -0.999, 0.038]},
+        "pad_right": {"pos": [1.7417, -0.0209, 0.9168], "normal": [-0.067, 0.949, -0.307]}
+      },
+      "hand_close_contact": {
+        "ok": true,
+        "contacts": {"left": 0, "right": 0, "pairs": []},
+        "bilateral_at_close": false,
+        "object_disturbance": 0.017549928774784257
+      },
+      "lift": {"ok": true, "ik_err": {"left": 0.0005, "right": 0.0017}},
+      "after_lift_probe": {
+        "object": [1.752, 0.058, 0.897],
+        "hand_contacts_side": {"left": 0, "right": 1, "pairs": [["gripper0_right_right_hand_palm_link", "bottle_collider_box_8e968ea9", "gripper0_right_g0_col"]]},
+        "note": "only the right palm rides under the drill; left hand has no contact"
+      },
+      "hand_open": {
+        "server_ok": false,
+        "error": "unserializable result: TypeError: Object of type bool_ is not JSON serializable",
+        "report_received": false
+      },
+      "after_open_probe": {
+        "object": [1.755, 0.115, 0.872],
+        "hand_contacts_side": {"left": 0, "right": 2, "pairs": [
+          ["gripper0_right_right_hand_thumb_1_link", "bottle_collider_box_f302734d", "gripper0_right_right_hand_thumb_1_link_col"],
+          ["gripper0_right_right_hand_thumb_2_link", "bottle_collider_box_8e968ea9", "gripper0_right_right_hand_thumb_2_link_col"]
+        ]},
+        "open_joint_error_measured": 0.263,
+        "open_joint_error_argmax": "right_hand_thumb_1_joint",
+        "hand_joints": {
+          "left_hand_index_0_joint": -0.056, "left_hand_index_1_joint": -0.056,
+          "left_hand_middle_0_joint": -0.056, "left_hand_middle_1_joint": -0.056,
+          "left_hand_thumb_0_joint": -0.004, "left_hand_thumb_1_joint": 0.057,
+          "left_hand_thumb_2_joint": 0.056, "right_hand_index_0_joint": 0.058,
+          "right_hand_index_1_joint": 0.056, "right_hand_middle_0_joint": 0.058,
+          "right_hand_middle_1_joint": 0.056, "right_hand_thumb_0_joint": 0.002,
+          "right_hand_thumb_1_joint": -0.263, "right_hand_thumb_2_joint": -0.169
+        },
+        "left_palm_vs_right_thumb_contact": {"force_n": 2.896}
+      },
+      "benchmark_result": {
+        "bilateral_contact_from_lift": false,
+        "hand_open_ok": false,
+        "contacts_after_fewer_than_before": false,
+        "open_joint_error_le_0.15": false,
+        "report_complete": false
+      }
+    }
+  },
+  "contract_judgment": {
+    "open_target_mechanism_fixed": true,
+    "open_target_reached_when_unimpeded": true,
+    "open_target_reachable_when_blocked": false,
+    "reporting_contract_satisfied_on_success": true,
+    "reporting_contract_satisfied_on_failure": false,
+    "release_contract_exercised": false,
+    "truthful_contact_channel": "api.contact_detail(limit=200); api.hand_contacts_side is a hand-link subset that ignores the drill's child collision geoms"
+  },
+  "defects": [
+    {
+      "id": "failure_path_serialization",
+      "severity": "blocking_for_contract_reporting",
+      "location": "work/ll_v3/substrate/hand_open.py line 29 (ok = open_ok and release_ok) and line 27 (open_ok = open_err <= open_tol)",
+      "detail": "open_err is numpy.float64 (a float subclass, JSON-serializable). open_ok is numpy.bool_. Python 'and' returns the falsy left operand, so ok is numpy.bool_ whenever the open target is not reached. numpy.bool_ is not JSON-serializable, so the server reports 'unserializable result' and the caller loses the whole report in exactly the failing-open case. When open_ok is true, 'and' returns the Python bool release_ok and the result serializes.",
+      "reproduction": "delegated run and direct attempt 2, both open_joint_error > 0.15, both returned the same unserializable-result error; direct attempt 1 (open_joint_error 0.057) serialized normally",
+      "suggested_fix_not_applied": "ok = bool(open_ok) and release_ok, or cast open_ok = bool(open_err <= open_tol)"
+    },
+    {
+      "id": "open_target_unreachable_when_finger_blocked",
+      "severity": "environment_setup_condition",
+      "detail": "When a thumb is blocked, the measured open_joint_error exceeds the 0.15 gate: 0.323 rad (delegated, thumb_2 vs thumb_2 17.434 N self-contact) and 0.263 rad (direct attempt 2, right thumb vs drill). The primitive correctly commands the neutral target, but the gate cannot be met in these poses.",
+      "disposition": "Attempting to satisfy this through the primitive would require force-based opening or collision avoidance; the blocker in both cases is the upstream grasp pose (no bilateral grasp)."
+    }
+  ],
+  "remaining_setup_constraint": {
+    "id": "no_bilateral_grasp",
+    "owner": "upstream W2 (grasp composition)",
+    "evidence": [
+      "delegated arm_pose_ik inner ok false, worst_pad_error 0.07267881396940928, binding pad_error; orientation='keep' leaves both pad normals nearly the same world direction (+y)",
+      "delegated hand_close_contact contacts {left 0, right 1}, bilateral_at_close false, binding object_disturbance",
+      "delegated lift hand_contacts_side {left 0, right 0}; only a 0.077 N bottle_body vs left wrist graze and a 3.903 N left/right index self-contact; object falls from z 0.946 to 0.867 after open",
+      "direct two-pad attempt 1 (opposing pads): close 0/0 and lift 0/0; pads sat ~0.07 m +x from the drill",
+      "direct two-pad attempt 2 (offset-corrected opposing pads): close 0/0; lift right palm only; right thumb pinned by the drill, open_joint_error 0.263"
+    ]
+  },
+  "benchmark_summary": {
+    "bilateral_contact_achieved_in_any_setup": false,
+    "hand_open_ok_any_setup": true,
+    "hand_open_ok_on_delegated_setup": false,
+    "min_open_joint_error_measured": 0.057,
+    "max_open_joint_error_measured": 0.323,
+    "disturbance_measured_where_reported": 0.0036055512754639926,
+    "disturbance_measured_where_report_lost": 0.1042
+  },
+  "evidence_files": [
+    "work/ll_v3/reports/w1_hand_open_raw2/register_hand_open.json",
+    "work/ll_v3/reports/w1_hand_open_raw2/reset.json",
+    "work/ll_v3/reports/w1_hand_open_raw2/base_standoff_servo.json",
+    "work/ll_v3/reports/w1_hand_open_raw2/probe_after_standoff.json",
+    "work/ll_v3/reports/w1_hand_open_raw2/arm_pose_ik.json",
+    "work/ll_v3/reports/w1_hand_open_raw2/hand_close_contact.json",
+    "work/ll_v3/reports/w1_hand_open_raw2/qp_reach_lift.json",
+    "work/ll_v3/reports/w1_hand_open_raw2/probe_after_lift.json",
+    "work/ll_v3/reports/w1_hand_open_raw2/hand_open.json",
+    "work/ll_v3/reports/w1_hand_open_raw2/probe_after_open.json",
+    "work/ll_v3/reports/w1_hand_open_direct_raw/hand_close_contact.json",
+    "work/ll_v3/reports/w1_hand_open_direct_raw/qp_reach_direct_grasp.json",
+    "work/ll_v3/reports/w1_hand_open_direct_raw/qp_reach_lift.json",
+    "work/ll_v3/reports/w1_hand_open_direct_raw/probe_after_lift.json",
+    "work/ll_v3/reports/w1_hand_open_direct_raw/hand_open.json",
+    "work/ll_v3/reports/w1_hand_open_direct_raw/probe_after_open.json",
+    "work/ll_v3/reports/w1_hand_open_direct2_raw/hand_close_contact.json",
+    "work/ll_v3/reports/w1_hand_open_direct2_raw/qp_reach_direct_grasp.json",
+    "work/ll_v3/reports/w1_hand_open_direct2_raw/qp_reach_lift.json",
+    "work/ll_v3/reports/w1_hand_open_direct2_raw/probe_after_lift.json",
+    "work/ll_v3/reports/w1_hand_open_direct2_raw/hand_open.json",
+    "work/ll_v3/reports/w1_hand_open_direct2_raw/probe_after_open.json"
+  ],
+  "validator_drivers": [
+    {"path": "work/ll_v3/validate_w1_hand_open.py", "sha256": "e367c2294ce42082d33ced1dc7dca954f8b9f39a3c7b1a910ab63bf0a40c0eb9"},
+    {"path": "work/ll_v3/validate_w1_hand_open_direct.py", "sha256": "51df058781e348477e17408e37ae75019e29563b1b3f7a5cd332a87d46a2517c"},
+    {"path": "work/ll_v3/validate_w1_hand_open_direct2.py", "sha256": "b9bd7bd1f1750c943617f36dbc3547ab1dbe179733104073512689167eecc425"}
+  ],
+  "notes": [
+    "Prior verdict on the unpatched source (reject, binding open-target holds api.upper()) is superseded by this revision.",
+    "post_checks ran on queue 05_drill_lift__4 with reset seed 0 between runs; the drill object pose is read from api.observe.",
+    "api.hand_contacts_side was 0/0 in every lift, but api.contact_detail showed hand-thumb self-contacts; docs/PROTOCOL.md line 77 describes hand_contacts_side as root-only and is stale.",
+    "The primitive is unconditional: it does not verify that a grasp exists before opening; it reports setup_note='no_grasp_to_open' instead."
+  ]
+}

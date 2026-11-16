@@ -1,0 +1,53 @@
+{
+ "track_gain": {
+  "ok": true,
+  "result": {
+   "joints": {
+    "left_shoulder_pitch_joint": {
+     "q0": 0.1,
+     "q1": 0.2994,
+     "delta_meas": 0.1994,
+     "gain": 0.997
+    }
+   },
+   "delta_cmd": 0.2,
+   "dur": 1.5,
+   "hold": 1.0,
+   "waist_owner": "homie",
+   "waist_channel": "upper_target, homie_v2 overwrites"
+  }
+ },
+ "state": {
+  "ok": true,
+  "result": {
+   "t": 2.5,
+   "base": [
+    -0.068,
+    -0.012,
+    0.751
+   ],
+   "base_tilt_deg": 5.0,
+   "object": {
+    "name": "bottle",
+    "pos": [
+     1.731,
+     0.03,
+     0.799
+    ],
+    "hand": {
+     "left": [
+      0.075,
+      0.148,
+      0.814
+     ],
+     "right": [
+      0.115,
+      -0.169,
+      0.843
+     ]
+    }
+   },
+   "hand_object_contacts": 0
+  }
+ }
+}

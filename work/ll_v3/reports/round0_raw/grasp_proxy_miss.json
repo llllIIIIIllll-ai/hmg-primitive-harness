@@ -1,0 +1,381 @@
+{
+ "ok": true,
+ "result": {
+  "primitive": "calib_grasp_proxy",
+  "n": 4,
+  "episodes": [
+   {
+    "seed": 0,
+    "ok": true,
+    "error": null,
+    "t": 10.5,
+    "wall_s": 2.987,
+    "reset_s": 0.521,
+    "result": {
+     "standoff_aabb": 0.1519816436284331,
+     "object_before": [
+      1.731,
+      0.027,
+      0.8
+     ],
+     "object_after": [
+      1.743,
+      0.018,
+      0.799
+     ],
+     "object_rise": -0.0010000000000000009,
+     "contacts_before": {
+      "left": 0,
+      "right": 0,
+      "pairs": []
+     },
+     "contacts_after": {
+      "left": 0,
+      "right": 0,
+      "pairs": []
+     },
+     "close_phase_bilateral": false,
+     "lift_phase_bilateral": false,
+     "fingers": {
+      "gripper0_left_left_hand_index_0_joint": -0.555,
+      "gripper0_left_left_hand_index_1_joint": -0.555,
+      "gripper0_left_left_hand_middle_0_joint": -0.555,
+      "gripper0_left_left_hand_middle_1_joint": -0.555,
+      "gripper0_left_left_hand_thumb_0_joint": 0.005,
+      "gripper0_left_left_hand_thumb_1_joint": 0.621,
+      "gripper0_left_left_hand_thumb_2_joint": 0.562,
+      "gripper0_right_right_hand_index_0_joint": 0.557,
+      "gripper0_right_right_hand_index_1_joint": 0.556,
+      "gripper0_right_right_hand_middle_0_joint": 0.527,
+      "gripper0_right_right_hand_middle_1_joint": 0.531,
+      "gripper0_right_right_hand_thumb_0_joint": 0.005,
+      "gripper0_right_right_hand_thumb_1_joint": -0.348,
+      "gripper0_right_right_hand_thumb_2_joint": -0.456
+     },
+     "proxy_grasped": false,
+     "reach_grasp": {
+      "palm_residual": {
+       "left": [
+        -0.016,
+        -0.016,
+        -0.0
+       ],
+       "right": [
+        -0.01,
+        -0.005,
+        -0.006
+       ]
+      },
+      "joint_margin_min": 0.0358,
+      "ik_err": {
+       "left": 0.0034,
+       "right": 0.0049
+      }
+     },
+     "reach_lift": {
+      "palm_residual": {
+       "left": [
+        -0.013,
+        -0.005,
+        -0.001
+       ],
+       "right": [
+        0.007,
+        0.004,
+        0.0
+       ]
+      },
+      "joint_margin_min": -0.0006,
+      "ik_err": {
+       "left": 0.0083,
+       "right": 0.0023
+      }
+     },
+     "close_contacts": 0,
+     "closed_present": true,
+     "t0": 0.0,
+     "t1": 10.5
+    }
+   },
+   {
+    "seed": 1,
+    "ok": true,
+    "error": null,
+    "t": 11.0,
+    "wall_s": 3.164,
+    "reset_s": 0.505,
+    "result": {
+     "standoff_aabb": 0.16876379943577952,
+     "object_before": [
+      1.763,
+      0.023,
+      0.804
+     ],
+     "object_after": [
+      1.966,
+      -0.227,
+      0.838
+     ],
+     "object_rise": 0.03399999999999992,
+     "contacts_before": {
+      "left": 0,
+      "right": 0,
+      "pairs": []
+     },
+     "contacts_after": {
+      "left": 0,
+      "right": 0,
+      "pairs": []
+     },
+     "close_phase_bilateral": false,
+     "lift_phase_bilateral": false,
+     "fingers": {
+      "gripper0_left_left_hand_index_0_joint": -0.556,
+      "gripper0_left_left_hand_index_1_joint": -0.556,
+      "gripper0_left_left_hand_middle_0_joint": -0.556,
+      "gripper0_left_left_hand_middle_1_joint": -0.556,
+      "gripper0_left_left_hand_thumb_0_joint": -0.001,
+      "gripper0_left_left_hand_thumb_1_joint": 0.557,
+      "gripper0_left_left_hand_thumb_2_joint": 0.556,
+      "gripper0_right_right_hand_index_0_joint": 0.555,
+      "gripper0_right_right_hand_index_1_joint": 0.556,
+      "gripper0_right_right_hand_middle_0_joint": 0.555,
+      "gripper0_right_right_hand_middle_1_joint": 0.556,
+      "gripper0_right_right_hand_thumb_0_joint": 0.004,
+      "gripper0_right_right_hand_thumb_1_joint": -0.553,
+      "gripper0_right_right_hand_thumb_2_joint": -0.556
+     },
+     "proxy_grasped": false,
+     "reach_grasp": {
+      "palm_residual": {
+       "left": [
+        -0.006,
+        0.019,
+        0.004
+       ],
+       "right": [
+        0.021,
+        0.034,
+        -0.019
+       ]
+      },
+      "joint_margin_min": 0.0393,
+      "ik_err": {
+       "left": 0.0077,
+       "right": 0.003
+      }
+     },
+     "reach_lift": {
+      "palm_residual": {
+       "left": [
+        -0.009,
+        0.007,
+        0.005
+       ],
+       "right": [
+        -0.009,
+        0.007,
+        0.005
+       ]
+      },
+      "joint_margin_min": 0.0546,
+      "ik_err": {
+       "left": 0.0013,
+       "right": 0.0012
+      }
+     },
+     "close_contacts": 0,
+     "closed_present": true,
+     "t0": 0.0,
+     "t1": 11.0
+    }
+   },
+   {
+    "seed": 2,
+    "ok": true,
+    "error": null,
+    "t": 13.0,
+    "wall_s": 3.803,
+    "reset_s": 0.502,
+    "result": {
+     "standoff_aabb": 0.10844579291055974,
+     "object_before": [
+      1.756,
+      0.012,
+      0.834
+     ],
+     "object_after": [
+      1.792,
+      0.13,
+      0.989
+     ],
+     "object_rise": 0.15500000000000003,
+     "contacts_before": {
+      "left": 0,
+      "right": 0,
+      "pairs": []
+     },
+     "contacts_after": {
+      "left": 0,
+      "right": 0,
+      "pairs": []
+     },
+     "close_phase_bilateral": false,
+     "lift_phase_bilateral": false,
+     "fingers": {
+      "gripper0_left_left_hand_index_0_joint": -0.556,
+      "gripper0_left_left_hand_index_1_joint": -0.556,
+      "gripper0_left_left_hand_middle_0_joint": -0.556,
+      "gripper0_left_left_hand_middle_1_joint": -0.556,
+      "gripper0_left_left_hand_thumb_0_joint": -0.003,
+      "gripper0_left_left_hand_thumb_1_joint": 0.558,
+      "gripper0_left_left_hand_thumb_2_joint": 0.556,
+      "gripper0_right_right_hand_index_0_joint": 0.558,
+      "gripper0_right_right_hand_index_1_joint": 0.556,
+      "gripper0_right_right_hand_middle_0_joint": 0.558,
+      "gripper0_right_right_hand_middle_1_joint": 0.556,
+      "gripper0_right_right_hand_thumb_0_joint": -0.001,
+      "gripper0_right_right_hand_thumb_1_joint": -0.549,
+      "gripper0_right_right_hand_thumb_2_joint": -0.553
+     },
+     "proxy_grasped": false,
+     "reach_grasp": {
+      "palm_residual": {
+       "left": [
+        -0.006,
+        0.04,
+        -0.01
+       ],
+       "right": [
+        0.0,
+        0.064,
+        0.019
+       ]
+      },
+      "joint_margin_min": 0.0428,
+      "ik_err": {
+       "left": 0.0065,
+       "right": 0.0036
+      }
+     },
+     "reach_lift": {
+      "palm_residual": {
+       "left": [
+        -0.003,
+        0.001,
+        0.001
+       ],
+       "right": [
+        -0.008,
+        0.011,
+        0.007
+       ]
+      },
+      "joint_margin_min": 0.0798,
+      "ik_err": {
+       "left": 0.0017,
+       "right": 0.0025
+      }
+     },
+     "close_contacts": 0,
+     "closed_present": true,
+     "t0": 0.0,
+     "t1": 13.0
+    }
+   },
+   {
+    "seed": 3,
+    "ok": true,
+    "error": null,
+    "t": 10.5,
+    "wall_s": 2.989,
+    "reset_s": 0.504,
+    "result": {
+     "standoff_aabb": 0.1682000297265134,
+     "object_before": [
+      1.753,
+      0.036,
+      0.802
+     ],
+     "object_after": [
+      1.762,
+      0.025,
+      0.799
+     ],
+     "object_rise": -0.0030000000000000027,
+     "contacts_before": {
+      "left": 0,
+      "right": 0,
+      "pairs": []
+     },
+     "contacts_after": {
+      "left": 0,
+      "right": 0,
+      "pairs": []
+     },
+     "close_phase_bilateral": false,
+     "lift_phase_bilateral": false,
+     "fingers": {
+      "gripper0_left_left_hand_index_0_joint": -0.552,
+      "gripper0_left_left_hand_index_1_joint": -0.555,
+      "gripper0_left_left_hand_middle_0_joint": -0.552,
+      "gripper0_left_left_hand_middle_1_joint": -0.555,
+      "gripper0_left_left_hand_thumb_0_joint": 0.001,
+      "gripper0_left_left_hand_thumb_1_joint": 0.56,
+      "gripper0_left_left_hand_thumb_2_joint": 0.557,
+      "gripper0_right_right_hand_index_0_joint": 0.553,
+      "gripper0_right_right_hand_index_1_joint": 0.555,
+      "gripper0_right_right_hand_middle_0_joint": 0.553,
+      "gripper0_right_right_hand_middle_1_joint": 0.555,
+      "gripper0_right_right_hand_thumb_0_joint": 0.0,
+      "gripper0_right_right_hand_thumb_1_joint": -0.559,
+      "gripper0_right_right_hand_thumb_2_joint": -0.557
+     },
+     "proxy_grasped": false,
+     "reach_grasp": {
+      "palm_residual": {
+       "left": [
+        0.003,
+        -0.038,
+        -0.017
+       ],
+       "right": [
+        -0.001,
+        0.027,
+        -0.027
+       ]
+      },
+      "joint_margin_min": 0.031,
+      "ik_err": {
+       "left": 0.003,
+       "right": 0.0033
+      }
+     },
+     "reach_lift": {
+      "palm_residual": {
+       "left": [
+        -0.006,
+        -0.003,
+        0.003
+       ],
+       "right": [
+        -0.007,
+        -0.001,
+        0.003
+       ]
+      },
+      "joint_margin_min": 0.0536,
+      "ik_err": {
+       "left": 0.0012,
+       "right": 0.001
+      }
+     },
+     "close_contacts": 0,
+     "closed_present": true,
+     "t0": 0.0,
+     "t1": 10.5
+    }
+   }
+  ]
+ }
+}

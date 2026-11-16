@@ -1,0 +1,1 @@
+{"ok": true, "result": {"ok": false, "abort": true, "violations": ["joint_margin"], "base_tilt_deg": 0.0, "joint_margin_min": 0.0, "joint_margin_joint": "left_hand_index_0_joint", "penetration_max": 0.0, "penetration_pairs": [], "binding_constraint": "joint_margin", "t0": 0.0, "t1": 0.0}}

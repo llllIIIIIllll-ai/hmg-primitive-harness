@@ -1,0 +1,25 @@
+{
+ "ok": true,
+ "result": {
+  "ok": false,
+  "binding_constraint": "tilt_guard",
+  "events": [],
+  "standoff_aabb": 1.637314963591306,
+  "base": {
+   "pos": [
+    0.0257,
+    -0.0209,
+    0.7481
+   ],
+   "yaw_deg": -1.04,
+   "tilt_deg": 1.99
+  },
+  "object": [
+   1.731,
+   0.03,
+   0.8
+  ],
+  "t0": 0.0,
+  "t1": 0.4
+ }
+}

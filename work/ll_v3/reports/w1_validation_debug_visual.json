@@ -1,0 +1,582 @@
+{
+  "validator": "independent validator, clean-room",
+  "round": "W1 warm-up (substrate gate)",
+  "workdir": "/home/pjy0422/hmg_primitive_harness/.claude/worktrees/ll-v1-run",
+  "substrate": "work/ll_v3/substrate/debug_visual.py",
+  "substrate_sha256": "e229bcad1da942f4586ef9d37adedaa6cee10b538a9488ffc70dc4e897d7b2a0",
+  "capability": "failure_visualization",
+  "task": "05_drill_lift",
+  "server": {
+    "task": "05_drill_lift",
+    "seed": 0,
+    "slot": 7,
+    "queue": "05_drill_lift__7"
+  },
+  "contract_verbatim": "find the failure onset/end steps in the trace, render the frames at those timesteps, report the onset/end steps plus the visual finding; never reads the success predicate",
+  "command": "HMG_TASK=05_drill_lift__7 python3 work/ll_v3/substrate/debug_visual.py --task 05_drill_lift__7 --signal obj_z --rule below --threshold 0.85 --pad 0.1",
+  "failing_trace": {
+    "construction": "reset(seed=0); registered base_standoff_servo, arm_pose_ik, hand_close_contact, safety_guard, w2_reach_close_lift from work/ll_v3/substrate/; ran w2_reach_close_lift({}) (05 reach -> close -> lift)",
+    "w2_result": {
+      "ok": false,
+      "stage": "ik",
+      "binding_constraint": "pad_error",
+      "worst_pad_error": 0.07267881396940928,
+      "pad_error": {
+        "left": 0.018695721435665422,
+        "right": 0.07267881396940928
+      },
+      "pad_error_at_ramp_end": {
+        "left": 0.019209372712298545,
+        "right": 0.05378661543544081
+      },
+      "joint_margin_min": 0.5236,
+      "solver": "mink-qp",
+      "waist_owner": "homie",
+      "waist_exogenous": true,
+      "target": {
+        "left": [
+          1.655,
+          0.11,
+          0.94
+        ],
+        "right": [
+          1.655,
+          -0.03,
+          0.94
+        ]
+      },
+      "t0": 0.0,
+      "t1": 9.74
+    },
+    "trace": {
+      "source": "recorded episode trace (trace_live_01.csv)",
+      "n_samples": 487,
+      "dt": 0.02,
+      "t_range": [
+        0.0,
+        9.72
+      ],
+      "obj_z_rest": 0.79931,
+      "obj_z_first_above_rest_plus_2mm": {
+        "step": 351,
+        "t": 7.02
+      },
+      "hand_n_first_nonzero": {
+        "step": 349,
+        "t": 6.98
+      },
+      "obj_z_max": {
+        "value": 0.87498,
+        "step": 481,
+        "t": 9.62
+      },
+      "obj_z_final": 0.86698,
+      "obj_z_first_ge_0.85": {
+        "step": 476,
+        "t": 9.52
+      },
+      "hand_n_max": 6.0,
+      "note": "the w2 IK gate failed on pad error, but the executed IK hold still moved the arms into the drill; the recorded object then rises from ~t=7.0 and crosses 0.85 at t=9.52, giving a real above-threshold excursion in the recorded trace"
+    }
+  },
+  "driver_result": {
+    "onset_step": 0,
+    "onset_t": 0.0,
+    "end_step": 476,
+    "end_t": 9.52,
+    "terminal": false,
+    "visual_finding": null,
+    "stills": {
+      "mode": "times",
+      "recording": true,
+      "frames": [
+        "/home/pjy0422/hmg_primitive_harness/.claude/worktrees/ll-v1-run/out/obs/05_drill_lift/ep_20261116_132322_p416748_s0/still_t0.000_00.png",
+        "/home/pjy0422/hmg_primitive_harness/.claude/worktrees/ll-v1-run/out/obs/05_drill_lift/ep_20261116_132322_p416748_s0/still_t9.520_01.png"
+      ],
+      "t": [
+        0.0,
+        9.52
+      ],
+      "requested_t": [
+        0.0,
+        9.52
+      ],
+      "steps": [
+        0,
+        476
+      ],
+      "dt": 0.02
+    },
+    "failure_window": {
+      "recording": true,
+      "signal": "obj_z",
+      "rule": "below",
+      "threshold": 0.85,
+      "delta": null,
+      "hold": 1,
+      "pad": 0.1,
+      "n_steps": 487,
+      "range": {
+        "t0": null,
+        "t1": null,
+        "n": 487
+      },
+      "signal_definition": {},
+      "onset_step": 0,
+      "onset_t": 0.0,
+      "onset_value": 0.799312,
+      "end_step": 476,
+      "end_t": 9.52,
+      "end_value": 0.856337,
+      "last_failure_step": 475,
+      "last_failure_t": 9.5,
+      "terminal": false,
+      "recovered": true,
+      "onset_anchor": null,
+      "series_around_onset": [
+        {
+          "step": 0,
+          "t": 0.0,
+          "value": 0.799312,
+          "obj": [
+            1.731422,
+            0.029687,
+            0.799312
+          ],
+          "obj_lo": [
+            1.63726,
+            -0.020471,
+            0.799312
+          ],
+          "obj_hi": [
+            1.825542,
+            0.079526,
+            1.024918
+          ],
+          "base_z": 0.789432,
+          "tilt": 0.025626,
+          "hand_n": 0
+        },
+        {
+          "step": 1,
+          "t": 0.02,
+          "value": 0.799389,
+          "obj": [
+            1.731422,
+            0.029687,
+            0.799389
+          ],
+          "obj_lo": [
+            1.63726,
+            -0.020471,
+            0.799389
+          ],
+          "obj_hi": [
+            1.825542,
+            0.079526,
+            1.024995
+          ],
+          "base_z": 0.781691,
+          "tilt": 0.033644,
+          "hand_n": 0
+        },
+        {
+          "step": 2,
+          "t": 0.04,
+          "value": 0.799434,
+          "obj": [
+            1.731422,
+            0.029687,
+            0.799434
+          ],
+          "obj_lo": [
+            1.63726,
+            -0.020471,
+            0.799434
+          ],
+          "obj_hi": [
+            1.825542,
+            0.079526,
+            1.02504
+          ],
+          "base_z": 0.770856,
+          "tilt": 0.040401,
+          "hand_n": 0
+        },
+        {
+          "step": 3,
+          "t": 0.06,
+          "value": 0.799461,
+          "obj": [
+            1.731422,
+            0.029687,
+            0.799461
+          ],
+          "obj_lo": [
+            1.63726,
+            -0.020471,
+            0.799461
+          ],
+          "obj_hi": [
+            1.825542,
+            0.079526,
+            1.025067
+          ],
+          "base_z": 0.761482,
+          "tilt": 0.04419,
+          "hand_n": 0
+        },
+        {
+          "step": 4,
+          "t": 0.08,
+          "value": 0.799476,
+          "obj": [
+            1.731422,
+            0.029687,
+            0.799476
+          ],
+          "obj_lo": [
+            1.63726,
+            -0.020471,
+            0.799476
+          ],
+          "obj_hi": [
+            1.825542,
+            0.079526,
+            1.025082
+          ],
+          "base_z": 0.756159,
+          "tilt": 0.030715,
+          "hand_n": 0
+        },
+        {
+          "step": 5,
+          "t": 0.1,
+          "value": 0.799485,
+          "obj": [
+            1.731422,
+            0.029687,
+            0.799485
+          ],
+          "obj_lo": [
+            1.63726,
+            -0.020471,
+            0.799485
+          ],
+          "obj_hi": [
+            1.825542,
+            0.079526,
+            1.025091
+          ],
+          "base_z": 0.752848,
+          "tilt": 0.01696,
+          "hand_n": 0
+        }
+      ],
+      "series_around_end": [
+        {
+          "step": 471,
+          "t": 9.42,
+          "value": 0.816281,
+          "obj": [
+            1.734446,
+            0.028824,
+            0.816281
+          ],
+          "obj_lo": [
+            1.652605,
+            -0.020182,
+            0.801408
+          ],
+          "obj_hi": [
+            1.853135,
+            0.159637,
+            1.043311
+          ],
+          "base_z": 0.748028,
+          "tilt": 0.065215,
+          "hand_n": 3
+        },
+        {
+          "step": 472,
+          "t": 9.44,
+          "value": 0.824447,
+          "obj": [
+            1.737165,
+            0.021273,
+            0.824447
+          ],
+          "obj_lo": [
+            1.654171,
+            -0.031527,
+            0.800441
+          ],
+          "obj_hi": [
+            1.834825,
+            0.16355,
+            1.047338
+          ],
+          "base_z": 0.748812,
+          "tilt": 0.070183,
+          "hand_n": 4
+        },
+        {
+          "step": 473,
+          "t": 9.46,
+          "value": 0.832209,
+          "obj": [
+            1.742119,
+            0.016689,
+            0.832209
+          ],
+          "obj_lo": [
+            1.643281,
+            -0.037143,
+            0.802631
+          ],
+          "obj_hi": [
+            1.81186,
+            0.161419,
+            1.052115
+          ],
+          "base_z": 0.749546,
+          "tilt": 0.074224,
+          "hand_n": 4
+        },
+        {
+          "step": 474,
+          "t": 9.48,
+          "value": 0.840458,
+          "obj": [
+            1.74538,
+            0.011651,
+            0.840458
+          ],
+          "obj_lo": [
+            1.635273,
+            -0.042004,
+            0.80709
+          ],
+          "obj_hi": [
+            1.804334,
+            0.159902,
+            1.062825
+          ],
+          "base_z": 0.750183,
+          "tilt": 0.077553,
+          "hand_n": 4
+        },
+        {
+          "step": 475,
+          "t": 9.5,
+          "value": 0.84861,
+          "obj": [
+            1.746258,
+            0.006515,
+            0.84861
+          ],
+          "obj_lo": [
+            1.631925,
+            -0.046823,
+            0.812993
+          ],
+          "obj_hi": [
+            1.804935,
+            0.158214,
+            1.071404
+          ],
+          "base_z": 0.750713,
+          "tilt": 0.080171,
+          "hand_n": 4
+        },
+        {
+          "step": 476,
+          "t": 9.52,
+          "value": 0.856337,
+          "obj": [
+            1.74572,
+            0.00157,
+            0.856337
+          ],
+          "obj_lo": [
+            1.630182,
+            -0.051428,
+            0.819174
+          ],
+          "obj_hi": [
+            1.80426,
+            0.156372,
+            1.078898
+          ],
+          "base_z": 0.751136,
+          "tilt": 0.081752,
+          "hand_n": 5
+        },
+        {
+          "step": 477,
+          "t": 9.54,
+          "value": 0.863015,
+          "obj": [
+            1.744789,
+            -0.002732,
+            0.863015
+          ],
+          "obj_lo": [
+            1.628135,
+            -0.055726,
+            0.825266
+          ],
+          "obj_hi": [
+            1.803176,
+            0.153154,
+            1.085765
+          ],
+          "base_z": 0.751451,
+          "tilt": 0.082131,
+          "hand_n": 5
+        },
+        {
+          "step": 478,
+          "t": 9.56,
+          "value": 0.868522,
+          "obj": [
+            1.743986,
+            -0.006555,
+            0.868522
+          ],
+          "obj_lo": [
+            1.625778,
+            -0.059723,
+            0.830426
+          ],
+          "obj_hi": [
+            1.802104,
+            0.149982,
+            1.091747
+          ],
+          "base_z": 0.751659,
+          "tilt": 0.081608,
+          "hand_n": 5
+        },
+        {
+          "step": 479,
+          "t": 9.58,
+          "value": 0.872317,
+          "obj": [
+            1.74298,
+            -0.009979,
+            0.872317
+          ],
+          "obj_lo": [
+            1.623828,
+            -0.063264,
+            0.833931
+          ],
+          "obj_hi": [
+            1.800848,
+            0.147343,
+            1.095842
+          ],
+          "base_z": 0.751756,
+          "tilt": 0.080256,
+          "hand_n": 5
+        },
+        {
+          "step": 480,
+          "t": 9.6,
+          "value": 0.874376,
+          "obj": [
+            1.741542,
+            -0.01307,
+            0.874376
+          ],
+          "obj_lo": [
+            1.622486,
+            -0.066421,
+            0.835843
+          ],
+          "obj_hi": [
+            1.799257,
+            0.14506,
+            1.098055
+          ],
+          "base_z": 0.751752,
+          "tilt": 0.07845,
+          "hand_n": 5
+        },
+        {
+          "step": 481,
+          "t": 9.62,
+          "value": 0.874976,
+          "obj": [
+            1.739853,
+            -0.015799,
+            0.874976
+          ],
+          "obj_lo": [
+            1.621203,
+            -0.069261,
+            0.836462
+          ],
+          "obj_hi": [
+            1.797406,
+            0.142969,
+            1.098861
+          ],
+          "base_z": 0.751677,
+          "tilt": 0.076469,
+          "hand_n": 5
+        }
+      ]
+    }
+  },
+  "visual_finding": {
+    "source": "validator read of the rendered PNGs with the Read tool; the driver itself never populates this field",
+    "onset_frame": {
+      "t": 0.0,
+      "step": 0,
+      "path": "/home/pjy0422/hmg_primitive_harness/.claude/worktrees/ll-v1-run/out/obs/05_drill_lift/ep_20261116_132322_p416748_s0/still_t0.000_00.png",
+      "description": "view dominated by the gray tabletop slab (beveled edge in the foreground), teal background wall, thin table legs and a gray vertical pole at the back; no robot arm is engaged and no drill is distinguishable; the object is occluded behind/under the slab edge"
+    },
+    "end_frame": {
+      "t": 9.52,
+      "step": 476,
+      "path": "/home/pjy0422/hmg_primitive_harness/.claude/worktrees/ll-v1-run/out/obs/05_drill_lift/ep_20261116_132322_p416748_s0/still_t9.520_01.png",
+      "description": "a green humanoid arm enters from the lower-right and extends nearly vertically to the table edge; the green hand/gripper is at the slab lip near the vertical pole, at the drill location, with a few small blue-green fragments visible near the wrist; the arm is clearly engaged at the object at this timestep"
+    },
+    "conclusion": "the pair brackets the arm-approach/engagement transition: nothing is engaged at onset, and the hand is on the object at the recovery boundary where obj_z crosses 0.85. The default camera (lookat 1.7,0,0.9) puts the tabletop slab between the camera and the drill, so the drill body and its height above the table are not directly visible; the finding concerns arm/object engagement, not a visual read of the z crossing"
+  },
+  "success_predicate_read": false,
+  "success_predicate_evidence": [
+    "debug_visual.py imports only argparse, json, os, subprocess, sys (stdlib; no harness predicate/reward modules)",
+    "the driver makes exactly two qtool calls: {\"tool\":\"failure_window\", signal/rule/threshold/delta/pad} and {\"tool\":\"stills\", t:[onset_t,end_t], lookat, n:1, prefix:\"debug_visual\"}",
+    "grep -niE \"success|predicate|reward|finish\" over debug_visual.py matches only docstring line 3 (\"Never reads the success predicate.\")",
+    "the only signal supplied is obj_z, a recorded trajectory channel, not a success predicate or reward term"
+  ],
+  "checks": {
+    "locate_failure_window": true,
+    "render_frames_at_onset_end": true,
+    "report_onset_end_steps": true,
+    "report_visual_finding": false,
+    "no_success_predicate_read": true,
+    "ran_exact_mandated_command": true,
+    "deterministic_repeat": true
+  },
+  "caveats": [
+    "degenerate onset: obj_z rests at ~0.799, already below the 0.85 threshold at the first sample, so failure_window returns onset_step=0 / onset_t=0.0 and the window spans the whole episode up to the recovery boundary (end_step=476, end_t=9.52, end_value=0.856337). The driver reports this faithfully, but it does not localize a mid-episode failure onset for this signal/rule/threshold combination",
+    "end_step (476) is the first recovering (non-failing) step; last_failure_step is 475 (t=9.5, obj_z=0.84861)",
+    "the driver output schema contains \"visual_finding\" but it is hardcoded to None and never assigned; the contract clause \"report ... the visual finding\" is satisfied only by a downstream reader, not by the driver",
+    "default camera is partly occluded by the tabletop slab; drill visibility is poor at both timesteps"
+  ],
+  "verdict": "restrict",
+  "binding_constraint": "visual_finding_not_populated",
+  "verdict_rationale": "Core contract mechanics pass: the driver locates the window from the recorded trace, renders the exact onset/end frames (steps 0 and 476, t 0.0 and 9.52) which match the window, prints onset/end steps and times, and demonstrably never reads the success predicate. Two gaps keep it short of an unqualified accept: (1) the contract requires reporting the visual finding, but debug_visual.py hardcodes visual_finding=None and never populates it; (2) with obj_z resting below the 0.85 threshold, the onset degenerates to step 0, so the window marks the recovery boundary rather than a mid-episode failure onset. The capability is usable for locate+render under those restrictions, so restrict rather than reject.",
+  "alternative_verdict_note": "accept would be defensible only under the interpretation that the visual finding is supplied out-of-band by the orchestrator/validator (as this W1 micro-benchmark does) and that onset_step=0 is an artifact of the mandated signal/threshold rather than of the driver. That interpretation is stated here explicitly rather than assumed.",
+  "evidence_files": {
+    "driver": "/home/pjy0422/hmg_primitive_harness/.claude/worktrees/ll-v1-run/work/ll_v3/substrate/debug_visual.py",
+    "driver_stdout": "/tmp/dv_final.json",
+    "trace_csv": "/home/pjy0422/hmg_primitive_harness/.claude/worktrees/ll-v1-run/out/obs/05_drill_lift/ep_20261116_132322_p416748_s0/trace_live_01.csv",
+    "still_onset": "/home/pjy0422/hmg_primitive_harness/.claude/worktrees/ll-v1-run/out/obs/05_drill_lift/ep_20261116_132322_p416748_s0/still_t0.000_00.png",
+    "still_end": "/home/pjy0422/hmg_primitive_harness/.claude/worktrees/ll-v1-run/out/obs/05_drill_lift/ep_20261116_132322_p416748_s0/still_t9.520_01.png"
+  }
+}

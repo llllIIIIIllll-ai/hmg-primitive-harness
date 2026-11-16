@@ -1,0 +1,56 @@
+{
+ "ok": true,
+ "result": {
+  "target": {
+   "left": [
+    1.731,
+    0.182,
+    1.25
+   ],
+   "right": [
+    1.731,
+    -0.128,
+    1.25
+   ]
+  },
+  "base": {
+   "pos": [
+    1.488,
+    0.0145,
+    0.7537
+   ],
+   "yaw_deg": 0.77,
+   "tilt_deg": 1.2
+  },
+  "waist_owner": "homie",
+  "rows": [
+   {
+    "task_dim": 12,
+    "worst_pad_err_m": 0.00013,
+    "joint_margin_rad": 0.1629,
+    "solve_s": 0.0151,
+    "meets_pad_0p015": true,
+    "meets_margin_0p05": true,
+    "best_base_search": null,
+    "waist_move_rad": null,
+    "waist_authoritative": false,
+    "binding_constraint": null
+   },
+   {
+    "task_dim": 14,
+    "worst_pad_err_m": 0.00013,
+    "joint_margin_rad": 0.1629,
+    "solve_s": 0.2447,
+    "meets_pad_0p015": true,
+    "meets_margin_0p05": true,
+    "best_base_search": {
+     "height_offset_m": 0.0,
+     "yaw_offset_rad": 0.0
+    },
+    "waist_move_rad": null,
+    "waist_authoritative": false,
+    "binding_constraint": null
+   }
+  ]
+ }
+}

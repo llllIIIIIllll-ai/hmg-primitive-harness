@@ -1,0 +1,26 @@
+{
+ "ok": true,
+ "result": {
+  "ok": false,
+  "binding_constraint": "fingertip_guard",
+  "events": [],
+  "standoff_aabb": 0.6442997206269764,
+  "base": {
+   "pos": [
+    0.9955,
+    0.0321,
+    0.7428
+   ],
+   "yaw_deg": 0.54,
+   "tilt_deg": 5.55
+  },
+  "object": [
+   1.731,
+   0.03,
+   0.799
+  ],
+  "guard_side": "left",
+  "t0": 0.0,
+  "t1": 4.8
+ }
+}

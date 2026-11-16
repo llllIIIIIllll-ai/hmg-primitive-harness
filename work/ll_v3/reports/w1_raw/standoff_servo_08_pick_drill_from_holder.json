@@ -1,0 +1,58 @@
+{
+ "task": "08_pick_drill_from_holder",
+ "grid": [
+  0.35,
+  0.25,
+  0.2
+ ],
+ "rows": [
+  {
+   "target_standoff": 0.35,
+   "servo_ok": true,
+   "standoff_aabb": 0.3678,
+   "xy_error": 0.017800000000000014,
+   "tilt_deg": 3.91,
+   "servo_binding": null,
+   "arm_ok": false,
+   "pad_error": {
+    "left": 0.36381864987930457,
+    "right": 0.3630549407458876
+   },
+   "worst_pad_error": 0.36381864987930457,
+   "joint_margin_min": 0.0539,
+   "arm_binding": "pad_error"
+  },
+  {
+   "target_standoff": 0.25,
+   "servo_ok": true,
+   "standoff_aabb": 0.2561,
+   "xy_error": 0.006099999999999994,
+   "tilt_deg": 1.63,
+   "servo_binding": null,
+   "arm_ok": false,
+   "pad_error": {
+    "left": 0.05097499386954353,
+    "right": 0.06392503421977969
+   },
+   "worst_pad_error": 0.06392503421977969,
+   "joint_margin_min": 0.8614,
+   "arm_binding": "pad_error"
+  },
+  {
+   "target_standoff": 0.2,
+   "servo_ok": true,
+   "standoff_aabb": 0.2198,
+   "xy_error": 0.019799999999999984,
+   "tilt_deg": 4.81,
+   "servo_binding": null,
+   "arm_ok": false,
+   "pad_error": {
+    "left": 0.05406486844522978,
+    "right": 0.036355604794859345
+   },
+   "worst_pad_error": 0.05406486844522978,
+   "joint_margin_min": 1.3023,
+   "arm_binding": "pad_error"
+  }
+ ]
+}

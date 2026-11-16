@@ -1,0 +1,155 @@
+[
+ {
+  "dx": -0.16,
+  "dy": 0.14,
+  "ik_err": {
+   "left": 0.0473,
+   "right": 0.004
+  },
+  "seed_surface": {
+   "unseeded": 0.04961115076157889,
+   "seeded": 0.0703078248921294
+  },
+  "wrist_pred": {
+   "left": 0.04961115076157889,
+   "right": 0.0703078248921294
+  },
+  "seed_choice": "unseeded"
+ },
+ {
+  "dx": -0.16,
+  "dy": 0.18,
+  "ik_err": {
+   "left": 0.0648,
+   "right": 0.0014
+  },
+  "seed_surface": {
+   "unseeded": 0.04610892354664761,
+   "seeded": 0.04142294585243057
+  },
+  "wrist_pred": {
+   "left": 0.04610892354664761,
+   "right": 0.10680811687960069
+  },
+  "seed_choice": "unseeded"
+ },
+ {
+  "dx": -0.16,
+  "dy": 0.22,
+  "ik_err": {
+   "left": 0.0424,
+   "right": 0.0013
+  },
+  "seed_surface": {
+   "unseeded": 0.14472201827313552,
+   "seeded": 0.06432679671777732
+  },
+  "wrist_pred": {
+   "left": 0.14692365554404346,
+   "right": 0.14472201827313552
+  },
+  "seed_choice": "unseeded"
+ },
+ {
+  "dx": -0.2,
+  "dy": 0.14,
+  "ik_err": {
+   "left": 0.1039,
+   "right": 0.0062
+  },
+  "seed_surface": {
+   "unseeded": 0.03971804183534558,
+   "seeded": 0.06581325784999696
+  },
+  "wrist_pred": {
+   "left": 0.03971804183534558,
+   "right": 0.09527524062793147
+  },
+  "seed_choice": "unseeded"
+ },
+ {
+  "dx": -0.2,
+  "dy": 0.18,
+  "ik_err": {
+   "left": 0.1166,
+   "right": 0.0012
+  },
+  "seed_surface": {
+   "unseeded": 0.12540000000000007,
+   "seeded": 0.12540000000000007
+  },
+  "wrist_pred": {
+   "left": 0.15269026522465184,
+   "right": 0.12540000000000007
+  },
+  "seed_choice": "unseeded"
+ },
+ {
+  "dx": -0.2,
+  "dy": 0.22,
+  "ik_err": {
+   "left": 0.0824,
+   "right": 0.0012
+  },
+  "seed_surface": {
+   "unseeded": 0.15955271114481662,
+   "seeded": 0.15955271114481662
+  },
+  "wrist_pred": {
+   "left": 0.21501190838788625,
+   "right": 0.15955271114481662
+  },
+  "seed_choice": "unseeded"
+ },
+ {
+  "dx": -0.24,
+  "dy": 0.14,
+  "ik_err": {
+   "left": 0.1255,
+   "right": 0.0013
+  },
+  "seed_surface": {
+   "unseeded": 0.12572691572023414,
+   "seeded": 0.12572691572023414
+  },
+  "wrist_pred": {
+   "left": 0.22750667049198842,
+   "right": 0.12572691572023414
+  },
+  "seed_choice": "unseeded"
+ },
+ {
+  "dx": -0.24,
+  "dy": 0.18,
+  "ik_err": {
+   "left": 0.1295,
+   "right": 0.0012
+  },
+  "seed_surface": {
+   "unseeded": 0.15102266746562254,
+   "seeded": 0.11288134311358232
+  },
+  "wrist_pred": {
+   "left": 0.18974370544039132,
+   "right": 0.15102266746562254
+  },
+  "seed_choice": "unseeded"
+ },
+ {
+  "dx": -0.24,
+  "dy": 0.22,
+  "ik_err": {
+   "left": 0.0884,
+   "right": 0.0012
+  },
+  "seed_surface": {
+   "unseeded": 0.1811390976849212,
+   "seeded": 0.07745401460863535
+  },
+  "wrist_pred": {
+   "left": 0.24544257438285544,
+   "right": 0.1811390976849212
+  },
+  "seed_choice": "unseeded"
+ }
+]

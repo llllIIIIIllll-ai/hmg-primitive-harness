@@ -1,0 +1,279 @@
+{
+ "ok": true,
+ "result": {
+  "contacts_detail": [
+   {
+    "b1": "gear_factory",
+    "b2": "robot0_left_ankle_roll_link",
+    "g1": "floor",
+    "g2": "robot0_g6_col",
+    "pos": [
+     1.4351,
+     0.1761,
+     -0.0003
+    ],
+    "dist": -0.00057,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "force": [
+     38.231,
+     -0.564,
+     -0.146,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "b1": "gear_factory",
+    "b2": "robot0_left_ankle_roll_link",
+    "g1": "floor",
+    "g2": "robot0_g7_col",
+    "pos": [
+     1.4329,
+     0.1261,
+     -0.0003
+    ],
+    "dist": -0.00066,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "force": [
+     50.107,
+     -0.612,
+     0.35,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "b1": "gear_factory",
+    "b2": "robot0_left_ankle_roll_link",
+    "g1": "floor",
+    "g2": "robot0_g8_col",
+    "pos": [
+     1.6052,
+     0.1735,
+     -0.0003
+    ],
+    "dist": -0.0006,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "force": [
+     40.192,
+     -2.178,
+     -0.125,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "b1": "gear_factory",
+    "b2": "robot0_left_ankle_roll_link",
+    "g1": "floor",
+    "g2": "robot0_g9_col",
+    "pos": [
+     1.6025,
+     0.1136,
+     -0.0004
+    ],
+    "dist": -0.00071,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "force": [
+     54.885,
+     -2.454,
+     0.509,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "b1": "gear_factory",
+    "b2": "robot0_right_ankle_roll_link",
+    "g1": "floor",
+    "g2": "robot0_g15_col",
+    "pos": [
+     1.4511,
+     -0.0528,
+     -0.0003
+    ],
+    "dist": -0.00061,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "force": [
+     43.603,
+     1.387,
+     -0.442,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "b1": "gear_factory",
+    "b2": "robot0_right_ankle_roll_link",
+    "g1": "floor",
+    "g2": "robot0_g16_col",
+    "pos": [
+     1.4468,
+     -0.1026,
+     -0.0003
+    ],
+    "dist": -0.00055,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "force": [
+     36.398,
+     1.294,
+     -0.293,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "b1": "gear_factory",
+    "b2": "robot0_right_ankle_roll_link",
+    "g1": "floor",
+    "g2": "robot0_g17_col",
+    "pos": [
+     1.6209,
+     -0.0623,
+     -0.0003
+    ],
+    "dist": -0.00065,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "force": [
+     47.481,
+     0.992,
+     -0.435,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "b1": "gear_factory",
+    "b2": "robot0_right_ankle_roll_link",
+    "g1": "floor",
+    "g2": "robot0_g18_col",
+    "pos": [
+     1.6158,
+     -0.1221,
+     -0.0003
+    ],
+    "dist": -0.00058,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "force": [
+     38.507,
+     0.92,
+     -0.253,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "b1": "gripper0_left_left_hand_thumb_2_link",
+    "b2": "gripper0_right_right_hand_thumb_2_link",
+    "g1": "gripper0_left_left_hand_thumb_2_link_col",
+    "g2": "gripper0_right_right_hand_thumb_2_link_col",
+    "pos": [
+     1.7772,
+     0.0643,
+     1.0335
+    ],
+    "dist": -0.00077,
+    "normal": [
+     0.109,
+     -0.945,
+     -0.31
+    ],
+    "force": [
+     17.434,
+     4.949,
+     0.754,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "b1": "table_main",
+    "b2": "bottle_battery",
+    "g1": "table_g7",
+    "g2": "bottle_collider_box_a1f69b3d",
+    "pos": [
+     1.724,
+     0.1157,
+     0.7995
+    ],
+    "dist": -2e-05,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "force": [
+     0.088,
+     -0.025,
+     0.035,
+     0.0,
+     0.0,
+     0.0
+    ]
+   }
+  ],
+  "hand_contacts_side": {
+   "left": 0,
+   "right": 0,
+   "pairs": []
+  },
+  "object": [
+   1.765,
+   0.089,
+   0.867
+  ],
+  "base": {
+   "pos": [
+    1.483,
+    0.0293,
+    0.7504
+   ],
+   "yaw_deg": -9.19,
+   "tilt_deg": 3.56
+  },
+  "t": 12.539999999999822,
+  "t0": 12.54,
+  "t1": 12.54
+ }
+}

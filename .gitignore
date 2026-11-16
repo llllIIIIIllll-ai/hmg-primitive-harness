@@ -20,3 +20,4 @@ experiments/*/library/
 experiments/*/out/
 experiments/*/checkpoints/*.db
 experiments/*/checkpoints/*.db-*
+.claude/settings.local.json

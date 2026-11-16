@@ -1,0 +1,63 @@
+{
+ "ok": true,
+ "result": {
+  "ok": true,
+  "events": [
+   {
+    "event": "before",
+    "owner": "homie",
+    "gains": {
+     "waist_yaw_joint": -0.085,
+     "waist_roll_joint": 0.269,
+     "waist_pitch_joint": 0.364
+    },
+    "tilt_deg": 3.24
+   },
+   {
+    "event": "handoff",
+    "owner": "ik",
+    "gains": {
+     "waist_yaw_joint": 1.003,
+     "waist_roll_joint": 1.003,
+     "waist_pitch_joint": 0.994
+    },
+    "tilt_deg": 4.08
+   },
+   {
+    "event": "restore",
+    "owner": "homie",
+    "gains": {
+     "waist_yaw_joint": -0.606,
+     "waist_roll_joint": -0.692,
+     "waist_pitch_joint": -0.811
+    },
+    "tilt_deg": 1.58
+   }
+  ],
+  "roll_gains": {
+   "before": 0.269,
+   "ik": 1.003,
+   "after": -0.692
+  },
+  "all_gains": {
+   "before": {
+    "waist_yaw_joint": -0.085,
+    "waist_roll_joint": 0.269,
+    "waist_pitch_joint": 0.364
+   },
+   "ik": {
+    "waist_yaw_joint": 1.003,
+    "waist_roll_joint": 1.003,
+    "waist_pitch_joint": 0.994
+   },
+   "after": {
+    "waist_yaw_joint": -0.606,
+    "waist_roll_joint": -0.692,
+    "waist_pitch_joint": -0.811
+   }
+  },
+  "binding_constraint": null,
+  "t0": 12.0,
+  "t1": 15.42
+ }
+}

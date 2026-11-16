@@ -1,0 +1,34 @@
+{
+ "task": "01_box_lift_floor",
+ "grid": [
+  0.35,
+  0.25,
+  0.2
+ ],
+ "rows": [
+  {
+   "target_standoff": 0.35,
+   "servo_ok": false,
+   "standoff_aabb": null,
+   "xy_error": null,
+   "tilt_deg": 16.29,
+   "servo_binding": "tilt_guard_after_height"
+  },
+  {
+   "target_standoff": 0.25,
+   "servo_ok": false,
+   "standoff_aabb": null,
+   "xy_error": null,
+   "tilt_deg": 16.29,
+   "servo_binding": "tilt_guard_after_height"
+  },
+  {
+   "target_standoff": 0.2,
+   "servo_ok": false,
+   "standoff_aabb": null,
+   "xy_error": null,
+   "tilt_deg": 16.29,
+   "servo_binding": "tilt_guard_after_height"
+  }
+ ]
+}

@@ -1,0 +1,231 @@
+{
+ "ok": true,
+ "result": {
+  "what": "contacts",
+  "t": 11.36,
+  "ncon": 10,
+  "hand_object_contacts": 1,
+  "contacts": [
+   {
+    "g1": "floor",
+    "g2": "robot0_g6_col",
+    "b1": "gear_factory",
+    "b2": "robot0_left_ankle_roll_link",
+    "pos": [
+     1.43514,
+     0.1761,
+     -0.00028
+    ],
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dist": -0.000565,
+    "penetration": 0.000565,
+    "force_normal": 36.858,
+    "force": 36.879,
+    "hand_obj": false,
+    "obj_contact": false
+   },
+   {
+    "g1": "floor",
+    "g2": "robot0_g7_col",
+    "b1": "gear_factory",
+    "b2": "robot0_left_ankle_roll_link",
+    "pos": [
+     1.4329,
+     0.12615,
+     -0.00037
+    ],
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dist": -0.000733,
+    "penetration": 0.000733,
+    "force_normal": 59.504,
+    "force": 59.515,
+    "hand_obj": false,
+    "obj_contact": false
+   },
+   {
+    "g1": "floor",
+    "g2": "robot0_g8_col",
+    "b1": "gear_factory",
+    "b2": "robot0_left_ankle_roll_link",
+    "pos": [
+     1.60519,
+     0.17347,
+     -0.00023
+    ],
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dist": -0.000456,
+    "penetration": 0.000456,
+    "force_normal": 25.417,
+    "force": 25.65,
+    "hand_obj": false,
+    "obj_contact": false
+   },
+   {
+    "g1": "floor",
+    "g2": "robot0_g9_col",
+    "b1": "gear_factory",
+    "b2": "robot0_left_ankle_roll_link",
+    "pos": [
+     1.6025,
+     0.11354,
+     -0.00033
+    ],
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dist": -0.000659,
+    "penetration": 0.000659,
+    "force_normal": 49.166,
+    "force": 49.364,
+    "hand_obj": false,
+    "obj_contact": false
+   },
+   {
+    "g1": "floor",
+    "g2": "robot0_g15_col",
+    "b1": "gear_factory",
+    "b2": "robot0_right_ankle_roll_link",
+    "pos": [
+     1.45108,
+     -0.05272,
+     -0.00031
+    ],
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dist": -0.000628,
+    "penetration": 0.000628,
+    "force_normal": 45.001,
+    "force": 45.002,
+    "hand_obj": false,
+    "obj_contact": false
+   },
+   {
+    "g1": "floor",
+    "g2": "robot0_g16_col",
+    "b1": "gear_factory",
+    "b2": "robot0_right_ankle_roll_link",
+    "pos": [
+     1.44682,
+     -0.10254,
+     -0.00034
+    ],
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dist": -0.000682,
+    "penetration": 0.000682,
+    "force_normal": 52.367,
+    "force": 52.376,
+    "hand_obj": false,
+    "obj_contact": false
+   },
+   {
+    "g1": "floor",
+    "g2": "robot0_g17_col",
+    "b1": "gear_factory",
+    "b2": "robot0_right_ankle_roll_link",
+    "pos": [
+     1.62089,
+     -0.06222,
+     -0.00028
+    ],
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dist": -0.00056,
+    "penetration": 0.00056,
+    "force_normal": 36.547,
+    "force": 36.674,
+    "hand_obj": false,
+    "obj_contact": false
+   },
+   {
+    "g1": "floor",
+    "g2": "robot0_g18_col",
+    "b1": "gear_factory",
+    "b2": "robot0_right_ankle_roll_link",
+    "pos": [
+     1.61577,
+     -0.12201,
+     -0.00031
+    ],
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "dist": -0.000625,
+    "penetration": 0.000625,
+    "force_normal": 44.694,
+    "force": 44.826,
+    "hand_obj": false,
+    "obj_contact": false
+   },
+   {
+    "g1": "bottle_collider_box_8e968ea9",
+    "g2": "robot0_g28_col",
+    "b1": "bottle_body",
+    "b2": "robot0_left_wrist_yaw_link",
+    "pos": [
+     1.65878,
+     0.08868,
+     0.97037
+    ],
+    "normal": [
+     0.1966,
+     0.5014,
+     -0.8426
+    ],
+    "dist": -4.1e-05,
+    "penetration": 4.1e-05,
+    "force_normal": 0.071,
+    "force": 0.078,
+    "hand_obj": false,
+    "obj_contact": true
+   },
+   {
+    "g1": "bottle_collider_cylinder99aba387",
+    "g2": "gripper0_right_g0_col",
+    "b1": "bottle_body",
+    "b2": "gripper0_right_right_hand_palm_link",
+    "pos": [
+     1.73072,
+     -0.07891,
+     0.99889
+    ],
+    "normal": [
+     0.1267,
+     -0.9102,
+     -0.3943
+    ],
+    "dist": -2.1e-05,
+    "penetration": 2.1e-05,
+    "force_normal": 0.036,
+    "force": 0.049,
+    "hand_obj": true,
+    "obj_contact": true
+   }
+  ]
+ }
+}

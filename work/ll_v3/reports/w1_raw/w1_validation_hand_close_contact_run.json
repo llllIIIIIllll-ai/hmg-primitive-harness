@@ -1,0 +1,508 @@
+{
+ "register_base_standoff_servo": {
+  "ok": true,
+  "result": {
+   "primitives": [
+    "base_standoff_servo"
+   ]
+  }
+ },
+ "register_arm_pose_ik": {
+  "ok": true,
+  "result": {
+   "primitives": [
+    "arm_pose_ik",
+    "base_standoff_servo"
+   ]
+  }
+ },
+ "register_hand_close_contact": {
+  "ok": true,
+  "result": {
+   "primitives": [
+    "arm_pose_ik",
+    "base_standoff_servo",
+    "hand_close_contact"
+   ]
+  }
+ },
+ "reset": {
+  "ok": true,
+  "result": {
+   "seed": 0,
+   "t": 0.0
+  }
+ },
+ "base_standoff_servo": {
+  "ok": true,
+  "result": {
+   "ok": true,
+   "standoff_aabb": 0.16601400543327657,
+   "standoff_error": 0.01601400543327658,
+   "final_xy_error": 0.009600000000000053,
+   "yaw_error_deg": 0.5043144131945589,
+   "tilt_deg": 1.6,
+   "base": {
+    "pos": [
+     1.4838,
+     0.0555,
+     0.7541
+    ],
+    "yaw_deg": -3.98,
+    "tilt_deg": 1.6
+   },
+   "object": [
+    1.739,
+    0.04,
+    0.801
+   ],
+   "object_aabb": {
+    "lo": [
+     1.6434,
+     -0.0076,
+     0.7998
+    ],
+    "hi": [
+     1.8341,
+     0.1006,
+     1.028
+    ]
+   },
+   "bursts": 23,
+   "events": [],
+   "binding_constraint": null,
+   "t0": 0.0,
+   "t1": 9.2
+  }
+ },
+ "probe_state": {
+  "ok": true,
+  "result": {
+   "t": 9.2,
+   "base": [
+    1.484,
+    0.055,
+    0.754
+   ],
+   "base_tilt_deg": 1.6,
+   "object": {
+    "name": "bottle",
+    "pos": [
+     1.739,
+     0.04,
+     0.801
+    ],
+    "hand": {
+     "left": [
+      1.659,
+      0.228,
+      0.862
+     ],
+     "right": [
+      1.654,
+      -0.081,
+      0.867
+     ]
+    }
+   },
+   "hand_object_contacts": 0
+  }
+ },
+ "targets": {
+  "left": [
+   1.6552,
+   0.11000000000000001,
+   0.94
+  ],
+  "right": [
+   1.6552,
+   -0.030000000000000006,
+   0.94
+  ]
+ },
+ "arm_pose_ik": {
+  "ok": true,
+  "result": {
+   "ok": false,
+   "pad_error": {
+    "left": 0.018695721435665422,
+    "right": 0.07267881396940928
+   },
+   "worst_pad_error": 0.07267881396940928,
+   "pad_error_at_ramp_end": {
+    "left": 0.019209372712298545,
+    "right": 0.05378661543544081
+   },
+   "normal_error_deg": {
+    "left": 15.76367991910602,
+    "right": 10.872943136645771
+   },
+   "joint_margin_min": 0.5236,
+   "waist_owner": "homie",
+   "waist_exogenous": true,
+   "solver": "mink-qp",
+   "ramp_s": 0.35,
+   "hold_s": 0.2,
+   "ik_err": {
+    "left": 0.0008,
+    "right": 0.0007
+   },
+   "ik_rot": {
+    "left": 0.0004,
+    "right": 0.0003
+   },
+   "pad": {
+    "left": {
+     "pos": [
+      1.7458,
+      0.1262,
+      0.9378
+     ],
+     "normal": [
+      -0.173,
+      0.923,
+      0.345
+     ],
+     "half_thick": 0.0217
+    },
+    "right": {
+     "pos": [
+      1.7445,
+      -0.0836,
+      0.9313
+     ],
+     "normal": [
+      0.05,
+      0.99,
+      -0.13
+     ],
+     "half_thick": 0.0217
+    }
+   },
+   "target": {
+    "left": [
+     1.655,
+     0.11,
+     0.94
+    ],
+    "right": [
+     1.655,
+     -0.03,
+     0.94
+    ]
+   },
+   "binding_constraint": "pad_error",
+   "t0": 9.2,
+   "t1": 9.74
+  }
+ },
+ "hand_close_contact": {
+  "ok": true,
+  "result": {
+   "ok": false,
+   "closed_angle": 0.8,
+   "steps": 9,
+   "contacts": {
+    "left": 0,
+    "right": 1,
+    "pairs": [
+     [
+      "gripper0_right_right_hand_palm_link",
+      "bottle_collider_cylinder99aba387",
+      "gripper0_right_g0_col"
+     ]
+    ]
+   },
+   "contacts_after_hold": {
+    "left": 0,
+    "right": 1,
+    "pairs": [
+     [
+      "gripper0_right_right_hand_palm_link",
+      "bottle_collider_cylinder99aba387",
+      "gripper0_right_g0_col"
+     ]
+    ]
+   },
+   "bilateral_at_close": false,
+   "object_disturbance": 0.06838128398911508,
+   "object_before": [
+    1.73,
+    -0.026,
+    0.866
+   ],
+   "object_after": [
+    1.704,
+    0.01,
+    0.814
+   ],
+   "closed_upper": [
+    0.14137988028724674,
+    -0.07604401728724582,
+    -0.2600234505709999,
+    -0.05468239818978308,
+    -0.005747748998495337,
+    -0.41720038958178524,
+    -0.4049265198704658,
+    0.39594665564942644,
+    0.5480365060627822,
+    0.26204610777679954,
+    0.06825065759490692,
+    0.02880876804059476,
+    0.15729320803328598,
+    -0.5093535727896951,
+    -0.20892276375354477,
+    0.48903996193157423,
+    -0.07293446018960412,
+    -0.6882532743044774,
+    -0.6844300914275783,
+    -0.6882590244541004,
+    -0.6844311471257358,
+    -6.350000735101372e-05,
+    0.679894266517441,
+    0.6831770231098679,
+    0.6865317744942344,
+    0.68421439848137,
+    0.6865332646838641,
+    0.6842150468440762,
+    -0.0023840009494830966,
+    -0.6810749909349378,
+    -0.6834248267452715
+   ],
+   "binding_constraint": "object_disturbance",
+   "t0": 9.74,
+   "t1": 11.36
+  }
+ },
+ "probe_contacts_after_close": {
+  "ok": true,
+  "result": {
+   "what": "contacts",
+   "t": 11.36,
+   "ncon": 10,
+   "hand_object_contacts": 1,
+   "contacts": [
+    {
+     "g1": "floor",
+     "g2": "robot0_g6_col",
+     "b1": "gear_factory",
+     "b2": "robot0_left_ankle_roll_link",
+     "pos": [
+      1.43514,
+      0.1761,
+      -0.00028
+     ],
+     "normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "dist": -0.000565,
+     "penetration": 0.000565,
+     "force_normal": 36.858,
+     "force": 36.879,
+     "hand_obj": false,
+     "obj_contact": false
+    },
+    {
+     "g1": "floor",
+     "g2": "robot0_g7_col",
+     "b1": "gear_factory",
+     "b2": "robot0_left_ankle_roll_link",
+     "pos": [
+      1.4329,
+      0.12615,
+      -0.00037
+     ],
+     "normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "dist": -0.000733,
+     "penetration": 0.000733,
+     "force_normal": 59.504,
+     "force": 59.515,
+     "hand_obj": false,
+     "obj_contact": false
+    },
+    {
+     "g1": "floor",
+     "g2": "robot0_g8_col",
+     "b1": "gear_factory",
+     "b2": "robot0_left_ankle_roll_link",
+     "pos": [
+      1.60519,
+      0.17347,
+      -0.00023
+     ],
+     "normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "dist": -0.000456,
+     "penetration": 0.000456,
+     "force_normal": 25.417,
+     "force": 25.65,
+     "hand_obj": false,
+     "obj_contact": false
+    },
+    {
+     "g1": "floor",
+     "g2": "robot0_g9_col",
+     "b1": "gear_factory",
+     "b2": "robot0_left_ankle_roll_link",
+     "pos": [
+      1.6025,
+      0.11354,
+      -0.00033
+     ],
+     "normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "dist": -0.000659,
+     "penetration": 0.000659,
+     "force_normal": 49.166,
+     "force": 49.364,
+     "hand_obj": false,
+     "obj_contact": false
+    },
+    {
+     "g1": "floor",
+     "g2": "robot0_g15_col",
+     "b1": "gear_factory",
+     "b2": "robot0_right_ankle_roll_link",
+     "pos": [
+      1.45108,
+      -0.05272,
+      -0.00031
+     ],
+     "normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "dist": -0.000628,
+     "penetration": 0.000628,
+     "force_normal": 45.001,
+     "force": 45.002,
+     "hand_obj": false,
+     "obj_contact": false
+    },
+    {
+     "g1": "floor",
+     "g2": "robot0_g16_col",
+     "b1": "gear_factory",
+     "b2": "robot0_right_ankle_roll_link",
+     "pos": [
+      1.44682,
+      -0.10254,
+      -0.00034
+     ],
+     "normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "dist": -0.000682,
+     "penetration": 0.000682,
+     "force_normal": 52.367,
+     "force": 52.376,
+     "hand_obj": false,
+     "obj_contact": false
+    },
+    {
+     "g1": "floor",
+     "g2": "robot0_g17_col",
+     "b1": "gear_factory",
+     "b2": "robot0_right_ankle_roll_link",
+     "pos": [
+      1.62089,
+      -0.06222,
+      -0.00028
+     ],
+     "normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "dist": -0.00056,
+     "penetration": 0.00056,
+     "force_normal": 36.547,
+     "force": 36.674,
+     "hand_obj": false,
+     "obj_contact": false
+    },
+    {
+     "g1": "floor",
+     "g2": "robot0_g18_col",
+     "b1": "gear_factory",
+     "b2": "robot0_right_ankle_roll_link",
+     "pos": [
+      1.61577,
+      -0.12201,
+      -0.00031
+     ],
+     "normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "dist": -0.000625,
+     "penetration": 0.000625,
+     "force_normal": 44.694,
+     "force": 44.826,
+     "hand_obj": false,
+     "obj_contact": false
+    },
+    {
+     "g1": "bottle_collider_box_8e968ea9",
+     "g2": "robot0_g28_col",
+     "b1": "bottle_body",
+     "b2": "robot0_left_wrist_yaw_link",
+     "pos": [
+      1.65878,
+      0.08868,
+      0.97037
+     ],
+     "normal": [
+      0.1966,
+      0.5014,
+      -0.8426
+     ],
+     "dist": -4.1e-05,
+     "penetration": 4.1e-05,
+     "force_normal": 0.071,
+     "force": 0.078,
+     "hand_obj": false,
+     "obj_contact": true
+    },
+    {
+     "g1": "bottle_collider_cylinder99aba387",
+     "g2": "gripper0_right_g0_col",
+     "b1": "bottle_body",
+     "b2": "gripper0_right_right_hand_palm_link",
+     "pos": [
+      1.73072,
+      -0.07891,
+      0.99889
+     ],
+     "normal": [
+      0.1267,
+      -0.9102,
+      -0.3943
+     ],
+     "dist": -2.1e-05,
+     "penetration": 2.1e-05,
+     "force_normal": 0.036,
+     "force": 0.049,
+     "hand_obj": true,
+     "obj_contact": true
+    }
+   ]
+  }
+ }
+}

@@ -56,6 +56,59 @@ if not os.path.isabs(QDIR):
     QDIR = os.path.join(HERE, QDIR)
 os.makedirs(QDIR, exist_ok=True)
 
+# ---------------------------------------------------------------------------
+# Waist authority experiment (2026-11-15).
+#
+# G1DecoupledWholeBodyPolicy.get_action writes q[upper_body] first and
+# q[lower_body] afterwards, so the waist's final writer is HOMIE v2 even with
+# enable_waist=True.  HMG_WAIST_OWNER overrides that order AFTER the policy
+# runs: ik (IK target wins), blend (weighted), homie (unchanged, default).
+# Control-layer only: no physics, reward, predicate or model-limit change.
+# ---------------------------------------------------------------------------
+WAIST = {
+    'owner': os.environ.get('HMG_WAIST_OWNER', 'homie').strip().lower(),
+    'blend': float(os.environ.get('HMG_WAIST_BLEND', '0.5')),
+    'lower_owner': os.environ.get('HMG_LOWER_OWNER', 'policy').strip().lower(),
+    'policy': None,
+}
+try:
+    from humanoidmimicgen.wbc.policy import G1DecoupledWholeBodyPolicy as _P
+    _orig_get_action = _P.get_action
+
+    def _apply_lower_owner(pol):
+        """policy: the HOMIE ONNX lower body writes the legs; hold: the
+        measured lower-body q is held (use_policy_action=False).  Applied
+        every step so a request made before the first get_action, and the
+        post-construction restore done by reset_policy(), both end up at the
+        owner the caller asked for."""
+        lp = getattr(pol, 'lower_body_policy', None)
+        if lp is not None and hasattr(lp, 'use_policy_action'):
+            lp.use_policy_action = (WAIST['lower_owner'] == 'policy')
+
+    def _get_action_waist_override(self, time=None):
+        WAIST['policy'] = self
+        out = _orig_get_action(self, time)
+        _apply_lower_owner(self)
+        q = out.get('q') if isinstance(out, dict) else None
+        goal = getattr(self.upper_body_policy, 'goal', None) or {}
+        tgt = goal.get('target_upper_body_pose')
+        if q is None or tgt is None or WAIST['owner'] == 'homie':
+            return out
+        idx = list(self.robot_model.get_joint_group_indices('waist'))
+        vals = np.asarray(tgt, float)[:len(idx)]
+        if WAIST['owner'] == 'ik':
+            q[idx] = vals
+        else:
+            a = max(0.0, min(1.0, WAIST['blend']))
+            q[idx] = (1.0 - a) * q[idx] + a * vals
+        return out
+
+    _P.get_action = _get_action_waist_override
+    print('waist authority switch installed (owner=%s)' % WAIST['owner'],
+          flush=True)
+except Exception as _exc:                       # pragma: no cover
+    print('waist override unavailable: %r' % (_exc,), flush=True)
+
 env = TaskEnv(TASK, seed=SEED)
 obs = env.reset(SEED)
 T = {'t': 0.0, 'nav': np.zeros(3), 'height': 0.74}
@@ -69,11 +122,56 @@ SRC = {}
 EP = {'seed': SEED, 'started': False}
 
 
+def authority_switch(**kw):
+    """Runtime authority handover (control-layer only).
+
+    waist_owner homie|ik|blend selects who makes the FINAL write of the three
+    waist joints (homie: the WBC lower-body policy, unchanged default; ik: the
+    upper-body target the IK solved; blend: weighted).  lower_owner
+    policy|hold selects whether the HOMIE ONNX lower body writes the legs
+    (policy) or the measured lower-body q is held (hold).
+
+    Exposed both as the harness tool ``authority`` and as ``api.authority``
+    inside a registered primitive, so a primitive can perform and verify a
+    handover itself.  No physics, reward, predicate or model limit changes.
+    """
+    if 'waist_owner' in kw:
+        want = str(kw['waist_owner']).strip().lower()
+        if want not in ('homie', 'ik', 'blend'):
+            raise ValueError('waist_owner must be homie|ik|blend, got %r' % want)
+        WAIST['owner'] = want
+    if 'waist_blend' in kw:
+        WAIST['blend'] = max(0.0, min(1.0, float(kw['waist_blend'])))
+    if 'lower_owner' in kw:
+        want = str(kw['lower_owner']).strip().lower()
+        if want not in ('policy', 'hold'):
+            raise ValueError('lower_owner must be policy|hold, got %r' % want)
+        WAIST['lower_owner'] = want
+    pol = WAIST.get('policy')
+    if pol is not None:
+        _apply_lower_owner(pol)
+    lower = getattr(pol, 'lower_body_policy', None)
+    return {'waist_owner': WAIST['owner'],
+            'waist_blend': WAIST['blend'],
+            'lower_owner': WAIST['lower_owner'],
+            'lower_policy_action': getattr(lower, 'use_policy_action', None)}
+
+
+def waist_owner():
+    """Current waist owner for tools that report authority (reach_box_qp)."""
+    return WAIST['owner']
+
+
 def make_tools():
     """Per-episode Tools bookkeeping (t, base-height/nav commands, the reset
     pose used by reach_box).  Same object shape a fresh server builds."""
     t = hmg_tools.Tools(env, lambda: state())
     t.state = lambda: state()
+    # A registered primitive receives this object as ``api``; expose the
+    # runtime authority switch and the current owner so a handover capability
+    # can be implemented as a primitive instead of harness-side glue.
+    t.authority = authority_switch
+    t.waist_owner = waist_owner
     return t
 
 
@@ -545,6 +643,26 @@ def handle(req):
         # assumes the env still sits at its episode start
         EP['started'] = True
         return RT.call(req['name'], **(req.get('kwargs') or {}))
+    if tool == 'qp_reach':
+        # mink QP whole-body IK.  task_dim=12 (default) solves the two palm
+        # poses over the 14 arm joints with the measured waist exogenous.
+        EP['started'] = True
+        return tools.reach_box_qp(**(req.get('kwargs') or {}))
+    if tool == 'ik_compare':
+        # Read-only 12/14/17 dimension comparison on scratch data: no command,
+        # no state change (same information class as ik_preview).
+        return tools.ik_compare(**(req.get('kwargs') or {}))
+    if tool == 'audit':
+        # per-joint authority + execution audit of the last command
+        return tools.command_audit(**(req.get('kwargs') or {}))
+    if tool == 'track_gain':
+        # measured achieved-vs-commanded gain for named joints
+        EP['started'] = True
+        return tools.track_gain(**(req.get('kwargs') or {}))
+    if tool == 'authority':
+        # runtime authority handover: waist owner (homie|ik|blend) and lower
+        # body owner (policy|hold).  Control-layer only.
+        return authority_switch(**(req.get('kwargs') or {}))
     if tool in ('run', 'run_seeds', 'sweep'):
         # one request, one primitive, several seeds (see run_episodes)
         return run_episodes(req)
@@ -567,6 +685,28 @@ def handle(req):
                          pad=req.get('pad', 0.2),
                          max_samples=int(req.get('max_samples', 200)),
                          fields=req.get('fields'))
+    if tool == 'failure_window':
+        # Trace-only onset/end of a failure signature: reads the recorder's
+        # per-step arrays, never the success predicate/reward, never steps
+        # the sim.  Recorder off -> {"recording": false}.
+        ep = _obs_episode()
+        if ep is None:
+            return {'recording': False}
+        th = req.get('threshold')
+        dl = req.get('delta')
+        t0 = req.get('t0')
+        t1 = req.get('t1')
+        return ep.failure_window(
+            signal=req.get('signal') or 'obj_z',
+            rule=req.get('rule') or 'below',
+            threshold=None if th is None else float(th),
+            delta=None if dl is None else float(dl),
+            hold=int(req.get('hold', 1)),
+            t0=None if t0 is None else float(t0),
+            t1=None if t1 is None else float(t1),
+            pad=float(req.get('pad', 0.1)),
+            max_samples=int(req.get('max_samples', 30)),
+            joints=req.get('joints'))
     if tool == 'probe':
         return probe(req)
     if tool == 'trace':
@@ -592,7 +732,8 @@ def handle(req):
                          azim=float(req.get('azim', -90.0)),
                          elev=float(req.get('elev', 15.0)),
                          mp4=bool(req.get('mp4')),
-                         fps=int(req.get('fps', 10)))
+                         fps=int(req.get('fps', 10)),
+                         t=req.get('t'), t_range=req.get('t_range'))
     if tool == 'finish':
         # Coordinator-only episode summary: the engine's own success flag and
         # the final qpos are written OUTSIDE the queue (the actor's response

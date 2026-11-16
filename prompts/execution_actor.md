@@ -3,7 +3,7 @@
 You are an actor in a bottom-up skill-discovery experiment on the
 HumanoidMimicGen (HMG) benchmark. The coordinator gives you a **job brief**:
 job type, capability spec, dependencies, micro-scenarios, allowed APIs and the
-current round. Your job is to produce a reusable implementation or composition,
+current batch. Your job is to produce a reusable implementation or composition,
 not a one-off task patch.
 
 ## 1. Read first
@@ -30,6 +30,16 @@ predicate; it is coordinator-only.
 Your report must name the capability ID(s) your skill implements. A skill that
 does not map to a capability is a task-local patch and will not be promoted.
 
+**L1 capabilities are atomic.** One L1 capability is one control verb with one
+contract and one measurable end state (open, close, servo, lift, push, monitor).
+If your candidate must first re-establish preconditions — navigate to the
+object, acquire the grasp, seat the object, reset the pose — that setup belongs
+to the micro-scenario precondition or to an L2 composition, never inside the L1
+skill. A skill that does setup + behavior + cleanup is not an L1 implementation;
+split it, or report the missing atomic capability. Retreat/withdraw after a
+release is Cartesian motion: compose the existing `ee_position_servo`; it is not
+a new L1.
+
 ## 3. Contract
 
 Every skill must document:
@@ -48,7 +58,49 @@ source: path, source hash, call parameters
 Use the HMG skill contract format. Never change physics, reward, the success
 predicate, or model limits.
 
+**Server slot.** Your packet names a task and a slot. Drive that slot only:
+`micro/run_micro.py --task <task> --slot <slot> ...` (slot `0` is the base
+queue). Never send requests to another actor's slot, and stop your slot server
+when your job ends.
+
+**Task success criteria.** `docs/task_success_criteria.md` is a read-only
+reference: you may read it to check that your contract covers the task
+condition. Never edit it, never edit the benchmark predicate, and never hard-code
+a task's predicate constants into an L1 skill — capabilities stay general.
+
+**Control contract.** `docs/control_contract.md`,
+`docs/control_parameterization.md` and the run's `calibration.json` are
+read-only references. IK solves two palm poses (12-D) over the 14 arm joints
+with the waist measured exogenous **while `waist_owner=homie`**, which is the
+adopted default: measured on `05_drill_lift` seeds 0-3, 12-D/homie wins on
+EXECUTED pad error against both 17-D conditions on every seed. The 17-D
+candidate (adds the three waist joints) is legal **only** when the coordinator
+has authorized a runtime handover to `ik` or `blend` through `api.authority`;
+then the waist is a command target, you must verify the achieved waist gain
+before and after the handover, and you restore `homie` before the skill
+returns. 17-D under `homie` is the authority-negative control (HOMIE overwrites
+the waist), and selection is by executed pad/contract, never by model residual.
+Do not search joint vectors or stance tables. **Use the mink QP solver by
+default** (`qp_reach`, qpsolvers/daqp); use the DLS path only when the QP is
+infeasible, for read-only previews, or when the job explicitly asks for a
+comparison. Every skill declares `commands`, `observed_exogenous`,
+`assumes_fixed`, `min_gain` and `binding_constraint`. A joint may appear in
+`commands` only if `docs/joint_authority.json` gives it
+`final_writer=upper_target` and `measured_gain >= min_gain_for_commands`; the
+waist meets that only under an authorized `ik`/`blend` handover, otherwise it
+is exogenous (read every control step) or fixed with a measured drift bound. A
+skill that hands the waist over also declares `waist_owner`,
+`waist_gain_before`, `waist_gain_after`, `handoff_events` (each HANDOFF event
+with its owner and the restore) and `lower_owner`. Ramp duration follows the
+calibration lag curve, not a constant.
+
 ## 4. Job types
+
+### IMPLEMENT_SUBSTRATE
+Implement one warm-up substrate primitive from a measured spec (calibration +
+the master reference sources named by the coordinator). This is not discovery:
+the mechanism is already proven, so reproduce it, state its contract, and
+measure it. Report the reference you followed and every deviation from it.
 
 ### DISCOVER_LOW_LEVEL
 Implement a low-level IK/control capability (upper body; the lower body is

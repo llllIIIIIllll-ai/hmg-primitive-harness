@@ -22,7 +22,9 @@ Harness fixes (2026-11-09, verified against the live model):
     models/grippers/g1_threefinger_hands.py); the old low-limit-sign rule
     flipped thumb_1 (left) and thumb_2 (both hands).
 """
+import math
 import os
+import time
 
 import numpy as np
 
@@ -189,6 +191,73 @@ ARM = ('shoulder_pitch', 'shoulder_roll', 'shoulder_yaw', 'elbow',
 HAND = ('thumb_0', 'thumb_1', 'thumb_2', 'index_0', 'index_1',
         'middle_0', 'middle_1')
 WAIST = ('waist_yaw', 'waist_roll', 'waist_pitch')
+
+
+class _LockDoFLimit:
+    """Hard-lock MuJoCo DoFs in a mink QP by forbidding their velocity.
+
+    mink's ``ConfigurationLimit`` ignores the floating base and only bounds
+    hinge/slide joints; it does not stop the optimizer from *using* the waist,
+    the base or the legs to help the arms reach.  The control contract requires
+    the opposite: the waist is HOMIE-owned and exogenous (read every step,
+    never commanded), and the base/legs are WBC-owned.  This limit adds the
+    equality-like inequalities ``|delta_q[dof]| <= 0`` for every non-free DoF,
+    which removes them from the optimisation exactly.
+    """
+
+    def __init__(self, dof_indices):
+        self.dof = np.asarray(sorted(set(int(x) for x in dof_indices)), int)
+
+    def compute_qp_inequalities(self, configuration, dt):
+        import mink
+        n = int(self.dof.size)
+        if n == 0:
+            return mink.Constraint()
+        nv = int(configuration.model.nv)
+        G = np.zeros((2 * n, nv))
+        rows = np.arange(n)
+        G[rows, self.dof] = 1.0
+        G[n + rows, self.dof] = -1.0
+        return mink.Constraint(G=G, h=np.zeros(2 * n))
+
+
+def _joint_dofs(m, sim_name, names):
+    out = []
+    for nm in names:
+        jid = int(m.joint(sim_name[nm]).id)
+        out.append(int(np.atleast_1d(m.joint(jid).dofadr)[0]))
+    return out
+
+
+def _arm_dofs(m, sim_name, sides=('left', 'right')):
+    names = ['%s_%s_joint' % (s_, a) for s_ in sides for a in ARM]
+    return _joint_dofs(m, sim_name, names)
+
+
+def _clamp_cfg_to_limits(m, cfg, cl):
+    """Bring a scratch mink configuration inside the QP joint bounds.
+
+    Live measurements can sit a few mrad outside a model limit (the WBC lets a
+    PD-driven joint rest there).  ``ConfigurationLimit`` then yields
+    ``delta_q_min > delta_q_max`` for that joint and daqp reports
+    NoSolutionFound before the task is considered.  Clamping the SCRATCH q (the
+    live state is never touched) restores feasibility; the command is clamped
+    to the model range afterwards anyway.
+    """
+    q = np.asarray(cfg.q, float).copy()
+    for jnt in range(int(m.njnt)):
+        if not bool(m.jnt_limited[jnt]):
+            continue
+        padr = int(m.jnt_qposadr[jnt])
+        v = float(q[padr])
+        # A measured joint can rest a few mrad outside a limit.  Expand the
+        # bound to contain it (1e-9 m/rad) so the inequality pair cannot be
+        # inverted; this is a solver-feasibility tolerance, not a model change.
+        if v < float(cl.lower[padr]):
+            cl.lower[padr] = v - 1e-9
+        elif v > float(cl.upper[padr]):
+            cl.upper[padr] = v + 1e-9
+    cfg.update(q)
 
 
 def task_object(env):
@@ -417,11 +486,15 @@ class Tools:
         return out
 
     def hand_contacts_side(self):
-        """Per-side hand-object contact count (added 2026-11-09, actor_2).
-        ``observe()['hand_object_contacts']`` only gives the total; a two-hand
-        grasp needs to know whether each hand actually touched the box before
-        closing.  Counts sim contacts whose other body is a left/right hand
-        body.  Same information class as the documented contact count."""
+        """Per-side hand-object contact count over the object body TREE.
+
+        ``observe()['hand_object_contacts']`` gives only the total; a two-hand
+        grasp needs the per-side split.  The object's collision geoms can sit
+        on child bodies (05_drill_lift: root ``bottle_main`` has no geoms), so
+        matching the root body alone reported 0/0 while the drill was contacted
+        and tilted (measured by the ll_v2 arm_pose_ik validator).  Every
+        descendant body is included.
+        """
         m, d = self.raw
         objs, sel = task_object(self.env)
         if sel is None:
@@ -429,14 +502,22 @@ class Tools:
         import mujoco
         bid = int(mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_BODY,
                                     sel.root_body))
+        members = set()
+        for b in range(int(m.nbody)):
+            x = b
+            while x > 0:
+                if x == bid:
+                    members.add(b)
+                    break
+                x = int(m.body_parentid[x])
         out = {'left': 0, 'right': 0, 'pairs': []}
         for ci in range(int(d.ncon)):
             c = d.contact[ci]
             b1 = int(m.geom_bodyid[c.geom1])
             b2 = int(m.geom_bodyid[c.geom2])
-            if bid not in (b1, b2):
+            if b1 not in members and b2 not in members:
                 continue
-            other = b2 if b1 == bid else b1
+            other = b2 if b1 in members else b1
             nm = m.body(other).name
             if not ('hand' in nm or 'gripper' in nm):
                 continue          # knee/torso contacts are not a grasp
@@ -570,6 +651,62 @@ class Tools:
                 'world_hi': None if hi is None else np.round(hi, 4).tolist(),
                 'geoms': geoms}
 
+    def object_aabb(self):
+        """World AABB over the task object's whole body TREE (read-only).
+
+        ``geom_detail`` only walks geoms attached to the root body, which is
+        empty for compound objects whose collision geoms sit on child bodies
+        (e.g. 05_drill_lift: root ``bottle_main`` has ngeom=0).  This walks the
+        root body and every descendant and returns the same AABB the server
+        probe reports, so a base-standoff or pad plan can be expressed against
+        the LIVE object extent rather than a stale body origin.
+        """
+        m, d = self.raw
+        import mujoco
+        mujoco.mj_forward(m, d)
+        objs, sel = task_object(self.env)
+        if sel is None:
+            return {'error': 'no object'}
+        root = int(mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_BODY,
+                                     sel.root_body))
+        if root < 0:
+            return {'error': 'root body missing'}
+        members = set()
+        for b in range(int(m.nbody)):
+            x = b
+            for _ in range(16):
+                if x == root:
+                    members.add(b)
+                    break
+                if x <= 0:
+                    break
+                x = int(m.body_parentid[x])
+        lo = hi = None
+        for gi in range(int(m.ngeom)):
+            if int(m.geom_bodyid[gi]) not in members:
+                continue
+            cen = np.asarray(d.geom_xpos[gi], float)
+            Rg = np.asarray(d.geom_xmat[gi], float).reshape(3, 3)
+            sz = np.asarray(m.geom_size[gi], float)
+            gtype = int(m.geom_type[gi])
+            if gtype == int(mujoco.mjtGeom.mjGEOM_MESH):
+                aid = int(m.geom_dataid[gi])
+                v0 = int(m.mesh_vertadr[aid])
+                v1 = v0 + int(m.mesh_vertnum[aid])
+                pts = np.asarray(m.mesh_vert[v0:v1], float) @ Rg.T + cen
+            else:
+                ext = np.abs(Rg) @ sz
+                pts = cen + np.array([[sx * ext[0], sy * ext[1], sz2 * ext[2]]
+                                      for sx in (-1, 1) for sy in (-1, 1)
+                                      for sz2 in (-1, 1)])
+            blo, bhi = pts.min(axis=0), pts.max(axis=0)
+            lo = blo if lo is None else np.minimum(lo, blo)
+            hi = bhi if hi is None else np.maximum(hi, bhi)
+        return {'body': sel.root_body,
+                'body_pos': np.round(d.xpos[root], 4).tolist(),
+                'lo': None if lo is None else np.round(lo, 4).tolist(),
+                'hi': None if hi is None else np.round(hi, 4).tolist()}
+
     def scene_objects(self, detail=False):
         """Read-only inventory of every ``mujoco_objects`` SceneObject in the
         task env, with world body pose and geom AABB (added 2026-11-09,
@@ -701,6 +838,50 @@ class Tools:
             if geoms:
                 out[nm] = {'body_pos': np.round(d.xpos[i], 4).tolist(),
                            'geoms': geoms}
+        return out
+
+    def arm_geoms(self):
+        """Read-only: every collision geom on the robot arm chain
+        (shoulder/elbow/wrist/hand bodies) with its world position, plus the
+        gripper0 hand geoms.  hand_geoms() covers only the hand bodies, so the
+        wrist link geoms (robot0_g27/g28/g34/g35_col) that dragged a tall
+        object during the descent were invisible to the pad-clearance check.
+        Reads model geometry only; no reward/predicate access.
+        """
+        m, d = self.raw
+        import mujoco
+        mujoco.mj_forward(m, d)
+        out = {}
+        for i in range(int(m.nbody)):
+            nm = m.body(i).name
+            if not nm.startswith('robot0'):
+                continue
+            hit = ('shoulder' in nm or 'elbow' in nm or 'wrist' in nm
+                   or 'hand' in nm)
+            if not hit:
+                continue
+            geoms = []
+            for gi in range(int(m.ngeom)):
+                if int(m.geom_bodyid[gi]) != i:
+                    continue
+                gtype = int(m.geom_type[gi])
+                tname = {int(mujoco.mjtGeom.mjGEOM_BOX): 'box',
+                         int(mujoco.mjtGeom.mjGEOM_SPHERE): 'sphere',
+                         int(mujoco.mjtGeom.mjGEOM_CAPSULE): 'capsule',
+                         int(mujoco.mjtGeom.mjGEOM_CYLINDER): 'cylinder',
+                         int(mujoco.mjtGeom.mjGEOM_MESH): 'mesh'}.get(
+                             gtype, str(gtype))
+                geoms.append({'name': m.geom(gi).name, 'type': tname,
+                              'local_size': np.round(
+                                  m.geom_size[gi], 4).tolist(),
+                              'world_pos': np.round(
+                                  d.geom_xpos[gi], 4).tolist()})
+            if geoms:
+                out[nm] = {'body_pos': np.round(d.xpos[i], 4).tolist(),
+                           'geoms': geoms}
+        hg = self.hand_geoms()
+        for nm in hg:
+            out[nm] = hg[nm]
         return out
 
     def bodies(self, match='', parents_depth=6):
@@ -1315,6 +1496,30 @@ class Tools:
             jid_ = int(m.joint(self.sim_name[nm_]).id)
             lo_, hi_ = m.jnt_range[jid_]
             target[i_] = np.clip(target[i_], lo_, hi_)
+        if not apply:
+            margin0 = {}
+            for nm_ in solved:
+                jid_ = int(m.joint(self.sim_name[nm_]).id)
+                lo_, hi_ = m.jnt_range[jid_]
+                q_ = float(d.qpos[self.addr[nm_]])
+                margin0[nm_] = round(float(min(q_ - lo_, hi_ - q_)), 4)
+            mj_name = None
+            for nm_ in margin0:
+                if mj_name is None or margin0[nm_] < margin0[mj_name]:
+                    mj_name = nm_
+            return {'solver': 'mink-qp', 'task_dim': int(task_dim),
+                    'applied': False, 'ik_err': ik_err, 'ik_rot': ik_rot,
+                    'target': {k: np.round(v, 3).tolist()
+                               for k, v in tgt.items()},
+                    'upper_target': [round(float(x), 4) for x in target],
+                    'joint_margin_min': (None if not margin0
+                                         else min(margin0.values())),
+                    'joint_margin_joint': mj_name,
+                    'joint_margins': margin0,
+                    'waist_exogenous': int(task_dim) < 17,
+                    'waist_owner': owner, 'waist_solved': waist_solved,
+                    'waist_commandable': waist_commandable,
+                    't': round(self.t, 2), 'state': self.state()}
         self._ramp(target, dur)
         # achieved residual after the WBC has actually tracked the target
         mujoco.mj_forward(m, d)
@@ -1352,6 +1557,604 @@ class Tools:
                 'target': {k: np.round(v, 3).tolist() for k, v in tgt.items()},
                 'upper_target': [round(float(x), 4) for x in target],
                 't': round(self.t, 2), 'state': self.state()}
+
+    def command_audit(self, tol=0.02):
+        """Per-joint authority and execution audit for the 31-D command.
+
+        Reports, for every contract joint, the commanded value, the measured
+        value, the error, which controller group the joint belongs to and who
+        has FINAL authority.  The lower-body policy is written AFTER the upper
+        body in G1DecoupledWholeBodyPolicy.get_action, so the waist is owned by
+        HOMIE v2 even when enable_waist=True puts it in both groups; a waist
+        target is only an indirect torso-orientation request.
+        """
+        cmd = self.last_cmd
+        if cmd is None:
+            return {'error': 'no command sent yet'}
+        try:
+            owner = (self.waist_owner() if callable(
+                getattr(self, 'waist_owner', None)) else 'homie')
+        except Exception:
+            owner = 'homie'
+        meas = self._upper_vec()
+        out, viol = {}, []
+        for i, nm in enumerate(ALLOWED_UPPER):
+            if nm.startswith('waist'):
+                if owner == 'ik':
+                    auth, groups = 'upper_target(ik handover)', ['waist']
+                elif owner == 'blend':
+                    auth, groups = 'blend', ['waist']
+                else:
+                    auth, groups = 'homie_v2(lower)', ['waist', 'lower_body']
+            elif '_hand_' in nm:
+                auth, groups = 'upper_target', ['upper_body(hands)']
+            else:
+                auth, groups = 'upper_target', ['upper_body(arms)']
+            e = float(cmd[i] - meas[i])
+            out[nm] = {'cmd': round(float(cmd[i]), 4),
+                       'meas': round(float(meas[i]), 4),
+                       'err': round(e, 4), 'authority': auth,
+                       'groups': groups}
+            if abs(e) > tol:
+                viol.append(nm)
+        return {'joints': out, 'violations': viol, 'tol': tol,
+                'waist_owner': owner,
+                'note': 'default waist final authority is HOMIE v2 (lower_body '
+                        'writes after upper_body); after an authorized '
+                        'handover (waist_owner=ik|blend) the upper target wins'}
+
+    def track_gain(self, joints=('waist_pitch_joint',), delta=0.10,
+                   dur=1.5, hold=1.0):
+        """Measure how much of a commanded joint delta the robot actually makes.
+
+        Commands ``delta`` on each named contract joint through the upper-body
+        channel, holds, and reports achieved delta and gain.  A gain near 0
+        means the channel does not have authority over that joint.
+        """
+        names = [n for n in ALLOWED_UPPER if n in set(joints)]
+        if not names:
+            return {'error': 'no matching joints'}
+        q0 = self._upper_vec()
+        target = q0.copy()
+        for nm in names:
+            target[ALLOWED_UPPER.index(nm)] += delta
+        self._ramp(target, dur)
+        n = max(1, int(hold / self.env.control_timestep))
+        for _ in range(n):
+            self._send(target)
+        q1 = self._upper_vec()
+        try:
+            owner = (self.waist_owner() if callable(
+                getattr(self, 'waist_owner', None)) else 'homie')
+        except Exception:
+            owner = 'homie'
+        out = {}
+        for nm in names:
+            i = ALLOWED_UPPER.index(nm)
+            d = float(q1[i] - q0[i])
+            out[nm] = {'q0': round(float(q0[i]), 4),
+                       'q1': round(float(q1[i]), 4),
+                       'delta_meas': round(d, 4),
+                       'gain': round(d / delta, 3) if delta else None}
+        return {'joints': out, 'delta_cmd': delta, 'dur': dur, 'hold': hold,
+                'waist_owner': owner,
+                'waist_channel': ('upper_target final writer'
+                                  if owner in ('ik', 'blend')
+                                  else 'upper_target, homie_v2 overwrites')}
+
+    def reach_box_qp(self, gap=0.155, z_off=0.45, dur=1.6, iters=80, dt=0.05,
+                     x_off=0.0, sides=('left', 'right'), orientation='keep',
+                     targets=None, R_body=None, hand_hold=None,
+                     position_cost=1.0, orientation_cost=0.5,
+                     base_cost=1000.0, posture_cost=1e-2, solver='daqp',
+                     damping=1e-4, task_dim=12, joint_bounds=None,
+                     apply=True, fallback_dls=True, seed_q=None):
+        """Both palms to targets via a mink QP (qpsolvers/daqp).
+
+        ``task_dim`` selects the solved subspace on the live model:
+
+          12  two palm poses over the 14 arm joints.  The waist is
+              EXOGENOUS: read and locked at its measured value every step and
+              never written (HOMIE v2 is its final writer).
+          17  12 + the three waist joints as free variables.  When the waist
+              owner is homie (default) this is the authority-negative
+              candidate: the solved waist is commanded, but HOMIE overwrites
+              it, so the achieved pad pose differs from the model residual.
+              After an authorized handover (``api.authority(waist_owner='ik')``)
+              the waist target is the final write and the solved waist is
+              authoritative.
+
+        The base, legs, hands and every other joint are hard-locked at their
+        measured values by a zero-velocity QP constraint, so the result is a
+        pure upper-body command the WBC can track.  ``joint_bounds`` restricts
+        named joints to their measured effective range (a direction whose
+        measured gain is below ``min_gain_for_commands`` must not be solved
+        into).  Same target semantics and returned fields as ``reach_box``;
+        on QP failure the DLS path is used and reported as such.
+        """
+        st = self.state()
+        try:
+            owner = (self.waist_owner() if callable(
+                getattr(self, 'waist_owner', None)) else 'homie')
+        except Exception:
+            owner = 'homie'
+        waist_solved = int(task_dim) >= 17
+        waist_commandable = bool(waist_solved and owner in ('ik', 'blend'))
+        ob = st.get('object') or {}
+        if not ob.get('pos'):
+            return {'error': 'no object visible'}
+        c = np.asarray(ob['pos'], float)
+        if targets:
+            tgt = {k: np.asarray(v, float) for k, v in targets.items()}
+        else:
+            tgt = {'left': c + np.array([x_off, +gap, z_off]),
+                   'right': c + np.array([x_off, -gap, z_off])}
+        m, d = self.raw
+        import mujoco
+        import mink
+        ds = mujoco.MjData(m)
+        ds.qpos[:] = d.qpos
+        mujoco.mj_forward(m, ds)
+        Rb = self._quat_to_mat(np.asarray(d.qpos[3:7], float))
+        R_Y90 = np.array([[0., 0, 1], [0, 1, 0], [-1, 0, 0]])
+        R_X90 = np.array([[1., 0, 0], [0, 0, -1], [0, 1, 0]])
+        R_ID = np.array([[0., 1, 0], [0, 0, -1], [-1, 0, 0]])
+
+        def frame_name(obj_type, oid):
+            return mujoco.mj_id2name(m, obj_type, oid)
+
+        # robot root body: first non-world body whose name starts with robot0
+        base_bid = None
+        for bid in range(1, int(m.nbody)):
+            if int(m.body_parentid[bid]) != 0:
+                continue
+            nm = mujoco.mj_id2name(m, mujoco.mjtObj.mjOBJ_BODY, bid) or ''
+            if nm.startswith('robot0'):
+                base_bid = bid
+                break
+        if base_bid is None:
+            base_bid = 1
+
+        cfg_q = ds.qpos.copy()
+        if seed_q:
+            for nm_ in seed_q:
+                if nm_ in self.addr:
+                    cfg_q[self.addr[nm_]] = float(seed_q[nm_])
+        cfg = mink.Configuration(m, q=cfg_q)
+        tasks = []
+        base_task = mink.FrameTask(
+            frame_name(mujoco.mjtObj.mjOBJ_BODY, base_bid), 'body',
+            base_cost, base_cost)
+        base_task.set_target(mink.SE3.from_rotation_and_translation(
+            mink.SO3.from_matrix(np.asarray(ds.xmat[base_bid]).reshape(3, 3)),
+            np.asarray(ds.xpos[base_bid], float).copy()))
+        tasks.append(base_task)
+        if posture_cost > 0:
+            posture = mink.PostureTask(m, posture_cost)
+            posture.set_target(ds.qpos.copy())
+            tasks.append(posture)
+        palm_tasks = {}
+        for s_ in sides:
+            sid = self.sid.get(s_)
+            if sid is None:
+                continue
+            if isinstance(R_body, dict):
+                Rb_side = R_body.get(s_)
+            else:
+                Rb_side = R_body
+            if Rb_side is not None:
+                R_des = Rb @ np.asarray(Rb_side, float) @ self.R_site0[s_]
+            elif orientation == 'down':
+                R_des = Rb @ R_Y90 @ self.R_site0[s_]
+            elif orientation == 'inward':
+                R_des = Rb @ R_X90 @ self.R_site0[s_]
+            elif orientation == 'inward_down':
+                R_des = Rb @ R_ID @ self.R_site0[s_]
+            elif orientation == 'keep':
+                R_des = np.asarray(ds.site_xmat[sid], float).reshape(3, 3).copy()
+            else:
+                R_des = None
+            t = mink.FrameTask(frame_name(mujoco.mjtObj.mjOBJ_SITE, sid),
+                               'site', position_cost,
+                               orientation_cost if R_des is not None else 0.0)
+            if R_des is not None:
+                t.set_target(mink.SE3.from_rotation_and_translation(
+                    mink.SO3.from_matrix(R_des), tgt[s_]))
+            else:
+                t.set_target(mink.SE3.from_translation(tgt[s_]))
+            tasks.append(t)
+            palm_tasks[s_] = (t, sid, R_des)
+        cl = mink.ConfigurationLimit(m)
+        if joint_bounds:
+            # Effective measured range: a direction whose measured gain is
+            # below min_gain_for_commands must not be solved into (see
+            # calibration.json / docs/control_contract.md).
+            for nm, bnd in joint_bounds.items():
+                if nm not in self.sim_name:
+                    continue
+                if isinstance(bnd, (list, tuple)):
+                    lo_, hi_ = (list(bnd) + [None, None])[:2]
+                else:
+                    lo_, hi_ = bnd, bnd
+                jid_ = int(m.joint(self.sim_name[nm]).id)
+                padr = int(m.jnt_qposadr[jid_])
+                if lo_ is not None:
+                    cl.lower[padr] = float(lo_)
+                if hi_ is not None:
+                    cl.upper[padr] = float(hi_)
+        _clamp_cfg_to_limits(m, cfg, cl)
+        arm_names = set('%s_%s_joint' % (s_, a) for s_ in sides for a in ARM)
+        waist_names = set(n + '_joint' for n in WAIST)
+        free = set(_arm_dofs(m, self.sim_name, sides))
+        if int(task_dim) >= 17:
+            free.update(_joint_dofs(m, self.sim_name, sorted(waist_names)))
+        locked = [i for i in range(int(m.nv)) if i not in free]
+        limits = [cl, _LockDoFLimit(locked)]
+        try:
+            for _ in range(int(iters)):
+                vel = mink.solve_ik(cfg, tasks, dt, solver, damping=damping,
+                                    limits=limits)
+                cfg.integrate_inplace(vel, dt)
+                if float(np.abs(vel).max()) < 1e-4:
+                    break
+        except Exception as exc:
+            if not fallback_dls:
+                raise
+            out = self.reach_box(gap=gap, z_off=z_off, dur=dur, x_off=x_off,
+                                 sides=sides, orientation=orientation,
+                                 targets=targets, R_body=R_body,
+                                 hand_hold=hand_hold)
+            out['solver'] = 'dls-fallback'
+            out['qp_error'] = '%s: %s' % (type(exc).__name__, exc)
+            out['task_dim'] = int(task_dim)
+            out['waist_owner'] = owner
+            out['waist_solved'] = waist_solved
+            out['waist_commandable'] = waist_commandable
+            return out
+        target = self._upper_vec()
+        # Copy only the SOLVED subspace.  The waist is exogenous by default:
+        # its measured value stays in the target untouched.
+        solved = []
+        for i, nm in enumerate(ALLOWED_UPPER):
+            if nm in arm_names or (int(task_dim) >= 17 and nm in waist_names):
+                target[i] = float(cfg.q[self.addr[nm]])
+                solved.append(nm)
+        ik_err, ik_rot = {}, {}
+        cfg.update(cfg.q)
+        for s_, (t, sid, R_des) in palm_tasks.items():
+            ik_err[s_] = round(float(np.linalg.norm(
+                cfg.data.site_xpos[sid] - tgt[s_])), 4)
+            if R_des is not None:
+                Rc = np.asarray(cfg.data.site_xmat[sid]).reshape(3, 3)
+                Re = R_des @ Rc.T
+                ik_rot[s_] = round(float(np.arccos(np.clip(
+                    (np.trace(Re) - 1) / 2, -1, 1))), 4)
+        if hand_hold is not None:
+            hh = np.asarray(hand_hold, float)
+            if hh.shape != (31,):
+                raise ValueError('hand_hold must be a 31-D contract vector')
+            for i, nm in enumerate(ALLOWED_UPPER):
+                if '_hand_' in nm:
+                    target[i] = hh[i]
+        for i_, nm_ in enumerate(ALLOWED_UPPER):
+            jid_ = int(m.joint(self.sim_name[nm_]).id)
+            lo_, hi_ = m.jnt_range[jid_]
+            if joint_bounds and nm_ in joint_bounds:
+                bnd_ = joint_bounds[nm_]
+                if isinstance(bnd_, (list, tuple)):
+                    if bnd_[0] is not None:
+                        lo_ = float(bnd_[0])
+                    if len(bnd_) > 1 and bnd_[1] is not None:
+                        hi_ = float(bnd_[1])
+            target[i_] = np.clip(target[i_], lo_, hi_)
+        if not apply:
+            # READ-ONLY branch (2026-11-16, coordinator, W2i).  The apply
+            # kwarg existed in the signature but was never honoured here, so
+            # every "read-only" solve also ramped its UNCLAMPED target for
+            # one control step -- that is why the descent's wrist moved
+            # 4-5 cm per primitive iteration and why joint_margin_joint was
+            # always absent (the applying return did not have it).
+            margin0 = {}
+            for nm_ in solved:
+                jid_ = int(m.joint(self.sim_name[nm_]).id)
+                lo_, hi_ = m.jnt_range[jid_]
+                q_ = float(cfg.q[self.addr[nm_]])
+                margin0[nm_] = round(float(min(q_ - lo_, hi_ - q_)), 4)
+            mj_name = None
+            for nm_ in margin0:
+                if mj_name is None or margin0[nm_] < margin0[mj_name]:
+                    mj_name = nm_
+            wpos = {}
+            for gi in range(int(m.ngeom)):
+                nmg = m.geom(gi).name
+                if nmg in ('robot0_g27_col', 'robot0_g28_col',
+                           'robot0_g34_col', 'robot0_g35_col'):
+                    wpos[nmg] = np.round(
+                        np.asarray(cfg.data.geom_xpos[gi], float),
+                        4).tolist()
+            return {'solver': 'mink-qp', 'task_dim': int(task_dim),
+                    'applied': False, 'ik_err': ik_err, 'ik_rot': ik_rot,
+                    'target': {k: np.round(v, 3).tolist()
+                               for k, v in tgt.items()},
+                    'upper_target': [round(float(x), 4) for x in target],
+                    'joint_margin_min': (None if not margin0
+                                         else min(margin0.values())),
+                    'joint_margin_joint': mj_name,
+                    'joint_margins': margin0,
+                    'wrist_solved': wpos,
+                    'waist_exogenous': int(task_dim) < 17,
+                    'waist_owner': owner, 'waist_solved': waist_solved,
+                    'waist_commandable': waist_commandable,
+                    't': round(self.t, 2), 'state': self.state()}
+        self._ramp(target, dur)
+        mujoco.mj_forward(m, d)
+        palm = {}
+        for s_ in tgt:
+            sid = self.sid.get(s_)
+            palm[s_] = None if sid is None else np.round(
+                tgt[s_] - d.site_xpos[sid], 3).tolist()
+        pad = {}
+        for s_ in tgt:
+            gi = int(mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_GEOM,
+                                       'gripper0_%s_g0_col' % s_))
+            if gi < 0:
+                pad[s_] = None
+                continue
+            Rg = np.asarray(d.geom_xmat[gi], float).reshape(3, 3)
+            pad[s_] = {'pos': np.round(d.geom_xpos[gi], 4).tolist(),
+                       'normal': np.round(Rg[:, 0], 3).tolist(),
+                       'half_thick': round(float(m.geom_size[gi][0]), 4)}
+        margin = {}
+        for nm_ in solved:
+            jid_ = int(m.joint(self.sim_name[nm_]).id)
+            lo_, hi_ = m.jnt_range[jid_]
+            q_ = float(d.qpos[self.addr[nm_]])
+            margin[nm_] = round(float(min(q_ - lo_, hi_ - q_)), 4)
+        return {'solver': 'mink-qp', 'task_dim': int(task_dim),
+                'ik_err': ik_err, 'ik_rot': ik_rot,
+                'palm_residual': palm, 'pad': pad,
+                'solved_joints': sorted(solved),
+                'joint_margin_min': (None if not margin else min(margin.values())),
+                'waist_exogenous': int(task_dim) < 17,
+                'waist_owner': owner,
+                'waist_solved': waist_solved,
+                'waist_commandable': waist_commandable,
+                'target': {k: np.round(v, 3).tolist() for k, v in tgt.items()},
+                'upper_target': [round(float(x), 4) for x in target],
+                't': round(self.t, 2), 'state': self.state()}
+
+    def ik_compare(self, targets, orientation='keep', R_body=None,
+                   task_dim_candidates=(12, 14, 17), iters=80, dt=0.05,
+                   base_height_offsets=(-0.06, 0.0, 0.06),
+                   base_yaw_offsets=(-0.20, 0.0, 0.20),
+                   joint_bounds=None, position_cost=1.0,
+                   orientation_cost=0.5, posture_cost=1e-2, solver='daqp',
+                   damping=1e-4):
+        """Read-only dimension comparison for the IK candidates 12/14/17.
+
+        Solves the same two palm poses on scratch data for each candidate and
+        reports the model pad residual, the minimum joint margin and the solve
+        time, so round 0 can adopt the smallest dimension that meets the
+        thresholds instead of assuming one.
+
+          12  two palm poses over the 14 arm joints; waist measured and
+              exogenous; base/legs/hands locked.
+          14  12 + a bounded base height/yaw search.  The base is placed
+              closed-loop in execution, so this preview moves the scratch base
+              and re-solves the arms at each point; it reports the best point.
+          17  12 + the three waist joints free in the same QP.  The model
+              residual may improve.  With the default homie owner the waist is
+              overwritten, so the authority penalty must be added before
+              adoption; after a handover (waist_owner=ik|blend) the waist is
+              authoritative and the row is marked waist_authoritative.
+        """
+        st = self.state()
+        ob = st.get('object') or {}
+        if not ob.get('pos'):
+            return {'error': 'no object visible'}
+        try:
+            owner = (self.waist_owner() if callable(
+                getattr(self, 'waist_owner', None)) else 'homie')
+        except Exception:
+            owner = 'homie'
+        c = np.asarray(ob['pos'], float)
+        tgt = {k: np.asarray(v, float) for k, v in targets.items()}
+        m, d = self.raw
+        import mujoco
+        import mink
+        R_Y90 = np.array([[0., 0, 1], [0, 1, 0], [-1, 0, 0]])
+        R_X90 = np.array([[1., 0, 0], [0, 0, -1], [0, 1, 0]])
+        R_ID = np.array([[0., 1, 0], [0, 0, -1], [-1, 0, 0]])
+        Rb = self._quat_to_mat(np.asarray(d.qpos[3:7], float))
+
+        def _rot(side, sid):
+            if isinstance(R_body, dict):
+                Rb_side = R_body.get(side)
+            else:
+                Rb_side = R_body
+            if Rb_side is not None:
+                return Rb @ np.asarray(Rb_side, float) @ self.R_site0[side]
+            if orientation == 'down':
+                return Rb @ R_Y90 @ self.R_site0[side]
+            if orientation == 'inward':
+                return Rb @ R_X90 @ self.R_site0[side]
+            if orientation == 'inward_down':
+                return Rb @ R_ID @ self.R_site0[side]
+            if orientation == 'keep':
+                return np.asarray(
+                    d.site_xmat[sid], float).reshape(3, 3).copy()
+            return None
+
+        def solve(scratch_q, free_extra=()):
+            cfg = mink.Configuration(m, q=np.asarray(scratch_q, float).copy())
+            tasks = []
+            if posture_cost > 0:
+                posture = mink.PostureTask(m, posture_cost)
+                posture.set_target(cfg.q.copy())
+                tasks.append(posture)
+            for s_ in tgt:
+                sid = self.sid.get(s_)
+                if sid is None:
+                    continue
+                R_des = _rot(s_, sid)
+                t = mink.FrameTask(
+                    mujoco.mj_id2name(m, mujoco.mjtObj.mjOBJ_SITE, sid),
+                    'site', position_cost,
+                    orientation_cost if R_des is not None else 0.0)
+                if R_des is not None:
+                    t.set_target(mink.SE3.from_rotation_and_translation(
+                        mink.SO3.from_matrix(R_des), tgt[s_]))
+                else:
+                    t.set_target(mink.SE3.from_translation(tgt[s_]))
+                tasks.append(t)
+            cl = mink.ConfigurationLimit(m)
+            if joint_bounds:
+                for nm, bnd in joint_bounds.items():
+                    if nm not in self.sim_name:
+                        continue
+                    lo_, hi_ = ((list(bnd) + [None, None])[:2]
+                                if isinstance(bnd, (list, tuple))
+                                else (bnd, bnd))
+                    jid_ = int(m.joint(self.sim_name[nm]).id)
+                    padr = int(m.jnt_qposadr[jid_])
+                    if lo_ is not None:
+                        cl.lower[padr] = float(lo_)
+                    if hi_ is not None:
+                        cl.upper[padr] = float(hi_)
+            _clamp_cfg_to_limits(m, cfg, cl)
+            free_names = set('%s_%s_joint' % (s_, a)
+                             for s_ in tgt for a in ARM) | set(free_extra)
+            free = set(_joint_dofs(m, self.sim_name, sorted(free_names)))
+            locked = [i for i in range(int(m.nv)) if i not in free]
+            limits = [cl, _LockDoFLimit(locked)]
+            try:
+                for _ in range(int(iters)):
+                    vel = mink.solve_ik(cfg, tasks, dt, solver,
+                                        damping=damping, limits=limits)
+                    cfg.integrate_inplace(vel, dt)
+                    if float(np.abs(vel).max()) < 1e-4:
+                        break
+            except Exception as exc:
+                return {'error': '%s: %s' % (type(exc).__name__, exc)}
+            cfg.update(cfg.q)
+            err = {}
+            for s_ in tgt:
+                sid = self.sid.get(s_)
+                err[s_] = round(float(np.linalg.norm(
+                    cfg.data.site_xpos[sid] - tgt[s_])), 5)
+            margin = None
+            for nm in free_names:
+                jid_ = int(m.joint(self.sim_name[nm]).id)
+                lo_, hi_ = m.jnt_range[jid_]
+                q_ = float(cfg.q[self.addr[nm]])
+                v_ = float(min(q_ - lo_, hi_ - q_))
+                margin = v_ if margin is None else min(margin, v_)
+            return {'err': err, 'margin': None if margin is None else
+                    round(float(margin), 4),
+                    'q': {nm: float(cfg.q[self.addr[nm]]) for nm in free_names}}
+
+        base_q = np.asarray(d.qpos, float).copy()
+        rows = []
+        for dim in task_dim_candidates:
+            dim = int(dim)
+            t0 = time.perf_counter()
+            best = None
+            if dim == 14:
+                baseR = self._quat_to_mat(np.asarray(base_q[3:7], float))
+                for dh in base_height_offsets:
+                    for dyaw in base_yaw_offsets:
+                        qs = base_q.copy()
+                        qs[2] += float(dh)
+                        Rz = np.array([
+                            [math.cos(dyaw), -math.sin(dyaw), 0.0],
+                            [math.sin(dyaw), math.cos(dyaw), 0.0],
+                            [0.0, 0.0, 1.0]])
+                        Rn = Rz @ baseR
+                        qs[3:7] = self._mat_to_quat(Rn)
+                        r = solve(qs)
+                        if 'error' in r:
+                            continue
+                        worst = max(r['err'].values())
+                        point = {'dh': round(float(dh), 3),
+                                 'dyaw': round(float(dyaw), 3),
+                                 'worst_err': worst, 'margin': r['margin']}
+                        if best is None or worst < best['worst_err']:
+                            best = point
+            else:
+                extra = ([n + '_joint' for n in WAIST] if dim >= 17 else [])
+                r = solve(base_q, free_extra=extra)
+                if 'error' in r:
+                    rows.append({'task_dim': dim, 'error': r['error']})
+                    continue
+                waist_move = None
+                if dim >= 17:
+                    waist_move = round(float(max(abs(
+                        r['q'].get(n + '_joint', 0.0)
+                        - float(base_q[self.addr[n + '_joint']]))
+                        for n in WAIST)), 4)
+                best = {'worst_err': round(max(r['err'].values()), 5),
+                        'margin': r['margin'],
+                        'err': r['err'], 'waist_move_rad': waist_move}
+            if best is None:
+                rows.append({'task_dim': dim, 'error': 'no feasible point'})
+                continue
+            elapsed = time.perf_counter() - t0
+            binding = None
+            if best['worst_err'] > 0.015:
+                binding = 'reach_geometry'
+            elif best['margin'] is not None and best['margin'] < 0.05:
+                binding = 'joint_margin'
+            elif dim >= 17 and owner == 'homie':
+                binding = 'waist_not_commandable'
+            rows.append({
+                'task_dim': dim,
+                'worst_pad_err_m': best['worst_err'],
+                'joint_margin_rad': best['margin'],
+                'solve_s': round(float(elapsed), 4),
+                'meets_pad_0p015': bool(best['worst_err'] <= 0.015),
+                'meets_margin_0p05': (None if best.get('margin') is None
+                                      else bool(best['margin'] >= 0.05)),
+                'best_base_search': (None if dim != 14 else {
+                    'height_offset_m': best.get('dh'),
+                    'yaw_offset_rad': best.get('dyaw')}),
+                'waist_move_rad': best.get('waist_move_rad'),
+                'waist_authoritative': bool(
+                    dim >= 17 and owner in ('ik', 'blend')),
+                'binding_constraint': binding,
+            })
+        return {'target': {k: np.round(v, 3).tolist() for k, v in tgt.items()},
+                'base': self.base_state(), 'waist_owner': owner,
+                'rows': rows}
+
+    @staticmethod
+    def _mat_to_quat(R):
+        """Rotation matrix -> (w, x, y, z), the MuJoCo order."""
+        t = float(R[0, 0] + R[1, 1] + R[2, 2])
+        if t > 0.0:
+            s = math.sqrt(t + 1.0) * 2.0
+            w = 0.25 * s
+            x = (R[2, 1] - R[1, 2]) / s
+            y = (R[0, 2] - R[2, 0]) / s
+            z = (R[1, 0] - R[0, 1]) / s
+        elif R[0, 0] > R[1, 1] and R[0, 0] > R[2, 2]:
+            s = math.sqrt(1.0 + R[0, 0] - R[1, 1] - R[2, 2]) * 2.0
+            w = (R[2, 1] - R[1, 2]) / s
+            x = 0.25 * s
+            y = (R[0, 1] + R[1, 0]) / s
+            z = (R[0, 2] + R[2, 0]) / s
+        elif R[1, 1] > R[2, 2]:
+            s = math.sqrt(1.0 + R[1, 1] - R[0, 0] - R[2, 2]) * 2.0
+            w = (R[0, 2] - R[2, 0]) / s
+            x = (R[0, 1] + R[1, 0]) / s
+            y = 0.25 * s
+            z = (R[1, 2] + R[2, 1]) / s
+        else:
+            s = math.sqrt(1.0 + R[2, 2] - R[0, 0] - R[1, 1]) * 2.0
+            w = (R[1, 0] - R[0, 1]) / s
+            x = (R[0, 2] + R[2, 0]) / s
+            y = (R[1, 2] + R[2, 1]) / s
+            z = 0.25 * s
+        return np.array([w, x, y, z], float)
 
     def ik_preview(self, xs=(-0.10, -0.04, 0.02), gaps=(0.155, 0.175, 0.20),
                    zs=(0.46, 0.52, 0.58, 0.64, 0.70), orients=('down',),
@@ -1521,6 +2324,8 @@ class Tools:
                                 'z': zo, 'err': round(perr, 3),
                                 'rot': None if rot is None else round(rot, 3),
                                 'seed': si_used,
+                                'q_named': {nm: round(float(best[1][j]), 4)
+                                            for j, nm in enumerate(names)},
                                 'dq': round(float(np.abs(
                                     best[1] - q_base).max()), 4),
                                 'pad_travel': ptrav,

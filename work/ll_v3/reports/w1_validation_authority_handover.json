@@ -1,0 +1,66 @@
+{
+  "validation": "ll_v3 W1 substrate micro-benchmark review",
+  "validator": "independent",
+  "date": "2026-11-16",
+  "task": "05_drill_lift",
+  "seed": 0,
+  "slot": 8,
+  "queue": "05_drill_lift__8",
+  "primitive": "authority_handover",
+  "source": "work/ll_v3/substrate/authority_handover.py",
+  "source_run_as_is": true,
+  "contract": "runtime handover and re-handover of a control channel (waist owner homie|ik|blend, lower-body owner policy|hold); verifies the achieved gain before and after the switch, records a HANDOFF event, and requires balance metrics to stay in bounds",
+  "protocol_executed": [
+    {"step": 1, "request": {"tool": "reset", "seed": 0}, "response": {"ok": true, "result": {"seed": 0, "t": 0.0}}},
+    {"step": 2, "request": {"tool": "write", "name": "authority_handover", "source": "<file contents>"}, "response": {"ok": true, "result": {"primitives": ["authority_handover"]}}},
+    {"step": 3, "request": {"tool": "call", "name": "authority_handover", "kwargs": {}}, "response": {"ok": true, "result": {"ok": true, "events": [{"event": "before", "owner": "homie", "gains": {"waist_yaw_joint": 0.956, "waist_roll_joint": 0.326, "waist_pitch_joint": 1.131}, "tilt_deg": 0.0}, {"event": "handoff", "owner": "ik", "gains": {"waist_yaw_joint": 1.004, "waist_roll_joint": 0.987, "waist_pitch_joint": 1.022}, "tilt_deg": 4.31}, {"event": "restore", "owner": "homie", "gains": {"waist_yaw_joint": 0.134, "waist_roll_joint": -0.256, "waist_pitch_joint": -0.175}, "tilt_deg": 2.04}], "roll_gains": {"before": 0.326, "ik": 0.987, "after": -0.256}, "all_gains": {"before": {"waist_yaw_joint": 0.956, "waist_roll_joint": 0.326, "waist_pitch_joint": 1.131}, "ik": {"waist_yaw_joint": 1.004, "waist_roll_joint": 0.987, "waist_pitch_joint": 1.022}, "after": {"waist_yaw_joint": 0.134, "waist_roll_joint": -0.256, "waist_pitch_joint": -0.175}}, "binding_constraint": null, "t0": 0.0, "t1": 3.42}}},
+    {"step": 4, "request": {"tool": "authority", "kwargs": {"waist_owner": "homie"}}, "response": {"ok": true, "result": {"waist_owner": "homie", "waist_blend": 0.5, "lower_owner": "policy", "lower_policy_action": true}}}
+  ],
+  "measured": {
+    "ok": true,
+    "roll_gains": {"before": 0.326, "ik": 0.987, "after": -0.256},
+    "all_gains": {
+      "before": {"waist_yaw_joint": 0.956, "waist_roll_joint": 0.326, "waist_pitch_joint": 1.131},
+      "ik": {"waist_yaw_joint": 1.004, "waist_roll_joint": 0.987, "waist_pitch_joint": 1.022},
+      "after": {"waist_yaw_joint": 0.134, "waist_roll_joint": -0.256, "waist_pitch_joint": -0.175}
+    },
+    "events": [
+      {"event": "before", "owner": "homie", "gains": {"waist_yaw_joint": 0.956, "waist_roll_joint": 0.326, "waist_pitch_joint": 1.131}, "tilt_deg": 0.0},
+      {"event": "handoff", "owner": "ik", "gains": {"waist_yaw_joint": 1.004, "waist_roll_joint": 0.987, "waist_pitch_joint": 1.022}, "tilt_deg": 4.31},
+      {"event": "restore", "owner": "homie", "gains": {"waist_yaw_joint": 0.134, "waist_roll_joint": -0.256, "waist_pitch_joint": -0.175}, "tilt_deg": 2.04}
+    ],
+    "binding_constraint": null,
+    "owner_after_call": "homie",
+    "lower_owner_after_call": "policy",
+    "episode_n_steps": 171,
+    "episode_duration_s": 3.4,
+    "max_base_tilt_rad": 0.12519,
+    "max_base_tilt_deg": 7.1729,
+    "tilt_event_samples_deg": [0.0, 4.31, 2.04]
+  },
+  "checks": [
+    {"name": "primitive_ok", "expected": true, "observed": true, "pass": true},
+    {"name": "roll_gain_before_below_min", "expected": "< 0.8", "observed": "|0.326| = 0.326", "pass": true},
+    {"name": "roll_gain_under_ik_at_least_min", "expected": ">= 0.8", "observed": "|0.987| = 0.987", "pass": true},
+    {"name": "roll_gain_after_below_min", "expected": "< 0.8", "observed": "|-0.256| = 0.256", "pass": true},
+    {"name": "owner_switch_to_ik", "expected": "ik", "observed": "ik", "pass": true},
+    {"name": "owner_restore_to_homie", "expected": "homie", "observed": "homie (event and live tool probe)", "pass": true},
+    {"name": "handoff_events_recorded", "expected": "before/handoff/restore present", "observed": "3 events with owner and gains recorded", "pass": true},
+    {"name": "base_tilt_within_limit", "expected": "<= 8 deg", "observed": "7.1729 deg whole-episode max (0.12519 rad)", "pass": true}
+  ],
+  "verdict": "accept",
+  "binding_constraint": null,
+  "evidence": {
+    "episode_dir": "out/obs/05_drill_lift/ep_20261116_132250_p416819_s0",
+    "tilt_trace": "out/obs/05_drill_lift/ep_20261116_132250_p416819_s0/trace_live_01.csv",
+    "recorder_tilt_units": "radians (hmg_harness/obs.py passes env.tilt_rad())",
+    "server_log": ".scratch/srv_05_drill_lift__8_132132.log"
+  },
+  "notes": [
+    "The roll joint is the discriminator as documented in the primitive; the yaw/pitch upper-channel gains are high under both owners and are not used for the pass criterion.",
+    "The restore gain is negative (-0.256); the primitive compares magnitude against min_gain, which is the intended signed-gain convention for this channel.",
+    "All three HANDOFF records are emitted by the primitive's declared events list (event=handoff, event=restore); the harness recorder's controller-owned HANDOFF counter reports 0, so the record is primitive-level rather than backend-emitted.",
+    "The primitive's internal balance check samples tilt only after the handover and after the restore; the independent whole-episode trace shows the transient peak (7.17 deg) also stays under the 8 deg bound.",
+    "The contract text also names a lower-body owner channel (policy|hold). The tested primitive only exercises the waist owner; lower_owner is left at its default policy and is not switched or verified. This is outside the enumerated micro-benchmark checks and is recorded as a scope note, not a failure."
+  ]
+}

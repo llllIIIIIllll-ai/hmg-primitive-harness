@@ -1,0 +1,502 @@
+{
+ "ok": true,
+ "result": {
+  "primitive": "calib_grasp_proxy",
+  "n": 4,
+  "episodes": [
+   {
+    "seed": 0,
+    "ok": true,
+    "error": null,
+    "t": 10.5,
+    "wall_s": 3.079,
+    "reset_s": 0.518,
+    "result": {
+     "standoff_aabb": 0.1519816436284331,
+     "object_before": [
+      1.731,
+      0.027,
+      0.8
+     ],
+     "object_after": [
+      1.804,
+      0.055,
+      0.868
+     ],
+     "object_rise": 0.06799999999999995,
+     "contacts_before": {
+      "left": 0,
+      "right": 0,
+      "pairs": []
+     },
+     "contacts_after": {
+      "left": 2,
+      "right": 2,
+      "pairs": [
+       [
+        "gripper0_left_left_hand_thumb_1_link",
+        "bottle_collider_box_8e968ea9",
+        "gripper0_left_left_hand_thumb_1_link_col"
+       ],
+       [
+        "gripper0_left_left_hand_thumb_2_link",
+        "bottle_collider_box_8e968ea9",
+        "gripper0_left_left_hand_thumb_2_link_col"
+       ],
+       [
+        "gripper0_right_right_hand_palm_link",
+        "bottle_collider_box_8e968ea9",
+        "gripper0_right_g0_col"
+       ],
+       [
+        "gripper0_right_right_hand_thumb_1_link",
+        "gripper0_right_right_hand_thumb_1_link_col",
+        "bottle_collider_box_f302734d"
+       ]
+      ]
+     },
+     "close_phase_bilateral": false,
+     "lift_phase_bilateral": true,
+     "fingers": {
+      "gripper0_left_left_hand_index_0_joint": -0.559,
+      "gripper0_left_left_hand_index_1_joint": -0.556,
+      "gripper0_left_left_hand_middle_0_joint": -0.559,
+      "gripper0_left_left_hand_middle_1_joint": -0.556,
+      "gripper0_left_left_hand_thumb_0_joint": -0.002,
+      "gripper0_left_left_hand_thumb_1_joint": 0.545,
+      "gripper0_left_left_hand_thumb_2_joint": 0.548,
+      "gripper0_right_right_hand_index_0_joint": 0.561,
+      "gripper0_right_right_hand_index_1_joint": 0.556,
+      "gripper0_right_right_hand_middle_0_joint": 0.561,
+      "gripper0_right_right_hand_middle_1_joint": 0.556,
+      "gripper0_right_right_hand_thumb_0_joint": 0.008,
+      "gripper0_right_right_hand_thumb_1_joint": -0.55,
+      "gripper0_right_right_hand_thumb_2_joint": -0.552
+     },
+     "proxy_grasped": true,
+     "reach_grasp": {
+      "palm_residual": {
+       "left": [
+        -0.003,
+        -0.023,
+        0.003
+       ],
+       "right": [
+        -0.019,
+        0.016,
+        0.009
+       ]
+      },
+      "joint_margin_min": 0.3938,
+      "ik_err": {
+       "left": 0.0009,
+       "right": 0.001
+      }
+     },
+     "reach_lift": {
+      "palm_residual": {
+       "left": [
+        0.015,
+        -0.008,
+        0.004
+       ],
+       "right": [
+        0.005,
+        0.009,
+        0.007
+       ]
+      },
+      "joint_margin_min": 0.2322,
+      "ik_err": {
+       "left": 0.0005,
+       "right": 0.0008
+      }
+     },
+     "close_contacts": 0,
+     "closed_present": true,
+     "t0": 0.0,
+     "t1": 10.5
+    }
+   },
+   {
+    "seed": 1,
+    "ok": true,
+    "error": null,
+    "t": 11.0,
+    "wall_s": 3.211,
+    "reset_s": 0.508,
+    "result": {
+     "standoff_aabb": 0.16876379943577952,
+     "object_before": [
+      1.763,
+      0.023,
+      0.804
+     ],
+     "object_after": [
+      1.846,
+      -0.019,
+      0.885
+     ],
+     "object_rise": 0.08099999999999996,
+     "contacts_before": {
+      "left": 0,
+      "right": 2,
+      "pairs": [
+       [
+        "gripper0_right_right_hand_palm_link",
+        "bottle_collider_box_8e968ea9",
+        "gripper0_right_g0_col"
+       ],
+       [
+        "gripper0_right_right_hand_index_1_link",
+        "bottle_collider_cylinder99aba387",
+        "gripper0_right_right_hand_index_1_link_col"
+       ]
+      ]
+     },
+     "contacts_after": {
+      "left": 1,
+      "right": 1,
+      "pairs": [
+       [
+        "gripper0_left_left_hand_thumb_2_link",
+        "bottle_collider_box_8e968ea9",
+        "gripper0_left_left_hand_thumb_2_link_col"
+       ],
+       [
+        "gripper0_right_right_hand_thumb_1_link",
+        "bottle_collider_box_8e968ea9",
+        "gripper0_right_right_hand_thumb_1_link_col"
+       ]
+      ]
+     },
+     "close_phase_bilateral": false,
+     "lift_phase_bilateral": true,
+     "fingers": {
+      "gripper0_left_left_hand_index_0_joint": -0.56,
+      "gripper0_left_left_hand_index_1_joint": -0.556,
+      "gripper0_left_left_hand_middle_0_joint": -0.56,
+      "gripper0_left_left_hand_middle_1_joint": -0.556,
+      "gripper0_left_left_hand_thumb_0_joint": 0.046,
+      "gripper0_left_left_hand_thumb_1_joint": 0.329,
+      "gripper0_left_left_hand_thumb_2_joint": 0.461,
+      "gripper0_right_right_hand_index_0_joint": 0.56,
+      "gripper0_right_right_hand_index_1_joint": 0.556,
+      "gripper0_right_right_hand_middle_0_joint": 0.561,
+      "gripper0_right_right_hand_middle_1_joint": 0.556,
+      "gripper0_right_right_hand_thumb_0_joint": -0.011,
+      "gripper0_right_right_hand_thumb_1_joint": -0.754,
+      "gripper0_right_right_hand_thumb_2_joint": -0.555
+     },
+     "proxy_grasped": true,
+     "reach_grasp": {
+      "palm_residual": {
+       "left": [
+        0.005,
+        0.007,
+        0.016
+       ],
+       "right": [
+        -0.007,
+        0.037,
+        0.009
+       ]
+      },
+      "joint_margin_min": 0.5229,
+      "ik_err": {
+       "left": 0.0007,
+       "right": 0.0008
+      }
+     },
+     "reach_lift": {
+      "palm_residual": {
+       "left": [
+        0.018,
+        -0.006,
+        -0.002
+       ],
+       "right": [
+        0.002,
+        0.012,
+        0.003
+       ]
+      },
+      "joint_margin_min": 0.3076,
+      "ik_err": {
+       "left": 0.0005,
+       "right": 0.0005
+      }
+     },
+     "close_contacts": 2,
+     "closed_present": true,
+     "t0": 0.0,
+     "t1": 11.0
+    }
+   },
+   {
+    "seed": 2,
+    "ok": true,
+    "error": null,
+    "t": 13.0,
+    "wall_s": 3.794,
+    "reset_s": 0.526,
+    "result": {
+     "standoff_aabb": 0.10844579291055974,
+     "object_before": [
+      1.756,
+      0.012,
+      0.834
+     ],
+     "object_after": [
+      1.807,
+      0.077,
+      0.96
+     ],
+     "object_rise": 0.126,
+     "contacts_before": {
+      "left": 3,
+      "right": 2,
+      "pairs": [
+       [
+        "gripper0_left_left_hand_palm_link",
+        "bottle_collider_box_a1f69b3d",
+        "gripper0_left_g0_col"
+       ],
+       [
+        "gripper0_left_left_hand_palm_link",
+        "bottle_collider_box_a1f69b3d",
+        "gripper0_left_g1_col"
+       ],
+       [
+        "gripper0_left_left_hand_thumb_2_link",
+        "bottle_collider_box_f302734d",
+        "gripper0_left_left_hand_thumb_2_link_col"
+       ],
+       [
+        "gripper0_right_right_hand_thumb_2_link",
+        "bottle_collider_box_a1f69b3d",
+        "gripper0_right_right_hand_thumb_2_link_col"
+       ],
+       [
+        "gripper0_right_right_hand_index_1_link",
+        "bottle_collider_box_a1f69b3d",
+        "gripper0_right_right_hand_index_1_link_col"
+       ]
+      ]
+     },
+     "contacts_after": {
+      "left": 5,
+      "right": 3,
+      "pairs": [
+       [
+        "gripper0_left_left_hand_palm_link",
+        "bottle_collider_box_a1f69b3d",
+        "gripper0_left_g0_col"
+       ],
+       [
+        "gripper0_left_left_hand_palm_link",
+        "bottle_collider_box_a1f69b3d",
+        "gripper0_left_g1_col"
+       ],
+       [
+        "gripper0_left_left_hand_thumb_2_link",
+        "bottle_collider_box_f302734d",
+        "gripper0_left_left_hand_thumb_2_link_col"
+       ],
+       [
+        "gripper0_left_left_hand_middle_0_link",
+        "bottle_collider_box_a1f69b3d",
+        "gripper0_left_left_hand_middle_0_link_col"
+       ],
+       [
+        "gripper0_left_left_hand_middle_1_link",
+        "bottle_collider_box_a1f69b3d",
+        "gripper0_left_left_hand_middle_1_link_col"
+       ],
+       [
+        "gripper0_right_right_hand_thumb_2_link",
+        "bottle_collider_box_a1f69b3d",
+        "gripper0_right_right_hand_thumb_2_link_col"
+       ],
+       [
+        "gripper0_right_right_hand_index_0_link",
+        "bottle_collider_box_f302734d",
+        "gripper0_right_right_hand_index_0_link_col"
+       ],
+       [
+        "gripper0_right_right_hand_index_1_link",
+        "bottle_collider_box_f302734d",
+        "gripper0_right_right_hand_index_1_link_col"
+       ]
+      ]
+     },
+     "close_phase_bilateral": true,
+     "lift_phase_bilateral": true,
+     "fingers": {
+      "gripper0_left_left_hand_index_0_joint": -0.558,
+      "gripper0_left_left_hand_index_1_joint": -0.556,
+      "gripper0_left_left_hand_middle_0_joint": -0.528,
+      "gripper0_left_left_hand_middle_1_joint": -0.555,
+      "gripper0_left_left_hand_thumb_0_joint": -0.039,
+      "gripper0_left_left_hand_thumb_1_joint": 0.556,
+      "gripper0_left_left_hand_thumb_2_joint": 0.561,
+      "gripper0_right_right_hand_index_0_joint": 0.527,
+      "gripper0_right_right_hand_index_1_joint": 0.553,
+      "gripper0_right_right_hand_middle_0_joint": 0.561,
+      "gripper0_right_right_hand_middle_1_joint": 0.556,
+      "gripper0_right_right_hand_thumb_0_joint": 0.089,
+      "gripper0_right_right_hand_thumb_1_joint": -0.477,
+      "gripper0_right_right_hand_thumb_2_joint": -0.527
+     },
+     "proxy_grasped": true,
+     "reach_grasp": {
+      "palm_residual": {
+       "left": [
+        -0.001,
+        0.016,
+        -0.017
+       ],
+       "right": [
+        0.015,
+        0.041,
+        0.031
+       ]
+      },
+      "joint_margin_min": 0.5846,
+      "ik_err": {
+       "left": 0.0008,
+       "right": 0.0007
+      }
+     },
+     "reach_lift": {
+      "palm_residual": {
+       "left": [
+        0.009,
+        0.001,
+        -0.018
+       ],
+       "right": [
+        0.003,
+        0.006,
+        0.004
+       ]
+      },
+      "joint_margin_min": 0.5239,
+      "ik_err": {
+       "left": 0.0001,
+       "right": 0.0005
+      }
+     },
+     "close_contacts": 5,
+     "closed_present": true,
+     "t0": 0.0,
+     "t1": 13.0
+    }
+   },
+   {
+    "seed": 3,
+    "ok": true,
+    "error": null,
+    "t": 10.5,
+    "wall_s": 3.031,
+    "reset_s": 0.512,
+    "result": {
+     "standoff_aabb": 0.1682000297265134,
+     "object_before": [
+      1.753,
+      0.036,
+      0.802
+     ],
+     "object_after": [
+      1.807,
+      0.034,
+      0.847
+     ],
+     "object_rise": 0.04499999999999993,
+     "contacts_before": {
+      "left": 0,
+      "right": 0,
+      "pairs": []
+     },
+     "contacts_after": {
+      "left": 1,
+      "right": 1,
+      "pairs": [
+       [
+        "gripper0_left_left_hand_thumb_2_link",
+        "bottle_collider_box_8e968ea9",
+        "gripper0_left_left_hand_thumb_2_link_col"
+       ],
+       [
+        "gripper0_right_right_hand_thumb_2_link",
+        "bottle_collider_box_8e968ea9",
+        "gripper0_right_right_hand_thumb_2_link_col"
+       ]
+      ]
+     },
+     "close_phase_bilateral": false,
+     "lift_phase_bilateral": true,
+     "fingers": {
+      "gripper0_left_left_hand_index_0_joint": -0.56,
+      "gripper0_left_left_hand_index_1_joint": -0.556,
+      "gripper0_left_left_hand_middle_0_joint": -0.56,
+      "gripper0_left_left_hand_middle_1_joint": -0.556,
+      "gripper0_left_left_hand_thumb_0_joint": -0.0,
+      "gripper0_left_left_hand_thumb_1_joint": 0.553,
+      "gripper0_left_left_hand_thumb_2_joint": 0.555,
+      "gripper0_right_right_hand_index_0_joint": 0.561,
+      "gripper0_right_right_hand_index_1_joint": 0.556,
+      "gripper0_right_right_hand_middle_0_joint": 0.561,
+      "gripper0_right_right_hand_middle_1_joint": 0.556,
+      "gripper0_right_right_hand_thumb_0_joint": -0.001,
+      "gripper0_right_right_hand_thumb_1_joint": -0.551,
+      "gripper0_right_right_hand_thumb_2_joint": -0.555
+     },
+     "proxy_grasped": true,
+     "reach_grasp": {
+      "palm_residual": {
+       "left": [
+        0.007,
+        -0.026,
+        0.018
+       ],
+       "right": [
+        -0.006,
+        0.042,
+        0.011
+       ]
+      },
+      "joint_margin_min": 0.4927,
+      "ik_err": {
+       "left": 0.0008,
+       "right": 0.0008
+      }
+     },
+     "reach_lift": {
+      "palm_residual": {
+       "left": [
+        0.014,
+        -0.004,
+        -0.0
+       ],
+       "right": [
+        0.012,
+        0.006,
+        0.008
+       ]
+      },
+      "joint_margin_min": 0.3372,
+      "ik_err": {
+       "left": 0.0006,
+       "right": 0.0007
+      }
+     },
+     "close_contacts": 0,
+     "closed_present": true,
+     "t0": 0.0,
+     "t1": 10.5
+    }
+   }
+  ]
+ }
+}

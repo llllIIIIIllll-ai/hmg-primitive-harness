@@ -1,0 +1,180 @@
+{
+ "task": "05_drill_lift",
+ "pose_standoff_aabb": 0.15,
+ "method": "executed mink-QP (qp_reach, task_dim=12, dur=0.35)",
+ "rows": [
+  {
+   "side": "left",
+   "xo": 0.0,
+   "gap": 0.155,
+   "z": 0.46,
+   "target": [
+    1.739,
+    0.195,
+    1.2610000000000001
+   ],
+   "pad_error": 0.1267911668847637,
+   "solver": "mink-qp",
+   "joint_margin_min": -0.0347,
+   "waist_owner": "homie",
+   "standoff_ok": true,
+   "standoff_aabb": 0.16601400543327657
+  },
+  {
+   "side": "left",
+   "xo": 0.0,
+   "gap": 0.155,
+   "z": 0.52,
+   "target": [
+    1.739,
+    0.195,
+    1.3210000000000002
+   ],
+   "pad_error": 0.15511608556174952,
+   "solver": "mink-qp",
+   "joint_margin_min": -0.0316,
+   "waist_owner": "homie",
+   "standoff_ok": true,
+   "standoff_aabb": 0.16601400543327657
+  },
+  {
+   "side": "left",
+   "xo": 0.0,
+   "gap": 0.155,
+   "z": 0.58,
+   "target": [
+    1.739,
+    0.195,
+    1.381
+   ],
+   "pad_error": 0.23118174668429167,
+   "solver": "mink-qp",
+   "joint_margin_min": -0.0158,
+   "waist_owner": "homie",
+   "standoff_ok": true,
+   "standoff_aabb": 0.16601400543327657
+  },
+  {
+   "side": "left",
+   "xo": 0.0,
+   "gap": 0.155,
+   "z": 0.64,
+   "target": [
+    1.739,
+    0.195,
+    1.441
+   ],
+   "pad_error": 0.1848972687737707,
+   "solver": "mink-qp",
+   "joint_margin_min": 0.0401,
+   "waist_owner": "homie",
+   "standoff_ok": true,
+   "standoff_aabb": 0.16601400543327657
+  },
+  {
+   "side": "left",
+   "xo": 0.0,
+   "gap": 0.155,
+   "z": 0.7,
+   "target": [
+    1.739,
+    0.195,
+    1.501
+   ],
+   "pad_error": 0.41978208632575065,
+   "solver": "mink-qp",
+   "joint_margin_min": -0.1259,
+   "waist_owner": "homie",
+   "standoff_ok": true,
+   "standoff_aabb": 0.16601400543327657
+  },
+  {
+   "side": "right",
+   "xo": 0.0,
+   "gap": 0.155,
+   "z": 0.46,
+   "target": [
+    1.739,
+    -0.11499999999999999,
+    1.2610000000000001
+   ],
+   "pad_error": 0.134740491315714,
+   "solver": "mink-qp",
+   "joint_margin_min": -0.0307,
+   "waist_owner": "homie",
+   "standoff_ok": true,
+   "standoff_aabb": 0.16601400543327657
+  },
+  {
+   "side": "right",
+   "xo": 0.0,
+   "gap": 0.155,
+   "z": 0.52,
+   "target": [
+    1.739,
+    -0.11499999999999999,
+    1.3210000000000002
+   ],
+   "pad_error": 0.1711695066301238,
+   "solver": "mink-qp",
+   "joint_margin_min": -0.0161,
+   "waist_owner": "homie",
+   "standoff_ok": true,
+   "standoff_aabb": 0.16601400543327657
+  },
+  {
+   "side": "right",
+   "xo": 0.0,
+   "gap": 0.155,
+   "z": 0.58,
+   "target": [
+    1.739,
+    -0.11499999999999999,
+    1.381
+   ],
+   "pad_error": 0.16983521425193304,
+   "solver": "mink-qp",
+   "joint_margin_min": -0.0048,
+   "waist_owner": "homie",
+   "standoff_ok": true,
+   "standoff_aabb": 0.16601400543327657
+  },
+  {
+   "side": "right",
+   "xo": 0.0,
+   "gap": 0.155,
+   "z": 0.64,
+   "target": [
+    1.739,
+    -0.11499999999999999,
+    1.441
+   ],
+   "pad_error": 0.19890449969771926,
+   "solver": "mink-qp",
+   "joint_margin_min": -0.0191,
+   "waist_owner": "homie",
+   "standoff_ok": true,
+   "standoff_aabb": 0.16601400543327657
+  },
+  {
+   "side": "right",
+   "xo": 0.0,
+   "gap": 0.155,
+   "z": 0.7,
+   "target": [
+    1.739,
+    -0.11499999999999999,
+    1.501
+   ],
+   "pad_error": 0.3008587708543662,
+   "solver": "mink-qp",
+   "joint_margin_min": -0.0326,
+   "waist_owner": "homie",
+   "standoff_ok": true,
+   "standoff_aabb": 0.16601400543327657
+  }
+ ],
+ "n": 10,
+ "n_le_0p015": 0,
+ "note": "The DLS preview reported 0/20 <= 15 mm; this executed set is the authoritative reach check."
+}

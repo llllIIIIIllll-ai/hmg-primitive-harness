@@ -39,7 +39,7 @@ def load_scenario(path):
     return data
 
 
-def run(task, seeds, source_path, name, kwargs, timeout):
+def run(task, seeds, source_path, name, kwargs, timeout, slot=0):
     if not os.path.isabs(source_path):
         source_path = os.path.join(ROOT, source_path)
     with open(source_path, encoding="utf-8") as fh:
@@ -53,7 +53,10 @@ def run(task, seeds, source_path, name, kwargs, timeout):
         "results": "full",
     }
     env = os.environ.copy()
-    env["HMG_TASK"] = task
+    # Slot 0 / empty / None all mean the base per-task queue.  A literal "0"
+    # must not become queue/<task>__0, which no base server polls.
+    s = "" if slot is None else str(slot).strip()
+    env["HMG_TASK"] = task if s in ("", "0") else "%s__%s" % (task, s)
     proc = subprocess.run(
         [QTOOL, json.dumps(req), str(timeout)],
         cwd=ROOT, env=env, capture_output=True, text=True, timeout=timeout + 20,
@@ -75,6 +78,8 @@ def main():
     p.add_argument("--name", default="micro")
     p.add_argument("--kwargs", default="{}")
     p.add_argument("--timeout", type=int, default=180)
+    p.add_argument("--slot", default="",
+                   help="server slot for this task (server_ctl.sh start <task> <seed> <slot>); 0/empty = base queue")
     args = p.parse_args()
 
     if args.scenario:
@@ -84,6 +89,7 @@ def main():
         source = data["source"]
         name = data["name"]
         kwargs = data["kwargs"]
+        slot = data.get("slot", args.slot)
     else:
         if not (args.task and args.source):
             p.error("direct mode needs --task and --source")
@@ -92,10 +98,11 @@ def main():
         source = args.source
         name = args.name
         kwargs = json.loads(args.kwargs)
+        slot = args.slot
 
-    result = run(task, seeds, source, name, kwargs, args.timeout)
-    out = {"ok": bool(result.get("ok")), "task": task, "seeds": seeds,
-           "name": name, "response": result}
+    result = run(task, seeds, source, name, kwargs, args.timeout, slot)
+    out = {"ok": bool(result.get("ok")), "task": task, "slot": slot,
+           "seeds": seeds, "name": name, "response": result}
     print(json.dumps(out, ensure_ascii=False, indent=2))
     return 0 if out["ok"] else 1
 

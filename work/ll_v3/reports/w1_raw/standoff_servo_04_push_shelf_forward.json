@@ -1,0 +1,50 @@
+{
+ "task": "04_push_shelf_forward",
+ "grid": [
+  0.35,
+  0.25,
+  0.2
+ ],
+ "rows": [
+  {
+   "target_standoff": 0.35,
+   "servo_ok": true,
+   "standoff_aabb": 0.36160000000000003,
+   "xy_error": 0.011600000000000055,
+   "tilt_deg": 2.12,
+   "servo_binding": null,
+   "arm_ok": false,
+   "pad_error": {
+    "left": 0.10239794919821393,
+    "right": 0.1028121588140236
+   },
+   "worst_pad_error": 0.1028121588140236,
+   "joint_margin_min": 0.3669,
+   "arm_binding": "pad_error"
+  },
+  {
+   "target_standoff": 0.25,
+   "servo_ok": true,
+   "standoff_aabb": 0.23719999999999997,
+   "xy_error": 0.012800000000000034,
+   "tilt_deg": 2.46,
+   "servo_binding": null,
+   "arm_ok": false,
+   "pad_error": {
+    "left": 0.08014050162059133,
+    "right": 0.04098402127659021
+   },
+   "worst_pad_error": 0.08014050162059133,
+   "joint_margin_min": 0.1046,
+   "arm_binding": "pad_error"
+  },
+  {
+   "target_standoff": 0.2,
+   "servo_ok": false,
+   "standoff_aabb": 0.2258,
+   "xy_error": null,
+   "tilt_deg": null,
+   "servo_binding": "fingertip_guard"
+  }
+ ]
+}

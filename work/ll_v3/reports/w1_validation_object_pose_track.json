@@ -1,0 +1,102 @@
+{
+  "validator": "independent W1 validator (clean-room)",
+  "subject": "work/ll_v3/substrate/object_pose_track.py",
+  "contract_source": "experiments/ll_v3/config.yaml warmup.substrate[object_pose_track]",
+  "contract_text": "live pose/AABB from the scene, reports pose error and tracking gap",
+  "task": "05_drill_lift",
+  "queue": "05_drill_lift__5",
+  "slot": 5,
+  "seed": 0,
+  "substrate_modified": false,
+  "environment_fact": {
+    "scene_object_name": "bottle",
+    "note": "the 05_drill_lift scene's manipulated body reports name 'bottle'; treated as a scene fact, not a contract failure"
+  },
+  "probe_ground_truth_pre_motion": {
+    "body_pos": [1.7413, 0.0452, 0.7995],
+    "aabb_lo": [1.6445, -0.0029, 0.7995],
+    "aabb_hi": [1.8349, 0.1005, 1.0251]
+  },
+  "checks": {
+    "static_pose_error": {
+      "target": [1.7413, 0.0452, 0.7995],
+      "pose_error_m": 0.0005223983154642456,
+      "tolerance_m": 0.01,
+      "pass": true
+    },
+    "static_tracking_gap_repeated_calls": {
+      "tracking_gap_m": 0.0,
+      "pass": true
+    },
+    "aabb_matches_probe_static": {
+      "returned_body_pos": [1.7413, 0.0452, 0.7995],
+      "returned_lo": [1.6445, -0.0029, 0.7995],
+      "returned_hi": [1.8349, 0.1005, 1.0251],
+      "max_abs_diff_m": 0.001,
+      "pass": true
+    },
+    "pose_matches_probe": {
+      "returned_object_pos_observe_3dp": [1.739, 0.04, 0.801],
+      "probe_body_pos": [1.7413, 0.0452, 0.7995],
+      "note": "observe() reports 3-decimal rounded pos; difference < 0.001 m",
+      "pass": true
+    },
+    "reset_boundary_no_cross_episode_state": {
+      "first_call_after_reset_tracking_gap": null,
+      "note": "tracking_gap is None on the first call of each episode; no stale _object_track_last leaks across reset",
+      "pass": true
+    },
+    "failure_path_far_target": {
+      "target": "far/off-object (deliberately > tol)",
+      "ok": false,
+      "binding_constraint": "pose_error",
+      "pass": true
+    },
+    "live_motion_tracking_gap": {
+      "method": "perturbed the object safely with base_standoff_servo(standoff=0.15) then arm_pose_ik targets placed into it; no direct object-command tool was used",
+      "base_final_pos": [1.4838, 0.0555, 0.7541],
+      "standoff_aabb_m": 0.16601,
+      "object_pos_before": [1.739, 0.04, 0.801],
+      "object_pos_after": [1.754, 0.01, 0.804],
+      "object_delta_m": [0.015, -0.03, 0.003],
+      "object_delta_norm_m": 0.033674917,
+      "reported_tracking_gap_m": 0.03367491648096543,
+      "gap_consistency_max_abs_diff_m": 0.000000001,
+      "pass": true
+    },
+    "post_motion_probe_consistency": {
+      "probe_body_pos": [1.75443, 0.01045, 0.80423],
+      "returned_body_pos": [1.7544, 0.0105, 0.8042],
+      "probe_aabb_lo": [1.66154, -0.06529, 0.7994],
+      "returned_aabb_lo": [1.6615, -0.0653, 0.7994],
+      "probe_aabb_hi": [1.84983, 0.04925, 1.03369],
+      "returned_aabb_hi": [1.8498, 0.0493, 1.0337],
+      "max_abs_diff_m": 0.0001,
+      "pass": true
+    },
+    "post_motion_static_pose_error": {
+      "target": [1.75443, 0.01045, 0.80423],
+      "pose_error_m": 0.0006635510530471016,
+      "tolerance_m": 0.01,
+      "tracking_gap_m": 0.0,
+      "pass": true
+    }
+  },
+  "field_coverage": {
+    "pose_error": "present and correct (None when no target supplied; numeric otherwise)",
+    "tracking_gap": "present and correct (None on first call of an episode, 0.0 static, true displacement under motion)",
+    "aabb": "present and probe-consistent",
+    "object": "present with name/pos/hand positions",
+    "binding_constraint": "null on success; 'pose_error' on far-target failure"
+  },
+  "safety_observations": {
+    "base_tilt_deg_max": 4.7,
+    "tilt_limit_deg": 8.0,
+    "hand_object_contacts_after_perturbation": 1,
+    "no_collision_or_guard_trip": true
+  },
+  "failures": [],
+  "binding_constraint_on_failure": null,
+  "verdict": "accept",
+  "verdict_rationale": "All contract clauses are honored against live probe ground truth: live pose/AABB are truthful to <0.001 m, pose_error is numerically correct and gates at tol with binding_constraint='pose_error', and tracking_gap is None at an episode start, 0.0 when static, and equals the measured object displacement (0.03367491648096543 m) after a real perturbation. The primitive is read-only (L1) and never commands the object or lower body. No binding constraint applies."
+}

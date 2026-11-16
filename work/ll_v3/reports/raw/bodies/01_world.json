@@ -1,0 +1,1 @@
+{"ok": true, "result": {"what": "bodies", "t": 0.0, "bodies": [{"body": "world", "pos": [0.0, 0.0, 0.0], "xmat": [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]], "parents": [], "mass": 0.0, "joints": [], "geoms": []}]}}

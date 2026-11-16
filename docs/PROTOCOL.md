@@ -74,10 +74,11 @@ coordinator-only episode summary is written per seed.  The response is
 - The source filter rejects a source containing forbidden substrings such as
   `os.` anywhere (even an identifier like `cpos.append` or text in a
   docstring). Avoid them.
-- `observe()['hand_object_contacts']` and `hand_contacts_side()` match only
-  the SceneObject ROOT body; objects whose collision geoms sit on child
-  bodies (drill, some boxes) read 0 there. `api.contact_pairs()` is the
-  truthful contact source.
+- `observe()['hand_object_contacts']` matches only the SceneObject ROOT body;
+  objects whose collision geoms sit on child bodies (drill, some boxes) read 0
+  there. `api.hand_contacts_side()` walks the object's BODY TREE and returns
+  the per-side counts; `api.contact_pairs()` / `api.contact_detail()` are the
+  full truthful contact sources.
 - Do not read the reward / success-predicate implementation. Treat the task
   outcome as unknown and judge from observations.
 

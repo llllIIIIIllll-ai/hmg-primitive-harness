@@ -1,0 +1,58 @@
+{
+ "task": "06_drill_pnp",
+ "grid": [
+  0.35,
+  0.25,
+  0.2
+ ],
+ "rows": [
+  {
+   "target_standoff": 0.35,
+   "servo_ok": true,
+   "standoff_aabb": 0.3677573248760656,
+   "xy_error": 0.014410757250660867,
+   "tilt_deg": 4.42,
+   "servo_binding": null,
+   "arm_ok": false,
+   "pad_error": {
+    "left": 0.2492181574444367,
+    "right": 0.3720810395599324
+   },
+   "worst_pad_error": 0.3720810395599324,
+   "joint_margin_min": -0.0324,
+   "arm_binding": "pad_error"
+  },
+  {
+   "target_standoff": 0.25,
+   "servo_ok": true,
+   "standoff_aabb": 0.25740289431162194,
+   "xy_error": 0.0025000000000000577,
+   "tilt_deg": 4.48,
+   "servo_binding": null,
+   "arm_ok": false,
+   "pad_error": {
+    "left": 0.10606078445872448,
+    "right": 0.09290527433897389
+   },
+   "worst_pad_error": 0.10606078445872448,
+   "joint_margin_min": 1.0566,
+   "arm_binding": "pad_error"
+  },
+  {
+   "target_standoff": 0.2,
+   "servo_ok": true,
+   "standoff_aabb": 0.2143814357634541,
+   "xy_error": 0.00880000000000003,
+   "tilt_deg": 4.69,
+   "servo_binding": null,
+   "arm_ok": false,
+   "pad_error": {
+    "left": 0.0697110464704124,
+    "right": 0.06545975863078023
+   },
+   "worst_pad_error": 0.0697110464704124,
+   "joint_margin_min": 1.1946,
+   "arm_binding": "pad_error"
+  }
+ ]
+}

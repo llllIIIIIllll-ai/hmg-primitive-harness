@@ -1,0 +1,50 @@
+{
+ "task": "03_box_lift",
+ "grid": [
+  0.35,
+  0.25,
+  0.2
+ ],
+ "rows": [
+  {
+   "target_standoff": 0.35,
+   "servo_ok": true,
+   "standoff_aabb": 0.369807409336265,
+   "xy_error": 0.016599999999999726,
+   "tilt_deg": 4.6,
+   "servo_binding": null,
+   "arm_ok": false,
+   "pad_error": {
+    "left": 0.7067003396065409,
+    "right": 0.48789902643887295
+   },
+   "worst_pad_error": 0.7067003396065409,
+   "joint_margin_min": -0.107,
+   "arm_binding": "pad_error"
+  },
+  {
+   "target_standoff": 0.25,
+   "servo_ok": true,
+   "standoff_aabb": 0.26247380821712474,
+   "xy_error": 0.008499999999999952,
+   "tilt_deg": 0.98,
+   "servo_binding": null,
+   "arm_ok": false,
+   "pad_error": {
+    "left": 0.2127160078602456,
+    "right": 0.1747130790753802
+   },
+   "worst_pad_error": 0.2127160078602456,
+   "joint_margin_min": 0.6732,
+   "arm_binding": "pad_error"
+  },
+  {
+   "target_standoff": 0.2,
+   "servo_ok": null,
+   "standoff_aabb": null,
+   "xy_error": null,
+   "tilt_deg": null,
+   "servo_binding": null
+  }
+ ]
+}

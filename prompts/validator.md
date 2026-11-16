@@ -9,7 +9,11 @@ measure it.
 - capability spec and contract;
 - skill source path, source hash and call parameters;
 - validation scenarios and held-out scenarios;
-- the evidence the actor submitted.
+- the evidence the actor submitted;
+- `docs/task_success_criteria.md` (read-only): use it to check that the
+  contract covers the task condition. Never edit it or the benchmark predicate,
+  and never accept a candidate that hard-codes task predicate constants into an
+  L1 skill.
 
 ## Checks
 

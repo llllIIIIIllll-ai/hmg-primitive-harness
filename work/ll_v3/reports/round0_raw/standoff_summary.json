@@ -1,0 +1,170 @@
+{
+  "07_box_table_to_shelf": {
+    "target_params": null,
+    "best_reachable": null,
+    "rows": [
+      {
+        "target_standoff_aabb": 0.35,
+        "achieved_standoff_aabb": 0.251,
+        "achieved_standoff_root": 0.353,
+        "worst_pad_error": 0.4789,
+        "joint_margin_min": -0.0063,
+        "base_tilt_deg": 0.0,
+        "meets_0p015_margin_tilt": false,
+        "binding_constraint": "pad_error"
+      },
+      {
+        "target_standoff_aabb": 0.3,
+        "achieved_standoff_aabb": 0.306,
+        "achieved_standoff_root": 0.429,
+        "worst_pad_error": 0.4396,
+        "joint_margin_min": -0.0015,
+        "base_tilt_deg": 5.73,
+        "meets_0p015_margin_tilt": false,
+        "binding_constraint": "pad_error"
+      },
+      {
+        "target_standoff_aabb": 0.25,
+        "achieved_standoff_aabb": 0.307,
+        "achieved_standoff_root": 0.461,
+        "worst_pad_error": 0.7398,
+        "joint_margin_min": -0.0003,
+        "base_tilt_deg": 2.2,
+        "meets_0p015_margin_tilt": false,
+        "binding_constraint": "pad_error"
+      },
+      {
+        "target_standoff_aabb": 0.2,
+        "achieved_standoff_aabb": 0.307,
+        "achieved_standoff_root": 0.461,
+        "worst_pad_error": 0.7611,
+        "joint_margin_min": 0.0039,
+        "base_tilt_deg": 2.84,
+        "meets_0p015_margin_tilt": false,
+        "binding_constraint": "pad_error"
+      },
+      {
+        "target_standoff_aabb": 0.15,
+        "achieved_standoff_aabb": 0.307,
+        "achieved_standoff_root": 0.46,
+        "worst_pad_error": 0.773,
+        "joint_margin_min": -0.0004,
+        "base_tilt_deg": 3.17,
+        "meets_0p015_margin_tilt": false,
+        "binding_constraint": "pad_error"
+      }
+    ]
+  },
+  "08_pick_drill_from_holder": {
+    "target_params": null,
+    "best_reachable": null,
+    "rows": [
+      {
+        "target_standoff_aabb": 0.35,
+        "achieved_standoff_aabb": 0.362,
+        "achieved_standoff_root": 0.439,
+        "worst_pad_error": 0.3266,
+        "joint_margin_min": 0.1272,
+        "base_tilt_deg": 3.39,
+        "meets_0p015_margin_tilt": false,
+        "binding_constraint": "pad_error"
+      },
+      {
+        "target_standoff_aabb": 0.3,
+        "achieved_standoff_aabb": 0.29,
+        "achieved_standoff_root": 0.368,
+        "worst_pad_error": 0.2582,
+        "joint_margin_min": 0.3831,
+        "base_tilt_deg": 4.91,
+        "meets_0p015_margin_tilt": false,
+        "binding_constraint": "pad_error"
+      },
+      {
+        "target_standoff_aabb": 0.25,
+        "achieved_standoff_aabb": 0.254,
+        "achieved_standoff_root": 0.352,
+        "worst_pad_error": 0.1543,
+        "joint_margin_min": 0.0907,
+        "base_tilt_deg": 3.26,
+        "meets_0p015_margin_tilt": false,
+        "binding_constraint": "pad_error"
+      },
+      {
+        "target_standoff_aabb": 0.2,
+        "achieved_standoff_aabb": 0.202,
+        "achieved_standoff_root": 0.33,
+        "worst_pad_error": 0.1302,
+        "joint_margin_min": 0.0261,
+        "base_tilt_deg": 3.27,
+        "meets_0p015_margin_tilt": false,
+        "binding_constraint": "pad_error"
+      },
+      {
+        "target_standoff_aabb": 0.15,
+        "achieved_standoff_aabb": 0.195,
+        "achieved_standoff_root": 0.293,
+        "worst_pad_error": 0.072,
+        "joint_margin_min": 0.2658,
+        "base_tilt_deg": 3.57,
+        "meets_0p015_margin_tilt": false,
+        "binding_constraint": "pad_error"
+      }
+    ]
+  },
+  "09_obstacle_aware_pick_drill": {
+    "target_params": null,
+    "best_reachable": null,
+    "rows": [
+      {
+        "target_standoff_aabb": 0.35,
+        "achieved_standoff_aabb": 1.305,
+        "achieved_standoff_root": 1.4,
+        "worst_pad_error": 1.8228,
+        "joint_margin_min": -0.0872,
+        "base_tilt_deg": 2.7,
+        "meets_0p015_margin_tilt": false,
+        "binding_constraint": "pad_error"
+      },
+      {
+        "target_standoff_aabb": 0.3,
+        "achieved_standoff_aabb": 2.275,
+        "achieved_standoff_root": 2.271,
+        "worst_pad_error": 2.4827,
+        "joint_margin_min": -0.0155,
+        "base_tilt_deg": 124.49,
+        "meets_0p015_margin_tilt": false,
+        "binding_constraint": "tilt_guard"
+      },
+      {
+        "target_standoff_aabb": 0.25,
+        "achieved_standoff_aabb": 2.009,
+        "achieved_standoff_root": 1.991,
+        "worst_pad_error": 2.2719,
+        "joint_margin_min": -0.0088,
+        "base_tilt_deg": 125.12,
+        "meets_0p015_margin_tilt": false,
+        "binding_constraint": "tilt_guard"
+      },
+      {
+        "target_standoff_aabb": 0.2,
+        "achieved_standoff_aabb": 2.914,
+        "achieved_standoff_root": 2.953,
+        "worst_pad_error": 3.4513,
+        "joint_margin_min": -0.0073,
+        "base_tilt_deg": 94.42,
+        "meets_0p015_margin_tilt": false,
+        "binding_constraint": "tilt_guard"
+      },
+      {
+        "target_standoff_aabb": 0.15,
+        "achieved_standoff_aabb": 2.289,
+        "achieved_standoff_root": 2.296,
+        "worst_pad_error": 2.2748,
+        "joint_margin_min": -0.0009,
+        "base_tilt_deg": 90.93,
+        "meets_0p015_margin_tilt": false,
+        "binding_constraint": "tilt_guard"
+      }
+    ]
+  }
+}

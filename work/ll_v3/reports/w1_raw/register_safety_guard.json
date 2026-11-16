@@ -1,0 +1,15 @@
+{
+ "ok": true,
+ "result": {
+  "primitives": [
+   "arm_pose_ik",
+   "authority_handover",
+   "base_standoff_servo",
+   "hand_close_contact",
+   "hand_open",
+   "object_pose_track",
+   "safety_guard",
+   "w2_reach_close_lift"
+  ]
+ }
+}
