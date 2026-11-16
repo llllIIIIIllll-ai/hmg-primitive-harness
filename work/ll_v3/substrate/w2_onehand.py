@@ -40,32 +40,58 @@ def run(api, side='left', standoff=0.15, lateral_offset=0.0,
                 'phase': {'displacements': {'tuck': d_tuck,
                                             'standoff': d_standoff,
                                             'backoff': d_back}}}
-    u_r = api.skill('arm_untuck', dx=pre_dx, dy=dy, z=z_pre,
-                    stop_err=0.12, max_steps=250, max_delta=0.04,
-                    orient_mode='side', orientation='keep', joint_mode=True,
-                    deadband_comp=0.012, wrist_guard=True,
-                    wrist_guard_dist=0.01, seed_mode='dls',
-                    sides=(side,), base_gain=0.3, base_deadband=0.005,
-                    base_vmax=0.05, trace_contacts=True, contact_match=om)
+    u1 = api.skill('arm_untuck', dx=-0.126, dy=0.07, z=1.16,
+                   stop_err=0.12, max_steps=250, max_delta=0.04,
+                   orient_mode='down', orientation='down', joint_mode=True,
+                   deadband_comp=0.012, wrist_guard=True,
+                   wrist_guard_dist=0.01, seed_mode='dls', sides=(side,),
+                   base_gain=0.3, base_deadband=0.005, base_vmax=0.05,
+                   base_yaw_deadband=0.003, base_yaw_gain=0.6,
+                   base_wmax=0.1, trace_contacts=True, contact_match=om)
+    st = api.observe()
+    o_u1 = (st.get('object') or {}).get('pos')
+    d_u1 = _dist(o_u1, o_b)
+    if d_u1 > 0.001:
+        return {'ok': False, 'stage': 'unfold_down',
+                'binding_constraint': 'object_displacement', 'untuck': u1,
+                'phase': {'displacements': {'backoff': d_back,
+                                            'untuck': d_u1}}}
+    u2 = api.skill('arm_pose_ik_live', grasp={'dx': pre_dx, 'dy': dy,
+                                              'z': z_pre},
+                   orientation='keep', orient_mode='side',
+                   sides=(side,), joint_mode=True, stop_err=0.12,
+                   max_steps=300, max_delta=0.04, deadband_comp=0.012,
+                   wrist_guard=True, wrist_guard_dist=0.01, seed_mode='dls',
+                   base_gain=0.3, base_deadband=0.005, base_vmax=0.05,
+                   base_yaw_deadband=0.003, base_yaw_gain=0.6,
+                   base_wmax=0.1, trace_contacts=True, contact_match=om)
     st = api.observe()
     o_u = (st.get('object') or {}).get('pos')
-    d_untuck = _dist(o_u, o_b)
+    d_untuck = _dist(o_u, o_u1)
     if d_untuck > 0.001:
-        return {'ok': False, 'stage': 'unfold',
+        return {'ok': False, 'stage': 'unfold_front',
                 'binding_constraint': 'object_displacement',
-                'untuck': u_r,
+                'untuck': u2, 'unfold_down': u1,
                 'phase': {'displacements': {'backoff': d_back,
+                                            'untuck_down': d_u1,
                                             'untuck': d_untuck}}}
+    u_r = u2
     r1b = api.skill('base_standoff_servo_v3', standoff=standoff,
                     lateral_target=lateral, object_match=om,
                     finger_clearance=0.02)
     st = api.observe()
     o_u2 = (st.get('object') or {}).get('pos')
     d_rest = _dist(o_u2, o_u)
+    lat_ok = True
     if not r1b.get('ok'):
-        return {'ok': False, 'stage': 'approach',
-                'binding_constraint': r1b.get('binding_constraint'),
-                'standoff_after_untuck': r1b, 'untuck': u_r}
+        if (r1b.get('binding_constraint') == 'lateral_error'
+                and r1b.get('standoff_aabb') is not None
+                and r1b.get('standoff_aabb') <= standoff + 0.05):
+            lat_ok = False
+        else:
+            return {'ok': False, 'stage': 'approach',
+                    'binding_constraint': r1b.get('binding_constraint'),
+                    'standoff_after_untuck': r1b, 'untuck': u_r}
     if d_rest > 0.001:
         return {'ok': False, 'stage': 'approach',
                 'binding_constraint': 'object_displacement',
@@ -169,5 +195,6 @@ def run(api, side='left', standoff=0.15, lateral_offset=0.0,
             close_contacts, 'object_rise': rise, 'guard': sg,
             'phase': phase, 'budget': budget,
             'standoff': r1, 'backoff': mv, 'untuck': u_r,
-            'rest_standoff': r1b, 'reach': r2, 'close': r3,
+            'rest_standoff': r1b, 'lateral_accepted': lat_ok,
+            'reach': r2, 'close': r3,
             'lift_ik': r4, 'binding_constraint': binding}

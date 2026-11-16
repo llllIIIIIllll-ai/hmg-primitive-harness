@@ -631,3 +631,20 @@ aabb 0.167 but lateral_error 0.07 vs the 0.04 tolerance with base yaw
 14 deg after 60 bursts; the chain stops at the approach. Object
 displacement 0.0. The grasp cell is feasible read-only; the blockers are
 the front pre-grasp reachability and the base lateral/yaw after the unfold.
+
+## 28. Two-stage one-hand chain: yaw fixed, two upstream stalls
+
+Stage 1 (down pre-grasp, 0.119 proven): clean, no displacement. Stage 2
+(joint-space move to the front pre-grasp dx -0.205 z 0.954): stalls at
+0.401 after 81 steps (pad_error) - the front posture's own deadband/gain
+is untuned. Approach: lateral 0.0108 m and yaw -0.51 deg (the tightened
+yaw hold + strong hold fixed the 0.07 / 14 deg), but the forward walk
+stalls: the base stays at [1.343, 0.019], aabb 0.298 after 60 bursts
+(~0.04 m in 24 s commanded). The forward channel does not move the base
+with the arms in the front pre-grasp posture. Chain stops at the approach;
+0.0 displacement in every phase; W2 not passed.
+
+Next levers: tune the front-posture joint-space move (its own deadband/
+gain curve), and re-approach before the front pre-grasp (down pre-grasp ->
+approach -> front pre-grasp near the handle -> descent) so the walk happens
+with the tucked arms that do walk.

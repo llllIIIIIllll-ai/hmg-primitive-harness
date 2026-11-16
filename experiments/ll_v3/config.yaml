@@ -94,6 +94,15 @@ warmup:
       capability: object_pose_tracking
       contract: live pose/AABB from the scene, reports pose error and tracking
         gap
+    - name: object_info
+      capability: object_part_inventory
+      contract: read-only inventory of the task object — bodies, collision and
+        visual geoms (type, size, local/world pose, mesh name), the world AABB
+        (reported as an over-approximation, not the object model), and a
+        shape-based part classification (handle / body / bit / battery / base,
+        with the evidence geom). Reports each part's cross-section vs the hand
+        opening and the wrist radius + wrist-pad offset, and names the
+        candidate grasp parts and approach axes. Never commands.
     - name: safety_guard
       capability: safety_limit_monitor
       contract: joint margin, base tilt, penetration; aborts or flags before a
